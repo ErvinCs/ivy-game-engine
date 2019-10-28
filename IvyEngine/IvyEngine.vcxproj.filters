@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ivy">
+      <UniqueIdentifier>{1DF9870B-8902-887C-127E-9E7C7E86937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ivy\Core">
+      <UniqueIdentifier>{95578A73-8124-E57E-AA3D-D32696691A0D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Ivy.h" />
+    <ClInclude Include="src\Ivy\Core\Application.h">
+      <Filter>Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Core\Core.h">
+      <Filter>Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Core\EntryPoint.h">
+      <Filter>Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Core\Logger.h">
+      <Filter>Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ivypch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Ivy\Core\Application.cpp">
+      <Filter>Ivy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Core\Logger.cpp">
+      <Filter>Ivy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ivypch.cpp" />
+  </ItemGroup>
+</Project>

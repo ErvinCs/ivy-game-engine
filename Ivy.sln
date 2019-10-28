@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IvyApplication", "IvyApplication\IvyApplication.vcxproj", "{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IvyEngine", "IvyEngine\IvyEngine.vcxproj", "{F35D2C1B-5FC8-E091-A806-923714B0BEE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Dist|x64 = Dist|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}.Debug|x64.ActiveCfg = Debug|x64
+		{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}.Debug|x64.Build.0 = Debug|x64
+		{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}.Dist|x64.ActiveCfg = Dist|x64
+		{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}.Dist|x64.Build.0 = Dist|x64
+		{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}.Release|x64.ActiveCfg = Release|x64
+		{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}.Release|x64.Build.0 = Release|x64
+		{F35D2C1B-5FC8-E091-A806-923714B0BEE6}.Debug|x64.ActiveCfg = Debug|x64
+		{F35D2C1B-5FC8-E091-A806-923714B0BEE6}.Debug|x64.Build.0 = Debug|x64
+		{F35D2C1B-5FC8-E091-A806-923714B0BEE6}.Dist|x64.ActiveCfg = Dist|x64
+		{F35D2C1B-5FC8-E091-A806-923714B0BEE6}.Dist|x64.Build.0 = Dist|x64
+		{F35D2C1B-5FC8-E091-A806-923714B0BEE6}.Release|x64.ActiveCfg = Release|x64
+		{F35D2C1B-5FC8-E091-A806-923714B0BEE6}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
