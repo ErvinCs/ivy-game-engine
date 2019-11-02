@@ -26,12 +26,15 @@ project "IvyEngine"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
 	}
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/glm"
 	}
 
 	-- Windows specific properties
@@ -88,7 +91,8 @@ project "IvyApplication"
 	includedirs
 	{
 		"IvyEngine/vendor/spdlog/include",
-		"IvyEngine/src"
+		"IvyEngine/src",
+		"%{prj.name}/vendor/glm"
 	}
 
 	links
