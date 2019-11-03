@@ -28,13 +28,15 @@ project "IvyEngine"
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/glm/glm/**.inl"
+		--"%{prj.name}/vendor/eastl/include/EASTL/**.h"
 	}
 
 	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/glm"
+		--"%{prj.name}/vendor/eastl"
 	}
 
 	-- Windows specific properties
@@ -46,6 +48,7 @@ project "IvyEngine"
 		defines
 		{
 			"IVY_PLATFORM_WINDOWS",
+			"IVY_PLATFORM_LINUX",
 			"IVY_BUILD_DLL"
 		}
 
@@ -93,6 +96,7 @@ project "IvyApplication"
 		"IvyEngine/vendor/spdlog/include",
 		"IvyEngine/src",
 		"%{prj.name}/vendor/glm"
+		--"%{prj.name}/vendor/eastl"
 	}
 
 	links

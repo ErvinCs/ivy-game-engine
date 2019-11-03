@@ -79,7 +79,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_BUILD_DLL;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -100,7 +100,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_BUILD_DLL;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -125,7 +125,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_BUILD_DLL;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -150,7 +150,10 @@
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
     <ClInclude Include="src\Ivy\Core\EntryPoint.h" />
+    <ClInclude Include="src\Ivy\Core\HashTable.h" />
     <ClInclude Include="src\Ivy\Core\Logger.h" />
+    <ClInclude Include="src\Ivy\Core\Node.h" />
+    <ClInclude Include="src\Ivy\Core\String.h" />
     <ClInclude Include="src\ivypch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -523,7 +526,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
+    <ClCompile Include="src\Ivy\Core\HashTable.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
+    <ClCompile Include="src\Ivy\Core\String.cpp" />
     <ClCompile Include="src\ivypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
