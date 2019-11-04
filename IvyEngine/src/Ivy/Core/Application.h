@@ -1,17 +1,24 @@
 #pragma once
 
 #include "Core.h"
+#include "../Managers/FileManager.h"
+#include "../Managers/MemoryManager.h"
 
 namespace Ivy {
 
 	class IVY_API Application 
 	{
-	
+	protected:
+		FileManager fileManager;
+		MemoryManager memoryManager;
+
 	public:
 		Application();
 		virtual ~Application();
 
+		void Init();
 		void Run();
+		void Shutdown();
 
 	};
 

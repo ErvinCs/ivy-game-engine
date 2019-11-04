@@ -13,8 +13,11 @@ int main(int argc, char** argv)
 	IVY_INFO("Initialized Client Logger!");
 
 	auto application = Ivy::CreateApplication();
+	application->Init();
 	application->Run();
+	application->Shutdown();
 	delete application;
+
 }
 
 #endif

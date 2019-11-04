@@ -10,6 +10,9 @@
     <Filter Include="src\Ivy\Core">
       <UniqueIdentifier>{8C5A04A4-78BD-9348-2143-CCFE0D855FCB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\Managers">
+      <UniqueIdentifier>{11F20668-FDEA-25BA-261D-0B3F127505C6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -56,6 +59,18 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\String.h">
       <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Core\Timestep.h">
+      <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Managers\BaseManager.h">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Managers\FileManager.h">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Managers\MemoryManager.h">
+      <Filter>src\Ivy\Managers</Filter>
     </ClInclude>
     <ClInclude Include="src\ivypch.h">
       <Filter>src</Filter>
@@ -1177,6 +1192,12 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Core\String.cpp">
       <Filter>src\Ivy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Managers\FileManager.cpp">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp">
+      <Filter>src\Ivy\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\ivypch.cpp">
       <Filter>src</Filter>
