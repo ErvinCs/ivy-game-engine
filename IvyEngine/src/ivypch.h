@@ -6,14 +6,14 @@
 #include <math.h>
 //#include <utility>
 //#include <algorithm>
-//#include <functional>
+#include <functional>
 
 // Data structures
 #include <cwchar>
 #include <string>
 #include <cstdint>
 //#include <sstream>
-//#include <vector>
+#include <vector>
 //#include <unordered_map>
 //#include <unordered_set>
 

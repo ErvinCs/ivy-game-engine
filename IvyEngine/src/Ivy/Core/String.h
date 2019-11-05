@@ -60,13 +60,45 @@ namespace Ivy {
 			return wcsncmp(getRawWString(), other.getRawWString(), getSize());
 		}
 
-		#ifdef IVY_PLATFORM_WINDOWS
+		inline String operator+=(const String& other)
+		{
+			size_t oldSize = this->getSize();
+			this->size += other.getSize() - 1;			// Delete one \0
+			wchar_t* concatString = new wchar_t[size];
+			wmemcpy(concatString, this->string, oldSize);
+			wcscat(concatString, other.getRawWString());
+
+			delete[] string;
+
+			this->string = concatString;
+			return *this;
+		}
+
+		inline String operator+(const String& other)
+		{
+			size_t resultSize = this->getSize() + other.getSize() - 1;		// Delete one \0
+			wchar_t* concatString = new wchar_t[resultSize];
+			wmemcpy(concatString, this->string, this->size);
+			wcscat(concatString, other.getRawWString());
+
+			return String(concatString);
+		}
+
+		friend std::ostream& operator<<(std::ostream& out, const String& string)
+		{
+			out << string.getRawCString();
+			return out;
+		}
 
 		static String getFileName(const String& fullPath)
 		{
 			
 			wchar_t* lastSeparator;
-			wcscpy(lastSeparator, wcsrchr(fullPath.getRawWString(), L'/') + 1);
+			#ifdef IVY_PLATFORM_WINDOWS
+				wcscpy(lastSeparator, wcsrchr(fullPath.getRawWString(), L'/') + 1);
+			#else
+				wcscpy(lastSeparator, wcsrchr(fullPath.getRawWString(), L'\\') + 1);
+			#endif
 			return String(lastSeparator);
 		}
 
@@ -77,6 +109,6 @@ namespace Ivy {
 			return String(lastSeparator);
 		}
 
-		#endif
+
 	};
 }

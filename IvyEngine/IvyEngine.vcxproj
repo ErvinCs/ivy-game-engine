@@ -155,6 +155,8 @@
     <ClInclude Include="src\Ivy\Core\Node.h" />
     <ClInclude Include="src\Ivy\Core\String.h" />
     <ClInclude Include="src\Ivy\Core\Timestep.h" />
+    <ClInclude Include="src\Ivy\Events\Event.h" />
+    <ClInclude Include="src\Ivy\Events\KeyEvent.h" />
     <ClInclude Include="src\Ivy\Managers\BaseManager.h" />
     <ClInclude Include="src\Ivy\Managers\FileManager.h" />
     <ClInclude Include="src\Ivy\Managers\MemoryManager.h" />
@@ -533,6 +535,7 @@
     <ClCompile Include="src\Ivy\Core\HashTable.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
     <ClCompile Include="src\Ivy\Core\String.cpp" />
+    <ClCompile Include="src\Ivy\Events\Event.cpp" />
     <ClCompile Include="src\Ivy\Managers\FileManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp" />
     <ClCompile Include="src\ivypch.cpp">

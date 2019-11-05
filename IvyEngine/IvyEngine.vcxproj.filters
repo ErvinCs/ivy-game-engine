@@ -10,6 +10,9 @@
     <Filter Include="src\Ivy\Core">
       <UniqueIdentifier>{8C5A04A4-78BD-9348-2143-CCFE0D855FCB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\Events">
+      <UniqueIdentifier>{183FA7BB-040D-9BC1-EDA0-0BE8D90D7726}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Ivy\Managers">
       <UniqueIdentifier>{11F20668-FDEA-25BA-261D-0B3F127505C6}</UniqueIdentifier>
     </Filter>
@@ -62,6 +65,12 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\Timestep.h">
       <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Events\Event.h">
+      <Filter>src\Ivy\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Events\KeyEvent.h">
+      <Filter>src\Ivy\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Managers\BaseManager.h">
       <Filter>src\Ivy\Managers</Filter>
@@ -1192,6 +1201,9 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Core\String.cpp">
       <Filter>src\Ivy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Events\Event.cpp">
+      <Filter>src\Ivy\Events</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Managers\FileManager.cpp">
       <Filter>src\Ivy\Managers</Filter>
