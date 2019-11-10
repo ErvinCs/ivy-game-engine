@@ -6,7 +6,7 @@
 
 namespace Ivy {
 
-	class IVY_API Logger
+	class Logger
 	{
 	private:
 		static std::shared_ptr<spdlog::logger> coreLogger;

@@ -6,7 +6,7 @@
 
 namespace Ivy {
 
-	class IVY_API Application 
+	class Application 
 	{
 	protected:
 		FileManager fileManager;

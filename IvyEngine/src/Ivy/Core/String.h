@@ -5,6 +5,7 @@
 //#include <string>
 
 namespace Ivy {
+
 	class String
 	{
 	private:
