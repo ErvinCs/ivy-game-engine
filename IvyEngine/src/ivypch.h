@@ -2,13 +2,16 @@
 
 // Utils
 #include <iostream>
+#include <fstream>
 #include <memory>
 #include <math.h>
+#include <utility>
 #include <functional>
 
 // Data structures
 #include <cwchar>
 #include <string>
+#include <sstream>
 #include <cstdint>
 #include <vector>
 

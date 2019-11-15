@@ -16,6 +16,15 @@
     <Filter Include="src\Ivy\Managers">
       <UniqueIdentifier>{11F20668-FDEA-25BA-261D-0B3F127505C6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\Renderer">
+      <UniqueIdentifier>{DA736E39-C66C-8D8B-EF9E-7210DBF66C97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Ivy\Renderer\OpenGL">
+      <UniqueIdentifier>{CE03BB36-3A3B-03CE-4345-67F1AFFB29C7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Ivy\Windows">
+      <UniqueIdentifier>{EEA3717C-5A2F-DF40-6340-6235CF4A3B41}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -37,6 +46,9 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Ivy.h">
@@ -54,10 +66,19 @@
     <ClInclude Include="src\Ivy\Core\HashTable.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Core\InputHandler.h">
+      <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\Core\Logger.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\Node.h">
+      <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Core\SortingLayer.h">
+      <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Core\SortingLayerStack.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\String.h">
@@ -66,20 +87,77 @@
     <ClInclude Include="src\Ivy\Core\Timestep.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Core\Window.h">
+      <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\Events\Event.h">
       <Filter>src\Ivy\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Events\KeyEvent.h">
       <Filter>src\Ivy\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\BaseManager.h">
-      <Filter>src\Ivy\Managers</Filter>
+    <ClInclude Include="src\Ivy\Events\MouseEvent.h">
+      <Filter>src\Ivy\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Events\WindowEvent.h">
+      <Filter>src\Ivy\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Managers\FileManager.h">
       <Filter>src\Ivy\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Managers\InputManager.h">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Managers\Manager.h">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\Managers\MemoryManager.h">
       <Filter>src\Ivy\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Managers\RendererManager.h">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLShader.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBufferLayout.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\Renderer.h">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\Shader.h">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\Texture.h">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\VertexArray.h">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h">
+      <Filter>src\Ivy\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h">
+      <Filter>src\Ivy\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Windows\WindowsWindow.h">
+      <Filter>src\Ivy\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\ivypch.h">
       <Filter>src</Filter>
@@ -1188,6 +1266,10 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1199,6 +1281,12 @@
     <ClCompile Include="src\Ivy\Core\Logger.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\Core\SortingLayer.cpp">
+      <Filter>src\Ivy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp">
+      <Filter>src\Ivy\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ivy\Core\String.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
@@ -1208,11 +1296,56 @@
     <ClCompile Include="src\Ivy\Managers\FileManager.cpp">
       <Filter>src\Ivy\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\Managers\InputManager.cpp">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp">
       <Filter>src\Ivy\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\Managers\RendererManager.cpp">
+      <Filter>src\Ivy\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.cpp">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.cpp">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.cpp">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\Renderer.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\Shader.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\Texture.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp">
+      <Filter>src\Ivy\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Windows\WindowsWindow.cpp">
+      <Filter>src\Ivy\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\ivypch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

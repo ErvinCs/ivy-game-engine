@@ -1,20 +1,28 @@
 #pragma once
-#include "BaseManager.h"
+#include "Manager.h"
 
 namespace Ivy {
 
-	class FileManager : public BaseManager
+	class FileManager : public Manager
 	{
 	public:
-		FileManager() {}
-		~FileManager() {}
+		~FileManager() = default;
+
+		static FileManager& getInstance()
+		{
+			static FileManager instance{};
+			return instance;
+		}
+		
 
 	protected:
 		void initHook();
 		void updateHook();
 		void shutdownHook();
 
-
+		FileManager() {}
+		FileManager(const FileManager&) = delete;
+		FileManager& operator=(const FileManager&) = delete;
 	};
 
 }

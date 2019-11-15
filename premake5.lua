@@ -12,10 +12,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Relative to the root
 IncludeDir = {}
-IncludeDir["glfw"]  = "IvyEngine/vendor/glfw/include" 
-IncludeDir["glad"]  = "IvyEngine/vendor/glad" 
-IncludeDir["imgui"] = "IvyEngine/vendor/imgui" 
-IncludeDir["glm"]   = "IvyEngine/vendor/glm" 
+IncludeDir["glfw"]      = "IvyEngine/vendor/glfw/include" 
+IncludeDir["glad"]      = "IvyEngine/vendor/glad" 
+IncludeDir["imgui"]     = "IvyEngine/vendor/imgui" 
+IncludeDir["glm"]       = "IvyEngine/vendor/glm" 
+IncludeDir["stb_image"] = "IvyEngine/vendor/stb_image"
 
 include "IvyEngine/vendor/glfw"
 include "IvyEngine/vendor/glad"
@@ -39,7 +40,9 @@ project "IvyEngine"
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
         "%{prj.name}/vendor/glm/glm/**.hpp",
-        "%{prj.name}/vendor/glm/glm/**.inl"
+        "%{prj.name}/vendor/glm/glm/**.inl",
+        "%{prj.name}/vendor/stb_image/**.h",
+        "%{prj.name}/vendor/stb_image/**.cpp"
         --"%{prj.name}/vendor/eastl/include/EASTL/**.h"
     }
 
@@ -50,7 +53,8 @@ project "IvyEngine"
         "%{IncludeDir.glfw}",
         "%{IncludeDir.glad}",
         "%{IncludeDir.imgui}",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.stb_image}"
         --"%{prj.name}/vendor/eastl"
     }
 

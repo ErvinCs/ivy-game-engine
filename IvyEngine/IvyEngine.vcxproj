@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -97,7 +97,7 @@
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -121,7 +121,7 @@
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -145,15 +145,38 @@
     <ClInclude Include="src\Ivy\Core\Core.h" />
     <ClInclude Include="src\Ivy\Core\EntryPoint.h" />
     <ClInclude Include="src\Ivy\Core\HashTable.h" />
+    <ClInclude Include="src\Ivy\Core\InputHandler.h" />
     <ClInclude Include="src\Ivy\Core\Logger.h" />
     <ClInclude Include="src\Ivy\Core\Node.h" />
+    <ClInclude Include="src\Ivy\Core\SortingLayer.h" />
+    <ClInclude Include="src\Ivy\Core\SortingLayerStack.h" />
     <ClInclude Include="src\Ivy\Core\String.h" />
     <ClInclude Include="src\Ivy\Core\Timestep.h" />
+    <ClInclude Include="src\Ivy\Core\Window.h" />
     <ClInclude Include="src\Ivy\Events\Event.h" />
     <ClInclude Include="src\Ivy\Events\KeyEvent.h" />
-    <ClInclude Include="src\Ivy\Managers\BaseManager.h" />
+    <ClInclude Include="src\Ivy\Events\MouseEvent.h" />
+    <ClInclude Include="src\Ivy\Events\WindowEvent.h" />
+    <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
     <ClInclude Include="src\Ivy\Managers\FileManager.h" />
+    <ClInclude Include="src\Ivy\Managers\InputManager.h" />
+    <ClInclude Include="src\Ivy\Managers\Manager.h" />
     <ClInclude Include="src\Ivy\Managers\MemoryManager.h" />
+    <ClInclude Include="src\Ivy\Managers\RendererManager.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBufferLayout.h" />
+    <ClInclude Include="src\Ivy\Renderer\Renderer.h" />
+    <ClInclude Include="src\Ivy\Renderer\Shader.h" />
+    <ClInclude Include="src\Ivy\Renderer\Texture.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h" />
+    <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
+    <ClInclude Include="src\Ivy\Windows\WindowsWindow.h" />
     <ClInclude Include="src\ivypch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -523,18 +546,36 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\HashTable.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
+    <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
+    <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp" />
     <ClCompile Include="src\Ivy\Core\String.cpp" />
     <ClCompile Include="src\Ivy\Events\Event.cpp" />
     <ClCompile Include="src\Ivy\Managers\FileManager.cpp" />
+    <ClCompile Include="src\Ivy\Managers\InputManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp" />
+    <ClCompile Include="src\Ivy\Managers\RendererManager.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp" />
+    <ClCompile Include="src\Ivy\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\ivypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">
