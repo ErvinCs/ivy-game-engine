@@ -1,15 +1,16 @@
 #pragma once
 
-//#include <glad/glad.h>
 //#include <GLFW/glfw3.h>
 
 #include "Core.h"
 #include "SortingLayerStack.h"
-#include "Window.h"
+#include "../Windows/WindowsWindow.h"
 #include "String.h"
 #include "Logger.h"
 
 #include "../Events/KeyEvent.h"
+#include "../Events/WindowEvent.h"
+#include "../Events/MouseEvent.h"
 
 #include "../Managers/FileManager.h"
 #include "../Managers/MemoryManager.h"
@@ -24,6 +25,7 @@ namespace Ivy {
 		static Application* instance;
 		SortingLayerStack layerStack;
 		std::unique_ptr<Window> window;
+		bool isRunning = true;
 
 	protected:
 		MemoryManager& memoryManager = MemoryManager::getInstance();
@@ -44,6 +46,8 @@ namespace Ivy {
 
 		inline Window& getWindow() { return *window; }
 		inline static Application& getApplication() { return *instance; }
+	private:
+		bool onWindowClose(WindowCloseEvent& event);
 
 	};
 

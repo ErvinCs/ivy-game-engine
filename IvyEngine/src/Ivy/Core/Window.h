@@ -1,23 +1,8 @@
 #pragma once
 
 #include <string>
-
+#include "../Events/Event.h"
 namespace Ivy {
-
-	class Window
-	{
-	public:
-		~Window() = default;
-
-		virtual void onUpdate() = 0;
-
-		virtual unsigned int getHeight() const = 0;
-		virtual unsigned int getWidth() const = 0;
-
-		// Window factory method
-		//static Window* Create(const WindowProperties& properties = WindowProperties());
-
-	};
 
 	struct WindowProperties
 	{
@@ -31,4 +16,22 @@ namespace Ivy {
 			: name(name), width(width), height(height)
 		{}
 	};
+
+	class Window
+	{
+	public:
+		using Func = std::function<void(Event&)>;
+
+		~Window() = default;
+
+		virtual void update() = 0;
+		virtual void setCallback(const Func& callback) = 0;
+
+		virtual unsigned int getHeight() const = 0;
+		virtual unsigned int getWidth() const = 0;
+
+		// Window factory method - implemented per platform
+		static Window* Create(const WindowProperties& properties = WindowProperties());
+	};
+
 }

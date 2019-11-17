@@ -157,6 +157,7 @@
     <ClInclude Include="src\Ivy\Events\KeyEvent.h" />
     <ClInclude Include="src\Ivy\Events\MouseEvent.h" />
     <ClInclude Include="src\Ivy\Events\WindowEvent.h" />
+    <ClInclude Include="src\Ivy\Exceptions\EventException.h" />
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
     <ClInclude Include="src\Ivy\Managers\FileManager.h" />
     <ClInclude Include="src\Ivy\Managers\InputManager.h" />

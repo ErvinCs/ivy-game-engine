@@ -1,16 +1,16 @@
 #include "ivypch.h"
 #include "Application.h"
 
+#include <glad/glad.h>
 
 namespace Ivy {
 
 
 	Application::Application()
 	{
-		//instance = this;
-		//window = std::unique_ptr<Window>(Window::Create());
+		window = std::unique_ptr<Window>(Window::Create());
 
-		//TODO: Create a layer & push it
+		//TODO: window->setCallback(IVY_BIND_EVENT_FN(onEvent));
 	}
 
 
@@ -28,25 +28,18 @@ namespace Ivy {
 
 	void Application::Run()
 	{
-		Event myEvent{};
-		EventHandler handler = []() {
-			std::cout << "Test1: Event notification \t";
-		};
-		myEvent.addHandler(handler);
-		KeyPressedEvent keyEvent{ 65, 1 };
-		EventHandler keyA = []() {
-			String string = String("Test2: KeyPressedEvent notification");
-			std::cout << string;
-		};
-		myEvent.addHandler(keyA);
-		myEvent();
-
-		while (true);
+		while (isRunning)
 		{
-			memoryManager.run();
-			fileManager.run();
-			inputManager.run();
-			rendererManager.run();
+			//memoryManager.run();
+			//fileManager.run();
+			//inputManager.run();
+			//rendererManager.run();
+			
+			//TODO - for each layer call update()
+
+			//glClearColor(1, 0, 1, 1);
+			//glClear(GL_COLOR_BUFFER_BIT);
+			window->update();
 		}
 	}
 
@@ -60,11 +53,22 @@ namespace Ivy {
 
 	void Application::pushLayer(SortingLayer* layer)
 	{
-		//this->layerStack.push(layer);
+		this->layerStack.push(layer);
 	}
 
 	void Application::onEvent(Event& event)
 	{
+		// TODO - Propagate event through layers (iterate from end to begin)
+		//EventHandler handler(event);
+		//event.addHandler(handler);
+		//event();	//TODO - call event in the update loop at some event processing stage
+		//IVY_CORE_INFO("OnEvent: {0}", event);
+		IVY_CORE_INFO("OnEvent");
+	}
 
+	bool Application::onWindowClose(WindowCloseEvent& event)
+	{
+		isRunning = false;
+		return true;
 	}
 }

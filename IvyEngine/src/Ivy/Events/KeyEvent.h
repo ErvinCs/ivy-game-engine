@@ -21,11 +21,11 @@ namespace Ivy {
 		int keyCode;
 	};
 
-	class KeyPressedEvent : public KeyEvent
+	class KeyDownEvent : public KeyEvent
 	{
 	public:
 		
-		KeyPressedEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), repeatCount(repeatCount) {}
+		KeyDownEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), repeatCount(repeatCount) {}
 
 		inline int getRepeatCount() const {
 			return repeatCount;
@@ -40,10 +40,10 @@ namespace Ivy {
 		int repeatCount;
 	};
 
-	class KeyReleasedEvent : public KeyEvent
+	class KeyUpEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keyCode) : KeyEvent(keyCode) {}
+		KeyUpEvent(int keyCode) : KeyEvent(keyCode) {}
 
 		String toString() const {
 			return String("KeyReleasedEvent: " + keyCode);

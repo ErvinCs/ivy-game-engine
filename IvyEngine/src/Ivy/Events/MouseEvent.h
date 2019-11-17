@@ -5,12 +5,83 @@
 
 namespace Ivy {
 
-	class MouseEvent
+	class MouseMoveEvent : public Event
+	{
+	private:
+		float x, y;
+	public:
+		MouseMoveEvent(float x, float y)
+			: x(x), y(y) {}
+
+		inline float getX() const { return x; }
+		inline float getY() const { return y; }
+
+		String toString() const
+		{
+			// Temproary fix
+			int X = x, Y = y;
+			String str = String("MouseMoveEvent: " + X) + String("," + Y);
+			return str;
+		}
+	};
+
+	class MouseScrollEvent : public Event
+	{
+	private:
+		float x, y;
+	public:
+		MouseScrollEvent(float x, float y)
+			: x(x), y(y) {}
+
+		inline float getXOffset() const { return x; }
+		inline float getYOffset() const { return y; }
+
+		String toString() const
+		{
+			// Temproary fix
+			int X = x, Y = y;
+			String str = String("MouseScrollEvent: " + X) + String("," + Y);
+			return str;
+		}
+
+	};
+
+	class MouseButtonEvent : public Event
 	{
 	public:
-		// TODO
-		MouseEvent() = default;
-		~MouseEvent() = default;
+		inline int getMouseButton() const { return button; }
+
+	protected:
+		MouseButtonEvent(int button)
+			: button(button) {}
+
+		int button;
+	};
+
+	class MouseButtonDownEvent : public MouseButtonEvent
+	{
+	public:
+		MouseButtonDownEvent(int button)
+			: MouseButtonEvent(button) {}
+
+		String toString() const
+		{
+			String str = String("MouseButtonDownEvent: " + button);
+			return str;
+		}
+	};
+
+	class MouseButtonUpEvent : public MouseButtonEvent
+	{
+	public:
+		MouseButtonUpEvent(int button)
+			: MouseButtonEvent(button) {}
+
+		String toString() const
+		{
+			String str = String("MouseButtonUpEvent: " + button);
+			return str;
+		}
 	};
 
 }

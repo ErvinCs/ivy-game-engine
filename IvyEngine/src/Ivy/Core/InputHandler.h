@@ -28,7 +28,7 @@ namespace Ivy{
 		virtual float GetMouseYImpl() = 0;
 
 	private:
-		static std::shared_ptr<InputHandler> instance;
+		static std::unique_ptr<InputHandler> instance;
 
 	};
 

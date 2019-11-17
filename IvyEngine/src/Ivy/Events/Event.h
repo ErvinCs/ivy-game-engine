@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../Core/String.h"
+#include "../Core/Logger.h"
+#include "../Exceptions/EventException.h"
 #include <memory>
 #include <vector>
 #include <functional>
@@ -10,10 +12,11 @@ namespace Ivy {
 
 	class EventHandler {
 	public:
+		//TODO - add params
 		using Func = std::function<void()>;
 
 	private:
-		Func _func;
+		Func callback;
 
 	public:
 		int id;
@@ -22,9 +25,9 @@ namespace Ivy {
 		EventHandler() : id{ 0 } {
 		}
 
-		EventHandler(const Func &func) : _func{ func } {
+		EventHandler(const Func &func) : callback{ func } {
 			this->id = ++EventHandler::counter;
-			//std::cout << "EventHandlerCounter (id) = " << EventHandler::counter << std::endl;
+			IVY_CORE_TRACE("EventHandlerCounter (id) = {0}", EventHandler::counter);	
 		}
 
 		void operator()();
