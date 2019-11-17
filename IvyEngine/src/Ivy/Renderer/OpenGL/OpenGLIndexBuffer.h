@@ -5,17 +5,17 @@ namespace Ivy {
 	class OpenGLIndexBuffer
 	{
 	private:
-		unsigned int rendererId;
-		unsigned int count;
+		uint32_t rendererId;
+		uint32_t count;
 
 	public:
-		OpenGLIndexBuffer(const unsigned int* data, unsigned int count);
+		OpenGLIndexBuffer(const uint32_t* data, uint32_t count);
 		~OpenGLIndexBuffer();
 
 		void bind() const;
 		void unbind() const;
 
-		inline unsigned int getCount() const { return count; }
+		inline uint32_t getCount() const { return count; }
 	};
 
 }

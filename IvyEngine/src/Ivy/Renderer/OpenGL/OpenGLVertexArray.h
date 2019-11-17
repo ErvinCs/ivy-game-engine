@@ -16,12 +16,12 @@ namespace Ivy {
 	class OpenGLVertexArray
 	{
 	private:
-		unsigned int rendererId;
+		uint32_t rendererId;
 	public:
 		OpenGLVertexArray();
 		~OpenGLVertexArray();
 
-		void addBuffer(const OpenGLVertexBuffer& vb, const OpenGLVertexBufferLayout& layout);
+		void addVertexBuffer(const OpenGLVertexBuffer& vb, const OpenGLVertexBufferLayout& layout);
 		void bind() const;
 		void unbind() const;
 	};

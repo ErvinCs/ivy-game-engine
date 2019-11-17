@@ -13,14 +13,11 @@
     <Filter Include="src\Ivy\Events">
       <UniqueIdentifier>{183FA7BB-040D-9BC1-EDA0-0BE8D90D7726}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\Exceptions">
+      <UniqueIdentifier>{251183FF-11F5-4355-7A55-3EA866582ED7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Ivy\Managers">
       <UniqueIdentifier>{11F20668-FDEA-25BA-261D-0B3F127505C6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Ivy\Renderer">
-      <UniqueIdentifier>{DA736E39-C66C-8D8B-EF9E-7210DBF66C97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Ivy\Renderer\OpenGL">
-      <UniqueIdentifier>{CE03BB36-3A3B-03CE-4345-67F1AFFB29C7}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Ivy\Windows">
       <UniqueIdentifier>{EEA3717C-5A2F-DF40-6340-6235CF4A3B41}</UniqueIdentifier>
@@ -102,6 +99,9 @@
     <ClInclude Include="src\Ivy\Events\WindowEvent.h">
       <Filter>src\Ivy\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Exceptions\LayerException.h">
+      <Filter>src\Ivy\Exceptions</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\Managers\FileManager.h">
       <Filter>src\Ivy\Managers</Filter>
     </ClInclude>
@@ -116,39 +116,6 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Managers\RendererManager.h">
       <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLShader.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBufferLayout.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\Renderer.h">
-      <Filter>src\Ivy\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\Shader.h">
-      <Filter>src\Ivy\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\Texture.h">
-      <Filter>src\Ivy\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\VertexArray.h">
-      <Filter>src\Ivy\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h">
       <Filter>src\Ivy\Windows</Filter>
@@ -1269,7 +1236,17 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
+    <ClInclude Include="src\Ivy\Renderer\Renderer.h" />
+    <ClInclude Include="src\Ivy\Renderer\Shader.h" />
+    <ClInclude Include="src\Ivy\Renderer\Texture.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1305,36 +1282,6 @@
     <ClCompile Include="src\Ivy\Managers\RendererManager.cpp">
       <Filter>src\Ivy\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.cpp">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.cpp">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLShader.cpp">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.cpp">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.cpp">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.cpp">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\Renderer.cpp">
-      <Filter>src\Ivy\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\Shader.cpp">
-      <Filter>src\Ivy\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\Texture.cpp">
-      <Filter>src\Ivy\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp">
-      <Filter>src\Ivy\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp">
       <Filter>src\Ivy\Windows</Filter>
     </ClCompile>
@@ -1347,5 +1294,15 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.cpp" />
   </ItemGroup>
 </Project>

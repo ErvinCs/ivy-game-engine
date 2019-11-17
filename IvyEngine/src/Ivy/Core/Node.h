@@ -1,4 +1,5 @@
 #pragma once
+
 namespace Ivy {
 
 	template <typename K, typename V> class Node

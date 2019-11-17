@@ -1,10 +1,15 @@
 #pragma once
 
+//#include <glad/glad.h>
+//#include <GLFW/glfw3.h>
+
 #include "Core.h"
 #include "SortingLayerStack.h"
 #include "Window.h"
+#include "String.h"
+#include "Logger.h"
 
-#include "../Events/Event.h"
+#include "../Events/KeyEvent.h"
 
 #include "../Managers/FileManager.h"
 #include "../Managers/MemoryManager.h"
@@ -43,5 +48,5 @@ namespace Ivy {
 	};
 
 	// Defined in client
-	Application* CreateApplication();
+	Application* CreateApp();
 }

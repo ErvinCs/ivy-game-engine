@@ -5,10 +5,10 @@
 
 namespace Ivy {
 	
-	OpenGLIndexBuffer::OpenGLIndexBuffer(const unsigned int* data, unsigned int count)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* data, uint32_t count)
 	{
 		this->count = count;
-		ASSERT(sizeof(unsigned int) == sizeof(GLuint));
+		//ASSERT(sizeof(uint32_t) == sizeof(GLuint));
 
 		GLCall(glGenBuffers(1, &rendererId));	// &buffer - store in the return param the buffer address
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererId));

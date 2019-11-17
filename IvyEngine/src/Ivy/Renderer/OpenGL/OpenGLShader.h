@@ -17,7 +17,7 @@ namespace Ivy {
 	{
 	private:
 		std::string filepath;
-		unsigned int rendererId;
+		uint32_t rendererId;
 		// Cache uniforms
 		std::unordered_map<std::string, int> uniformLocationCache;
 

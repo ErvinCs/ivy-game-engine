@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
+#include "../glad/include/glad/glad.h"
 #include <vector>
 
 #include "OpenGLRenderer.h"
@@ -36,41 +36,41 @@ namespace Ivy {
 	{
 	private:
 		std::vector<OpenGLVertexBufferElement> elements;
-		unsigned int stride;
+		uint32_t stride;
 	public:
-		OpenGLVertexBufferLayout(unsigned int stride) : stride(stride) {}
+		OpenGLVertexBufferLayout(uint32_t stride) : stride(stride) {}
 		OpenGLVertexBufferLayout() : stride(0) {}
 		~OpenGLVertexBufferLayout() = default;
 
 		// TODO: Support for more types
 		template <typename T>
-		void push(unsigned int count)
+		void push(uint32_t count)
 		{
 			static_assert(false);
 		}
 
 		template<>
-		void push<float>(unsigned int count)
+		void push<float>(uint32_t count)
 		{
 			elements.push_back({ GL_FLOAT, count, GL_FALSE });
 			stride += count * OpenGLVertexBufferElement::getSizeOfType(GL_FLOAT);
 		}
 
 		template<>
-		void push<unsigned int>(unsigned int count)
+		void push<uint32_t>(uint32_t count)
 		{
 			elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
 			stride += count * OpenGLVertexBufferElement::getSizeOfType(GL_UNSIGNED_INT);
 		}
 
 		template<>
-		void push<unsigned char>(unsigned int count)
+		void push<char>(uint32_t count)
 		{
 			elements.push_back({ GL_UNSIGNED_BYTE, count, GL_TRUE });
 			stride += count * OpenGLVertexBufferElement::getSizeOfType(GL_UNSIGNED_BYTE);
 		}
 
-		inline unsigned int getStride() const { return stride; }
+		inline uint32_t getStride() const { return stride; }
 		inline const std::vector<OpenGLVertexBufferElement> getElements() const { return elements; }
 	};
 

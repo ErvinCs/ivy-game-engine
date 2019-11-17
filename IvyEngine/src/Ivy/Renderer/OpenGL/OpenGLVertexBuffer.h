@@ -5,10 +5,10 @@ namespace Ivy {
 	class OpenGLVertexBuffer
 	{
 	private:
-		unsigned int rendererId;
+		uint32_t rendererId;
 
 	public:
-		OpenGLVertexBuffer(const void* data, unsigned int size);
+		OpenGLVertexBuffer(const void* data, uint32_t size);
 		~OpenGLVertexBuffer();
 
 		void bind() const;

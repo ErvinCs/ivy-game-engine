@@ -13,7 +13,8 @@ public:
 	}
 };
 
-Ivy::Application* Ivy::CreateApplication()
+
+Ivy::Application* Ivy::CreateApp()
 {
 	return new IvyApp();
 }

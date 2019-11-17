@@ -1,7 +1,10 @@
 #pragma once
 
-#include "../../ivypch.h"
+#include "../Core/String.h"
 #include <memory>
+#include <vector>
+#include <functional>
+//#include <iostream>
 
 namespace Ivy {
 
@@ -21,7 +24,7 @@ namespace Ivy {
 
 		EventHandler(const Func &func) : _func{ func } {
 			this->id = ++EventHandler::counter;
-			std::cout << "EventHandlerCounter (id) = " << EventHandler::counter << std::endl;
+			//std::cout << "EventHandlerCounter (id) = " << EventHandler::counter << std::endl;
 		}
 
 		void operator()();

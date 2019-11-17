@@ -1,7 +1,4 @@
 #include "ivypch.h"
-
-#include "../Events/KeyEvent.h"
-#include "String.h"
 #include "Application.h"
 
 
@@ -10,8 +7,8 @@ namespace Ivy {
 
 	Application::Application()
 	{
-		instance = this;
-		window = std::unique_ptr<Window>(Window::Create());
+		//instance = this;
+		//window = std::unique_ptr<Window>(Window::Create());
 
 		//TODO: Create a layer & push it
 	}
@@ -63,7 +60,7 @@ namespace Ivy {
 
 	void Application::pushLayer(SortingLayer* layer)
 	{
-		this->layerStack.push(layer);
+		//this->layerStack.push(layer);
 	}
 
 	void Application::onEvent(Event& event)

@@ -2,6 +2,8 @@
 #include "OpenGLShader.h"
 #include "OpenGLRenderer.h"
 
+#include "GLFW/glfw3.h"
+
 namespace Ivy {
 
 	OpenGLShader::OpenGLShader(const std::string& filepath) : filepath(filepath), rendererId(0)

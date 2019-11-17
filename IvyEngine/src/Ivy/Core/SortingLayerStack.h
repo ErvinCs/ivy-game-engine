@@ -3,6 +3,8 @@
 #include "SortingLayer.h"
 #include "../Exceptions/LayerException.h"
 
+#include <vector>
+
 namespace Ivy {
 
 	class SortingLayerStack

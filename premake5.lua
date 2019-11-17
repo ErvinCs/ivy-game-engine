@@ -13,14 +13,15 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Relative to the root
 IncludeDir = {}
 IncludeDir["glfw"]      = "IvyEngine/vendor/glfw/include" 
-IncludeDir["glad"]      = "IvyEngine/vendor/glad" 
+IncludeDir["glad"]      = "IvyEngine/vendor/glad/include" 
 IncludeDir["imgui"]     = "IvyEngine/vendor/imgui" 
 IncludeDir["glm"]       = "IvyEngine/vendor/glm" 
 IncludeDir["stb_image"] = "IvyEngine/vendor/stb_image"
 
-include "IvyEngine/vendor/glfw"
-include "IvyEngine/vendor/glad"
-include "IvyEngine/vendor/imgui"
+group "Dependencies"
+    include "IvyEngine/vendor/glfw"
+    include "IvyEngine/vendor/glad"
+    include "IvyEngine/vendor/imgui"
 
 project "IvyEngine"
     location "IvyEngine"
@@ -44,6 +45,11 @@ project "IvyEngine"
         "%{prj.name}/vendor/stb_image/**.h",
         "%{prj.name}/vendor/stb_image/**.cpp"
         --"%{prj.name}/vendor/eastl/include/EASTL/**.h"
+    }
+
+    defines
+    {
+        "_CRT_SECURE_NO_WARNINGS"
     }
 
     includedirs
@@ -75,7 +81,8 @@ project "IvyEngine"
         {
             "IVY_PLATFORM_WINDOWS",
             "IVY_PLATFORM_LINUX",
-            "IVY_BUILD_DLL"
+            "IVY_BUILD_DLL",
+            "GLFW_INCLUDE_NONE"
         }
 
 

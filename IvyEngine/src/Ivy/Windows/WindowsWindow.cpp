@@ -3,7 +3,8 @@
 
 namespace Ivy {
 
-	WindowsWindow::WindowsWindow()
+	WindowsWindow::WindowsWindow(const WindowProperties& properties) 
+		: properties(properties)
 	{
 	}
 

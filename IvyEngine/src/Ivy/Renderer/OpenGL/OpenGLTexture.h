@@ -7,7 +7,7 @@ namespace Ivy {
 	class OpenGLTexture
 	{
 	private:
-		unsigned int rendererId;
+		uint32_t rendererId;
 		std::string filepath;
 		unsigned char* localBuffer;
 		int width, height, bitsPerPixel;

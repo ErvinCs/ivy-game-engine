@@ -16,7 +16,7 @@ namespace Ivy {
 		GLCall(glDeleteVertexArrays(1, &rendererId));
 	}
 
-	void OpenGLVertexArray::addBuffer(const OpenGLVertexBuffer& vb, const OpenGLVertexBufferLayout& layout)
+	void OpenGLVertexArray::addVertexBuffer(const OpenGLVertexBuffer& vb, const OpenGLVertexBufferLayout& layout)
 	{
 		// Bind the vertex array
 		this->bind();
@@ -29,7 +29,7 @@ namespace Ivy {
 			const auto& elem = elements[i];
 			GLCall(glEnableVertexAttribArray(i));
 			GLCall(glVertexAttribPointer(i, elem.count, elem.type, elem.normalized, layout.getStride(), (const void*)offset));
-			offset += elem.count * VertexBufferElement::getSizeOfType(elem.type);
+			offset += elem.count * OpenGLVertexBufferElement::getSizeOfType(elem.type);
 		}
 	}
 

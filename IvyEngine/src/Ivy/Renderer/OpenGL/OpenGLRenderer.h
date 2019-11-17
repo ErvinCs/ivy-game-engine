@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gl/GL.h>
+#include "../glad/include/glad/glad.h"
 
 #include "OpenGLVertexArray.h"
 #include "OpenGLShader.h"
@@ -23,8 +23,11 @@ namespace Ivy {
 	class OpenGLRenderer
 	{
 	public:
-		void clear() const;
-		void draw(const OpenGLVertexArray& va, const OpenGLIndexBuffer& ib, const OpenGLShader& shader) const;
+		void init();
+		void clear();
+		//void draw(const OpenGLVertexArray& va, const OpenGLIndexBuffer& ib, const OpenGLShader& shader);
+		//void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+
 	};
 
 }

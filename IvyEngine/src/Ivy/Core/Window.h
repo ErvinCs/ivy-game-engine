@@ -1,21 +1,21 @@
 #pragma once
 
-#include "Core.h"
+#include <string>
 
 namespace Ivy {
 
 	class Window
 	{
 	public:
-		virtual ~Window() = default;
+		~Window() = default;
 
 		virtual void onUpdate() = 0;
 
 		virtual unsigned int getHeight() const = 0;
 		virtual unsigned int getWidth() const = 0;
 
-		static Window* Create(const WindowProperties& properties = WindowProperties());
-	
+		// Window factory method
+		//static Window* Create(const WindowProperties& properties = WindowProperties());
 
 	};
 
