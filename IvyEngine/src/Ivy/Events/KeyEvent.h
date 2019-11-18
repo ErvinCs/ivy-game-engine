@@ -25,14 +25,18 @@ namespace Ivy {
 	{
 	public:
 		
-		KeyDownEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), repeatCount(repeatCount) {}
+		KeyDownEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), repeatCount(repeatCount) 
+		{
+			//IVY_CORE_INFO("Created: KeyEvent/KeyDownEvent: keyCode={0}, repeatCount={1}", keyCode, repeatCount);
+		}
 
 		inline int getRepeatCount() const {
 			return repeatCount;
 		}
 
-		String toString() const {
-			String str = String("KeyPressedEvent: " + keyCode) + String("; Repeat count: " + repeatCount);
+		std::string toString() const override {
+			//String str = String("KeyPressedEvent: " + keyCode) + String("; Repeat count: " + repeatCount);
+			std::string str = "KeyPressedEvent: " + keyCode;
 			return str;
 		}
 
@@ -43,10 +47,14 @@ namespace Ivy {
 	class KeyUpEvent : public KeyEvent
 	{
 	public:
-		KeyUpEvent(int keyCode) : KeyEvent(keyCode) {}
+		KeyUpEvent(int keyCode) : KeyEvent(keyCode) 
+		{
+			IVY_CORE_INFO("Created: KeyEvent/KeyUpEvent: keyCode={0}", keyCode);
+		}
 
-		String toString() const {
-			return String("KeyReleasedEvent: " + keyCode);
+		std::string toString() const override {
+			return "KeyReleasedEvent: " + keyCode;
+			//return String("KeyReleasedEvent: " + keyCode);
 		}
 	};
 

@@ -20,8 +20,6 @@
 	#define IVY_CORE_ASSERT(x, ...)
 #endif
 
-#define IVY_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
-
 // Deprecated: Not using DLLs anymore
 /*#ifdef IVY_PLATFORM_WINDOWS
 	#ifdef IVY_BUILD_DLL

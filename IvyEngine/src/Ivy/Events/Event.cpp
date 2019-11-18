@@ -8,8 +8,8 @@ namespace Ivy {
 
 	int EventHandler::counter;
 
-	void EventHandler::operator()() {
-		this->callback();
+	void EventHandler::operator()(Event& e) {
+		this->callback(e);
 	}
 
 	void EventHandler::operator=(const EventHandler &func) {
@@ -34,7 +34,8 @@ namespace Ivy {
 		vector<unique_ptr<EventHandler>>::iterator func = this->handlers.begin();
 		for (; func != this->handlers.end(); ++func) {
 			if (*func != nullptr && (*func)->id != 0) {
-				(*(*func))();
+				Event* e = (*func)->getEvent();
+				(*(*func))(*e);
 				IVY_CORE_TRACE("EventHandler.id: {0}", (*func)->id);
 			}
 		}
@@ -77,5 +78,7 @@ namespace Ivy {
 		return *this;
 	}
 
-
+	std::string Event::toString() const {
+		return "Event";
+	}
 }

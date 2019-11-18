@@ -9,8 +9,8 @@ namespace Ivy {
 	Application::Application()
 	{
 		window = std::unique_ptr<Window>(Window::Create());
-
-		//TODO: window->setCallback(IVY_BIND_EVENT_FN(onEvent));
+		
+		window->setCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 	}
 
 
@@ -28,6 +28,13 @@ namespace Ivy {
 
 	void Application::Run()
 	{
+
+		Event e;
+		//EventHandler eHandler = []() {
+		//	std::cout << "e notified!";
+		//};
+		//e.addHandler(eHandler);
+		//e();
 		while (isRunning)
 		{
 			//memoryManager.run();
@@ -59,11 +66,10 @@ namespace Ivy {
 	void Application::onEvent(Event& event)
 	{
 		// TODO - Propagate event through layers (iterate from end to begin)
-		//EventHandler handler(event);
-		//event.addHandler(handler);
-		//event();	//TODO - call event in the update loop at some event processing stage
-		//IVY_CORE_INFO("OnEvent: {0}", event);
-		IVY_CORE_INFO("OnEvent");
+		//IVY_CORE_WARN("OnEvent: {0}", event.toString());
+		event();
+		//event();	//TODO - call event in the update loop at some event processing stage, use EventHandles
+		
 	}
 
 	bool Application::onWindowClose(WindowCloseEvent& event)

@@ -9,14 +9,17 @@
 //#include <iostream>
 
 namespace Ivy {
+	
+	class Event;
 
 	class EventHandler {
 	public:
 		//TODO - add params
-		using Func = std::function<void()>;
+		using Func = std::function<void(Event& e)>;
 
-	private:
+	public:
 		Func callback;
+		Event* event;
 
 	public:
 		int id;
@@ -30,12 +33,15 @@ namespace Ivy {
 			IVY_CORE_TRACE("EventHandlerCounter (id) = {0}", EventHandler::counter);	
 		}
 
-		void operator()();
+		Event* getEvent() {
+			return event;
+		}
+
+		void operator()(Event& e);
 		void operator=(const EventHandler &func);
 		bool operator==(const EventHandler &del);
 		bool operator!=(nullptr_t);
 	};
-
 
 	class Event {
 		std::vector<std::unique_ptr<EventHandler>> handlers;
@@ -49,5 +55,9 @@ namespace Ivy {
 		Event &operator+=(const EventHandler::Func &handler);
 		Event &operator-=(const EventHandler &handler);
 		int totalHandlers() { return this->handlers.size(); }
+
+		virtual std::string toString() const;
 	};
+
+
 }

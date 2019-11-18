@@ -51,7 +51,7 @@ namespace Ivy {
 		glfwSwapInterval(1);
 
 		// Event Callbacks
-		/*glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
+		glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
 		
@@ -125,10 +125,10 @@ namespace Ivy {
 		glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) 
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
-
+			
 			MouseMoveEvent moveEvent((float)xPos, (float)yPos);
 			data.callback(moveEvent);
-		});*/
+		});
 	}
 
 	void WindowsWindow::shutdown()
