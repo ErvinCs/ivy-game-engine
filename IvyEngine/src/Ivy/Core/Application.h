@@ -1,12 +1,9 @@
 #pragma once
 
-//#include <GLFW/glfw3.h>
-
 #include "Core.h"
 #include "SortingLayerStack.h"
 #include "../Windows/WindowsWindow.h"
 #include "String.h"
-#include "Logger.h"
 
 #include "../Events/KeyEvent.h"
 #include "../Events/WindowEvent.h"
@@ -17,6 +14,10 @@
 #include "../Managers/InputManager.h"
 #include "../Managers/RendererManager.h"
 
+#include "../ImGui/ImGuiLayer.h"
+
+//#include <GLFW/glfw3.h>
+
 namespace Ivy {
 
 	class Application 
@@ -26,6 +27,7 @@ namespace Ivy {
 		SortingLayerStack layerStack;
 		std::unique_ptr<Window> window;
 		bool isRunning = true;
+		ImGuiLayer* imGuiLayer;
 
 	protected:
 		MemoryManager& memoryManager = MemoryManager::getInstance();
@@ -34,6 +36,11 @@ namespace Ivy {
 		RendererManager& rendererManager = RendererManager::getInstance();
 
 	public:
+		inline static Application& getInstance()
+		{
+			return *instance;
+		}
+
 		Application();
 		virtual ~Application();
 

@@ -11,10 +11,10 @@ public:
 		IVY_INFO("TestLayer Client Update.");
 	}
 
-	/*void onEvent(Ivy::Event& event) override
+	void onEvent(Ivy::Event& event) override
 	{
-		IVY_INFO("Event: {0}", event);
-	}*/
+		IVY_INFO("Event: {0}", event.toString());
+	}
 };
 
 class IvyApp : public Ivy::Application
@@ -23,6 +23,7 @@ public:
 	IvyApp()
 	{
 		//pushLayer(new TestLayer());
+		//pushLayer(new Ivy::ImGuiLayer());
 	}
 
 	~IvyApp()

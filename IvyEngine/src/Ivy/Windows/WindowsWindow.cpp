@@ -94,6 +94,13 @@ namespace Ivy {
 			}
 		});
 
+		/*glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int char* character)
+		{
+			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
+			KeyTypedEvent typedEvent(character);
+			data.callback(typedEvent);
+		});*/
+
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);

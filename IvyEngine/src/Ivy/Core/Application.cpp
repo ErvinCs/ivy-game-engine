@@ -2,15 +2,24 @@
 #include "Application.h"
 
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include "Logger.h"
+#include "InputHandler.h"
 
 namespace Ivy {
 
+	Application* Application::instance = nullptr;
 
 	Application::Application()
 	{
+		instance = this;
 		window = std::unique_ptr<Window>(Window::Create());
 		
 		window->setCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
+
+		//imGuiLayer = new ImGuiLayer();
+		//pushLayer(imGuiLayer);
 	}
 
 
@@ -61,12 +70,13 @@ namespace Ivy {
 	void Application::pushLayer(SortingLayer* layer)
 	{
 		this->layerStack.push(layer);
+		layer->attach();
 	}
 
 	void Application::onEvent(Event& event)
 	{
 		// TODO - Propagate event through layers (iterate from end to begin)
-		//IVY_CORE_WARN("OnEvent: {0}", event.toString());
+		IVY_CORE_WARN("OnEvent: {0}", event.toString());
 		event();
 		//event();	//TODO - call event in the update loop at some event processing stage, use EventHandles
 		

@@ -16,6 +16,8 @@
 
 #include "Ivy/Core/Timestep.h"
 
+#include "Ivy/ImGui/ImGuiLayer.h"
+
 //#include "Ivy/Renderer/Renderer.h"
 //#include "Ivy/Renderer/Shader.h"
 //#include "Ivy/Renderer/Texture.h"

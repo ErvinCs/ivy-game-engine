@@ -159,6 +159,7 @@
     <ClInclude Include="src\Ivy\Events\WindowEvent.h" />
     <ClInclude Include="src\Ivy\Exceptions\EventException.h" />
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
+    <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Ivy\Managers\FileManager.h" />
     <ClInclude Include="src\Ivy\Managers\InputManager.h" />
     <ClInclude Include="src\Ivy\Managers\Manager.h" />
@@ -557,6 +558,8 @@
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp" />
     <ClCompile Include="src\Ivy\Core\String.cpp" />
     <ClCompile Include="src\Ivy\Events\Event.cpp" />
+    <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp" />
+    <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Ivy\Managers\FileManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\InputManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp" />

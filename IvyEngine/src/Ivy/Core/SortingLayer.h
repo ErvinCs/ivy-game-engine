@@ -1,6 +1,6 @@
 #pragma once
 
-//#include "../Events/Event.h"
+#include "../Events/Event.h"
 
 #include <string>
 
@@ -17,7 +17,7 @@ namespace Ivy {
 		virtual void attach() {}
 		virtual void detach() {}
 		virtual void update() {}
-		//virtual void onEvent(Event& event);
+		virtual void onEvent(Event& event) {}
 
 	private:
 		std::string layerName;

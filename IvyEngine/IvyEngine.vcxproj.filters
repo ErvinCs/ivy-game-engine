@@ -16,6 +16,9 @@
     <Filter Include="src\Ivy\Exceptions">
       <UniqueIdentifier>{251183FF-11F5-4355-7A55-3EA866582ED7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\ImGui">
+      <UniqueIdentifier>{DE71FA24-4A32-765B-136D-BFD87FECBA37}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Ivy\Managers">
       <UniqueIdentifier>{11F20668-FDEA-25BA-261D-0B3F127505C6}</UniqueIdentifier>
     </Filter>
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h">
       <Filter>src\Ivy\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h">
+      <Filter>src\Ivy\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Managers\FileManager.h">
       <Filter>src\Ivy\Managers</Filter>
@@ -1300,6 +1306,12 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Events\Event.cpp">
       <Filter>src\Ivy\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp">
+      <Filter>src\Ivy\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp">
+      <Filter>src\Ivy\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Managers\FileManager.cpp">
       <Filter>src\Ivy\Managers</Filter>
