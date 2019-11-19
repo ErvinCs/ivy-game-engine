@@ -9,6 +9,7 @@ namespace Ivy {
 		uint32_t count;
 
 	public:
+		OpenGLIndexBuffer() = default;
 		OpenGLIndexBuffer(const uint32_t* data, uint32_t count);
 		~OpenGLIndexBuffer();
 

@@ -8,6 +8,7 @@ namespace Ivy {
 		uint32_t rendererId;
 
 	public:
+		OpenGLVertexBuffer() = default;
 		OpenGLVertexBuffer(const void* data, uint32_t size);
 		~OpenGLVertexBuffer();
 

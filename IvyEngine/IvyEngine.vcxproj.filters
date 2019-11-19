@@ -1368,4 +1368,10 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res_temp\textures\cat1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res_temp\shaders\image.shader" />
+  </ItemGroup>
 </Project>

@@ -23,6 +23,7 @@ namespace Ivy {
 
 	public:
 		// Take in 1 file with both a vertex shader & a fragment shader
+		OpenGLShader() = default;
 		OpenGLShader(const std::string& filepath);
 		~OpenGLShader();
 

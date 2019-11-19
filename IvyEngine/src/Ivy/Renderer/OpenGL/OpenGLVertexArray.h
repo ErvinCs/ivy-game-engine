@@ -1,7 +1,7 @@
 #pragma once
 
 #include "OpenGLVertexBuffer.h"
-#include "OpenGLRenderer.h"
+//#include "OpenGLRenderer.h" - Cyclic dependency
 
 namespace Ivy {
 

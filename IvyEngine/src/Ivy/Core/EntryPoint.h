@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 	application->Shutdown();
 	delete application;
 
-	//return 0;
+	return 0;
 }
 
 #endif

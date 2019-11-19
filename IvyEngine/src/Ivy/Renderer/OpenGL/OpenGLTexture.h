@@ -12,6 +12,7 @@ namespace Ivy {
 		unsigned char* localBuffer;
 		int width, height, bitsPerPixel;
 	public:
+		OpenGLTexture() = default;
 		OpenGLTexture(const std::string& path);
 		~OpenGLTexture();
 

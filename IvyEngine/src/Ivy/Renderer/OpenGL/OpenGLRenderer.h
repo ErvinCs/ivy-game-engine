@@ -23,11 +23,12 @@ namespace Ivy {
 	class OpenGLRenderer
 	{
 	public:
+		OpenGLRenderer() = default;
+		~OpenGLRenderer() = default;
 		void init();
-		void clear();
-		//void draw(const OpenGLVertexArray& va, const OpenGLIndexBuffer& ib, const OpenGLShader& shader);
-		//void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
-
+		void clear() const;
+		void draw(const OpenGLVertexArray& va, const OpenGLIndexBuffer& ib, const OpenGLShader& shader) const;
+		void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 	};
 
 }
