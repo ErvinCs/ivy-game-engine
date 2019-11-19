@@ -2,8 +2,8 @@
 #include "ImGuiLayer.h"
 
 #include "../imgui/imgui.h"
-#include "../imgui/examples/imgui_impl_glfw.h"
-#include "../ImGui/examples/imgui_impl_opengl3.h"
+#include "examples/imgui_impl_opengl3.h"
+#include "examples/imgui_impl_glfw.h"
 
 #include "../Core/Application.h"	//Care for dependency loop
 
@@ -15,6 +15,7 @@ namespace Ivy {
 	ImGuiLayer::ImGuiLayer()
 		: SortingLayer("ImGuiLayer")
 	{
+		gladLoadGL();
 	}
 
 
@@ -22,17 +23,45 @@ namespace Ivy {
 	{
 	}
 
-	void ImGuiLayer::update() 
+	void ImGuiLayer::begin()
 	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+	}
+
+	void ImGuiLayer::end()
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		Application& app = Application::getApplication();
+		io.DisplaySize = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
+
+		// Rendering
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		/*if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
+		}*/
+	}
+
+	void ImGuiLayer::imGuiRender() 
+	{
+		static bool show = true;
+		ImGui::ShowDemoWindow(&show);
 		/*ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::getInstance();
 		io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
-
 
 		float currTime = (float)glfwGetTime();
 		io.DeltaTime = this->time > 0.0 ? (currTime - this->time) : (1.0f / 60.0f);
 
 		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
 		static bool show = true;
@@ -42,26 +71,32 @@ namespace Ivy {
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
 	}
 
-	void ImGuiLayer::onEvent(Event& event) 
-	{
-	}
-
 	void ImGuiLayer::attach()  
 	{
-		/*ImGui::CreateContext();
-		ImGui::StyleColorsDark();
+		//IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
 
 		ImGuiIO& io = ImGui::GetIO();
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		ImGui_ImplOpenGL3_Init("#version 450");
-		*/
+		ImGui::StyleColorsDark();
+
+		Application& app = Application::getApplication();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app.getWindow().GetNativeWindow());
+
+		// Setup Platform/Renderer bindings
+		const char opengl_version[] = "#version 440";
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init(opengl_version);
 	}
 
 	void ImGuiLayer::detach()  
 	{
-
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 	}
 
 	bool ImGuiLayer::onKeyDownEvent(KeyDownEvent& event)
@@ -124,7 +159,7 @@ namespace Ivy {
 		io.DisplaySize = ImVec2(event.getWidth(), event.getHeight());
 		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 
-		//Don't do this here
+		// TODO: Abstract this
 		glViewport(0, 0, event.getWidth(), event.getHeight());
 
 		return false;

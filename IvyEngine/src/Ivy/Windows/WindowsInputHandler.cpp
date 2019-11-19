@@ -1,32 +1,47 @@
 #include "ivypch.h"
 #include "WindowsInputHandler.h"
 
+#include "../Core/Application.h"
+
+#include <GLFW/glfw3.h>
+
 namespace Ivy {
 
 
-	bool WindowsInputHandler::IsKeyPressedImpl(unsigned int keycode)
+	bool WindowsInputHandler::IsKeyDownImpl(unsigned int keycode)
 	{
-		return false;
+		// Get the glfw window reference
+		auto window = static_cast<GLFWwindow*>(Application::getApplication().getWindow().GetNativeWindow());
+		auto state = glfwGetKey(window, keycode);
+		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	bool WindowsInputHandler::IsMouseButtonPressedImpl(unsigned int button)
+	bool WindowsInputHandler::IsMouseButtonDownImpl(unsigned int button)
 	{
-		return false;
+		auto window = static_cast<GLFWwindow*>(Application::getApplication().getWindow().GetNativeWindow());
+		auto state = glfwGetMouseButton(window, button);
+		return state == GLFW_PRESS;
 	}
 
 	std::pair<float, float> WindowsInputHandler::GetMousePositionImpl()
 	{
-		return { 0.0f, 0.0f };
+		auto window = static_cast<GLFWwindow*>(Application::getApplication().getWindow().GetNativeWindow());
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+
+		return { (float)xpos, (float)ypos };
 	}
 
 	float WindowsInputHandler::GetMouseXImpl()
 	{
-		return 0.0f;
+		auto[x, y] = GetMousePositionImpl();
+		return x;
 	}
 
 	float WindowsInputHandler::GetMouseYImpl()
 	{
-		return 0.0f;
+		auto[x, y] = GetMousePositionImpl();
+		return y;
 	}
 
 }

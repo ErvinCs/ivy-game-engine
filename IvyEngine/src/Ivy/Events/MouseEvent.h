@@ -21,11 +21,12 @@ namespace Ivy {
 
 		std::string toString() const override
 		{
-			// Temproary fix
-			int X = x, Y = y;
+			std::stringstream ss;
+			ss << "MouseMoveEvent: x=" << x << ",y=" << y;
+			return ss.str();
+
+			//int X = x, Y = y;
 			//String str = String("MouseMoveEvent: " + X) + String("," + Y);
-			std::string str = "MouseMoveEvent: " + X + ',' + Y;
-			return str;
 		}
 	};
 
@@ -45,12 +46,12 @@ namespace Ivy {
 
 		std::string toString() const override
 		{
-			// Temproary fix
-			int X = x, Y = y;
-			//String str = String("MouseScrollEvent: " + X) + String("," + Y);
+			std::stringstream ss;
+			ss << "MouseScrollEvent: x=" << x << ",y=" << y;
+			return ss.str();
 
-			std::string str = "MouseScrollEvent: " + X + ',' + Y;
-			return str;
+			//int X = x, Y = y;
+			//String str = String("MouseScrollEvent: " + X) + String("," + Y);
 		}
 
 	};
@@ -82,8 +83,9 @@ namespace Ivy {
 		std::string toString() const override
 		{
 			//String str = String("MouseButtonDownEvent: " + button);
-			std::string str = "MouseButtonDownEvent: " + button;
-			return str;
+			std::stringstream ss;
+			ss << "MouseButtonDownEvent: button=" << button;
+			return ss.str();
 		}
 	};
 
@@ -99,8 +101,9 @@ namespace Ivy {
 		std::string toString() const override
 		{
 			//String str = String("MouseButtonUpEvent: " + button);
-			std::string str = "MouseButtonUpEvent: " + button;
-			return str;
+			std::stringstream ss;
+			ss << "MouseButtonUpEvent: button=" << button;
+			return ss.str();
 		}
 	};
 

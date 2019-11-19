@@ -8,9 +8,9 @@ namespace Ivy{
 	public:
 		~InputHandler() = default;
 
-		inline static bool IsKeyPressed(unsigned int keycode) { return instance->IsKeyPressedImpl(keycode); }
+		inline static bool IsKeyDown(unsigned int keycode) { return instance->IsKeyDownImpl(keycode); }
 
-		inline static bool IsMouseButtonPressed(unsigned int button) { return instance->IsMouseButtonPressedImpl(button); }
+		inline static bool IsMouseButtonDown(unsigned int button) { return instance->IsMouseButtonDownImpl(button); }
 		inline static std::pair<float, float> GetMousePosition() { return instance->GetMousePositionImpl(); }
 		inline static float GetMouseX() { return instance->GetMouseXImpl(); }
 		inline static float GetMouseY() { return instance->GetMouseYImpl(); }
@@ -20,9 +20,9 @@ namespace Ivy{
 		InputHandler(const InputHandler&) = delete;
 		InputHandler& operator=(const InputHandler&) = delete;
 
-		virtual bool IsKeyPressedImpl(unsigned int keycode) = 0;
+		virtual bool IsKeyDownImpl(unsigned int keycode) = 0;
 
-		virtual bool IsMouseButtonPressedImpl(unsigned int button) = 0;
+		virtual bool IsMouseButtonDownImpl(unsigned int button) = 0;
 		virtual std::pair<float, float> GetMousePositionImpl() = 0;
 		virtual float GetMouseXImpl() = 0;
 		virtual float GetMouseYImpl() = 0;

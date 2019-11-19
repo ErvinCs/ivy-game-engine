@@ -35,9 +35,10 @@ namespace Ivy {
 		}
 
 		std::string toString() const override {
+			std::stringstream ss;
+			ss << "KeyDownEvent: " << keyCode << "; Repeat count: " << repeatCount;
+			return ss.str();
 			//String str = String("KeyPressedEvent: " + keyCode) + String("; Repeat count: " + repeatCount);
-			std::string str = "KeyPressedEvent: " + keyCode;
-			return str;
 		}
 
 	private:
@@ -53,7 +54,9 @@ namespace Ivy {
 		}
 
 		std::string toString() const override {
-			return "KeyReleasedEvent: " + keyCode;
+			std::stringstream ss;
+			ss << "KeyUpEvent: " << keyCode;
+			return ss.str();
 			//return String("KeyReleasedEvent: " + keyCode);
 		}
 	};

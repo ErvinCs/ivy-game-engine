@@ -16,8 +16,10 @@ namespace Ivy {
 
 		virtual void attach() override;
 		virtual void detach() override;
-		virtual void update() override;
-		virtual void onEvent(Event& event) override;
+		virtual void imGuiRender() override;
+
+		void begin();
+		void end();
 	private:
 		// Returns true if event was handled (consumed); false otherwise
 		bool onKeyDownEvent(KeyDownEvent& event);

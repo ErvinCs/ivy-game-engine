@@ -30,6 +30,9 @@ namespace Ivy {
 		virtual unsigned int getHeight() const = 0;
 		virtual unsigned int getWidth() const = 0;
 
+		// Get the window - implemented per platform
+		virtual void* GetNativeWindow() const = 0;
+
 		// Window factory method - implemented per platform
 		static Window* Create(const WindowProperties& properties = WindowProperties());
 	};

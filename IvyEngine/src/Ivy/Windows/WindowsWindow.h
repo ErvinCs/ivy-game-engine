@@ -20,11 +20,14 @@ namespace Ivy {
 
 		inline unsigned int getHeight() const override { return properties.wProps.height; }
 		inline unsigned int getWidth() const override { return properties.wProps.width; }
+		inline virtual void* GetNativeWindow() const override { return window; }
 		
 		void setCallback(const Func& callback) override
 		{
 			properties.callback = callback;
 		}
+
+
 
 	private:
 		struct WindowPropertiesUserData

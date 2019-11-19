@@ -1,7 +1,7 @@
 #include <Ivy.h>
 
 //TODO
-class TestLayer : public Ivy::SortingLayer
+/*class TestLayer : public Ivy::SortingLayer
 {
 public:
 	TestLayer() : SortingLayer("Test") {}
@@ -15,7 +15,7 @@ public:
 	{
 		IVY_INFO("Event: {0}", event.toString());
 	}
-};
+};*/
 
 class IvyApp : public Ivy::Application
 {

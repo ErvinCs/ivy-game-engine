@@ -3,23 +3,14 @@
 
 namespace Ivy {
 
-	SortingLayer::SortingLayer()
+
+	SortingLayer::SortingLayer(const std::string& name) : layerName(name)
 	{
-		this->layerName = "";
-		this->layerRank = -1;
+		this->layerRank = 0;
 	}
 
-
-	SortingLayer::SortingLayer(const std::string& name)
+	SortingLayer::SortingLayer(const std::string& name, const unsigned int& rank) : layerName(name), layerRank(rank)
 	{
-		this->layerName = name;
-		this->layerRank = -1;
-	}
-
-	SortingLayer::SortingLayer(const std::string& name, const unsigned int& rank)
-	{
-		this->layerName = name;
-		this->layerRank = rank;
 	}
 
 }

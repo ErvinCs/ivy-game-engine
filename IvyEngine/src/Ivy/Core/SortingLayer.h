@@ -9,8 +9,7 @@ namespace Ivy {
 	class SortingLayer
 	{
 	public:
-		SortingLayer();
-		SortingLayer(const std::string& name);
+		SortingLayer(const std::string& name = "Layer");
 		SortingLayer(const std::string& name, const unsigned int& rank);
 		~SortingLayer() = default;
 
@@ -18,6 +17,7 @@ namespace Ivy {
 		virtual void detach() {}
 		virtual void update() {}
 		virtual void onEvent(Event& event) {}
+		virtual void imGuiRender() {}
 
 	private:
 		std::string layerName;

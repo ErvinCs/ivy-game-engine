@@ -22,8 +22,9 @@ namespace Ivy {
 		std::string toString() const override
 		{
 			//String str = String("WindowResizeEvent: " + width) + String("," + height);
-			std::string str = "WindowResizeEvent: " + width + ',' + height;
-			return str;
+			std::stringstream ss;
+			ss << "WindowResizeEvent: width=" << width << ",height=" << height;
+			return ss.str();
 		}
 
 	};
@@ -39,8 +40,7 @@ namespace Ivy {
 		std::string toString() const override
 		{
 			//String str = String("WindowClosedEvent.");
-			std::string str = "WindowClosedEvent";
-			return str;
+			return "WindowClosedEvent";
 		}
 	};
 

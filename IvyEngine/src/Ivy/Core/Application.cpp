@@ -18,13 +18,18 @@ namespace Ivy {
 		
 		window->setCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 
-		//imGuiLayer = new ImGuiLayer();
-		//pushLayer(imGuiLayer);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+		imGuiLayer = new ImGuiLayer();
+		pushLayer(imGuiLayer);
 	}
 
 
 	Application::~Application()
 	{
+		//delete imGuiLayer;
 	}
 
 	void Application::Init()
@@ -38,12 +43,6 @@ namespace Ivy {
 	void Application::Run()
 	{
 
-		Event e;
-		//EventHandler eHandler = []() {
-		//	std::cout << "e notified!";
-		//};
-		//e.addHandler(eHandler);
-		//e();
 		while (isRunning)
 		{
 			//memoryManager.run();
@@ -51,10 +50,11 @@ namespace Ivy {
 			//inputManager.run();
 			//rendererManager.run();
 			
-			//TODO - for each layer call update()
+			imGuiLayer->begin();
+			for (SortingLayer* layer : layerStack)
+				layer->imGuiRender();
+			imGuiLayer->end();
 
-			//glClearColor(1, 0, 1, 1);
-			//glClear(GL_COLOR_BUFFER_BIT);
 			window->update();
 		}
 	}
@@ -76,8 +76,8 @@ namespace Ivy {
 	void Application::onEvent(Event& event)
 	{
 		// TODO - Propagate event through layers (iterate from end to begin)
-		IVY_CORE_WARN("OnEvent: {0}", event.toString());
-		event();
+		//IVY_CORE_WARN("OnEvent: {0}", event.toString());
+		//event();
 		//event();	//TODO - call event in the update loop at some event processing stage, use EventHandles
 		
 	}
