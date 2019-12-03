@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Events/Event.h"
+#include "Timestep.h"
 
 #include <string>
 
@@ -15,7 +16,7 @@ namespace Ivy {
 
 		virtual void attach() {}
 		virtual void detach() {}
-		virtual void update() {}
+		virtual void update(Timestep ts) {}
 		virtual void onEvent(Event& event) {}
 		virtual void imGuiRender() {}
 
