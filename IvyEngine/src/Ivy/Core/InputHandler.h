@@ -9,7 +9,6 @@ namespace Ivy{
 		~InputHandler() = default;
 
 		inline static bool IsKeyDown(unsigned int keycode) { return instance->IsKeyDownImpl(keycode); }
-
 		inline static bool IsMouseButtonDown(unsigned int button) { return instance->IsMouseButtonDownImpl(button); }
 		inline static std::pair<float, float> GetMousePosition() { return instance->GetMousePositionImpl(); }
 		inline static float GetMouseX() { return instance->GetMouseXImpl(); }
@@ -29,6 +28,7 @@ namespace Ivy{
 
 	private:
 		static std::unique_ptr<InputHandler> instance;
+		//static InputHandler* instance;
 
 	};
 

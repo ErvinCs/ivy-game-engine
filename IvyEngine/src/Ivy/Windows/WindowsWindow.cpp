@@ -1,6 +1,8 @@
 #include "ivypch.h"
 #include "WindowsWindow.h"
 
+#include "../Renderer/OpenGL/OpenGLContext.h"
+
 namespace Ivy {
 
 	static bool windowIsInitalized = false;
@@ -29,7 +31,8 @@ namespace Ivy {
 	void WindowsWindow::update()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(window);
+		context->swapBuffers();
+
 	}
 
 	void WindowsWindow::init(const WindowProperties& wProps)
@@ -38,15 +41,19 @@ namespace Ivy {
 		this->properties.wProps.width = wProps.width;
 		this->properties.wProps.height = wProps.height;
 
+
 		if (!windowIsInitalized)
 		{
 			int init = glfwInit();
-			//glfwSetErrorCallback(GLFWErrorCallback);
+			glfwSetErrorCallback(GLFWErrorCallback);
 			windowIsInitalized = true;
 		}
 
+		// Create and init context & window
 		this->window = glfwCreateWindow(wProps.width, wProps.height, wProps.name.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(window);
+		context = new OpenGLContext(window);
+		context->init();
+
 		glfwSetWindowUserPointer(window, &properties);
 		glfwSwapInterval(1);
 

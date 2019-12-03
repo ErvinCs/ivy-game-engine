@@ -65,7 +65,7 @@ namespace Ivy {
 		MouseButtonEvent(int button)
 			: button(button) 
 		{
-			//IVY_CORE_INFO("Created: MouseEvent/MouseButtonEvent: button={0}", button);
+			IVY_CORE_INFO("Created: MouseEvent/MouseButtonEvent: button={0}", button);
 		}
 
 		int button;
@@ -77,7 +77,7 @@ namespace Ivy {
 		MouseButtonDownEvent(int button)
 			: MouseButtonEvent(button) 
 		{
-			//IVY_CORE_INFO("Created: MouseEvent/MouseButtonDownEvent: button={0}", button);
+			IVY_CORE_INFO("Created: MouseEvent/MouseButtonDownEvent: button={0}", button);
 		}
 
 		std::string toString() const override
@@ -95,7 +95,7 @@ namespace Ivy {
 		MouseButtonUpEvent(int button)
 			: MouseButtonEvent(button) 
 		{
-			//IVY_CORE_INFO("Created: MouseEvent/MouseButtonUpEvent: button={0}", button);
+			IVY_CORE_INFO("Created: MouseEvent/MouseButtonUpEvent: button={0}", button);
 		}
 
 		std::string toString() const override

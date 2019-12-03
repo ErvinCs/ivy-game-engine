@@ -1,10 +1,10 @@
 #pragma once
 
 
-
 #include "Core.h"
 #include "SortingLayerStack.h"
 #include "../Windows/WindowsWindow.h"
+#include "../Windows/WindowsInputHandler.h"
 #include "String.h"
 
 #include "../Events/KeyEvent.h"
@@ -30,7 +30,6 @@ namespace Ivy {
 		std::unique_ptr<Window> window;
 		bool isRunning = true;
 		ImGuiLayer* imGuiLayer;
-
 
 	protected:
 		MemoryManager& memoryManager = MemoryManager::getInstance();

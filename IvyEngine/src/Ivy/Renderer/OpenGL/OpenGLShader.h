@@ -5,6 +5,8 @@
 
 #include "glm/glm.hpp"
 
+#include "../Shader.h"
+
 namespace Ivy {
 
 	struct ShaderProgramSource
@@ -13,7 +15,7 @@ namespace Ivy {
 		std::string FragmentSource;
 	};
 
-	class OpenGLShader
+	class OpenGLShader : public Shader
 	{
 	private:
 		std::string filepath;
@@ -27,8 +29,8 @@ namespace Ivy {
 		OpenGLShader(const std::string& filepath);
 		~OpenGLShader();
 
-		void bind() const;
-		void unbind() const;
+		void bind() const override;
+		void unbind() const override;
 
 		// Set uniforms
 		// TODO: templates

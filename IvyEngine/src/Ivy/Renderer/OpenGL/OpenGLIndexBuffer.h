@@ -1,8 +1,10 @@
 #pragma once
 
+#include "../IndexBuffer.h"
+
 namespace Ivy {
 
-	class OpenGLIndexBuffer
+	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	private:
 		uint32_t rendererId;
@@ -11,12 +13,12 @@ namespace Ivy {
 	public:
 		OpenGLIndexBuffer() = default;
 		OpenGLIndexBuffer(const uint32_t* data, uint32_t count);
-		~OpenGLIndexBuffer();
+		virtual ~OpenGLIndexBuffer();
 
-		void bind() const;
-		void unbind() const;
+		void bind() const override;
+		void unbind() const override;
 
-		inline uint32_t getCount() const { return count; }
+		inline uint32_t getCount() const override { return count; }
 	};
 
 }

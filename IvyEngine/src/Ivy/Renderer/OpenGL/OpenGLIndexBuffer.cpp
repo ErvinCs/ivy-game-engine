@@ -1,7 +1,7 @@
 #include "ivypch.h"
 #include "OpenGLIndexBuffer.h"
 
-#include "OpenGLRenderer.h"
+#include "OpenGLRenderAPI.h"
 
 namespace Ivy {
 	

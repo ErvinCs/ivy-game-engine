@@ -1,6 +1,6 @@
 #include "ivypch.h"
 #include "OpenGLShader.h"
-#include "OpenGLRenderer.h"
+#include "OpenGLRenderAPI.h"
 
 #include "GLFW/glfw3.h"
 

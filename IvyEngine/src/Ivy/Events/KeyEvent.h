@@ -27,7 +27,7 @@ namespace Ivy {
 		
 		KeyDownEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), repeatCount(repeatCount) 
 		{
-			//IVY_CORE_INFO("Created: KeyEvent/KeyDownEvent: keyCode={0}, repeatCount={1}", keyCode, repeatCount);
+			IVY_CORE_INFO("Created: KeyEvent/KeyDownEvent: keyCode={0}, repeatCount={1}", keyCode, repeatCount);
 		}
 
 		inline int getRepeatCount() const {

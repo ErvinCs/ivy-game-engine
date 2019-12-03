@@ -1,9 +1,7 @@
 #pragma once
-
-#include "../glad/include/glad/glad.h"
 #include <vector>
 
-#include "OpenGLRenderer.h"
+#include "OpenGLRenderAPI.h"
 
 namespace Ivy {
 

@@ -25,6 +25,8 @@ namespace Ivy {
 
 	void ImGuiLayer::begin()
 	{
+		// Begin ImGui Window rendering
+		// Each layer should be able to manage its own rendering
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -32,6 +34,7 @@ namespace Ivy {
 
 	void ImGuiLayer::end()
 	{
+		// End ImGui Window Rendering
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::getApplication();
 		io.DisplaySize = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
@@ -51,24 +54,8 @@ namespace Ivy {
 
 	void ImGuiLayer::imGuiRender() 
 	{
-		static bool show = true;
+		static bool show = false;
 		ImGui::ShowDemoWindow(&show);
-		/*ImGuiIO& io = ImGui::GetIO();
-		Application& app = Application::getInstance();
-		io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
-
-		float currTime = (float)glfwGetTime();
-		io.DeltaTime = this->time > 0.0 ? (currTime - this->time) : (1.0f / 60.0f);
-
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
 	}
 
 	void ImGuiLayer::attach()  
@@ -83,10 +70,17 @@ namespace Ivy {
 
 		ImGui::StyleColorsDark();
 
+		/*ImGuiStyle& style = ImGui::GetStyle();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			style.WindowRounding = 0.0f;
+			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		}*/
+
 		Application& app = Application::getApplication();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.getWindow().GetNativeWindow());
 
-		// Setup Platform/Renderer bindings
+		// Setup Platform/Renderer bindings [for OpenGL only atm]
 		const char opengl_version[] = "#version 440";
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(opengl_version);
@@ -99,6 +93,7 @@ namespace Ivy {
 		ImGui::DestroyContext();
 	}
 
+	/*
 	bool ImGuiLayer::onKeyDownEvent(KeyDownEvent& event)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -163,5 +158,5 @@ namespace Ivy {
 		glViewport(0, 0, event.getWidth(), event.getHeight());
 
 		return false;
-	}
+	}*/
 }

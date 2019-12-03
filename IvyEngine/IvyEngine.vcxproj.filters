@@ -135,9 +135,6 @@
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.h">
       <Filter>src\Ivy\Renderer\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.h">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLShader.h">
       <Filter>src\Ivy\Renderer\OpenGL</Filter>
     </ClInclude>
@@ -1284,6 +1281,16 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Ivy\Renderer\OrthoCamera.h" />
+    <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\RenderAPI.h" />
+    <ClInclude Include="src\Ivy\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderAPI.h">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\Context.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1328,9 +1335,6 @@
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.cpp">
       <Filter>src\Ivy\Renderer\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderer.cpp">
-      <Filter>src\Ivy\Renderer\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLShader.cpp">
       <Filter>src\Ivy\Renderer\OpenGL</Filter>
     </ClCompile>
@@ -1366,6 +1370,15 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OrthoCamera.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\RenderAPI.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderAPI.cpp">
+      <Filter>src\Ivy\Renderer\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,8 @@
 #include <GLFW/glfw3.h>
 
 namespace Ivy {
-
+	std::unique_ptr<InputHandler> InputHandler::instance = std::make_unique<WindowsInputHandler>();
+	//InputHandler* InputHandler::instance = new WindowsInputHandler();
 
 	bool WindowsInputHandler::IsKeyDownImpl(unsigned int keycode)
 	{

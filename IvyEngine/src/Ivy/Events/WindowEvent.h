@@ -34,7 +34,7 @@ namespace Ivy {
 	public:
 		WindowCloseEvent() 
 		{
-			//IVY_CORE_INFO("Created: WindowEvent/WindowClosedEvent");
+			IVY_CORE_INFO("Created: WindowEvent/WindowClosedEvent");
 		}
 
 		std::string toString() const override

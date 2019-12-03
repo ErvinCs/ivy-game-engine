@@ -1,12 +1,14 @@
 #pragma once
 
 #include "../glfw/include/GLFW/glfw3.h"
+#include "../Renderer/GraphicsContext.h"
 
 #include "../Core/Logger.h"
 #include "../Core/Window.h"
 #include "../Events/WindowEvent.h"
 #include "../Events/MouseEvent.h"
 #include "../Events/KeyEvent.h"
+
 
 namespace Ivy {
 
@@ -38,6 +40,7 @@ namespace Ivy {
 
 		WindowPropertiesUserData properties;
 		GLFWwindow* window;
+		GraphicsContext* context;
 
 		virtual void init(const WindowProperties& properties);
 		virtual void shutdown();

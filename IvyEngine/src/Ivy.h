@@ -18,6 +18,9 @@
 
 #include "Ivy/ImGui/ImGuiLayer.h"
 
+#include "Ivy/Windows/WindowsInputHandler.h"
+#include "Ivy/Core/InputHandler.h"
+
 //#include "Ivy/Renderer/Renderer.h"
 //#include "Ivy/Renderer/Shader.h"
 //#include "Ivy/Renderer/Texture.h"
