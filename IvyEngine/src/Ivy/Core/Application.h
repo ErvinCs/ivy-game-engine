@@ -30,6 +30,7 @@ namespace Ivy {
 		std::unique_ptr<Window> window;
 		bool isRunning = true;
 		ImGuiLayer* imGuiLayer;
+		float lastFrameTime = 0.0f;
 
 	protected:
 		MemoryManager& memoryManager = MemoryManager::getInstance();

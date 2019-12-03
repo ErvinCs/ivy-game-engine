@@ -13,21 +13,13 @@
 
 #include "Ivy/Windows/GLFWKeyCodes.h"
 #include "Ivy/Core/InputHandler.h"
-//#include "Ivy/Windows/WindowsInputHandler.h"
-
-//#include "Ivy/Events/Event.h"
-//#include "Ivy/Events/KeyEvent.h"
-//#include "Ivy/Events/MouseEvent.h"
-//#include "Ivy/Events/WindowEvent.h"
-
 
 #include "Ivy/Renderer/Renderer.h"
 #include "Ivy/Renderer/RenderCommand.h"
-
 #include "Ivy/Renderer/VertexBufferLayout.h"
 #include "Ivy/Renderer/IndexBuffer.h"
 #include "Ivy/Renderer/VertexBuffer.h"
 #include "Ivy/Renderer/VertexArray.h"
 #include "Ivy/Renderer/Shader.h"
-
+#include "Ivy/Renderer/Texture.h"
 #include "Ivy/Renderer/OrthoCamera.h"

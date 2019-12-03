@@ -62,22 +62,17 @@ namespace Ivy {
 			//inputManager.run();
 			//rendererManager.run();
 
-			//RenderCommand::setClearColor();
-			//RenderCommand::clear();
+			float time = (float)glfwGetTime();
+			Timestep ts = time - lastFrameTime;
+			lastFrameTime = time;
 
-			//Renderer::beginScene();
-			// shader->bind()
-			// shader->uploadeUniformMat4("u_vpm",camera.getViewProjMatrix());	//Dont forget to #include OrthoCamera.h
-			//Renderer::submit(/*vertexArray*/);
-			//Renderer::EndScene();
+			for (SortingLayer* layer : layerStack)
+				layer->update(ts);
 
-			//for (SortingLayer* layer : layerStack)
-			//	layer->update();
-
-			//imGuiLayer->begin();
-			//for (SortingLayer* layer : layerStack)
-			//	layer->imGuiRender();
-			//imGuiLayer->end();
+			imGuiLayer->begin();
+			for (SortingLayer* layer : layerStack)
+				layer->imGuiRender();
+			imGuiLayer->end();
 
 			window->update();
 		}

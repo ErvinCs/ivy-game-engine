@@ -47,3 +47,7 @@ namespace Ivy {
 
 // Strap Logs from distribution build
 #define IVY_CORE_INFO
+#define IVY_CORE_TRACE
+#define IVY_CORE_WARN
+#define IVY_CORE_ERROR
+#define IVY_CORE_FATAL

@@ -3,6 +3,8 @@
 
 #include "OpenGLVertexBufferLayout.h"
 
+#include <glad/glad.h>
+
 namespace Ivy {
 
 	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
@@ -27,12 +29,16 @@ namespace Ivy {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
-		GLCall(glGenVertexArrays(1, &rendererId));
+		//GLCall(
+		glGenVertexArrays(1, &rendererId);
+		//);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
-		GLCall(glDeleteVertexArrays(1, &rendererId));
+		//GLCall(
+		glDeleteVertexArrays(1, &rendererId);
+		//);
 	}
 
 	void OpenGLVertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
@@ -75,12 +81,16 @@ namespace Ivy {
 
 	void OpenGLVertexArray::bind() const
 	{
-		GLCall(glBindVertexArray(rendererId));
+		//GLCall(
+		glBindVertexArray(rendererId);
+		//);
 	}
 
 	void OpenGLVertexArray::unbind() const
 	{
-		GLCall(glBindVertexArray(0));
+		//GLCall(
+		glBindVertexArray(0);
+		//);
 
 	}
 

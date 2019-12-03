@@ -3,6 +3,9 @@
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+/////////////////////
+#include <gl/GL.h>
+////////////////////
 
 namespace Ivy {
 	OpenGLContext::OpenGLContext(GLFWwindow* window) : window(window)

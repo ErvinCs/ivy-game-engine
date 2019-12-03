@@ -3,6 +3,7 @@
 #include "OpenGLRenderAPI.h"
 
 #include "GLFW/glfw3.h"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Ivy {
 
@@ -45,7 +46,8 @@ namespace Ivy {
 	void OpenGLShader::setUniformMat4f(const std::string& name, const glm::mat4& matrix)
 	{
 		// GLboolean transpose - OpenGL uses matrices sorted by columns (and so does glm) - set to true otherwise
-		GLCall(glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+		GLint location = glGetUniformLocation(rendererId, name.c_str());
+		GLCall(glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix)););  //&matrix[0][0]
 	}
 
 
