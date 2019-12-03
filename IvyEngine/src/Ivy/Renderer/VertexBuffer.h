@@ -1,5 +1,7 @@
 #pragma once
 
+#include "VertexBufferLayout.h"
+
 namespace Ivy {
 
 	class VertexBuffer
@@ -10,8 +12,11 @@ namespace Ivy {
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
+		virtual const VertexBufferLayout& getLayout() const = 0;
+		virtual void setLayout(const VertexBufferLayout& layout) = 0;
+
 		// void* to float* ?
-		static VertexBuffer* Create(void* vertices, uint32_t size);
+		static VertexBuffer* Create(float* vertices, uint32_t size);
 	};
 
 }

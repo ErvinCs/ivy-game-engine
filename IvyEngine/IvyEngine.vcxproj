@@ -182,6 +182,7 @@
     <ClInclude Include="src\Ivy\Renderer\Shader.h" />
     <ClInclude Include="src\Ivy\Renderer\Texture.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h" />
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsWindow.h" />

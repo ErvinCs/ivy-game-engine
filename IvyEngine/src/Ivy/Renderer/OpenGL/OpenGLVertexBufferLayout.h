@@ -1,7 +1,8 @@
 #pragma once
-#include <vector>
+/*#include <vector>
 
 #include "OpenGLRenderAPI.h"
+#include "../VertexBufferLayout.h"
 
 namespace Ivy {
 
@@ -30,7 +31,7 @@ namespace Ivy {
 		}
 	};
 
-	class OpenGLVertexBufferLayout
+	class OpenGLVertexBufferLayout : public VertexBufferLayout
 	{
 	private:
 		std::vector<OpenGLVertexBufferElement> elements;
@@ -72,4 +73,4 @@ namespace Ivy {
 		inline const std::vector<OpenGLVertexBufferElement> getElements() const { return elements; }
 	};
 
-}
+}*/

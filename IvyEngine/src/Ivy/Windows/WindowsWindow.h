@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../glfw/include/GLFW/glfw3.h"
-#include "../Renderer/GraphicsContext.h"
+#include "../Renderer/Context.h"
 
 #include "../Core/Logger.h"
 #include "../Core/Window.h"
@@ -40,7 +40,7 @@ namespace Ivy {
 
 		WindowPropertiesUserData properties;
 		GLFWwindow* window;
-		GraphicsContext* context;
+		Context* context;
 
 		virtual void init(const WindowProperties& properties);
 		virtual void shutdown();

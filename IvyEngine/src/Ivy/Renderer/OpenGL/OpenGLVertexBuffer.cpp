@@ -5,7 +5,7 @@
 
 namespace Ivy {
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(const void* data, uint32_t size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(const float* data, uint32_t size)
 	{
 		GLCall(glGenBuffers(1, &rendererId));	// &buffer - store in the return param the buffer address
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, rendererId));

@@ -1291,6 +1291,7 @@
       <Filter>src\Ivy\Renderer\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\Context.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">

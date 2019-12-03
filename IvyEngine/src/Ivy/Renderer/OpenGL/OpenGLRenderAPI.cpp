@@ -11,8 +11,11 @@ namespace Ivy {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-
-	void OpenGLRenderAPI::drawIndexed(const OpenGLVertexArray& va, const OpenGLIndexBuffer& ib, const OpenGLShader& shader)
+	void OpenGLRenderAPI::drawIndexed(const std::shared_ptr<VertexArray>& va)
+	{
+		GLCall(glDrawElements(GL_TRIANGLES, va->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr));
+	}
+	/*void OpenGLRenderAPI::drawIndexed(const OpenGLVertexArray& va, const OpenGLIndexBuffer& ib, const OpenGLShader& shader)
 	{
 		// Bind shaders & uniforms - to the GPU to render the data
 		shader.bind();
@@ -23,7 +26,7 @@ namespace Ivy {
 
 		// Issue a draw call using the index buffer - access the vertex buffer and call the shader for each vertex
 		GLCall(glDrawElements(GL_TRIANGLES, ib.getCount(), GL_UNSIGNED_INT, nullptr));
-	}
+	}*/
 
 	void OpenGLRenderAPI::clear()
 	{
@@ -35,4 +38,8 @@ namespace Ivy {
 		glViewport(x, y, width, height);
 	}
 
+	void OpenGLRenderAPI::setClearColor(const glm::vec4& color)
+	{
+		glClearColor(color.r, color.g, color.b, color.a);
+	}
 }
