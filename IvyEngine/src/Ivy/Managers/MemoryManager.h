@@ -1,18 +1,26 @@
 #pragma once
-#include "BaseManager.h"
+#include "Manager.h"
 
 namespace Ivy {
 
-	class MemoryManager : public BaseManager
+	class MemoryManager : public Manager
 	{
 	public:
-		MemoryManager() {}
-		~MemoryManager() {}
+		~MemoryManager() = default;
 
+		static MemoryManager& getInstance()
+		{
+			static MemoryManager instance{};
+			return instance;
+		}
 	protected:
 		void initHook();
 		void updateHook();
 		void shutdownHook();
+
+		MemoryManager() {}
+		MemoryManager(const MemoryManager&) = delete;
+		MemoryManager& operator=(const MemoryManager&) = delete;
 
 	};
 

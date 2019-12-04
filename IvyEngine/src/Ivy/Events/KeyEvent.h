@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Event.h"
-#include "../Core/String.h"
+
 
 namespace Ivy {
 
@@ -21,32 +21,43 @@ namespace Ivy {
 		int keyCode;
 	};
 
-	class KeyPressedEvent : public KeyEvent
+	class KeyDownEvent : public KeyEvent
 	{
 	public:
 		
-		KeyPressedEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), repeatCount(repeatCount) {}
+		KeyDownEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), repeatCount(repeatCount) 
+		{
+			IVY_CORE_INFO("Created: KeyEvent/KeyDownEvent: keyCode={0}, repeatCount={1}", keyCode, repeatCount);
+		}
 
 		inline int getRepeatCount() const {
 			return repeatCount;
 		}
 
-		String toString() const {
-			String str = String("KeyPressedEvent: " + keyCode) + String("; Repeat count: " + repeatCount);
-			return str;
+		std::string toString() const override {
+			std::stringstream ss;
+			ss << "KeyDownEvent: " << keyCode << "; Repeat count: " << repeatCount;
+			return ss.str();
+			//String str = String("KeyPressedEvent: " + keyCode) + String("; Repeat count: " + repeatCount);
 		}
 
 	private:
 		int repeatCount;
 	};
 
-	class KeyReleasedEvent : public KeyEvent
+	class KeyUpEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keyCode) : KeyEvent(keyCode) {}
+		KeyUpEvent(int keyCode) : KeyEvent(keyCode) 
+		{
+			IVY_CORE_INFO("Created: KeyEvent/KeyUpEvent: keyCode={0}", keyCode);
+		}
 
-		String toString() const {
-			return String("KeyReleasedEvent: " + keyCode);
+		std::string toString() const override {
+			std::stringstream ss;
+			ss << "KeyUpEvent: " << keyCode;
+			return ss.str();
+			//return String("KeyReleasedEvent: " + keyCode);
 		}
 	};
 

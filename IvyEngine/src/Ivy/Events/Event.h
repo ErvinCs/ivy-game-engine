@@ -1,16 +1,23 @@
 #pragma once
 
-#include "../../ivypch.h"
+#include "../Core/String.h"
+#include "../Core/Logger.h"
+#include "../Exceptions/EventException.h"
 #include <memory>
+#include <vector>
+#include <functional>
 
 namespace Ivy {
+	
+	class Event;
 
 	class EventHandler {
 	public:
-		using Func = std::function<void()>;
+		using Func = std::function<void(Event& e)>;
 
-	private:
-		Func _func;
+	public:
+		Func callback;
+		Event* event;
 
 	public:
 		int id;
@@ -19,17 +26,20 @@ namespace Ivy {
 		EventHandler() : id{ 0 } {
 		}
 
-		EventHandler(const Func &func) : _func{ func } {
+		EventHandler(const Func &func) : callback{ func } {
 			this->id = ++EventHandler::counter;
-			std::cout << "EventHandlerCounter (id) = " << EventHandler::counter << std::endl;
+			IVY_CORE_TRACE("EventHandlerCounter (id) = {0}", EventHandler::counter);	
 		}
 
-		void operator()();
+		Event* getEvent() {
+			return event;
+		}
+
+		void operator()(Event& e);
 		void operator=(const EventHandler &func);
 		bool operator==(const EventHandler &del);
 		bool operator!=(nullptr_t);
 	};
-
 
 	class Event {
 		std::vector<std::unique_ptr<EventHandler>> handlers;
@@ -43,5 +53,9 @@ namespace Ivy {
 		Event &operator+=(const EventHandler::Func &handler);
 		Event &operator-=(const EventHandler &handler);
 		int totalHandlers() { return this->handlers.size(); }
+
+		virtual std::string toString() const;
 	};
+
+
 }

@@ -2,7 +2,7 @@
 
 namespace Ivy {
 
-	class BaseManager
+	class Manager
 	{
 	protected:
 		// Will probably become more specific
@@ -13,12 +13,12 @@ namespace Ivy {
 	public:
 		// Init each subsystem in a predefined runOrder
 		virtual void init() final {
-			// Init common operations & hooks
+			initHook();
 		}
 
 		// Shutdown each subsystem in reverse runOrder
 		virtual void shutdown() final {
-			// Shutdown common operations & hooks
+			shutdownHook();
 		}
 
 		// In-loop operations
@@ -26,8 +26,8 @@ namespace Ivy {
 			updateHook();
 		}
 
-		BaseManager() {}
-		~BaseManager() {}
+		Manager() {}
+		~Manager() {}
 	};
 
 }

@@ -8,18 +8,17 @@ namespace Ivy {
 
 	int EventHandler::counter;
 
-	void EventHandler::operator()() {
-		this->_func();
+	void EventHandler::operator()(Event& e) {
+		this->callback(e);
 	}
 
 	void EventHandler::operator=(const EventHandler &func) {
-		if (this->_func == nullptr) {
-			this->_func = func;
+		if (this->callback == nullptr) {
+			this->callback = func;
 			this->id = ++EventHandler::counter;
 		}
 		else {
-			// Throw as exception or just log it out.
-			std::cerr << "Nope!" << std::endl;
+			throw new EventException("Assignment failed: invalid EventHandler function!");
 		}
 	}
 
@@ -27,7 +26,7 @@ namespace Ivy {
 		return this->id == del.id;
 	}
 	bool EventHandler::operator!=(nullptr_t) {
-		return this->_func != nullptr;
+		return this->callback != nullptr;
 	}
 
 
@@ -35,8 +34,9 @@ namespace Ivy {
 		vector<unique_ptr<EventHandler>>::iterator func = this->handlers.begin();
 		for (; func != this->handlers.end(); ++func) {
 			if (*func != nullptr && (*func)->id != 0) {
-				(*(*func))();
-				std::cout << "EventHandler.id: " << (*func)->id << std::endl;
+				Event* e = (*func)->getEvent();
+				(*(*func))(*e);
+				IVY_CORE_TRACE("EventHandler.id: {0}", (*func)->id);
 			}
 		}
 	}
@@ -49,7 +49,7 @@ namespace Ivy {
 		vector<unique_ptr<EventHandler>>::iterator to_remove = this->handlers.begin();
 		for (; to_remove != this->handlers.end(); ++to_remove) {
 			if (*(*to_remove) == handler) {
-				std::cout << "Removing: " << (*to_remove)->id << std::endl;
+				IVY_CORE_TRACE("Removing: {0}",  (*to_remove)->id);
 				this->handlers.erase(to_remove);
 				break;
 			}
@@ -78,5 +78,7 @@ namespace Ivy {
 		return *this;
 	}
 
-
+	std::string Event::toString() const {
+		return "Event";
+	}
 }

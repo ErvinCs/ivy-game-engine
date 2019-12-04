@@ -1,15 +1,18 @@
 #pragma once
 
-//#include "../../ivypch.h"
-//#include <cwchar>
-//#include <string>
+#include <iostream>
+#include <cwchar>
+#include <string>
+#include <sstream>
 
 namespace Ivy {
+
 	class String
 	{
 	private:
 		wchar_t* string;
 		size_t size;
+		//TODO: char* cString;
 
 	public:
 		String();
@@ -83,6 +86,38 @@ namespace Ivy {
 
 			return String(concatString);
 		}
+
+
+		/*inline String operator+=(const char* other)
+		{
+			size_t oldSize = this->getSize();
+			this->size += strlen(other);			
+			wchar_t* concatString = new wchar_t[size];
+			wmemcpy(concatString, this->string, oldSize);
+			wchar_t* temp = new wchar_t[size];
+			mbstowcs(temp, other, size);
+			wcscat(concatString, temp);
+
+			delete[] temp;
+			delete[] string;
+
+			this->string = concatString;
+			return *this;
+		}
+
+		inline String operator+(const char* other)
+		{
+			size_t resultSize = this->getSize() + strlen(other);		
+			wchar_t* concatString = new wchar_t[resultSize];
+			wmemcpy(concatString, this->string, this->size);
+			wchar_t* temp = new wchar_t[size];
+			mbstowcs(temp, other, size);
+			wcscat(concatString, temp);
+
+			delete[] temp;
+
+			return String(concatString);
+		}*/
 
 		friend std::ostream& operator<<(std::ostream& out, const String& string)
 		{

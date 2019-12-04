@@ -1,19 +1,20 @@
 #pragma once
 
-#include <cstdint>
 #include "Node.h"
+#include "String.h"
 
 namespace Ivy {
 
 	template<typename K, typename V> class HashTable
 	{
+	private:
 		Node<K, V>** table;
-		uint16_t capacity;
-		uint16_t size;
-		uint16_t H = 1023;
+		uint32_t capacity;
+		uint32_t size;
+		uint32_t H = 1023;
 
-		uint16_t currentKeyIndex;
-		uint16_t currentValueIndex;
+		uint32_t currentKeyIndex;
+		uint32_t currentValueIndex;
 
 	public:
 		/**
@@ -51,9 +52,9 @@ namespace Ivy {
 		/**
 		* Returns a hash code for a key using the division method
 		* @param: K
-		* @return: uint16_t
+		* @return: uint32_t
 		*/
-		uint16_t hashCode(K key)
+		uint32_t hashCode(K key)
 		{
 			return key % H;
 
@@ -69,7 +70,7 @@ namespace Ivy {
 		*/
 		void insert(K key, V value)
 		{
-			uint16_t hash = hashCode(key);
+			uint32_t hash = hashCode(key);
 
 			if (table[hash] == nullptr)
 				table[hash] = new Node<K, V>(key, value);
@@ -90,7 +91,7 @@ namespace Ivy {
 		*/
 		bool removeKeyValue(K key, V value)
 		{
-			uint16_t hash = hashCode(key);
+			uint32_t hash = hashCode(key);
 
 			Node<K, V>* aux = nullptr;
 			Node<K, V>* node = table[hash];
@@ -132,7 +133,7 @@ namespace Ivy {
 		*/
 		bool update(K key, V value, V newValue)
 		{
-			uint16_t hash = hashCode(key);
+			uint32_t hash = hashCode(key);
 
 			Node<K, V>* node = table[hash];
 
@@ -160,7 +161,7 @@ namespace Ivy {
 		*/
 		V getValue(K key)
 		{
-			uint16_t hash = hashCode(key);
+			uint32_t hash = hashCode(key);
 
 			Node<K, V>* node = table[hash];
 
@@ -181,7 +182,7 @@ namespace Ivy {
 		K getKey(V value)
 		{
 			Node<K, V>* node = table[0];
-			uint16_t counter = 0;
+			uint32_t counter = 0;
 
 			while (counter < H)
 			{
@@ -200,9 +201,9 @@ namespace Ivy {
 
 		/**
 		* Returns the number of elements in the table
-		* @return: uint16_t
+		* @return: uint32_t
 		*/
-		uint16_t getSize()
+		uint32_t getSize()
 		{
 			return size;
 		}

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace Ivy {
 
-	class IVY_API Logger
+	class Logger
 	{
 	private:
 		static std::shared_ptr<spdlog::logger> coreLogger;
@@ -28,8 +28,6 @@ namespace Ivy {
 
 }
 
-// TODO - Other macros that would use Error, Warn etc, only under certain circumstances
-
 // Core Logger
 #define IVY_CORE_FATAL(...) ::Ivy::Logger::GetCoreLogger()->fatal(__VA_ARGS__)
 #define IVY_CORE_ERROR(...) ::Ivy::Logger::GetCoreLogger()->error(__VA_ARGS__)
@@ -46,3 +44,7 @@ namespace Ivy {
 
 // Strap Logs from distribution build
 #define IVY_CORE_INFO
+#define IVY_CORE_TRACE
+#define IVY_CORE_WARN
+#define IVY_CORE_ERROR
+#define IVY_CORE_FATAL

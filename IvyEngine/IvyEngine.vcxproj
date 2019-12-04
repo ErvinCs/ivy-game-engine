@@ -23,19 +23,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
@@ -54,33 +54,30 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug-windows-x86_64\IvyEngine\</OutDir>
     <IntDir>..\bin-int\Debug-windows-x86_64\IvyEngine\</IntDir>
     <TargetName>IvyEngine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Release-windows-x86_64\IvyEngine\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\IvyEngine\</IntDir>
     <TargetName>IvyEngine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Dist-windows-x86_64\IvyEngine\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\IvyEngine\</IntDir>
     <TargetName>IvyEngine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -89,19 +86,18 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>..\bin\Debug-windows-x86_64\IvyEngine\IvyEngine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\IvyEngine\IvyEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\IvyEngine\IvyEngine.dll ..\bin\Debug-windows-x86_64\IvyApplication &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\IvyEngine\IvyEngine.dll ..\bin\Debug-windows-x86_64\IvyApplication &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -114,19 +110,18 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ImportLibrary>..\bin\Release-windows-x86_64\IvyEngine\IvyEngine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\IvyEngine\IvyEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\IvyEngine\IvyEngine.dll ..\bin\Release-windows-x86_64\IvyApplication &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\IvyEngine\IvyEngine.dll ..\bin\Release-windows-x86_64\IvyApplication &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -139,27 +134,58 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ImportLibrary>..\bin\Dist-windows-x86_64\IvyEngine\IvyEngine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\IvyEngine\IvyEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\IvyEngine\IvyEngine.dll ..\bin\Dist-windows-x86_64\IvyApplication &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\IvyEngine\IvyEngine.dll ..\bin\Dist-windows-x86_64\IvyApplication &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ivy\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Ivy\Renderer\RenderAPI.h" />
+    <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OrthoCamera.h" />
+    <ClInclude Include="src\Ivy\Renderer\Context.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
     <ClInclude Include="src\Ivy\Core\EntryPoint.h" />
     <ClInclude Include="src\Ivy\Core\HashTable.h" />
+    <ClInclude Include="src\Ivy\Core\InputHandler.h" />
     <ClInclude Include="src\Ivy\Core\Logger.h" />
     <ClInclude Include="src\Ivy\Core\Node.h" />
+    <ClInclude Include="src\Ivy\Core\SortingLayer.h" />
+    <ClInclude Include="src\Ivy\Core\SortingLayerStack.h" />
     <ClInclude Include="src\Ivy\Core\String.h" />
     <ClInclude Include="src\Ivy\Core\Timestep.h" />
+    <ClInclude Include="src\Ivy\Core\Window.h" />
     <ClInclude Include="src\Ivy\Events\Event.h" />
     <ClInclude Include="src\Ivy\Events\KeyEvent.h" />
-    <ClInclude Include="src\Ivy\Managers\BaseManager.h" />
+    <ClInclude Include="src\Ivy\Events\MouseEvent.h" />
+    <ClInclude Include="src\Ivy\Events\WindowEvent.h" />
+    <ClInclude Include="src\Ivy\Exceptions\EventException.h" />
+    <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
+    <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Ivy\Managers\FileManager.h" />
+    <ClInclude Include="src\Ivy\Managers\InputManager.h" />
+    <ClInclude Include="src\Ivy\Managers\Manager.h" />
     <ClInclude Include="src\Ivy\Managers\MemoryManager.h" />
+    <ClInclude Include="src\Ivy\Managers\RendererManager.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderAPI.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBufferLayout.h" />
+    <ClInclude Include="src\Ivy\Renderer\Renderer.h" />
+    <ClInclude Include="src\Ivy\Renderer\Shader.h" />
+    <ClInclude Include="src\Ivy\Renderer\Texture.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h" />
+    <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h" />
+    <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
+    <ClInclude Include="src\Ivy\Windows\WindowsWindow.h" />
     <ClInclude Include="src\ivypch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -529,18 +555,64 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ivy\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\RenderAPI.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OrthoCamera.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\HashTable.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
+    <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
+    <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp" />
     <ClCompile Include="src\Ivy\Core\String.cpp" />
     <ClCompile Include="src\Ivy\Events\Event.cpp" />
+    <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp" />
+    <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Ivy\Managers\FileManager.cpp" />
+    <ClCompile Include="src\Ivy\Managers\InputManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp" />
+    <ClCompile Include="src\Ivy\Managers\RendererManager.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderAPI.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp" />
+    <ClCompile Include="src\Ivy\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\ivypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="vendor\glfw\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\glad\Glad.vcxproj">
+      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res_temp\textures\cat1.png" />
+    <Image Include="res_temp\textures\sprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res_temp\shaders\image.shader" />
+    <None Include="res_temp\shaders\test.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
