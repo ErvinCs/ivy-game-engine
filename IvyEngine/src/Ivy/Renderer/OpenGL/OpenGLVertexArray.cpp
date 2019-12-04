@@ -57,8 +57,6 @@ namespace Ivy {
 		// Bind the vertex buffer & setup the layout
 		vb->bind();
 		const auto& elements = vb->getLayout();
-		//unsigned int offset = 0;
-		//for (unsigned int i = 0; i < elements.GetElements(); i++)
 		for(const auto& element : elements)
 		{
 			glEnableVertexAttribArray(vbIndex);
@@ -69,13 +67,8 @@ namespace Ivy {
 				elements.GetStride(),
 				(const void*)element.Offset);
 			vbIndex++;
-			//const auto& elem = elements[i];
-			//GLCall(glEnableVertexAttribArray(i));
-			//GLCall(glVertexAttribPointer(i, elem.count, elem.type, elem.normalized, layout.getStride(), (const void*)offset));
-			//offset += elem.count * OpenGLVertexBufferElement::getSizeOfType(elem.type);
 		}
 
-		//this->vertexBuffers.push_back(std::make_shared<VertexBuffer>(vb));
 		this->vertexBuffers.push_back(vb);
 	}
 

@@ -9,10 +9,10 @@ namespace Ivy {
 		: projMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), viewMatrix(1.0f)
 	{
 		viewProjMatrix = projMatrix * viewMatrix;
-		/*leftBorder = left;
-		rightBorder = right;
-		topBorder = top;
-		bottomBorder = bottom;*/
+		//leftBorder = left;
+		//rightBorder = right;
+		//topBorder = top;
+		//bottomBorder = bottom;
 	}
 
 	void OrthoCamera::calculateViewMatrix()

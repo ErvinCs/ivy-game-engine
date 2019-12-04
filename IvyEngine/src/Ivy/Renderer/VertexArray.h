@@ -10,8 +10,8 @@ namespace Ivy {
 	{
 	public:
 		virtual ~VertexArray() {}
-		//virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb, const OpenGLVertexBufferLayout& layout) = 0;
-		virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb) = 0;	// const std::shared_ptr<VertexBufferLayout>& layout
+		
+		virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb) = 0;	
 		virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) = 0;
 
 		virtual void bind() const = 0;

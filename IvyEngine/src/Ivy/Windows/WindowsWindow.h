@@ -29,8 +29,6 @@ namespace Ivy {
 			properties.callback = callback;
 		}
 
-
-
 	private:
 		struct WindowPropertiesUserData
 		{

@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
@@ -28,8 +27,6 @@ namespace Ivy {
 	};
 
 }
-
-// TODO - Other macros that would use Error, Warn etc, only under certain circumstances
 
 // Core Logger
 #define IVY_CORE_FATAL(...) ::Ivy::Logger::GetCoreLogger()->fatal(__VA_ARGS__)

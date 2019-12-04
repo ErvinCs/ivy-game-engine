@@ -22,7 +22,6 @@ namespace Ivy {
 		init(properties);
 	}
 
-
 	WindowsWindow::~WindowsWindow()
 	{
 		shutdown();

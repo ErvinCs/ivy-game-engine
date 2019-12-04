@@ -17,26 +17,28 @@ private:
 
 private:
 	bool isJumping = false;
-	const float constJumpTime = 2.0f;
+	bool isFalling = false;
+	const float constJumpTime = 1.3f;
+	const float jumpSpeed = 2.0f;
 	float jumpTime = constJumpTime;
 	float jumpCooldown = 1.0f;
 
-	//float leftBorder = -12.8f;
-	//float rightBorder = 12.8f;
-	//float topBorder = -6.4f;
-	//float botBorder = 6.4f;
+	float leftBorder = 12.3f;
+	float rightBorder = -11.8f;
+	float topBorder = 6.4f;
+	float botBorder = -6.4f;
 
 public:
-	TestLayer() : SortingLayer("Test"), camera(-12.8f, 12.8f, -6.4f, 6.4f), cameraPos(0.0f) 
+	TestLayer() : SortingLayer("Test"), camera(-12.8f, 12.8f, -6.4f, 6.4f), cameraPos({ 0.0f, 4.0f, 0.0f })
 	{
 		IVY_TRACE("Creating TestLayer");
 		
 		va.reset(Ivy::VertexArray::Create());
 		float vertices[] = {
-		   -0.4f,  -0.4f, 0.0f, 0.0f,	//0
-			0.4f,  -0.4f, 1.0f, 0.0f,	//1
-			0.4f,   0.4f, 1.0f, 1.0f,	//2
-		   -0.4f,   0.4f, 0.0f, 1.0f	//3
+		   -0.4f,  -0.4f, 0.0f, 0.0f,	//v0
+			0.4f,  -0.4f, 1.0f, 0.0f,	//v1
+			0.4f,   0.4f, 1.0f, 1.0f,	//v2
+		   -0.4f,   0.4f, 0.0f, 1.0f	//v3
 		};
 		uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
 
@@ -63,51 +65,59 @@ public:
 
 	void update(Ivy::Timestep ts) override
 	{
-		IVY_TRACE("Update:  timestep={0}", ts);
+		//IVY_TRACE("Update:  timestep={0}", ts);
 		jumpCooldown -= ts;
 
 		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_A))
 		{
-			//if (cameraPos.x < leftBorder)
+			//IVY_TRACE("KeyA down");
+			if (cameraPos.x < leftBorder)
+			{
 				cameraPos.x += cameraMoveSpeed * ts;
-			IVY_TRACE("KeyA down");
+			}
+			//IVY_TRACE("cameraPos.x = {0}, leftBorder = {1}", cameraPos.x, leftBorder);
 		}
 		else if (Ivy::InputHandler::IsKeyDown(IVY_KEY_D))
 		{
-			//if (cameraPos.x < rightBorder)
+			//IVY_TRACE("KeyD down");
+			if (cameraPos.x > rightBorder)
+			{
 				cameraPos.x -= cameraMoveSpeed * ts;
-			IVY_TRACE("KeyD down");
+			}
+			//IVY_TRACE("cameraPos.x = {0}, rightBorder = {1}", cameraPos.x, rightBorder);
+
 		}
 
-		//TODOD - Refactor this Jump: Rise while key down, after peek is reached start falling
-		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_W) && jumpCooldown <= 0)
+		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_W))
 		{
-			if (!isJumping)
+			if (!isJumping && jumpCooldown <= 0)
 			{
-				jumpTime -= ts;
-				cameraPos.y -= cameraMoveSpeed * ts;
 				isJumping = true;
 			}
-			else if (jumpTime > constJumpTime / 2)	//Rise
+		}
+
+		if (isJumping)
+		{
+			//IVY_TRACE("cameraPos.y = {0}", cameraPos.y);
+			jumpTime -= ts;
+			if (jumpTime > constJumpTime / 2)	
 			{
-				jumpTime -= ts;
-				//if (cameraPos.y < topBorder)
-					cameraPos.y -= cameraMoveSpeed * ts;
+				// isRising
+				cameraPos.y -= cameraMoveSpeed * ts * jumpSpeed;
 			}
-			else if (jumpTime < constJumpTime / 2 && jumpTime > 0.0f)	//Fall
+			else if (jumpTime < constJumpTime / 2 && jumpTime > 0)
 			{
-				jumpTime -= ts;
-				//if (cameraPos.y > botBorder)
-					cameraPos.y += cameraMoveSpeed * ts;
+				// isFalling
+				cameraPos.y += cameraMoveSpeed * ts * jumpSpeed;
 			}
-			else if (jumpTime <= 0.0f)
+			else
 			{
+				// Reset
 				isJumping = false;
 				jumpCooldown = 1.0f;
 				jumpTime = constJumpTime;
 			}
-			
-		} 
+		}
 
 		Ivy::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Ivy::RenderCommand::clear();
@@ -120,6 +130,12 @@ public:
 		Ivy::Renderer::submit(shader, va);
 
 		Ivy::Renderer::end();
+	}
+
+	void imGuiRender() override
+	{
+		ImGui::SliderFloat(" Position X", &cameraPos.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position Y", &cameraPos.y, botBorder, topBorder);
 	}
 
 	void onEvent(Ivy::Event& event) override

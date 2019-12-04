@@ -28,7 +28,6 @@ namespace Ivy{
 
 	private:
 		static std::unique_ptr<InputHandler> instance;
-		//static InputHandler* instance;
 
 	};
 

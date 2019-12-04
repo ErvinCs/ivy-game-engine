@@ -8,12 +8,13 @@ namespace Ivy {
 	OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* data, uint32_t count)
 	{
 		this->count = count;
-		//ASSERT(sizeof(uint32_t) == sizeof(GLuint));
 
-		GLCall(glGenBuffers(1, &rendererId));	// &buffer - store in the return param the buffer address
+		// &buffer - store in the return param the buffer address
+		GLCall(glGenBuffers(1, &rendererId));	
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererId));
 		// Provide the buffer with the data
-		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));	// Assume that sizeof(unsigned int) = sizeof(GLuint)
+		// Assume that sizeof(unsigned int) = sizeof(GLuint)
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));	
 	}
 
 

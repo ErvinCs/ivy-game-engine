@@ -6,7 +6,6 @@
 #include <memory>
 #include <vector>
 #include <functional>
-//#include <iostream>
 
 namespace Ivy {
 	
@@ -14,7 +13,6 @@ namespace Ivy {
 
 	class EventHandler {
 	public:
-		//TODO - add params
 		using Func = std::function<void(Event& e)>;
 
 	public:

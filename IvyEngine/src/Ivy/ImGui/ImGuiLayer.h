@@ -21,14 +21,6 @@ namespace Ivy {
 		void begin();
 		void end();
 	private:
-		// Returns true if event was handled (consumed); false otherwise
-		//bool onKeyDownEvent(KeyDownEvent& event);
-		//bool onKeyUpEvent(KeyUpEvent& event);
-		//bool onMouseButtonDownEvent(MouseButtonDownEvent& event);
-		//bool onMouseButtonUpEvent(MouseButtonUpEvent& event);
-		//bool onMouseMoveEvent(MouseMoveEvent& event);
-		//bool onMouseScrollEvent(MouseScrollEvent& event);
-		//bool onWindowReseizeEvent(WindowResizeEvent& event);
 	private:
 		float time = 0.0;
 	

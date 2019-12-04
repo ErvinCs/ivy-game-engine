@@ -1,6 +1,5 @@
 #pragma once
 
-//#include <cstdint>
 #include "Node.h"
 #include "String.h"
 

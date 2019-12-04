@@ -9,9 +9,9 @@ namespace Ivy {
 	private:
 		uint32_t rendererId;
 		VertexBufferLayout layout;
+
 	public:
 		OpenGLVertexBuffer() = default;
-		// Consider changing void* to float*
 		OpenGLVertexBuffer(const float* data, uint32_t size);
 		~OpenGLVertexBuffer();
 

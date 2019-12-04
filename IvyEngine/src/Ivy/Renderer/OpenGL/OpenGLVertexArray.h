@@ -4,19 +4,12 @@
 #include "../VertexArray.h"
 #include "../VertexBufferLayout.h"
 
-
 //#include "OpenGLRenderer.h" - Cyclic dependency
 #include "../RenderAPI.h"
+
 namespace Ivy {
 
-	/*
-	 * Forward decalred VertexBufferLayout
-	 *  such that it does not need to be included here
-	 *  to avoid cyclic dependency in Renderer
-	 */
-	//class OpenGLVertexBufferLayout;
 
-	// TODO
 	class OpenGLVertexArray : public VertexArray
 	{
 	private:
@@ -28,7 +21,6 @@ namespace Ivy {
 		OpenGLVertexArray();
 		~OpenGLVertexArray();
 
-		//virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb, const OpenGLVertexBufferLayout& layout) override;
 		virtual void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb) override;
 		virtual void setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) override;
 
