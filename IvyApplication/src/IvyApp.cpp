@@ -35,17 +35,17 @@ public:
 		
 		va.reset(Ivy::VertexArray::Create());
 		float vertices[] = {
-		   -0.4f,  -0.4f, 0.0f, 0.0f,	//v0
-			0.4f,  -0.4f, 1.0f, 0.0f,	//v1
-			0.4f,   0.4f, 1.0f, 1.0f,	//v2
-		   -0.4f,   0.4f, 0.0f, 1.0f	//v3
+		   -0.6f,  -0.6f, 0.0f, 0.0f,	//v0
+			0.6f,  -0.6f, 1.0f, 0.0f,	//v1
+			0.6f,   0.6f, 1.0f, 1.0f,	//v2
+		   -0.6f,   0.6f, 0.0f, 1.0f	//v3
 		};
 		uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
 
 		std::shared_ptr<Ivy::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Ivy::VertexBuffer::Create(vertices, sizeof(vertices)));
 		Ivy::VertexBufferLayout layout = {
-			{ Ivy::ShaderDataType::Float3, "position" },
+			{ Ivy::ShaderDataType::Float2, "position" },
 			{ Ivy::ShaderDataType::Float2, "texCoord" }
 		};
 		vertexBuffer->setLayout(layout);
@@ -55,9 +55,9 @@ public:
 		indexBuffer.reset(Ivy::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		va->setIndexBuffer(indexBuffer);
 
-		shader = Ivy::Shader::Create("C:/Workspace/ivy-game-engine/IvyEngine/res_temp/shaders/image.shader"); 
+		shader = Ivy::Shader::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\shaders\\image.shader"); 
 		shader->bind();
-		texture = Ivy::Texture::Create("C:/Workspace/ivy-game-engine/IvyEngine/res_temp/textures/sprite.png");
+		texture = Ivy::Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png");
 		texture->bind(0);
 
 		IVY_TRACE("Created TestLayer");
