@@ -35,6 +35,15 @@ namespace Ivy {
 			stbi_image_free(localBuffer);
 	}
 
+	void OpenGLTexture::flipX() const
+	{
+		//TODO
+	}
+
+	void OpenGLTexture::flipY() const
+	{
+		//TODO
+	}
 
 	OpenGLTexture::~OpenGLTexture()
 	{
