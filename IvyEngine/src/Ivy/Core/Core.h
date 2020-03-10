@@ -1,6 +1,6 @@
 #pragma once
 
-
+// Platform
 #ifdef _WIN32
 	// Windows x64/x86 
 	#ifdef _WIN64
@@ -12,6 +12,7 @@
 	#endif
 #endif
 
+// Logging
 #ifdef IVY_ENABLE_ASSERTS
 	#define IVY_ASSERT(x, ...) { if(!(x)) { HZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 	#define IVY_CORE_ASSERT(x, ...) { if(!(x)) { HZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
@@ -20,4 +21,6 @@
 	#define IVY_CORE_ASSERT(x, ...)
 #endif
 
-
+// ECS
+//typedef uint16_t EntityID;
+//typedef uint16_t ComponentID;

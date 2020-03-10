@@ -11,10 +11,10 @@ namespace Ivy {
 
 		// &buffer - store in the return param the buffer address
 		GLCall(glGenBuffers(1, &rendererId));	
-		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererId));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, rendererId));
 		// Provide the buffer with the data
 		// Assume that sizeof(unsigned int) = sizeof(GLuint)
-		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));	
+		GLCall(glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW));
 	}
 
 

@@ -9,12 +9,17 @@ Read Stuff, Get References
 class TestLayer : public Ivy::SortingLayer
 {
 private:
-	std::shared_ptr<Ivy::Shader> shader;
-	std::shared_ptr<Ivy::VertexArray> va;
-	std::shared_ptr<Ivy::Texture> texture;
+	std::shared_ptr<Ivy::Texture> playerTexture;
+	std::shared_ptr<Ivy::Texture> tileTexture;
+	glm::vec4 playerColor;
+	glm::vec2 playerSize;
+	glm::vec2 playerPosition;
+	glm::vec2 tilePosition;
+	glm::vec2 tileSize;
+	float playerMoveSpeed = 5.0f;
+
 	Ivy::OrthoCamera camera;
 	glm::vec3 cameraPos;
-	float cameraMoveSpeed = 5.0f;
 	float cameraRotation = 0.0f;
 	float cameraRotationSpeed = 180.0f;
 
@@ -35,35 +40,13 @@ public:
 	TestLayer() : SortingLayer("Test"), camera(-12.8f, 12.8f, -6.4f, 6.4f), cameraPos({ 0.0f, 4.0f, 0.0f })
 	{
 		IVY_TRACE("Creating TestLayer");
-		
-		va.reset(Ivy::VertexArray::Create());
-		float vertices[] = {
-		   -0.6f,  -0.6f, 0.0f, 0.0f,	//v0
-			0.6f,  -0.6f, 1.0f, 0.0f,	//v1
-			0.6f,   0.6f, 1.0f, 1.0f,	//v2
-		   -0.6f,   0.6f, 0.0f, 1.0f	//v3
-		};
-		uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
-
-		std::shared_ptr<Ivy::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Ivy::VertexBuffer::Create(vertices, sizeof(vertices)));
-		Ivy::VertexBufferLayout layout = {
-			{ Ivy::ShaderDataType::Float2, "position" },
-			{ Ivy::ShaderDataType::Float2, "texCoord" }
-		};
-		vertexBuffer->setLayout(layout);
-		va->addVertexBuffer(vertexBuffer);
-
-		std::shared_ptr<Ivy::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Ivy::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		va->setIndexBuffer(indexBuffer);
-
-		shader = Ivy::Shader::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\shaders\\image.shader"); 
-		shader->bind();
-		texture = Ivy::Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png");
-		texture->bind(0);
-
-		IVY_TRACE("Created TestLayer");
+		playerTexture = Ivy::Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png");
+		tileTexture = Ivy::Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png");
+		playerColor = glm::vec4({ 200.0f, 200.0f, 200.0f, 200.0f });
+		playerPosition = glm::vec2({ 1.0f, 1.0f });
+		tilePosition = glm::vec2({ 2.0f, 2.0f });
+		playerSize = glm::vec2({ 3.0f, 3.0f });
+		tileSize = glm::vec2({ 1.0f, 1.0f });
 	}
 
 	void update(Ivy::Timestep ts) override
@@ -74,21 +57,20 @@ public:
 		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_A))
 		{
 			//IVY_TRACE("KeyA down");
-			if (cameraPos.x < leftBorder)
+			if (playerPosition.x < leftBorder)
 			{
-				cameraPos.x += cameraMoveSpeed * ts;
+				playerPosition.x += playerMoveSpeed * ts;
 			}
 			//IVY_TRACE("cameraPos.x = {0}, leftBorder = {1}", cameraPos.x, leftBorder);
 		}
 		else if (Ivy::InputHandler::IsKeyDown(IVY_KEY_D))
 		{
 			//IVY_TRACE("KeyD down");
-			if (cameraPos.x > rightBorder)
+			if (playerPosition.x > rightBorder)
 			{
-				cameraPos.x -= cameraMoveSpeed * ts;
+				playerPosition.x -= playerMoveSpeed * ts;
 			}
 			//IVY_TRACE("cameraPos.x = {0}, rightBorder = {1}", cameraPos.x, rightBorder);
-
 		}
 
 		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_W))
@@ -106,12 +88,12 @@ public:
 			if (jumpTime > constJumpTime / 2)	
 			{
 				// isRising
-				cameraPos.y -= cameraMoveSpeed * ts * jumpSpeed;
+				playerPosition.y += playerMoveSpeed * ts * jumpSpeed;
 			}
 			else if (jumpTime < constJumpTime / 2 && jumpTime > 0)
 			{
 				// isFalling
-				cameraPos.y += cameraMoveSpeed * ts * jumpSpeed;
+				playerPosition.y -= playerMoveSpeed * ts * jumpSpeed;
 			}
 			else
 			{
@@ -120,25 +102,30 @@ public:
 				jumpCooldown = 1.0f;
 				jumpTime = constJumpTime;
 			}
-		}
+		} 
 
-		Ivy::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		// Render
+		Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
 		Ivy::RenderCommand::clear();
 
-		camera.setPosition(cameraPos);
-		camera.setRotation(cameraRotation);
+		Ivy::Renderer::Begin(camera);
 
-		Ivy::Renderer::begin(camera);
+		Ivy::Renderer::DrawRect(playerPosition, playerSize, playerTexture);
+		Ivy::Renderer::DrawRect(playerPosition + glm::vec2(2.0f, 2.0f), playerSize, playerColor);
+		for (int i = 0; i < 20; i++)
+		{
+			Ivy::Renderer::DrawRect(tilePosition + glm::vec2(i, 0.0f), tileSize, tileTexture);
+		}
 
-		Ivy::Renderer::submit(shader, va);
-
-		Ivy::Renderer::end();
+		Ivy::Renderer::End();
 	}
 
 	void imGuiRender() override
 	{
-		ImGui::SliderFloat(" Position X", &cameraPos.x, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Position Y", &cameraPos.y, botBorder, topBorder);
+		ImGui::SliderFloat(" Position X", &playerPosition.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position Y", &playerPosition.y, botBorder, topBorder);
+		ImGui::SliderFloat(" Size X", &playerSize.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Size Y", &playerSize.y, botBorder, topBorder);
 	}
 
 	void onEvent(Ivy::Event& event) override

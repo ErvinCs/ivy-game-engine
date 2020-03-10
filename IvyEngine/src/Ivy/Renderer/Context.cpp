@@ -1,16 +1,15 @@
 #include "ivypch.h"
-#include "RenderAPI.h"
+#include "Context.h"
 
 #include "Renderer.h"
+#include "RenderAPI.h"
 
 #include "../Core/Logger.h"
-#include "OpenGL/OpenGLRenderAPI.h"
+#include "OpenGL/OpenGLContext.h"
 
 namespace Ivy {
-
-	RenderAPI::API RenderAPI::rAPI = RenderAPI::API::OpenGL;
-
-	std::unique_ptr<RenderAPI> RenderAPI::Create()
+	
+	std::unique_ptr<Context> Context::Create(void* window)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -18,11 +17,10 @@ namespace Ivy {
 			IVY_CORE_ERROR("RenderAPI::None is not supported!");
 			return nullptr;
 		case RenderAPI::API::OpenGL:
-			return std::make_unique<OpenGLRenderAPI>();
+			return std::make_unique<OpenGLContext>(static_cast<GLFWwindow*>(window));
 		}
 
 		IVY_CORE_ERROR("Unknown RenderAPI!");
 		return nullptr;
 	}
-
 }

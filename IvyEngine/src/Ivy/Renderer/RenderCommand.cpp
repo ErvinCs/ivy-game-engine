@@ -5,6 +5,6 @@
 
 namespace Ivy {
 
-	RenderAPI* RenderCommand::renderAPI = new OpenGLRenderAPI();
+	std::unique_ptr<RenderAPI> RenderCommand::renderAPI = RenderAPI::Create();
 
 }

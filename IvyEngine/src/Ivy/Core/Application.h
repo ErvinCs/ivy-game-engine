@@ -47,15 +47,15 @@ namespace Ivy {
 		Application();
 		virtual ~Application();
 
-		void Init();
-		void Run();
-		void Shutdown();
+		void init();
+		void run();
+		void shutdown();
 
 		void pushLayer(SortingLayer* layer);
 		void onEvent(Event& event);
 
 		inline Window& getWindow() { return *window; }
-		inline static Application& getApplication() { return *instance; }
+		inline static Application& GetApplication() { return *instance; }
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 

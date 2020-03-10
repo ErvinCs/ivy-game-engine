@@ -1,18 +1,12 @@
 #include "ivypch.h"
 #include "Application.h"
 
-/*
-* TODO
-*	Movement
-*	Jump
-*	Border-Collision (2 ifs)
-*	In Client-App
-*/
-
 #include <GLFW/glfw3.h>
 
 #include "Logger.h"
 #include "InputHandler.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/BaseRenderer.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -26,13 +20,10 @@ namespace Ivy {
 	Application::Application()
 	{
 		instance = this;
-		window = std::unique_ptr<Window>(Window::Create());
-		
+		window = Window::Create();
 		window->setCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		BaseRenderer::Init();
 
 		imGuiLayer = new ImGuiLayer();
 		pushLayer(imGuiLayer);
@@ -42,9 +33,10 @@ namespace Ivy {
 	Application::~Application()
 	{
 		//delete imGuiLayer;
+		BaseRenderer::Shutdown();
 	}
 
-	void Application::Init()
+	void Application::init()
 	{
 		memoryManager.init();
 		fileManager.init();
@@ -52,7 +44,7 @@ namespace Ivy {
 		rendererManager.init();
 	}
 
-	void Application::Run()
+	void Application::run()
 	{
 
 		while (isRunning)
@@ -78,7 +70,7 @@ namespace Ivy {
 		}
 	}
 
-	void Application::Shutdown()
+	void Application::shutdown()
 	{
 		rendererManager.shutdown();
 		inputManager.shutdown();

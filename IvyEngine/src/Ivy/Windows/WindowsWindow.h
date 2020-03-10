@@ -22,7 +22,7 @@ namespace Ivy {
 
 		inline unsigned int getHeight() const override { return properties.wProps.height; }
 		inline unsigned int getWidth() const override { return properties.wProps.width; }
-		inline virtual void* GetNativeWindow() const override { return window; }
+		inline virtual void* getNativeWindow() const override { return window; }
 		
 		void setCallback(const Func& callback) override
 		{
@@ -38,7 +38,7 @@ namespace Ivy {
 
 		WindowPropertiesUserData properties;
 		GLFWwindow* window;
-		Context* context;
+		std::unique_ptr<Context> context;
 
 		virtual void init(const WindowProperties& properties);
 		virtual void shutdown();

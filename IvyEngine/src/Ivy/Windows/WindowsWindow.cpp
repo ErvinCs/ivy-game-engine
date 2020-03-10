@@ -12,9 +12,9 @@ namespace Ivy {
 		IVY_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProperties& properties)
+	std::unique_ptr<Window> Window::Create(const WindowProperties& properties)
 	{
-		return new WindowsWindow(properties);
+		return std::make_unique<WindowsWindow>(properties);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProperties& properties) 
@@ -30,8 +30,7 @@ namespace Ivy {
 	void WindowsWindow::update()
 	{
 		glfwPollEvents();
-		context->swapBuffers();
-
+		context->refresh();
 	}
 
 	void WindowsWindow::init(const WindowProperties& wProps)
@@ -50,7 +49,7 @@ namespace Ivy {
 
 		// Create and init context & window
 		this->window = glfwCreateWindow(wProps.width, wProps.height, wProps.name.c_str(), nullptr, nullptr);
-		context = new OpenGLContext(window);
+		context = Context::Create(window);
 		context->init();
 
 		glfwSetWindowUserPointer(window, &properties);
@@ -99,13 +98,6 @@ namespace Ivy {
 				}
 			}
 		});
-
-		/*glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int char* character)
-		{
-			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
-			KeyTypedEvent typedEvent(character);
-			data.callback(typedEvent);
-		});*/
 
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
 		{

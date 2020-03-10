@@ -11,15 +11,15 @@ namespace Ivy {
 		VertexBufferLayout layout;
 
 	public:
-		OpenGLVertexBuffer() = default;
+		//OpenGLVertexBuffer() = default;
 		OpenGLVertexBuffer(const float* data, uint32_t size);
-		~OpenGLVertexBuffer();
+		virtual ~OpenGLVertexBuffer();
 
 		virtual const VertexBufferLayout& getLayout() const override { return layout; }
 		virtual void setLayout(const VertexBufferLayout& layout) override { this->layout = layout; }
 
-		void bind() const override;
-		void unbind() const override;
+		virtual void bind() const override;
+		virtual void unbind() const override;
 	};
 
 }
