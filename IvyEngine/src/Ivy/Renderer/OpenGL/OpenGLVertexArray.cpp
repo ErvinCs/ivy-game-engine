@@ -49,8 +49,7 @@ namespace Ivy {
 		this->indexBuffer = indexBuffer;
 	}
 
-	//void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb, const OpenGLVertexBufferLayout& layout)
-	void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb)	//, const std::shared_ptr<VertexBufferLayout>& layou
+	void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb)	
 	{
 		// Bind the vertex array
 		this->bind();

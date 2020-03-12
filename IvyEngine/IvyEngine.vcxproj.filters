@@ -1324,6 +1324,10 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
+    <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
+    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1427,6 +1431,7 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
+    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res_temp\shaders\color.shader" />

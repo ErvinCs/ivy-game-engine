@@ -18,8 +18,6 @@
 
 #include "../ImGui/ImGuiLayer.h"
 
-//#include <GLFW/glfw3.h>
-
 namespace Ivy {
 
 	class Application 
@@ -33,10 +31,10 @@ namespace Ivy {
 		float lastFrameTime = 0.0f;
 
 	protected:
-		MemoryManager& memoryManager = MemoryManager::getInstance();
-		FileManager& fileManager = FileManager::getInstance();
-		InputManager& inputManager = InputManager::getInstance();
-		RendererManager& rendererManager = RendererManager::getInstance();
+		//MemoryManager& memoryManager = MemoryManager::getInstance();
+		//FileManager& fileManager = FileManager::getInstance();
+		//InputManager& inputManager = InputManager::getInstance();
+		//RendererManager& rendererManager = RendererManager::getInstance();
 
 	public:
 		inline static Application& getInstance()

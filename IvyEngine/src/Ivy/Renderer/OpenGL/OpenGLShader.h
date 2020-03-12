@@ -43,7 +43,6 @@ namespace Ivy {
 		virtual void setUniform4i(const std::string& name, const glm::ivec4& vec4) override;
 		virtual void setUniformMat4f(const std::string& name, const glm::mat4& matrix) override;
 
-	//private:
 		unsigned int compileShader(unsigned int type, const std::string& source);
 		unsigned int createShader(const std::string& vertexShader, const std::string& fragmentShader);
 		ShaderProgramSource parseShader(const std::string& filepath);

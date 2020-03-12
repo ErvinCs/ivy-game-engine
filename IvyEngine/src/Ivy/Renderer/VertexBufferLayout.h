@@ -1,4 +1,5 @@
 #pragma once
+
 // TEMPORARY - Only needed by the VertexArray (& OpenGLVertexArray)
 // TODO - Refactor
 

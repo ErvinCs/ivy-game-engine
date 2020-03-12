@@ -38,10 +38,10 @@ namespace Ivy {
 
 	void Application::init()
 	{
-		memoryManager.init();
-		fileManager.init();
-		inputManager.init();
-		rendererManager.init();
+		//memoryManager.init();
+		//fileManager.init();
+		//inputManager.init();
+		//rendererManager.init();
 	}
 
 	void Application::run()
@@ -49,10 +49,6 @@ namespace Ivy {
 
 		while (isRunning)
 		{
-			//memoryManager.run();
-			//fileManager.run();
-			//inputManager.run();
-			//rendererManager.run();
 
 			float time = (float)glfwGetTime();
 			Timestep ts = time - lastFrameTime;
@@ -72,10 +68,10 @@ namespace Ivy {
 
 	void Application::shutdown()
 	{
-		rendererManager.shutdown();
-		inputManager.shutdown();
-		fileManager.shutdown();
-		memoryManager.shutdown();
+		//rendererManager.shutdown();
+		//inputManager.shutdown();
+		//fileManager.shutdown();
+		//memoryManager.shutdown();
 	}
 
 	void Application::pushLayer(SortingLayer* layer)

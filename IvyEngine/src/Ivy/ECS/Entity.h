@@ -5,15 +5,13 @@
 
 #include "Component.h"
 
-namespace Ivy
-{
+namespace Ivy {
+
 	class Entity
 	{
 	private:
-		int MAX_ENTITIES = 5000;
 		uint16_t entityId;
-		// ComponentID to Component mapping
-		std::map<uint8_t, Component*> componentRefs;
+		std::map<uint8_t, std::shared_ptr<Component>> componentRefs; // ComponentID to Component mapping
 
 	public:
 		Entity(uint16_t id) : entityId(id) {}
@@ -22,11 +20,11 @@ namespace Ivy
 			return entityId;
 		}
 
-		inline void addComponent(Component* component) {
-			componentRefs.insert(std::pair<uint16_t, Component*>(component->getComponentId(), component));
+		inline void addComponent(const std::shared_ptr<Component>& component) {
+			componentRefs.insert(std::pair<uint16_t, std::shared_ptr<Component>>(component->getComponentId(), component));
 		}
 
-		inline void removeComponent(Component* component) {
+		inline void removeComponent(const std::shared_ptr<Component>& component) {
 			componentRefs.erase(component->getComponentId());
 		}
 	};

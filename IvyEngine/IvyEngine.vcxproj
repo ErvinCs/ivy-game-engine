@@ -140,6 +140,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
+    <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
+    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
@@ -564,6 +568,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\HashTable.cpp" />

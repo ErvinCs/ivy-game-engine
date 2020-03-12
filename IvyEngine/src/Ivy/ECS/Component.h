@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include "glm/vec2.hpp"
+
 
 namespace Ivy
 {
@@ -19,17 +19,8 @@ namespace Ivy
 		//inline uint16_t getEntityId() { return entityId; }
 	};
 
-	struct Transform
-	{
-	public:
-		glm::vec2 position;
-		float rotation;
-		glm::vec2 scale;
-	};
+	//enum ComponentTypes
+	//{
 
-	struct Renderable
-	{
-	public:
-		std::string spritePath;
-	};
+	//};
 }
