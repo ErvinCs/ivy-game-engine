@@ -18,15 +18,38 @@ namespace Ivy {
 	class ComponentContainer : public BaseComponentContainer
 	{
 	private:
-		//int capacity = 1000;	//MAX ENTITIES
-		std::array<T, 1000> componentArray;
-		int size = 0;
+		//int capacity = 100;	//MAX ENTITIES
+		std::array<T, 3> componentArray{};
+		int size;
 	public:
-		ComponentContainer() = default;
-
-		void addComponent(Entity& entity, const T& component) 
+		ComponentContainer()
 		{
-			entity.addComponent(std::make_shared<T>(component));
+			this->size = 0;
+		}
+
+		/*ComponentContainer(const ComponentContainer& container)
+		{
+			this->componentArray = container.getComponentArray();
+			this->size = container.getSize();
+		}
+		ComponentContainer(ComponentContainer&& container) = default;
+		ComponentContainer& operator=(ComponentContainer&& container) = default;
+		ComponentContainer& operator=(const ComponentContainer& container) = default;*/
+		
+		std::array<T, 100>& getComponentArray()
+		{
+			return this->componentArray;
+		}
+
+		int& getSize()
+		{
+			return this->size;
+		}
+
+		void addComponent(Entity& entity, T& component) 
+		{
+			//entity.addComponent(&component);
+			component.setEntityId(entity.getEntityId());
 			componentArray[size] = component;
 			size++;
 		}
@@ -36,12 +59,15 @@ namespace Ivy {
 
 			for (int i = 0; i < size; i++)
 			{
-				if (componentArray[i].getComponentId() == entity.getEntityId())
+				if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
 					T tempComponent = componentArray[i];
 					componentArray[i] = componentArray[size - 1];
 					componentArray[size - 1] = tempComponent;
 					size--;
+
+					// WORK ON THIS
+					//entity.removeComponent(&tempComponent);
 				}
 			}
 		}
@@ -50,7 +76,7 @@ namespace Ivy {
 		{
 			for (int i = 0; i < size; i++)
 			{
-				if (componentArray[i].getComponentId() == entity.getEntityId())
+				if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
 					return componentArray[i];
 				}

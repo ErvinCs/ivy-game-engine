@@ -11,5 +11,14 @@ namespace Ivy
 		glm::vec2 position;
 		float rotation;
 		glm::vec2 scale;
+
+		Transform() = default;
+		Transform(glm::vec2 position, float rotation, glm::vec2 scale)
+		{
+			this->position = position;
+			this->rotation = rotation;
+			this->scale = scale;
+			this->setComponentId(0);
+		}
 	};
 }

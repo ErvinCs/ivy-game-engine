@@ -23,3 +23,11 @@
 #include "Ivy/Renderer/Shader.h"
 #include "Ivy/Renderer/Texture.h"
 #include "Ivy/Renderer/OrthoCamera.h"
+
+#include "Ivy/ECS/Entity.h"
+#include "Ivy/ECS/System.h"
+#include "Ivy/ECS/Component.h"
+#include "Ivy/ECS/ECS.h"
+#include "Ivy/ECS/RenderSystem.h"
+#include "Ivy/ECS/Components/Transform.h"
+#include "Ivy/ECS/Components/Renderable.h"

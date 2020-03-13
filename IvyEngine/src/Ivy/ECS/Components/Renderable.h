@@ -9,5 +9,12 @@ namespace Ivy
 	{
 	public:
 		std::string spritePath;
+
+		Renderable() = default;
+		Renderable(std::string spritePath)
+		{
+			this->spritePath = spritePath;
+			this->setComponentId(1);
+		}
 	};
 }

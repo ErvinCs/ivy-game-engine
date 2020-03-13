@@ -11,7 +11,7 @@ namespace Ivy {
 	{
 	protected:
 		//std::shared_ptr<std::set<Entity>> entities;
-		std::set<Entity> entities;
+		std::vector<Entity> entities;
 	public:
 		//inline const std::shared_ptr<std::set<Entity>>& getEntities() { return this->entities; }
 		//inline void setEntities(const std::shared_ptr<std::set<Entity>>& entities)
@@ -19,8 +19,8 @@ namespace Ivy {
 		//	this->entities = entities;
 		//}
 
-		inline const std::set<Entity>& getEntities() { return entities; }
-		inline void setEntities(const std::set<Entity>& entities) { this->entities = entities; }
+		inline const std::vector<Entity>& getEntities() const { return entities; }
+		inline void setEntities(const std::vector<Entity>& entities) { this->entities = entities; }
 
 		virtual void init() = 0;
 		virtual void update(float deltatime) = 0;

@@ -11,18 +11,24 @@ namespace Ivy {
 	class RenderSystem : public System
 	{
 	public:
-		RenderSystem(const std::set<Entity>& entities)//(const std::shared_ptr<std::set<Entity>>& entities)
+		RenderSystem() = default;
+		RenderSystem(const std::vector<Entity>& entities)
 		{
 			this->setEntities(entities);
+		}
+		RenderSystem(const std::vector<Entity>& entities, const OrthoCamera& camera)
+		{
+			this->setEntities(entities);
+			this->camera = camera;
 		}
 		
 		virtual void init() override;
 		virtual void update(float deltatime) override;
 
-		void setCamera(std::shared_ptr<OrthoCamera>& camera) { this->camera = camera; }
+		void setCamera(const OrthoCamera& camera) { this->camera = camera; }
 
 	private:
-		std::shared_ptr<OrthoCamera> camera;
+		OrthoCamera camera;
 	};
 
 }

@@ -16,6 +16,11 @@ private:
 	glm::vec2 tileSize;
 	float playerMoveSpeed = 5.0f;
 
+	Ivy::Entity myEntity = Ivy::ECS::getInstance().getEntities().at(0);
+	Ivy::Transform transform{ glm::vec2(2.0f, 2.0f), 180.0f, glm::vec2(2.0f, 2.0f) };
+	Ivy::Renderable renderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png" };
+	std::shared_ptr<Ivy::RenderSystem> renderSystem = std::make_shared<Ivy::RenderSystem>(Ivy::ECS::getInstance().getEntities());
+	
 	Ivy::OrthoCamera camera;
 	glm::vec3 cameraPos;
 	float cameraRotation = 0.0f;
@@ -46,7 +51,18 @@ public:
 		tilePosition = glm::vec2({ 2.0f, 2.0f });
 		playerSize = glm::vec2({ 3.0f, 3.0f });
 		tileSize = glm::vec2({ 1.0f, 1.0f });
-		picturePosition = glm::vec2(11.5f, 5.4f);
+		picturePosition = glm::vec2(11.5f, 5.4f);	
+
+		renderSystem->setCamera(camera);
+
+		Ivy::ECS::getInstance().addComponentType<Ivy::Transform>();
+		Ivy::ECS::getInstance().addComponentType<Ivy::Renderable>();
+		
+		Ivy::ECS::getInstance().addComponent<Ivy::Transform>(myEntity, transform);
+
+		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(myEntity, renderable);
+		
+		Ivy::ECS::getInstance().addSystem(renderSystem);
 	}
 
 	void update(Ivy::Timestep ts) override
@@ -114,8 +130,10 @@ public:
 			Ivy::Renderer::DrawRect(tilePosition + glm::vec2(i, -8.0f), tileSize, tileTexture);
 		}
 		Ivy::Renderer::DrawRect(picturePosition, glm::vec2(2.0f, 2.0f), pictureTex);
+		renderSystem->update(ts);
 
 		Ivy::Renderer::End();
+
 	}
 
 	void imGuiRender() override

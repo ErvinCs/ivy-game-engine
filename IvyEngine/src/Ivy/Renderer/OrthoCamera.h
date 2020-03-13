@@ -7,6 +7,7 @@ namespace Ivy {
 	class OrthoCamera
 	{
 	public:
+		OrthoCamera() = default;
 		OrthoCamera(const float left, const float right, const float bottom, const float top);
 		~OrthoCamera() = default;
 

@@ -14,16 +14,17 @@ namespace Ivy {
 	void RenderSystem::init()
 	{
 		RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
+		RenderCommand::clear();
 	}
 
 	void RenderSystem::update(float deltatime)
 	{
-		//std::shared_ptr<std::set<Entity>> entts = getEntities();
-		std::set<Entity> entts = getEntities();
+		std::vector<Entity> entts = getEntities();
 
-		RenderCommand::clear();
-		Renderer::Begin(*camera);
-	
+		//RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
+		//RenderCommand::clear();
+
+		//Renderer::Begin(camera);
 
 		for (auto& it = entts.begin(); it != entts.end(); it++)
 		{
@@ -31,12 +32,11 @@ namespace Ivy {
 
 			auto& renderable = ECS::getInstance().getComponent<Renderable>(object);
 			auto& transform = ECS::getInstance().getComponent<Transform>(object);
-			std::shared_ptr<Ivy::Texture> texture = Texture::Create(renderable.spritePath);
 
-			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, texture);
+			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, Texture::Create(renderable.spritePath));
 		}
 
-		Renderer::End();
+		//Renderer::End();
 	}
 
 }

@@ -15,25 +15,23 @@ namespace Ivy {
 	class ECS
 	{
 	private:
-		static uint16_t EntityIdGenerator;
-		static uint8_t componentTypeCounter;
-		std::map<const char*, std::shared_ptr<BaseComponentContainer>> componentContainers;
-		std::map<const char*, uint8_t> componentTypes;
-		//std::set<Entity> entities;
-		//std::set<System*> systems; // consider using map with const char* as id
+		uint16_t EntityIdGenerator;
+		uint8_t componentTypeCounter;
+		std::map<const char*, std::shared_ptr<BaseComponentContainer>> componentContainers{};
+		std::map<const char*, uint8_t> componentTypes{};
+		std::vector<Entity> entities{};
+		std::set<std::shared_ptr<System>> systems{}; // consider using map with const char* as id
 	public:
-		ECS() 
-		{ 
-			EntityIdGenerator = 0; 
-			componentTypeCounter = 0;
-		}
-
 		~ECS()
 		{
-			//for (auto it : entities)
-			//{
-			//	destroyEntity(it);
-			//}
+			for (auto& it = entities.begin(); it != entities.end(); it++)
+			{
+				destroyEntity(*it);
+			}
+			componentTypes.clear();
+			componentContainers.clear();
+			systems.clear();
+			entities.clear();
 		}
 
 		static ECS& getInstance()
@@ -49,15 +47,15 @@ namespace Ivy {
 			const char* typeName = typeid(T).name();
 
 			// Add a new component type
-			componentTypes.insert({typeName, componentTypeCounter })
+			componentTypes.insert({ typeName, componentTypeCounter });
 			// Add a component container for the new type
-			componentContainers.insert({ typeName, std::make_shared<ComponentContainer<T>> });
+			componentContainers.insert({ typeName, std::make_shared<ComponentContainer<T>>() });
 
 			componentTypeCounter++;
 		}
 
 		template<typename T>
-		void addComponent(Entity& entity, const T& component)
+		void addComponent(Entity& entity, T& component)
 		{
 			getComponentContainer<T>()->addComponent(entity, component);
 		}
@@ -83,21 +81,33 @@ namespace Ivy {
 
 				component->onEntityDestroyed(entity);
 			}
-			// TODO - Separate live entities from dead entities
-			//entities.erase(entity);
+			
+			for (auto& it = entities.begin(); it != entities.end(); it++)
+			{
+				
+				if (it->getEntityId() == entity.getEntityId())
+				{
+					entities.erase(it);
+				}
+			}
 		}
 
 		Entity& createEntity()
 		{
-			Entity* entity = new Entity(EntityIdGenerator);
+			Entity entity = Entity(EntityIdGenerator);
+			entities.push_back(entity);
 			EntityIdGenerator++;
-			//this->entities.emplace(*entity);
-			return *entity;
+			return entities.at(entities.size() - 1);
+		}
+
+		const std::vector<Entity>& getEntities() {
+			return this->entities;
 		}
 
 		// Systems
-		void addSystem(System& system)
+		void addSystem(const std::shared_ptr<System>& system)
 		{
+			systems.insert(system);
 			//systems.emplace(system);
 		}
 
@@ -110,6 +120,15 @@ namespace Ivy {
 
 			return std::static_pointer_cast<ComponentContainer<T>>(componentContainers[typeName]);
 		}	
+
+		ECS()
+		{
+			EntityIdGenerator = 0;
+			componentTypeCounter = 0;
+			entities.push_back(Entity(EntityIdGenerator));
+			EntityIdGenerator++;
+		}
+
 		ECS(const ECS&) = delete;
 		ECS& operator=(const ECS&) = delete;
 	};
