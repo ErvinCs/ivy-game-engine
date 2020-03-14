@@ -140,12 +140,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Ivy\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Ivy\Renderer\RenderAPI.h" />
-    <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
-    <ClInclude Include="src\Ivy\Renderer\OrthoCamera.h" />
-    <ClInclude Include="src\Ivy\Renderer\Context.h" />
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
+    <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
+    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
+    <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
@@ -159,6 +158,11 @@
     <ClInclude Include="src\Ivy\Core\String.h" />
     <ClInclude Include="src\Ivy\Core\Timestep.h" />
     <ClInclude Include="src\Ivy\Core\Window.h" />
+    <ClInclude Include="src\Ivy\ECS\Component.h" />
+    <ClInclude Include="src\Ivy\ECS\ComponentContainer.h" />
+    <ClInclude Include="src\Ivy\ECS\ECS.h" />
+    <ClInclude Include="src\Ivy\ECS\Entity.h" />
+    <ClInclude Include="src\Ivy\ECS\System.h" />
     <ClInclude Include="src\Ivy\Events\Event.h" />
     <ClInclude Include="src\Ivy\Events\KeyEvent.h" />
     <ClInclude Include="src\Ivy\Events\MouseEvent.h" />
@@ -171,17 +175,23 @@
     <ClInclude Include="src\Ivy\Managers\Manager.h" />
     <ClInclude Include="src\Ivy\Managers\MemoryManager.h" />
     <ClInclude Include="src\Ivy\Managers\RendererManager.h" />
+    <ClInclude Include="src\Ivy\Renderer\Context.h" />
+    <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLRenderAPI.h" />
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.h" />
-    <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBufferLayout.h" />
+    <ClInclude Include="src\Ivy\Renderer\OrthoCamera.h" />
+    <ClInclude Include="src\Ivy\Renderer\RenderAPI.h" />
+    <ClInclude Include="src\Ivy\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Ivy\Renderer\Renderer.h" />
     <ClInclude Include="src\Ivy\Renderer\Shader.h" />
     <ClInclude Include="src\Ivy\Renderer\Texture.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Ivy\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h" />
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
@@ -556,14 +566,10 @@
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
-    <ClInclude Include="src\Ivy\Renderer\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Ivy\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\RenderAPI.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\OrthoCamera.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\HashTable.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
@@ -577,23 +583,29 @@
     <ClCompile Include="src\Ivy\Managers\InputManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\RendererManager.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLRenderAPI.cpp" />
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLVertexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\OrthoCamera.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\RenderAPI.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Ivy\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Ivy\Renderer\Shader.cpp" />
     <ClCompile Include="src\Ivy\Renderer\Texture.cpp" />
     <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp" />
     <ClCompile Include="src\Ivy\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\ivypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">
@@ -607,13 +619,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res_temp\textures\cat1.png" />
-    <Image Include="res_temp\textures\ninja.png" />
-    <Image Include="res_temp\textures\sprite.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="res_temp\shaders\color.shader" />
     <None Include="res_temp\shaders\image.shader" />
-    <None Include="res_temp\shaders\test.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

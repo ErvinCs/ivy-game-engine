@@ -9,14 +9,14 @@
 
 namespace Ivy {
 
-	VertexArray* VertexArray::Create()
+	std::shared_ptr<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RenderAPI::API::None:    
 			IVY_CORE_ERROR("RenderAPI::None is currently not supported!"); return nullptr;
 		case RenderAPI::API::OpenGL:  
-			return new OpenGLVertexArray();
+			return std::make_shared<OpenGLVertexArray>();
 		}
 
 		IVY_CORE_ERROR("Unknown RenderAPI!");

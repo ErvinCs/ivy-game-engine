@@ -22,12 +22,17 @@ namespace Ivy {
 			renderAPI->clear();
 		}
 
-		inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+		inline static void Draw(const std::shared_ptr<VertexArray>& vertexArray)
 		{
-			renderAPI->drawIndexed(vertexArray);
+			renderAPI->draw(vertexArray);
+		}
+
+		inline static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+		{
+			renderAPI->setViewport(x, y, width, height);
 		}
 	private:
-		static RenderAPI* renderAPI;
+		static std::unique_ptr<RenderAPI> renderAPI;
 	};
 
 }

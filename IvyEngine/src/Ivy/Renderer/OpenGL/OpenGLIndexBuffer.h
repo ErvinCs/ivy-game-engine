@@ -11,14 +11,13 @@ namespace Ivy {
 		uint32_t count;
 
 	public:
-		OpenGLIndexBuffer() = default;
 		OpenGLIndexBuffer(const uint32_t* data, uint32_t count);
 		virtual ~OpenGLIndexBuffer();
 
-		void bind() const override;
-		void unbind() const override;
+		virtual void bind() const override;
+		virtual void unbind() const override;
 
-		inline uint32_t getCount() const override { return count; }
+		inline virtual uint32_t getCount() const override { return count; }
 	};
 
 }

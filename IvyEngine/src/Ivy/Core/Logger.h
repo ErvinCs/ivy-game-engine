@@ -43,8 +43,8 @@ namespace Ivy {
 #define IVY_TRACE(...) ::Ivy::Logger::GetClientLogger()->trace(__VA_ARGS__)
 
 // Strap Logs from distribution build
-#define IVY_CORE_INFO
-#define IVY_CORE_TRACE
-#define IVY_CORE_WARN
-#define IVY_CORE_ERROR
-#define IVY_CORE_FATAL
+//#define IVY_CORE_INFO
+//#define IVY_CORE_TRACE
+//#define IVY_CORE_WARN
+//#define IVY_CORE_ERROR
+//#define IVY_CORE_FATAL

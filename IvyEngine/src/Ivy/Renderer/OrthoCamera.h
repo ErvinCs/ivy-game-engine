@@ -7,6 +7,7 @@ namespace Ivy {
 	class OrthoCamera
 	{
 	public:
+		OrthoCamera() = default;
 		OrthoCamera(const float left, const float right, const float bottom, const float top);
 		~OrthoCamera() = default;
 
@@ -36,19 +37,6 @@ namespace Ivy {
 
 		glm::vec3 position = { 0.0f, 0.0f, 0.0f };
 		float rotation = 0.0f;	// Z-Rotation
-
-	/////////////////////////////////////////////////////////////////
-	/*private:
-		float leftBorder;
-		float rightBorder;
-		float bottomBorder;
-		float topBorder;
-
-	public:
-		inline float getLeftBorder() { return leftBorder; }
-		inline float getRightBorder() { return rightBorder; }
-		inline float getTopBorder() { return topBorder; }
-		inline float getBottomBorder() { return bottomBorder; }*/
 	};
 
 }

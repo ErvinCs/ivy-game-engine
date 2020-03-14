@@ -5,10 +5,10 @@
 
 #ifdef IVY_PLATFORM_WINDOWS
 
-// Will return an application from IvyApp in IvyApplication project
+// Return an application from IvyApp in IvyApplication project
 extern Ivy::Application* Ivy::CreateApp();
 
-// Need some system initialization to init subsystems: Logger
+// Initialize subsystems: Logger
 int main(int argc, char** argv)
 {
 	Ivy::Logger::Init();
@@ -16,9 +16,9 @@ int main(int argc, char** argv)
 	IVY_INFO("Initialized Client Logger!");
 
 	auto application = Ivy::CreateApp();
-	application->Init();
-	application->Run();
-	application->Shutdown();
+	application->init();
+	application->run();
+	application->shutdown();
 	delete application;
 
 	return 0;

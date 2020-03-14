@@ -7,41 +7,40 @@
 
 namespace Ivy {
 	std::unique_ptr<InputHandler> InputHandler::instance = std::make_unique<WindowsInputHandler>();
-	//InputHandler* InputHandler::instance = new WindowsInputHandler();
 
-	bool WindowsInputHandler::IsKeyDownImpl(unsigned int keycode)
+	bool WindowsInputHandler::isKeyDownImpl(unsigned int keycode)
 	{
 		// Get the glfw window reference
-		auto window = static_cast<GLFWwindow*>(Application::getApplication().getWindow().GetNativeWindow());
+		auto window = static_cast<GLFWwindow*>(Application::GetApplication().getWindow().getNativeWindow());
 		auto state = glfwGetKey(window, keycode);
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	bool WindowsInputHandler::IsMouseButtonDownImpl(unsigned int button)
+	bool WindowsInputHandler::isMouseButtonDownImpl(unsigned int button)
 	{
-		auto window = static_cast<GLFWwindow*>(Application::getApplication().getWindow().GetNativeWindow());
+		auto window = static_cast<GLFWwindow*>(Application::GetApplication().getWindow().getNativeWindow());
 		auto state = glfwGetMouseButton(window, button);
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> WindowsInputHandler::GetMousePositionImpl()
+	std::pair<float, float> WindowsInputHandler::getMousePositionImpl()
 	{
-		auto window = static_cast<GLFWwindow*>(Application::getApplication().getWindow().GetNativeWindow());
+		auto window = static_cast<GLFWwindow*>(Application::GetApplication().getWindow().getNativeWindow());
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 
 		return { (float)xpos, (float)ypos };
 	}
 
-	float WindowsInputHandler::GetMouseXImpl()
+	float WindowsInputHandler::getMouseXImpl()
 	{
-		auto[x, y] = GetMousePositionImpl();
+		auto[x, y] = getMousePositionImpl();
 		return x;
 	}
 
-	float WindowsInputHandler::GetMouseYImpl()
+	float WindowsInputHandler::getMouseYImpl()
 	{
-		auto[x, y] = GetMousePositionImpl();
+		auto[x, y] = getMousePositionImpl();
 		return y;
 	}
 

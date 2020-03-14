@@ -33,13 +33,16 @@ namespace Ivy {
 		void unbind() const override;
 
 		// Set uniforms
-		// TODO: templates
-		void setUniform1f(const std::string& name, float v);
-		void setUniform1i(const std::string& name, int v);
-		void setUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
-		void setUniformMat4f(const std::string& name, const glm::mat4& matrix);
+		virtual void setUniform1f(const std::string& name, float v) override;
+		virtual void setUniform1i(const std::string& name, int v) override;
+		virtual void setUniform2f(const std::string& name, const glm::vec2& vec2) override;
+		virtual void setUniform2i(const std::string& name, const glm::ivec2& vec2) override;
+		virtual void setUniform3f(const std::string& name, const glm::vec3& vec3) override;
+		virtual void setUniform3i(const std::string& name, const glm::ivec3& vec3) override;
+		virtual void setUniform4f(const std::string& name, const glm::vec4& vec4) override;
+		virtual void setUniform4i(const std::string& name, const glm::ivec4& vec4) override;
+		virtual void setUniformMat4f(const std::string& name, const glm::mat4& matrix) override;
 
-	//private:
 		unsigned int compileShader(unsigned int type, const std::string& source);
 		unsigned int createShader(const std::string& vertexShader, const std::string& fragmentShader);
 		ShaderProgramSource parseShader(const std::string& filepath);

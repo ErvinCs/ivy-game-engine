@@ -21,7 +21,7 @@ namespace Ivy {
 		IVY_CORE_TRACE("Glad status: {0}", status);
 	}
 
-	void OpenGLContext::swapBuffers()
+	void OpenGLContext::refresh()
 	{
 		glfwSwapBuffers(window);
 	}

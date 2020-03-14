@@ -23,5 +23,4 @@ namespace Ivy {
 		IVY_CORE_ERROR("Unknown RendererAPI!");
 		return nullptr;
 	}
-
 }

@@ -18,8 +18,6 @@
 
 #include "../ImGui/ImGuiLayer.h"
 
-//#include <GLFW/glfw3.h>
-
 namespace Ivy {
 
 	class Application 
@@ -32,12 +30,6 @@ namespace Ivy {
 		ImGuiLayer* imGuiLayer;
 		float lastFrameTime = 0.0f;
 
-	protected:
-		MemoryManager& memoryManager = MemoryManager::getInstance();
-		FileManager& fileManager = FileManager::getInstance();
-		InputManager& inputManager = InputManager::getInstance();
-		RendererManager& rendererManager = RendererManager::getInstance();
-
 	public:
 		inline static Application& getInstance()
 		{
@@ -47,15 +39,15 @@ namespace Ivy {
 		Application();
 		virtual ~Application();
 
-		void Init();
-		void Run();
-		void Shutdown();
+		void init();
+		void run();
+		void shutdown();
 
 		void pushLayer(SortingLayer* layer);
 		void onEvent(Event& event);
 
 		inline Window& getWindow() { return *window; }
-		inline static Application& getApplication() { return *instance; }
+		inline static Application& GetApplication() { return *instance; }
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 

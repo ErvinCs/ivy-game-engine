@@ -1,7 +1,7 @@
 #include "ivypch.h"
 #include "OpenGLVertexArray.h"
 
-#include "OpenGLVertexBufferLayout.h"
+#include "OpenGLRenderAPI.h"
 
 #include <glad/glad.h>
 
@@ -29,16 +29,16 @@ namespace Ivy {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
-		//GLCall(
+		GLCall(
 		glGenVertexArrays(1, &rendererId);
-		//);
+		);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
-		//GLCall(
+		GLCall(
 		glDeleteVertexArrays(1, &rendererId);
-		//);
+		);
 	}
 
 	void OpenGLVertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
@@ -49,8 +49,7 @@ namespace Ivy {
 		this->indexBuffer = indexBuffer;
 	}
 
-	//void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb, const OpenGLVertexBufferLayout& layout)
-	void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb)	//, const std::shared_ptr<VertexBufferLayout>& layou
+	void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vb)	
 	{
 		// Bind the vertex array
 		this->bind();
@@ -74,16 +73,16 @@ namespace Ivy {
 
 	void OpenGLVertexArray::bind() const
 	{
-		//GLCall(
+		GLCall(
 		glBindVertexArray(rendererId);
-		//);
+		);
 	}
 
 	void OpenGLVertexArray::unbind() const
 	{
-		//GLCall(
+		GLCall(
 		glBindVertexArray(0);
-		//);
+		);
 
 	}
 

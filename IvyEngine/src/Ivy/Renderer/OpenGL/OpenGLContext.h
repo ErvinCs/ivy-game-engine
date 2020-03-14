@@ -10,10 +10,9 @@ namespace Ivy {
 	{
 	public:
 		OpenGLContext(GLFWwindow* window);
-		~OpenGLContext() = default;
 
 		virtual void init() override;
-		virtual void swapBuffers() override;
+		virtual void refresh() override;
 	private:
 		GLFWwindow* window;
 	};

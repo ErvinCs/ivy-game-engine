@@ -36,7 +36,7 @@ namespace Ivy {
 	{
 		// End ImGui Window Rendering
 		ImGuiIO& io = ImGui::GetIO();
-		Application& app = Application::getApplication();
+		Application& app = Application::GetApplication();
 		io.DisplaySize = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
 
 		// Rendering
@@ -79,8 +79,8 @@ namespace Ivy {
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}*/
 
-		Application& app = Application::getApplication();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.getWindow().GetNativeWindow());
+		Application& app = Application::GetApplication();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app.getWindow().getNativeWindow());
 
 		// Setup Renderer bindings
 		const char opengl_version[] = "#version 440";

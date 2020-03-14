@@ -12,7 +12,7 @@ namespace Ivy {
 
 		virtual uint32_t getCount() const = 0;
 
-		static IndexBuffer* Create(uint32_t* data, uint32_t size);
+		static std::shared_ptr<IndexBuffer> Create(uint32_t* data, uint32_t size);
 	};
 
 }

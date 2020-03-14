@@ -2,12 +2,13 @@
 #include "OpenGLShader.h"
 #include "OpenGLRenderAPI.h"
 
+
 #include "GLFW/glfw3.h"
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Ivy {
 
-	OpenGLShader::OpenGLShader(const std::string& filepath) : filepath(filepath), rendererId(0)
+	OpenGLShader::OpenGLShader(const std::string& filepath) : filepath(filepath)
 	{
 		ShaderProgramSource source = parseShader(filepath);
 		rendererId = createShader(source.VertexSource, source.FragmentSource);
@@ -28,11 +29,6 @@ namespace Ivy {
 		GLCall(glUseProgram(0));
 	}
 
-	void OpenGLShader::setUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
-	{
-		GLCall(glUniform4f(getUniformLocation(name), v0, v1, v2, v3));
-	}
-
 	void OpenGLShader::setUniform1f(const std::string& name, float v)
 	{
 		GLCall(glUniform1f(getUniformLocation(name), v));
@@ -41,6 +37,36 @@ namespace Ivy {
 	void OpenGLShader::setUniform1i(const std::string& name, int v)
 	{
 		GLCall(glUniform1i(getUniformLocation(name), v));
+	}
+
+	void OpenGLShader::setUniform2f(const std::string& name, const glm::vec2& vec2)
+	{
+		GLCall(glUniform2f(getUniformLocation(name), vec2.x, vec2.y));
+	}
+
+	void OpenGLShader::setUniform2i(const std::string& name, const glm::ivec2& vec2)
+	{
+		GLCall(glUniform2i(getUniformLocation(name), vec2.x, vec2.y));
+	}
+
+	void OpenGLShader::setUniform3f(const std::string& name, const glm::vec3& vec3)
+	{
+		GLCall(glUniform3f(getUniformLocation(name), vec3.x, vec3.y, vec3.z));
+	}
+
+	void OpenGLShader::setUniform3i(const std::string& name, const glm::ivec3& vec3)
+	{
+		GLCall(glUniform3i(getUniformLocation(name), vec3.x, vec3.y, vec3.z));
+	}
+
+	void OpenGLShader::setUniform4f(const std::string& name, const glm::vec4& vec4)
+	{
+		GLCall(glUniform4f(getUniformLocation(name), vec4.x, vec4.y, vec4.z, vec4.w));
+	}
+
+	void OpenGLShader::setUniform4i(const std::string& name, const glm::ivec4& vec4)
+	{
+		GLCall(glUniform4i(getUniformLocation(name), vec4.x, vec4.y, vec4.z, vec4.w));
 	}
 
 	void OpenGLShader::setUniformMat4f(const std::string& name, const glm::mat4& matrix)
@@ -60,7 +86,7 @@ namespace Ivy {
 		// A shader must already be bound before using Uniforms
 		// Retrieve the location of the uniform
 		// Check if the uniform can be found; Will return -1 if the uniform is not used (it will be stripped at compile-time)
-		GLCall(int uniformLocation = glGetUniformLocation(rendererId, name.c_str()));
+		GLCall(GLint uniformLocation = glGetUniformLocation(rendererId, name.c_str()));
 		if (uniformLocation == -1)
 		{
 			std::cout << "[Warn] Uniform '" << name << "' does not exist!" << std::endl;
@@ -127,7 +153,7 @@ namespace Ivy {
 
 	}
 
-	// Parse the file Basic.shader & divide its code
+	// Parse the file shader & divide its code
 	ShaderProgramSource OpenGLShader::parseShader(const std::string& filepath)
 	{
 		std::ifstream stream(filepath);
@@ -148,12 +174,12 @@ namespace Ivy {
 			{
 				if (line.find("vertex") != std::string::npos)
 				{
-					// Vertex mode - add to vertex shader string
+					// Add to vertex shader string
 					type = ShaderType::VERTEX;
 				}
 				else if (line.find("fragment") != std::string::npos)
 				{
-					// Fragment mode - add to fragment shader string
+					// Add to fragment shader string
 					type = ShaderType::FRAGMENT;
 				}
 			}

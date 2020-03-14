@@ -1,33 +1,122 @@
 #include "ivypch.h"
 #include "Renderer.h"
 #include "OpenGL/OpenGLShader.h"
+
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Ivy {
 
-	Renderer::SceneData* Renderer::sceneData = new Renderer::SceneData;
+	struct Renderable
+	{
+		std::shared_ptr<VertexArray> vertexArray;
+		std::shared_ptr<Shader> shaderTex;
+		std::shared_ptr<Texture> textureBlank;
+	};
 
-	void Renderer::init()
+	static Renderable* data;
+
+	void Renderer::Init()
 	{
 		RenderCommand::init();
+
+		data = new Renderable();
+		data->vertexArray = VertexArray::Create();
+
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+		};
+
+		std::shared_ptr<VertexBuffer> vb = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+		vb->setLayout({
+			{ ShaderDataType::Float3, "position" },
+			{ ShaderDataType::Float2, "texCoord" }
+			});
+		data->vertexArray->addVertexBuffer(vb);
+
+		uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<IndexBuffer> ib = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
+		data->vertexArray->setIndexBuffer(ib);
+
+		//TODO - FIX THIS
+		std::shared_ptr<Texture> textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\white.png");
+		//data->textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\white.png");
+		//data->textureBlank->bind();
+		textureBlank->bind();
+
+		data->shaderTex = Shader::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\shaders\\image.shader");
+		data->shaderTex->bind();
+		data->shaderTex->setUniform1i("u_texture", 0);
 	}
 
-	void Renderer::begin(OrthoCamera& camera)
+	void Renderer::Begin(OrthoCamera& camera)
 	{
-		sceneData->viewProjMatrix = camera.getViewProjMatrix();
+		data->shaderTex->bind();
+		data->shaderTex->setUniformMat4f("u_viewProjection", camera.getViewProjMatrix());
 	}
 
-	void Renderer::end()
+	void Renderer::End()
 	{
 	}
 
-	void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray)
+	void Renderer::Shutdown()
 	{
-		// TODO
-		shader->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->setUniformMat4f("u_vpm", sceneData->viewProjMatrix);
-
-		vertexArray->bind();
-		RenderCommand::drawIndexed(vertexArray);
+		delete data;
 	}
 
+	void Renderer::DrawRect(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	{
+		data->shaderTex->setUniform4f("u_color", color);
+		data->textureBlank->bind();
+
+		glm::vec3 position3 = glm::vec3(position.x, position.y, 0.0f);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position3) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		data->shaderTex->setUniformMat4f("u_transform", transform);
+		data->vertexArray->bind();
+		RenderCommand::Draw(data->vertexArray);
+	}
+
+	void Renderer::DrawRect(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		data->shaderTex->setUniform4f("u_color", color);
+		//data->textureBlank->bind();
+
+		glm::vec3 position3 = glm::vec3(position.x, position.y, 0.0f);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position3) 
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		data->shaderTex->setUniformMat4f("u_transform", transform);
+		data->vertexArray->bind();
+		RenderCommand::Draw(data->vertexArray);
+	}
+
+	void Renderer::DrawRect(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture)
+	{
+		data->shaderTex->setUniform4f("u_color", glm::vec4(1.0f));
+		texture->bind();
+
+		glm::vec3 position3 = glm::vec3(position.x, position.y, 0.0f);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position3) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		data->shaderTex->setUniformMat4f("u_transform", transform);
+
+		data->vertexArray->bind();
+		RenderCommand::Draw(data->vertexArray);
+	}
+
+	void Renderer::DrawRect(const glm::vec2& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture>& texture, const glm::vec4& color)
+	{
+		data->shaderTex->setUniform4f("u_color", color);
+		texture->bind();
+
+		glm::vec3 position3 = glm::vec3(position.x, position.y, 0.0f);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position3)
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		data->shaderTex->setUniformMat4f("u_transform", transform);
+		data->vertexArray->bind();
+		RenderCommand::Draw(data->vertexArray);
+	}
 
 }
