@@ -20,7 +20,7 @@ namespace Ivy {
 		std::map<const char*, std::shared_ptr<BaseComponentContainer>> componentContainers{};
 		std::map<const char*, uint8_t> componentTypes{};
 		std::vector<Entity> entities{};
-		std::set<std::shared_ptr<System>> systems{}; // consider using map with const char* as id
+		std::set<std::shared_ptr<System>> systems{};
 	public:
 		~ECS()
 		{
@@ -49,7 +49,7 @@ namespace Ivy {
 			// Add a new component type
 			componentTypes.insert({ typeName, componentTypeCounter });
 			// Add a component container for the new type
-			componentContainers.insert({ typeName, std::make_shared<ComponentContainer<T>>() });
+			componentContainers.insert({ typeName, std::move(std::make_shared<ComponentContainer<T>>()) });
 
 			componentTypeCounter++;
 		}
@@ -75,17 +75,17 @@ namespace Ivy {
 		// Entities
 		void destroyEntity(Entity& entity)
 		{
-			for (auto const& container : componentContainers)
+			for (auto const& containerPair : componentContainers)
 			{
-				auto const& component = container.second;
+				auto const& container = containerPair.second;
 
-				component->onEntityDestroyed(entity);
+				container->onEntityDestroyed(entity);
 			}
 			
 			for (auto& it = entities.begin(); it != entities.end(); it++)
 			{
-				
-				if (it->getEntityId() == entity.getEntityId())
+				if(*it == entity)
+				//if (it->getEntityId() == entity.getEntityId())
 				{
 					entities.erase(it);
 				}
@@ -94,7 +94,7 @@ namespace Ivy {
 
 		Entity& createEntity()
 		{
-			Entity entity = Entity(EntityIdGenerator);
+			Entity entity = EntityIdGenerator; //Entity(EntityIdGenerator);
 			entities.push_back(entity);
 			EntityIdGenerator++;
 			return entities.at(entities.size() - 1);
@@ -107,8 +107,7 @@ namespace Ivy {
 		// Systems
 		void addSystem(const std::shared_ptr<System>& system)
 		{
-			systems.insert(system);
-			//systems.emplace(system);
+			systems.insert(std::move(system));
 		}
 
 
@@ -125,8 +124,6 @@ namespace Ivy {
 		{
 			EntityIdGenerator = 0;
 			componentTypeCounter = 0;
-			entities.push_back(Entity(EntityIdGenerator));
-			EntityIdGenerator++;
 		}
 
 		ECS(const ECS&) = delete;

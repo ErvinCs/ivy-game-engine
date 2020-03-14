@@ -5,77 +5,72 @@
 
 #include "Component.h"
 
-namespace Ivy {
+#define Entity uint16_t
 
-	class Entity
-	{
-	private:
-		uint16_t entityId;
-		//std::map<uint8_t, std::shared_ptr<Component>> componentRefs; // ComponentID to Component mapping
-		//std::map<uint8_t, Component*> compRefs;
-
-	public:
-		Entity() = default;
-		Entity(const uint16_t& id) : entityId(id) {}
-		~Entity() = default;
-		/*{
-			for (auto& pair : compRefs)
-			{
-				compRefs.erase(pair.second->getComponentId());
-				delete pair.second;
-			}
-		}*/
-
-		inline const uint16_t getEntityId() const {
-			return entityId;
-		}
-
-		/*inline void addComponent(Component* component) {
-			compRefs.insert(std::pair<uint8_t, Component*>(component->getComponentId(), component));
-		}
-
-		inline void removeComponent(Component* component) {
-			compRefs.erase(component->getComponentId());
-			delete component;
-		}
-
-		/*inline void addComponent(const std::shared_ptr<Component>& component) {
-			componentRefs.insert(std::pair<uint8_t, std::shared_ptr<Component>>(component->getComponentId(), component));
-		}
-
-		inline void removeComponent(const std::shared_ptr<Component>& component) {
-			componentRefs.erase(component->getComponentId());
-		}*/
-
-		// ----- Operators -----
-
-		bool operator==(const Entity& other)
-		{
-			return this->entityId == other.getEntityId();
-		}
-		bool operator!=(const Entity& other)
-		{
-			return !(this->entityId == other.getEntityId());
-		}
-
-		bool operator<(const Entity& other)
-		{
-			return this->entityId < other.getEntityId();
-		}
-
-		bool operator>(const Entity& other)
-		{
-			return this->entityId > other.getEntityId();
-		}
-
-		bool operator<=(const Entity& other)
-		{
-			return this->entityId <= other.getEntityId();
-		}
-
-		bool operator>=(const Entity& other)
-		{
-			return this->entityId >= other.getEntityId();
-		}
-	};
-}
+//namespace ivy {
+//
+//	class entity
+//	{
+//	private:
+//		uint16_t entityid;
+//		/*
+//		std::map<uint8_t, std::shared_ptr<component>> componentrefs; // componentid to component mapping
+//		*/
+//
+//	public:
+//		entity() = default;
+//		entity(const uint16_t& id) : entityid(id) {}
+//		entity(const entity& other) { this->entityid = other.entityid; }
+//		~entity() = default;
+//		/*{
+//			for (auto& pair : comprefs)
+//			{
+//				comprefs.erase(pair.second->getcomponentid());
+//				delete pair.second;
+//			}
+//		}*/
+//
+//		inline const uint16_t getentityid() const {
+//			return entityid;
+//		}
+//
+//		/*inline void addcomponent(const std::shared_ptr<component>& component) {
+//			componentrefs.insert(std::pair<uint8_t, std::shared_ptr<component>>(component->getcomponentid(), component));
+//		}
+//
+//		inline void removecomponent(const std::shared_ptr<component>& component) {
+//			componentrefs.erase(component->getcomponentid());
+//		}*/
+//
+//		// ----- operators -----
+//
+//		bool operator==(const entity& other)
+//		{
+//			return this->entityid == other.getentityid();
+//		}
+//		bool operator!=(const entity& other)
+//		{
+//			return !(this->entityid == other.getentityid());
+//		}
+//
+//		bool operator<(const entity& other)
+//		{
+//			return this->entityid < other.getentityid();
+//		}
+//
+//		bool operator>(const entity& other)
+//		{
+//			return this->entityid > other.getentityid();
+//		}
+//
+//		bool operator<=(const entity& other)
+//		{
+//			return this->entityid <= other.getentityid();
+//		}
+//
+//		bool operator>=(const entity& other)
+//		{
+//			return this->entityid >= other.getentityid();
+//		}
+//	};
+//}

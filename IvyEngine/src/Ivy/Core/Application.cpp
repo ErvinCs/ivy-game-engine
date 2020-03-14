@@ -32,16 +32,12 @@ namespace Ivy {
 
 	Application::~Application()
 	{
-		//delete imGuiLayer;
+		delete imGuiLayer;
 		BaseRenderer::Shutdown();
 	}
 
 	void Application::init()
 	{
-		//memoryManager.init();
-		//fileManager.init();
-		//inputManager.init();
-		//rendererManager.init();
 	}
 
 	void Application::run()
@@ -68,10 +64,6 @@ namespace Ivy {
 
 	void Application::shutdown()
 	{
-		//rendererManager.shutdown();
-		//inputManager.shutdown();
-		//fileManager.shutdown();
-		//memoryManager.shutdown();
 	}
 
 	void Application::pushLayer(SortingLayer* layer)

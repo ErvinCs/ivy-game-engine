@@ -30,12 +30,6 @@ namespace Ivy {
 		ImGuiLayer* imGuiLayer;
 		float lastFrameTime = 0.0f;
 
-	protected:
-		//MemoryManager& memoryManager = MemoryManager::getInstance();
-		//FileManager& fileManager = FileManager::getInstance();
-		//InputManager& inputManager = InputManager::getInstance();
-		//RendererManager& rendererManager = RendererManager::getInstance();
-
 	public:
 		inline static Application& getInstance()
 		{

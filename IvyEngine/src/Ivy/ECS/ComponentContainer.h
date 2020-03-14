@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "../Exceptions/ComponentNotFoundException.h"
 
-//TODO - Replace array with hash_map
+//TODO - Replace array with a more suitable data struct - hash_map 
 namespace Ivy {
 
 	class BaseComponentContainer
@@ -18,23 +18,13 @@ namespace Ivy {
 	class ComponentContainer : public BaseComponentContainer
 	{
 	private:
-		//int capacity = 100;	//MAX ENTITIES
-		std::array<T, 3> componentArray{};
+		std::array<T, 1000> componentArray{};
 		int size;
 	public:
 		ComponentContainer()
 		{
 			this->size = 0;
 		}
-
-		/*ComponentContainer(const ComponentContainer& container)
-		{
-			this->componentArray = container.getComponentArray();
-			this->size = container.getSize();
-		}
-		ComponentContainer(ComponentContainer&& container) = default;
-		ComponentContainer& operator=(ComponentContainer&& container) = default;
-		ComponentContainer& operator=(const ComponentContainer& container) = default;*/
 		
 		std::array<T, 100>& getComponentArray()
 		{
@@ -48,8 +38,8 @@ namespace Ivy {
 
 		void addComponent(Entity& entity, T& component) 
 		{
-			//entity.addComponent(&component);
-			component.setEntityId(entity.getEntityId());
+			//component.setEntityId(entity.getEntityId());
+			component.setEntityId(entity);
 			componentArray[size] = component;
 			size++;
 		}
@@ -59,15 +49,15 @@ namespace Ivy {
 
 			for (int i = 0; i < size; i++)
 			{
-				if (componentArray[i].getEntityId() == entity.getEntityId())
+				if (componentArray[i].getEntityId() == entity)
+				//if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
+					//componentArray[i].setEntityId(-1);
+
 					T tempComponent = componentArray[i];
 					componentArray[i] = componentArray[size - 1];
 					componentArray[size - 1] = tempComponent;
 					size--;
-
-					// WORK ON THIS
-					//entity.removeComponent(&tempComponent);
 				}
 			}
 		}
@@ -76,7 +66,8 @@ namespace Ivy {
 		{
 			for (int i = 0; i < size; i++)
 			{
-				if (componentArray[i].getEntityId() == entity.getEntityId())
+				if(componentArray[i].getEntityId() == entity)
+				//if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
 					return componentArray[i];
 				}

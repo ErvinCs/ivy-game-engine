@@ -2,31 +2,123 @@
 
 #include "imgui/imgui.h"
 
+using ECS = Ivy::ECS&(*)(void);
+//using Entity = Ivy::Entity;
+using Transform = Ivy::Transform;
+using Renderable = Ivy::Renderable;
+
 class TestLayer : public Ivy::SortingLayer
 {
 private:
-	std::shared_ptr<Ivy::Texture> playerTexture;
-	std::shared_ptr<Ivy::Texture> tileTexture;
-	std::shared_ptr<Ivy::Texture> pictureTex;
-	glm::vec4 playerColor;
-	glm::vec2 playerSize;
-	glm::vec2 picturePosition;
-	glm::vec2 playerPosition;
-	glm::vec2 tilePosition;
-	glm::vec2 tileSize;
-	float playerMoveSpeed = 5.0f;
+	ECS getECS = &Ivy::ECS::getInstance;
 
-	Ivy::Entity myEntity = Ivy::ECS::getInstance().getEntities().at(0);
-	Ivy::Transform transform{ glm::vec2(2.0f, 2.0f), 180.0f, glm::vec2(2.0f, 2.0f) };
-	Ivy::Renderable renderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png" };
-	std::shared_ptr<Ivy::RenderSystem> renderSystem = std::make_shared<Ivy::RenderSystem>(Ivy::ECS::getInstance().getEntities());
-	
+	void InitEntity(Entity& entity, Transform& transform) {
+		getECS().addComponent<Transform>(entity, transform);
+	}
+
+	void InitEntity(Entity& entity, Renderable& renderable) {
+		getECS().addComponent<Renderable>(entity, renderable);
+	}
+
+	void InitEntity(Entity& entity, Transform& transform, Renderable& renderable) {
+		getECS().addComponent<Transform>(entity, transform);
+		getECS().addComponent<Renderable>(entity, renderable);
+	}
+
+private:
+	// Entities
+	std::array<Entity, 20> tiles = {
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity(),
+		getECS().createEntity()
+
+	};
+	std::array<Transform, 20> transforms = {
+		Transform(glm::vec2(-11.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-10.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-9.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-8.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-7.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-6.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-5.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-4.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-3.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-2.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(-1.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(0.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(1.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(2.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(3.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(4.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(5.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(6.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(7.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+		Transform(glm::vec2(8.0f, -5.6f), 0.0f, glm::vec2(1.0f, 1.0f)),
+	};
+	std::array<Renderable, 20> renderables = {
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
+		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png"
+	};
+
+	Entity player = getECS().createEntity();
+	Transform playerTransform{ glm::vec2(0.0f, -3.6f), 0.0f, glm::vec2(2.0f, 2.0f) };
+	Renderable playerRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png" };
+
+	Entity sprite = getECS().createEntity();
+	Transform spriteTransform{ glm::vec2(2.0f, 2.0f), 180.0f, glm::vec2(2.0f, 2.0f) };
+	Renderable spriteRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png" };
+
+	Entity cat = getECS().createEntity();;
+	Transform catTransform{ glm::vec2(11.5f, 5.4f), 0.0f, glm::vec2(2.0f, 2.0f) };
+	Renderable catRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png" };
+
+	//Systems
+	std::shared_ptr<Ivy::System> renderSystem = std::make_shared<Ivy::RenderSystem>(getECS().getEntities());
+
+private:
+	//Camera
 	Ivy::OrthoCamera camera;
 	glm::vec3 cameraPos;
 	float cameraRotation = 0.0f;
 	float cameraRotationSpeed = 180.0f;
 
-private:
+	// Gameplay Related
+	float playerMoveSpeed = 5.0f;
 	bool isJumping = false;
 	bool isFalling = false;
 	const float constJumpTime = 1.3f;
@@ -34,6 +126,7 @@ private:
 	float jumpTime = constJumpTime;
 	float jumpCooldown = 1.0f;
 
+	// Screen Borders
 	float leftBorder = 12.3f;
 	float rightBorder = -11.8f;
 	float topBorder = 6.4f;
@@ -43,26 +136,28 @@ public:
 	TestLayer() : SortingLayer("Test"), camera(-12.8f, 12.8f, -6.4f, 6.4f), cameraPos({ 0.0f, 4.0f, 0.0f })
 	{
 		IVY_TRACE("Creating TestLayer");
-		playerTexture = Ivy::Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png");
-		tileTexture = Ivy::Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png");
-		pictureTex = Ivy::Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png");
-		playerColor = glm::vec4({ 255.0f, 0.0f, 0.0f, 255.0f });
-		playerPosition = glm::vec2({ 0.0f, -3.6f });
-		tilePosition = glm::vec2({ 2.0f, 2.0f });
-		playerSize = glm::vec2({ 3.0f, 3.0f });
-		tileSize = glm::vec2({ 1.0f, 1.0f });
-		picturePosition = glm::vec2(11.5f, 5.4f);	
 
-		renderSystem->setCamera(camera);
+		//TODO - MAKE THIS WORK
+		//player = getECS().createEntity();
 
-		Ivy::ECS::getInstance().addComponentType<Ivy::Transform>();
-		Ivy::ECS::getInstance().addComponentType<Ivy::Renderable>();
+		getECS().addComponentType<Transform>();
+		getECS().addComponentType<Renderable>();
+
+		InitEntity(sprite, spriteTransform);
+		InitEntity(cat, catTransform);
+		InitEntity(player, playerTransform);
+
+		InitEntity(sprite, spriteTransform, spriteRenderable);
+		InitEntity(cat, catTransform, catRenderable);
+		InitEntity(player, playerTransform, playerRenderable);
+		for (int i = 0; i < 20; i++)
+		{
+			InitEntity(tiles[i], transforms[i], renderables[i]);
+		}
 		
-		Ivy::ECS::getInstance().addComponent<Ivy::Transform>(myEntity, transform);
+		getECS().addSystem(renderSystem);
 
-		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(myEntity, renderable);
-		
-		Ivy::ECS::getInstance().addSystem(renderSystem);
+		renderSystem->init();
 	}
 
 	void update(Ivy::Timestep ts) override
@@ -73,17 +168,17 @@ public:
 		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_D))
 		{
 			//IVY_TRACE("KeyD down");
-			if (playerPosition.x < leftBorder)
+			if (getECS().getComponent<Transform>(player).position.x < leftBorder)
 			{
-				playerPosition.x += playerMoveSpeed * ts;
+				getECS().getComponent<Transform>(player).position.x += playerMoveSpeed * ts;
 			}
 		}
 		else if (Ivy::InputHandler::IsKeyDown(IVY_KEY_A))
 		{
 			//IVY_TRACE("KeyA down");
-			if (playerPosition.x > rightBorder)
+			if (getECS().getComponent<Transform>(player).position.x > rightBorder)
 			{
-				playerPosition.x -= playerMoveSpeed * ts;
+				getECS().getComponent<Transform>(player).position.x -= playerMoveSpeed * ts;
 			}
 		}
 
@@ -101,12 +196,12 @@ public:
 			if (jumpTime > constJumpTime / 2)	
 			{
 				// isRising
-				playerPosition.y += playerMoveSpeed * ts * jumpSpeed;
+				getECS().getComponent<Transform>(player).position.y += playerMoveSpeed * ts * jumpSpeed;
 			}
 			else if (jumpTime < constJumpTime / 2 && jumpTime > 0)
 			{
 				// isFalling
-				playerPosition.y -= playerMoveSpeed * ts * jumpSpeed;
+				getECS().getComponent<Transform>(player).position.y -= playerMoveSpeed * ts * jumpSpeed;
 			}
 			else
 			{
@@ -123,32 +218,32 @@ public:
 
 		Ivy::Renderer::Begin(camera);
 
-		Ivy::Renderer::DrawRect(playerPosition, playerSize, playerTexture);
-		Ivy::Renderer::DrawRect(playerPosition, playerSize + glm::vec2(0.5f, 0.5f), playerColor);
-		for (int i = -20; i < 20; i++)
-		{
-			Ivy::Renderer::DrawRect(tilePosition + glm::vec2(i, -8.0f), tileSize, tileTexture);
-		}
-		Ivy::Renderer::DrawRect(picturePosition, glm::vec2(2.0f, 2.0f), pictureTex);
 		renderSystem->update(ts);
 
 		Ivy::Renderer::End();
-
 	}
 
 	void imGuiRender() override
 	{
-		ImGui::SliderFloat(" Position X", &playerPosition.x, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Position Y", &playerPosition.y, botBorder, topBorder);
-		ImGui::SliderFloat(" Size X", &playerSize.x, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Size Y", &playerSize.y, botBorder, topBorder);
-		ImGui::SliderFloat(" Position X Cat", &picturePosition.x, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Position Y Cat", &picturePosition.y, botBorder, topBorder);
+		ImGui::SliderFloat(" Position X Player", &getECS().getComponent<Transform>(player).position.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position Y Player", &getECS().getComponent<Transform>(player).position.y, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Size X Player",     &getECS().getComponent<Transform>(player).scale.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Size Y Player",     &getECS().getComponent<Transform>(player).scale.y, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Rotation Player",   &getECS().getComponent<Transform>(player).rotation, 0.0f, 360.0f);
+		ImGui::SliderFloat(" Position X Cat",    &getECS().getComponent<Transform>(cat).position.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position Y Cat",    &getECS().getComponent<Transform>(cat).position.y, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position X Sprite", &getECS().getComponent<Transform>(sprite).position.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position Y Sprite", &getECS().getComponent<Transform>(sprite).position.y, botBorder, topBorder);
+
 	}
 
 	void onEvent(Ivy::Event& event) override
 	{
 		IVY_INFO("Test Layer: {0}", event.toString());
+	}
+
+	~TestLayer()
+	{
 	}
 };
 

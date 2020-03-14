@@ -25,7 +25,7 @@ namespace Ivy {
 		glTextureSubImage2D(rendererId, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
 
 		stbi_image_free(data);*/
-		rendererId = 0;
+		//rendererId = 0;
 		localBuffer = nullptr;
 		width = 0;
 		height = 0;
@@ -44,7 +44,7 @@ namespace Ivy {
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer));
-		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+		//GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
 		// Free the copy of the data in the buffer 
 		// (TODO: should be stored)

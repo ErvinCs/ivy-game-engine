@@ -18,7 +18,7 @@ namespace Ivy
 			this->position = position;
 			this->rotation = rotation;
 			this->scale = scale;
-			this->setComponentId(0);
+			this->setComponentId(0);	//TODO - Remove hard-coded set id
 		}
 	};
 }

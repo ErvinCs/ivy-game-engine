@@ -40,8 +40,11 @@ namespace Ivy {
 		std::shared_ptr<IndexBuffer> ib = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		data->vertexArray->setIndexBuffer(ib);
 
-		data->textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\white.png");
-		data->textureBlank->bind();
+		//TODO - FIX THIS
+		std::shared_ptr<Texture> textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\white.png");
+		//data->textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\white.png");
+		//data->textureBlank->bind();
+		textureBlank->bind();
 
 		data->shaderTex = Shader::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\shaders\\image.shader");
 		data->shaderTex->bind();
@@ -78,7 +81,7 @@ namespace Ivy {
 	void Renderer::DrawRect(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		data->shaderTex->setUniform4f("u_color", color);
-		data->textureBlank->bind();
+		//data->textureBlank->bind();
 
 		glm::vec3 position3 = glm::vec3(position.x, position.y, 0.0f);
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position3) 
