@@ -19,11 +19,20 @@ namespace Ivy {
 
 	Application::Application()
 	{
+		int success;
 		instance = this;
 		window = Window::Create();
 		window->setCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 
 		BaseRenderer::Init();
+
+		this->scriptManager = &ScriptManager::GetInstance();
+		success = scriptManager->init();
+		if (success < 0)
+		{
+			IVY_CORE_ERROR("Could not initialize script manager!");
+			delete scriptManager;
+		}
 
 		imGuiLayer = new ImGuiLayer();
 		pushLayer(imGuiLayer);
@@ -34,6 +43,11 @@ namespace Ivy {
 	{
 		delete imGuiLayer;
 		BaseRenderer::Shutdown();
+		if (scriptManager)
+		{
+			delete scriptManager;
+			scriptManager = 0;
+		}
 	}
 
 	void Application::init()

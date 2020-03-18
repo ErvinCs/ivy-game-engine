@@ -1,5 +1,11 @@
 #pragma once
 
+/*
+#include "../Managers/FileManager.h"
+#include "../Managers/MemoryManager.h"
+#include "../Managers/InputManager.h"
+#include "../Managers/RendererManager.h"
+*/
 
 #include "Core.h"
 #include "SortingLayerStack.h"
@@ -11,12 +17,8 @@
 #include "../Events/WindowEvent.h"
 #include "../Events/MouseEvent.h"
 
-#include "../Managers/FileManager.h"
-#include "../Managers/MemoryManager.h"
-#include "../Managers/InputManager.h"
-#include "../Managers/RendererManager.h"
-
 #include "../ImGui/ImGuiLayer.h"
+#include "../Scripting/ScriptManager.h"
 
 namespace Ivy {
 
@@ -29,6 +31,7 @@ namespace Ivy {
 		bool isRunning = true;
 		ImGuiLayer* imGuiLayer;
 		float lastFrameTime = 0.0f;
+		ScriptManager* scriptManager;
 
 	public:
 		inline static Application& getInstance()

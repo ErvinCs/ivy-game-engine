@@ -76,8 +76,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ANGELSCRIPT_EXPORT;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\angelscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -96,8 +96,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ANGELSCRIPT_EXPORT;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\angelscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -120,8 +120,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ivypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;ANGELSCRIPT_EXPORT;IVY_PLATFORM_WINDOWS;IVY_PLATFORM_LINUX;IVY_BUILD_DLL;GLFW_INCLUDE_NONE;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\angelscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -140,11 +140,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
-    <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
-    <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
-    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
-    <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
@@ -160,13 +155,19 @@
     <ClInclude Include="src\Ivy\Core\Window.h" />
     <ClInclude Include="src\Ivy\ECS\Component.h" />
     <ClInclude Include="src\Ivy\ECS\ComponentContainer.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\ScriptComponent.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
     <ClInclude Include="src\Ivy\ECS\ECS.h" />
     <ClInclude Include="src\Ivy\ECS\Entity.h" />
+    <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\ScriptSystem.h" />
     <ClInclude Include="src\Ivy\ECS\System.h" />
     <ClInclude Include="src\Ivy\Events\Event.h" />
     <ClInclude Include="src\Ivy\Events\KeyEvent.h" />
     <ClInclude Include="src\Ivy\Events\MouseEvent.h" />
     <ClInclude Include="src\Ivy\Events\WindowEvent.h" />
+    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
     <ClInclude Include="src\Ivy\Exceptions\EventException.h" />
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="src\Ivy\Managers\Manager.h" />
     <ClInclude Include="src\Ivy\Managers\MemoryManager.h" />
     <ClInclude Include="src\Ivy\Managers\RendererManager.h" />
+    <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
     <ClInclude Include="src\Ivy\Renderer\Context.h" />
     <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\Ivy\Renderer\OpenGL\OpenGLContext.h" />
@@ -193,6 +195,8 @@
     <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h" />
+    <ClInclude Include="src\Ivy\Scripting\GameObject.h" />
+    <ClInclude Include="src\Ivy\Scripting\ScriptManager.h" />
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsWindow.h" />
@@ -568,14 +572,14 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\HashTable.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp" />
     <ClCompile Include="src\Ivy\Core\String.cpp" />
+    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
+    <ClCompile Include="src\Ivy\ECS\ScriptSystem.cpp" />
     <ClCompile Include="src\Ivy\Events\Event.cpp" />
     <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp" />
     <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp" />
@@ -583,6 +587,7 @@
     <ClCompile Include="src\Ivy\Managers\InputManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp" />
     <ClCompile Include="src\Ivy\Managers\RendererManager.cpp" />
+    <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
     <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
     <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp" />
     <ClCompile Include="src\Ivy\Renderer\OpenGL\OpenGLContext.cpp" />
@@ -600,6 +605,8 @@
     <ClCompile Include="src\Ivy\Renderer\Texture.cpp" />
     <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Ivy\Scripting\GameObject.cpp" />
+    <ClCompile Include="src\Ivy\Scripting\ScriptManager.cpp" />
     <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp" />
     <ClCompile Include="src\Ivy\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\ivypch.cpp">
@@ -617,10 +624,9 @@
     <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res_temp\shaders\color.shader" />
-    <None Include="res_temp\shaders\image.shader" />
+    <ProjectReference Include="vendor\angelscript\AngelScript.vcxproj">
+      <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

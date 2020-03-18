@@ -1,0 +1,3 @@
+class CPlayer : IController
+{
+}

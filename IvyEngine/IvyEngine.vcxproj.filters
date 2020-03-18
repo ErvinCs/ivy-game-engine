@@ -13,6 +13,9 @@
     <Filter Include="src\Ivy\ECS">
       <UniqueIdentifier>{FE333E1C-6AE9-B611-F3DD-B0E85F92AD15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\ECS\Components">
+      <UniqueIdentifier>{53DEBBA3-3FD8-E4F5-2845-7B0614DE4A62}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Ivy\Events">
       <UniqueIdentifier>{183FA7BB-040D-9BC1-EDA0-0BE8D90D7726}</UniqueIdentifier>
     </Filter>
@@ -30,6 +33,9 @@
     </Filter>
     <Filter Include="src\Ivy\Renderer\OpenGL">
       <UniqueIdentifier>{CE03BB36-3A3B-03CE-4345-67F1AFFB29C7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Ivy\Scripting">
+      <UniqueIdentifier>{B6AB9043-22C2-8ED9-6B39-1AFBD78E5F61}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Ivy\Windows">
       <UniqueIdentifier>{EEA3717C-5A2F-DF40-6340-6235CF4A3B41}</UniqueIdentifier>
@@ -105,10 +111,25 @@
     <ClInclude Include="src\Ivy\ECS\ComponentContainer.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\ScriptComponent.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\Transform.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\ECS\ECS.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Entity.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\RenderSystem.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\ScriptSystem.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\System.h">
@@ -125,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Events\WindowEvent.h">
       <Filter>src\Ivy\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h">
+      <Filter>src\Ivy\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Exceptions\EventException.h">
       <Filter>src\Ivy\Exceptions</Filter>
@@ -149,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Managers\RendererManager.h">
       <Filter>src\Ivy\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h">
+      <Filter>src\Ivy\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\Context.h">
       <Filter>src\Ivy\Renderer</Filter>
@@ -203,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h">
       <Filter>src\Ivy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\ScriptManager.h">
+      <Filter>src\Ivy\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h">
       <Filter>src\Ivy\Windows</Filter>
@@ -1323,11 +1353,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
-    <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
-    <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
-    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
-    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
+    <ClInclude Include="src\Ivy\Scripting\GameObject.h">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1347,6 +1375,12 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Core\String.cpp">
       <Filter>src\Ivy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\ScriptSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Events\Event.cpp">
       <Filter>src\Ivy\Events</Filter>
@@ -1368,6 +1402,12 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Managers\RendererManager.cpp">
       <Filter>src\Ivy\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Renderer\Context.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp">
       <Filter>src\Ivy\Renderer</Filter>
@@ -1417,6 +1457,9 @@
     <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp">
       <Filter>src\Ivy\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\Scripting\ScriptManager.cpp">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp">
       <Filter>src\Ivy\Windows</Filter>
     </ClCompile>
@@ -1429,12 +1472,8 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
-    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res_temp\shaders\color.shader" />
-    <None Include="res_temp\shaders\image.shader" />
+    <ClCompile Include="src\Ivy\Scripting\GameObject.cpp">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

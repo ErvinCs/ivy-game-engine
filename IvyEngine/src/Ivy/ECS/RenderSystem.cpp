@@ -7,8 +7,6 @@
 #include "../Renderer/RenderCommand.h"
 #include "../Renderer/Renderer.h"
 
-#include "../Renderer/Texture.h"
-
 namespace Ivy {
 	
 	void RenderSystem::init()

@@ -1,10 +1,6 @@
 #pragma once
 
 #include "System.h"
-#include "../Renderer/OrthoCamera.h"
-
-#include <iostream>
-#include <set>
 
 namespace Ivy {
 
