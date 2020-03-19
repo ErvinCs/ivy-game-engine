@@ -1,12 +1,14 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include <angelscript.h>
 #include "../angelscript/add_on/scripthandle/scripthandle.h"
 #include "../angelscript/add_on/scriptstdstring/scriptstdstring.h"
 #include "../angelscript/add_on/scriptbuilder/scriptbuilder.h"
 #include "../angelscript/add_on/weakref/weakref.h"
 
-#include "GameObject.h"
+#include "ScriptableObject.h"
 
 
 namespace Ivy {
@@ -34,15 +36,15 @@ namespace Ivy {
 			static ScriptManager instance{};
 			return instance;
 		}
-
 		~ScriptManager();
 
 		int init();
-		asIScriptObject* createScriptController(const std::string& script, GameObject* gameObject);
+		asIScriptObject* createScriptController(const std::string& script, ScriptableObject* gameObject);
 
 		void callOnUpdate(asIScriptObject* scriptObject);
-		void callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, GameObject* caller);
+		void callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, ScriptableObject* caller);
 
+		inline bool getHasCompileErrors() { return hasCompileErrors; }
 	protected:
 		void setMessageCallback(const asSMessageInfo& message);
 		asIScriptContext* getScriptContextFromPool(asIScriptFunction* function);

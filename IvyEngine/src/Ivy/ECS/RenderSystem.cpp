@@ -22,9 +22,16 @@ namespace Ivy {
 			auto& object = *it;
 
 			auto& renderable = ECS::getInstance().getComponent<Renderable>(object);
-			auto& transform = ECS::getInstance().getComponent<Transform>(object);
+			if (renderable.getComponentId() == uint8_t(1))
+				continue;
 
-			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
+			auto& transform = ECS::getInstance().getComponent<Transform>(object);
+			if (transform.getComponentId() == uint8_t(0))
+				continue;
+			
+
+			Renderer::DrawRect(glm::vec2(transform.positionX, transform.positionY), 
+				glm::vec2(transform.scaleX, transform.scaleY), transform.rotation, renderable.texture);
 		}
 	}
 

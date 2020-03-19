@@ -33,6 +33,10 @@ namespace Ivy {
 			IVY_CORE_ERROR("Could not initialize script manager!");
 			delete scriptManager;
 		}
+		if (scriptManager->getHasCompileErrors())
+		{
+			IVY_CORE_ERROR("Compile errors on script load!");
+		}
 
 		imGuiLayer = new ImGuiLayer();
 		pushLayer(imGuiLayer);

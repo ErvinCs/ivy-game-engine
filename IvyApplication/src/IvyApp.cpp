@@ -3,9 +3,9 @@
 #include "imgui/imgui.h"
 
 using ECS = Ivy::ECS&(*)(void);
-//using Entity = Ivy::Entity;
 using Transform = Ivy::Transform;
 using Renderable = Ivy::Renderable;
+using Script = Ivy::ScriptComponent;
 
 class TestLayer : public Ivy::SortingLayer
 {
@@ -25,9 +25,20 @@ private:
 		getECS().addComponent<Renderable>(entity, renderable);
 	}
 
+	void InitEntity(Entity& entity, Transform& transform, Renderable& renderable, Script& script) {
+		getECS().addComponent<Transform>(entity, transform);
+		getECS().addComponent<Renderable>(entity, renderable);
+		getECS().addComponent<Script>(entity, script);
+	}
+
 private:
 	// Entities
-	std::array<Entity, 20> tiles = {
+	Entity player = getECS().createEntity();
+	Transform playerTransform{ 0.0f, -3.6f, 0.0f, 2.0f, 2.0f };		//{ glm::vec2(0.0f, -3.6f), 0.0f, glm::vec2(2.0f, 2.0f) };
+	Renderable playerRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png" };
+	Script playerScript{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as" };
+
+	/*std::array<Entity, 20> tiles = {
 		getECS().createEntity(),
 		getECS().createEntity(),
 		getECS().createEntity(),
@@ -93,22 +104,18 @@ private:
 		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
 		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
 		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png"
-	};
+	};*/
 
-	Entity player = getECS().createEntity();
-	Transform playerTransform{ glm::vec2(0.0f, -3.6f), 0.0f, glm::vec2(2.0f, 2.0f) };
-	Renderable playerRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png" };
-
-	Entity sprite = getECS().createEntity();
-	Transform spriteTransform{ glm::vec2(2.0f, 2.0f), 180.0f, glm::vec2(2.0f, 2.0f) };
+	/*Entity sprite = getECS().createEntity();
+	Transform spriteTransform{ 2.0f, 2.0f, 180.0f, 2.0f, 2.0f };
 	Renderable spriteRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png" };
 
 	Entity cat = getECS().createEntity();;
-	Transform catTransform{ glm::vec2(11.5f, 5.4f), 0.0f, glm::vec2(2.0f, 2.0f) };
-	Renderable catRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png" };
-
+	Transform catTransform{11.5f, 5.4f, 0.0f,2.0f, 2.0f };
+	Renderable catRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png" };*/
 	//Systems
 	std::shared_ptr<Ivy::System> renderSystem = std::make_shared<Ivy::RenderSystem>(getECS().getEntities());
+	std::shared_ptr<Ivy::System> scriptSystem = std::make_shared<Ivy::ScriptSystem>(getECS().getEntities());
 
 private:
 	//Camera
@@ -118,13 +125,13 @@ private:
 	float cameraRotationSpeed = 180.0f;
 
 	// Gameplay Related
-	float playerMoveSpeed = 5.0f;
+	/*float playerMoveSpeed = 5.0f;
 	bool isJumping = false;
 	bool isFalling = false;
 	const float constJumpTime = 1.3f;
 	const float jumpSpeed = 2.0f;
 	float jumpTime = constJumpTime;
-	float jumpCooldown = 1.0f;
+	float jumpCooldown = 1.0f;*/
 
 	// Screen Borders
 	float leftBorder = 12.3f;
@@ -142,29 +149,30 @@ public:
 
 		getECS().addComponentType<Transform>();
 		getECS().addComponentType<Renderable>();
+		getECS().addComponentType<Script>();
 
-		InitEntity(sprite, spriteTransform);
-		InitEntity(cat, catTransform);
-		InitEntity(player, playerTransform);
-
-		InitEntity(sprite, spriteTransform, spriteRenderable);
+		InitEntity(player, playerTransform, playerRenderable, playerScript);
+		/*InitEntity(sprite, spriteTransform, spriteRenderable);
 		InitEntity(cat, catTransform, catRenderable);
-		InitEntity(player, playerTransform, playerRenderable);
+
 		for (int i = 0; i < 20; i++)
 		{
 			InitEntity(tiles[i], transforms[i], renderables[i]);
-		}
+		}*/
 		
 		getECS().addSystem(renderSystem);
+		getECS().addSystem(scriptSystem);
 
 		renderSystem->init();
+		scriptSystem->init();
 	}
 
 	void update(Ivy::Timestep ts) override
 	{
-		//IVY_TRACE("Update:  timestep={0}", ts);
-		jumpCooldown -= ts;
+		// Run player.as
 
+		//IVY_TRACE("Update:  timestep={0}", ts);
+		/*jumpCooldown -= ts;
 		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_D))
 		{
 			//IVY_TRACE("KeyD down");
@@ -193,7 +201,7 @@ public:
 		if (isJumping)
 		{
 			jumpTime -= ts;
-			if (jumpTime > constJumpTime / 2)	
+			if (jumpTime > constJumpTime / 2)
 			{
 				// isRising
 				getECS().getComponent<Transform>(player).position.y += playerMoveSpeed * ts * jumpSpeed;
@@ -210,7 +218,7 @@ public:
 				jumpCooldown = 1.0f;
 				jumpTime = constJumpTime;
 			}
-		} 
+		}*/
 
 		// Render
 		Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
@@ -219,13 +227,14 @@ public:
 		Ivy::Renderer::Begin(camera);
 
 		renderSystem->update(ts);
+		scriptSystem->update(ts);
 
 		Ivy::Renderer::End();
 	}
 
 	void imGuiRender() override
 	{
-		ImGui::SliderFloat(" Position X Player", &getECS().getComponent<Transform>(player).position.x, leftBorder, rightBorder);
+		/*ImGui::SliderFloat(" Position X Player", &getECS().getComponent<Transform>(player).position.x, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Position Y Player", &getECS().getComponent<Transform>(player).position.y, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Size X Player",     &getECS().getComponent<Transform>(player).scale.x, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Size Y Player",     &getECS().getComponent<Transform>(player).scale.y, leftBorder, rightBorder);
@@ -233,7 +242,7 @@ public:
 		ImGui::SliderFloat(" Position X Cat",    &getECS().getComponent<Transform>(cat).position.x, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Position Y Cat",    &getECS().getComponent<Transform>(cat).position.y, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Position X Sprite", &getECS().getComponent<Transform>(sprite).position.x, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Position Y Sprite", &getECS().getComponent<Transform>(sprite).position.y, botBorder, topBorder);
+		ImGui::SliderFloat(" Position Y Sprite", &getECS().getComponent<Transform>(sprite).position.y, botBorder, topBorder);*/
 
 	}
 

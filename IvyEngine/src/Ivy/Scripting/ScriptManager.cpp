@@ -1,9 +1,35 @@
 #include "ivypch.h"
 #include "ScriptManager.h"
 
+#include "MethodWrappers.h"
+
 #include "../Core/Logger.h"
+#include "../Core/InputHandler.h"
+#include <new>
+
+
 
 namespace Ivy {
+
+	void Transform_Constructor(void* ptr)
+	{
+		new(ptr) Transform(0,0,0,0,0);
+	}
+
+	void Transform_Constructor(float posX, float posY, float rotate, float scaleX, float scaleY, void* ptr)
+	{
+		new(ptr) Transform(posX, posY, rotate, scaleX, scaleY);
+	}
+
+	Transform* Transform_Factory1()
+	{
+		return new Transform(0, 0, 0, 0, 0);
+	}
+
+	Transform* Transform_Factory5(float posX, float posY, float rotate, float scaleX, float scaleY, void* ptr)
+	{
+		return new Transform(posX, posY, rotate, scaleX, scaleY);
+	}
 
 	ScriptManager::~ScriptManager()
 	{
@@ -36,24 +62,28 @@ namespace Ivy {
 		RegisterScriptWeakRef(scriptEngine);
 
 		// Register the game object. The scripts cannot create these directly, so there is no factory function.
-		r = scriptEngine->RegisterObjectType("GameObject", 0, asOBJ_REF); assert(r >= 0);
-		r = scriptEngine->RegisterObjectBehaviour("GameObject", asBEHAVE_ADDREF, "void f()", asMETHOD(GameObject, addReference), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectBehaviour("GameObject", asBEHAVE_RELEASE, "void f()", asMETHOD(GameObject, release), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectBehaviour("GameObject", asBEHAVE_GET_WEAKREF_FLAG, "int &f()", asMETHOD(GameObject, getWeakRefereneFlag), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectType("ScriptableObject", 0, asOBJ_REF); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_ADDREF, "void f()", asMETHOD(ScriptableObject, addReference), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_RELEASE, "void f()", asMETHOD(ScriptableObject, release), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_GET_WEAKREF_FLAG, "int &f()", asMETHOD(ScriptableObject, getWeakRefereneFlag), asCALL_THISCALL); assert(r >= 0);
 
 		// The object's position is read-only to the script. The position is updated with the Move method
-		//r = scriptEngine->RegisterObjectMethod("GameObject", "int get_x() const", asMETHOD(GameObject, getX), asCALL_THISCALL); assert(r >= 0);
-		//r = scriptEngine->RegisterObjectMethod("GameObject", "int get_y() const", asMETHOD(GameObject, getY), asCALL_THISCALL); assert(r >= 0);
-		//r = scriptEngine->RegisterObjectMethod("GameObject", "bool Move(int dx, int dy)", asMETHOD(GameObject, Move), asCALL_THISCALL); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectMethod("ScriptableObject", "int get_x() const", asMETHOD(ScriptableObject, getX), asCALL_THISCALL); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectMethod("ScriptableObject", "int get_y() const", asMETHOD(ScriptableObject, getY), asCALL_THISCALL); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectMethod("ScriptableObject", "bool Move(int dx, int dy)", asMETHOD(ScriptableObject, Move), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void setOwner(uint16 ownerEntity)", asMETHOD(ScriptableObject, setOwner), asCALL_THISCALL); assert(r >= 0);
 
 		// The script can kill the owning object
-		r = scriptEngine->RegisterObjectMethod("GameObject", "void killObject()", asMETHOD(GameObject, killObject), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void killObject()", asMETHOD(ScriptableObject, killObject), asCALL_THISCALL); assert(r >= 0);
+
+		// Access the owning object through the script - getOwner returns the entity id
+		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "uint16 getOwner()", asMETHOD(ScriptableObject, getOwner), asCALL_THISCALL); assert(r >= 0);
 
 		// The script can send a message to the other object through this method
 		// Observe the autohandle @+ to tell AngelScript to automatically release the handle after the call
 		// The generic handle type is used to allow the script to pass any object to
 		// the other script without the application having to know anything about it
-		r = scriptEngine->RegisterObjectMethod("GameObject", "void sendMessage(ref message, const GameObject @+ to)", asMETHOD(GameObject, sendMessage), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void sendMessage(ref message, const ScriptableObject @+ to)", asMETHOD(ScriptableObject, sendMessage), asCALL_THISCALL); assert(r >= 0);
 
 
 		// The game engine will determine the class that represents the controller
@@ -63,40 +93,64 @@ namespace Ivy {
 		// methods that doesn't do anything, thus improving performance.
 		r = scriptEngine->RegisterInterface("IController"); assert(r >= 0);
 
-		/*
-		// Register the game manager as a singleton. The script will access it through the global property
-		r = scriptEngine->RegisterObjectType("GameManager", 0, asOBJ_REF | asOBJ_NOHANDLE); assert(r >= 0);
+		// InputHandler function handles.
+		// Note that InputHandler provides only static functions which are registered as global functions.
+		r = scriptEngine->RegisterGlobalFunction("bool IsKeyDown(uint)", asFUNCTION(IsKeyDown), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("bool IsMouseButtonDown(uint)", asFUNCTION(IsMouseButtonDown), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("float GetMouseX()", asFUNCTION(GetMouseX), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("float GetMouseY()", asFUNCTION(GetMouseY), asCALL_CDECL); assert(r >= 0);
+		
+		/*// Register glm types
+		r = scriptEngine->RegisterObjectType("Vec2", sizeof(glm::vec2), asOBJ_VALUE | asGetTypeTraits<glm::vec2>());
+		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(glm::vec2()), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(~glm::vec2()), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2& opAssign(const Vec2 &in)",
+			asMETHODPR(glm::vec2, operator=, (const glm::vec2&), glm::vec2&), asCALL_THISCALL);*/
 
-		// Register the game manager's methods
-		r = scriptEngine->RegisterGlobalProperty("GameManager game", gameMgr); assert(r >= 0);
+		// Register the components. The scripts cannot create these directly, so there is no factory function.
+		r = scriptEngine->RegisterObjectType("Transform", 0, asOBJ_REF); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_ADDREF, "void f()", asMETHOD(Transform, addReference), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_RELEASE, "void f()", asMETHOD(Transform, release), asCALL_THISCALL); assert(r >= 0);
+		
+		r = scriptEngine->RegisterGlobalFunction("Transform@ InitTransform()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
+		//r = scriptEngine->RegisterGlobalFunction("Transform@ Transform(float,float,float,float,float)", asFUNCTION(Transform_Factory5), asCALL_CDECL); assert(r >= 0);
+		
+		r = scriptEngine->RegisterObjectProperty("Transform", "float positionX", asOFFSET(Transform, positionX)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Transform", "float positionY", asOFFSET(Transform, positionY)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Transform", "float scaleX", asOFFSET(Transform, scaleX)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Transform", "float scaleY", asOFFSET(Transform, scaleY)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Transform", "float rotation", asOFFSET(Transform, rotation)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Transform", "Transform &opAssign(const Transform &in)", 
+			asMETHODPR(Transform, operator=, (const Transform &), Transform &), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f(float, float, float, float, float)", asFUNCTION(Transform_Factory5), asCALL_CDECL); assert(r >= 0);
+		/*r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_CONSTRUCT, "void f()", 
+			asFUNCTIONPR(Transform_Constructor, (void*), void), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_CONSTRUCT, "void f(float, float, float, float, float)", 
+			asFUNCTIONPR(Transform_Constructor, (float, float, float, float, float, void*), void), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		*///r = scriptEngine->RegisterObjectType("Renderable", 0, asOBJ_REF | asOBJ_NOCOUNT); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectType("ScriptComponent", 0, asOBJ_REF | asOBJ_NOCOUNT); assert(r >= 0);
 
-		// The script can determine what the user wants to do through the actionStates
-		r = scriptEngine->RegisterObjectMethod("GameManager", "bool get_actionState(int idx)", asMETHOD(CGameMgr, GetActionState), asCALL_THISCALL); assert(r >= 0);
-
-		// The script can call this method to end the game
-		r = scriptEngine->RegisterObjectMethod("GameManager", "void EndGame(bool win)", asMETHOD(CGameMgr, EndGame), asCALL_THISCALL); assert(r >= 0);
-
-		// Register a method that will allow the script to find an object by its name.
-		// This returns the object as const handle, as the script should only be 
-		// allow to directly modify its owner object.
-		// Observe the @+ that tells AngelScript to automatically increase the refcount
-		r = scriptEngine->RegisterObjectMethod("GameManager", "const CGameObj @+ FindObjByName(const string &in name)", asMETHOD(CGameMgr, FindGameObjByName), asCALL_THISCALL); assert(r >= 0);
-		*/
+		// Register template specializations & factories for ECS methods
+		r = scriptEngine->RegisterGlobalFunction("void GetTransform(uint16, Transform &out)", asFUNCTION(GetTransform), asCALL_CDECL); assert(r >= 0);
+		//r = scriptEngine->RegisterGlobalFunction("void GetRenderable(uint16, Renderable &out)", asFUNCTION(GetRenderable), asCALL_CDECL); assert(r >= 0);
+		//r = scriptEngine->RegisterGlobalFunction("void GetScriptComponent(uint16, ScriptComponent &out)", asFUNCTION(GetScriptComponent), asCALL_CDECL); assert(r >= 0);
+		
 
 		return 0;
 	}
 
-	asIScriptObject* ScriptManager::createScriptController(const std::string& script, GameObject* gameObject)
+	asIScriptObject* ScriptManager::createScriptController(const std::string& script, ScriptableObject* gameObject)
 	{
 		int asReturnValue;
-		asIScriptObject *object = 0;
+		asIScriptObject* object = 0;
 
-		SController *controller = getScriptController(script);
+		SController* controller = getScriptController(script);
 		if (controller == 0) 
 			return 0;
 
 		// Create the object using the factory function
-		asIScriptContext *context = getScriptContextFromPool(controller->createFunction);
+		asIScriptContext* context = getScriptContextFromPool(controller->createFunction);
 
 		// Pass the object pointer to the script function. With this call the 
 		// context will automatically increase the reference count for the object.
@@ -113,6 +167,7 @@ namespace Ivy {
 			// it is necessary to increase the ref count
 			object->AddRef();
 		}
+		gameObject->setScriptObject(object);
 
 		// Return the context to the pool so it can be reused
 		returnScriptContextToPool(context);
@@ -123,7 +178,7 @@ namespace Ivy {
 	void ScriptManager::callOnUpdate(asIScriptObject* scriptObject)
 	{
 		// Find the cached onThink method id
-		SController *controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());
+		SController *controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());	//scriptObject was nullptr
 
 		// Call the method using the shared context
 		if (controller->onUpdateMethod != 0)
@@ -147,6 +202,7 @@ namespace Ivy {
 
 		if (message.type == asMSGTYPE_ERROR)
 			hasCompileErrors = true;
+		IVY_CORE_INFO("HasCompileErrors={0}", hasCompileErrors);
 	}
 
 	asIScriptContext* ScriptManager::getScriptContextFromPool(asIScriptFunction* function)
@@ -204,7 +260,7 @@ namespace Ivy {
 		}
 
 		// No controller found, check if the script has already been loaded
-		asIScriptModule *module = scriptEngine->GetModule(script.c_str(), asGM_ONLY_IF_EXISTS);
+		asIScriptModule *module = scriptEngine->GetModule(script.c_str(), asGM_ONLY_IF_EXISTS);	
 		if (module)
 		{
 			// We've already attempted loading the script before, but there is no controller
@@ -219,12 +275,12 @@ namespace Ivy {
 
 		// If the script file doesn't exist, then there is no script controller for this type
 		FILE* file;
-		if ((file = fopen((script + ".as").c_str(), "asReturnValue")) == 0)
+		if ((file = fopen((script /*+ ".as"*/).c_str(), "r")) == 0)
 			return 0;
 		fclose(file);
 
 		// Let the builder load the script, and do the necessary pre-processing (include files, etc)
-		asReturnValue = builder.AddSectionFromFile((script + ".as").c_str());
+		asReturnValue = builder.AddSectionFromFile((script /*+ ".as"*/).c_str());
 		if (asReturnValue < 0)
 			return 0;
 
@@ -271,8 +327,8 @@ namespace Ivy {
 		}
 
 		// Find the factory function
-		// The game engine will pass in the owning CGameObj to the controller for storage
-		std::string s = std::string(type->GetName()) + "@ " + std::string(type->GetName()) + "(CGameObj @)";
+		// The game engine will pass in the owning ScriptableObject to the controller for storage
+		std::string s = std::string(type->GetName()) + "@ " + std::string(type->GetName()) + "(ScriptableObject @)";
 		controller->createFunction = type->GetFactoryByDecl(s.c_str());
 		if (controller->createFunction == 0)
 		{
@@ -292,7 +348,7 @@ namespace Ivy {
 		return controller;
 	}
 
-	void ScriptManager::callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, GameObject* caller)
+	void ScriptManager::callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, ScriptableObject* caller)
 	{
 		// Find the cached onMessage method id
 		SController* controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());

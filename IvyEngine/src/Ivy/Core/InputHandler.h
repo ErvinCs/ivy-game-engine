@@ -14,12 +14,13 @@ namespace Ivy{
 		inline static float GetMouseX() { return instance->getMouseXImpl(); }
 		inline static float GetMouseY() { return instance->getMouseYImpl(); }
 
+		inline static std::unique_ptr<InputHandler>& GetInstance() { return instance; }
+
 	protected:
 		InputHandler() = default;
 		InputHandler(const InputHandler&) = delete;
 		InputHandler& operator=(const InputHandler&) = delete;
 
-		// TODO - Lowerecase these
 		virtual bool isKeyDownImpl(unsigned int keycode) = 0;
 		virtual bool isMouseButtonDownImpl(unsigned int button) = 0;
 		virtual std::pair<float, float> getMousePositionImpl() = 0;
@@ -28,7 +29,7 @@ namespace Ivy{
 
 	private:
 		static std::unique_ptr<InputHandler> instance;
-
+		
 	};
 
 }

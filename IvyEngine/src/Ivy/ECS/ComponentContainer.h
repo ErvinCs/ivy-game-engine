@@ -72,7 +72,8 @@ namespace Ivy {
 					return componentArray[i];
 				}
 			}
-			throw new ComponentNotFoundException("Could not find a component of the given type!");
+			//throw new ComponentNotFoundException("Could not find a component of the given type!");
+			return T();
 		}
 
 		void onEntityDestroyed(Entity& entity) override

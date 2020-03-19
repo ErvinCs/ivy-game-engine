@@ -12,7 +12,7 @@ namespace Ivy
 		std::string spritePath;
 		std::shared_ptr<Ivy::Texture> texture;
 
-		Renderable() = default;
+		Renderable() : Component() {}
 		Renderable(std::string spritePath)
 		{
 			this->spritePath = spritePath;

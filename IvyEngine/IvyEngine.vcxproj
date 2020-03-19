@@ -195,7 +195,8 @@
     <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h" />
-    <ClInclude Include="src\Ivy\Scripting\GameObject.h" />
+    <ClInclude Include="src\Ivy\Scripting\MethodWrappers.h" />
+    <ClInclude Include="src\Ivy\Scripting\ScriptableObject.h" />
     <ClInclude Include="src\Ivy\Scripting\ScriptManager.h" />
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
@@ -605,7 +606,7 @@
     <ClCompile Include="src\Ivy\Renderer\Texture.cpp" />
     <ClCompile Include="src\Ivy\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="src\Ivy\Scripting\GameObject.cpp" />
+    <ClCompile Include="src\Ivy\Scripting\ScriptableObject.cpp" />
     <ClCompile Include="src\Ivy\Scripting\ScriptManager.cpp" />
     <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp" />
     <ClCompile Include="src\Ivy\Windows\WindowsWindow.cpp" />
@@ -627,6 +628,10 @@
     <ProjectReference Include="vendor\angelscript\AngelScript.vcxproj">
       <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res_temp\scripts\common.as" />
+    <None Include="res_temp\scripts\player.as" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

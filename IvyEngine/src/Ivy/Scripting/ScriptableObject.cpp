@@ -1,20 +1,30 @@
 #include "ivypch.h"
-#include "GameObject.h"
+#include "ScriptableObject.h"
 
 #include "ScriptManager.h"
 
 namespace Ivy {
 
-	GameObject::GameObject()
+	void ScriptableObject::setOwner(Entity ownerEntity) 
 	{
+		this->ownerEntity = ownerEntity;
+	}
+
+	Entity ScriptableObject::getOwner()
+	{
+		return this->ownerEntity;
+	}
+
+	ScriptableObject::ScriptableObject(const std::string& name)
+	{
+		this->name = name;
 		this->referenceCount = 1;
 		this->isAlive = true;
 		this->scriptObject = 0;
 		this->weakReferenceFlag = 0;
-		//this->position = glm::vec2(1.0f);
 	}
 
-	GameObject::~GameObject()
+	ScriptableObject::~ScriptableObject()
 	{
 		// Notify objects that hold weak references to this object that it has been destroyed
 		if (weakReferenceFlag)
@@ -29,12 +39,12 @@ namespace Ivy {
 		}
 	}
 
-	int GameObject::addReference()
+	int ScriptableObject::addReference()
 	{
 		return ++referenceCount;
 	}
 
-	int GameObject::release()
+	int ScriptableObject::release()
 	{
 		if (--referenceCount == 0)
 		{
@@ -44,7 +54,7 @@ namespace Ivy {
 		return referenceCount;
 	}
 
-	asILockableSharedBool* GameObject::getWeakRefereneFlag()
+	asILockableSharedBool* ScriptableObject::getWeakRefereneFlag()
 	{
 		if (!weakReferenceFlag)
 			weakReferenceFlag = asCreateLockableSharedBool();
@@ -52,7 +62,7 @@ namespace Ivy {
 		return weakReferenceFlag;
 	}
 
-	void GameObject::destoryAndRelease()
+	void ScriptableObject::destoryAndRelease()
 	{
 		// Release all referrences that this object holds
 		if (scriptObject)
@@ -64,20 +74,20 @@ namespace Ivy {
 		release();
 	}
 
-	void GameObject::onUpdate()
+	void ScriptableObject::onUpdate()
 	{
 		if (scriptObject)
 			ScriptManager::GetInstance().callOnUpdate(scriptObject);
 	}
 
 
-	void GameObject::sendMessage(CScriptHandle message, GameObject* target)
+	void ScriptableObject::sendMessage(CScriptHandle message, ScriptableObject* target)
 	{
 		if (target && target->scriptObject)
 			ScriptManager::GetInstance().callOnMessage(target->scriptObject, message, this);
 	}
 
-	void GameObject::killObject()
+	void ScriptableObject::killObject()
 	{
 		// Just flag the object as dead.The game manager will
 		// do the actual destroying at the end of the frame
