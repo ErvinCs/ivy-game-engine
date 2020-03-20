@@ -27,12 +27,13 @@ class CPlayer : IController
 	CPlayer(ScriptableObject@ object)
 	{
 		@self = object;
+		
 	}
 
 	void onUpdate()
 	{
-		GetTransform(self.getOwner(), transform);
 
+		@transform = FindTransform(self.getOwner());
 		if (IsKeyDown(RIGHT))
 		{
 			if (transform.positionX < leftBorder)

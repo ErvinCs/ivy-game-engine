@@ -2,6 +2,7 @@
 #include "ScriptableObject.h"
 
 #include "ScriptManager.h"
+#include "../Core/Logger.h"
 
 namespace Ivy {
 
@@ -76,8 +77,10 @@ namespace Ivy {
 
 	void ScriptableObject::onUpdate()
 	{
-		if (scriptObject)
+		if (scriptObject) {
+			//IVY_CORE_INFO("ScriptableObject::OnUpadte. scriptObject");
 			ScriptManager::GetInstance().callOnUpdate(scriptObject);
+		}
 	}
 
 

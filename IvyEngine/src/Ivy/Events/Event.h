@@ -28,7 +28,7 @@ namespace Ivy {
 
 		EventHandler(const Func &func) : callback{ func } {
 			this->id = ++EventHandler::counter;
-			IVY_CORE_TRACE("EventHandlerCounter (id) = {0}", EventHandler::counter);	
+			//IVY_CORE_TRACE("EventHandlerCounter (id) = {0}", EventHandler::counter);	
 		}
 
 		Event* getEvent() {

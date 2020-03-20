@@ -39,7 +39,7 @@ namespace Ivy {
 		~ScriptManager();
 
 		int init();
-		asIScriptObject* createScriptController(const std::string& script, ScriptableObject* gameObject);
+		asIScriptObject* createScriptController(const std::string& script, ScriptableObject* gameObject, Entity entity);
 
 		void callOnUpdate(asIScriptObject* scriptObject);
 		void callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, ScriptableObject* caller);

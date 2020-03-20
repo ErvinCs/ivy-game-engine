@@ -13,7 +13,7 @@ namespace Ivy {
 		WindowResizeEvent(unsigned int width, unsigned int height)
 			: width(width), height(height) 
 		{
-			//IVY_CORE_INFO("Created: WindowEvent/WindowResizeEvent: width={0}, height={1}", width, height);
+			IVY_CORE_INFO("Created: WindowEvent/WindowResizeEvent: width={0}, height={1}", width, height);
 		}
 
 		inline unsigned int getWidth() const { return width; }

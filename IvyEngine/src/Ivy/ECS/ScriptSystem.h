@@ -2,9 +2,6 @@
 
 #include "System.h"
 
-#include <iostream>
-#include <set>
-
 namespace Ivy {
 
 	class ScriptSystem : public System

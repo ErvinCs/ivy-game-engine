@@ -2,7 +2,7 @@
 #include "WindowsInputHandler.h"
 
 #include "../Core/Application.h"
-
+#include "../Core/Logger.h"
 #include <GLFW/glfw3.h>
 
 namespace Ivy {
@@ -13,6 +13,8 @@ namespace Ivy {
 		// Get the glfw window reference
 		auto window = static_cast<GLFWwindow*>(Application::GetApplication().getWindow().getNativeWindow());
 		auto state = glfwGetKey(window, keycode);
+		//WORKING PROPERLY
+		//IVY_CORE_TRACE("WindowsInputHandler::IsKeyDownImpl. keycode={0}, press={1}, repeat={2}", keycode, state == GLFW_PRESS, state == GLFW_REPEAT);
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 

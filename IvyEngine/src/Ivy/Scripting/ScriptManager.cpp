@@ -133,6 +133,8 @@ namespace Ivy {
 
 		// Register template specializations & factories for ECS methods
 		r = scriptEngine->RegisterGlobalFunction("void GetTransform(uint16, Transform &out)", asFUNCTION(GetTransform), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("Transform@ FindTransform(uint16)", asFUNCTION(FindTransform), asCALL_CDECL); assert(r >= 0);
+
 		//r = scriptEngine->RegisterGlobalFunction("void GetRenderable(uint16, Renderable &out)", asFUNCTION(GetRenderable), asCALL_CDECL); assert(r >= 0);
 		//r = scriptEngine->RegisterGlobalFunction("void GetScriptComponent(uint16, ScriptComponent &out)", asFUNCTION(GetScriptComponent), asCALL_CDECL); assert(r >= 0);
 		
@@ -140,7 +142,7 @@ namespace Ivy {
 		return 0;
 	}
 
-	asIScriptObject* ScriptManager::createScriptController(const std::string& script, ScriptableObject* gameObject)
+	asIScriptObject* ScriptManager::createScriptController(const std::string& script, ScriptableObject* gameObject, Entity entity)
 	{
 		int asReturnValue;
 		asIScriptObject* object = 0;
@@ -168,6 +170,7 @@ namespace Ivy {
 			object->AddRef();
 		}
 		gameObject->setScriptObject(object);
+		gameObject->setOwner(entity);
 
 		// Return the context to the pool so it can be reused
 		returnScriptContextToPool(context);
@@ -183,6 +186,7 @@ namespace Ivy {
 		// Call the method using the shared context
 		if (controller->onUpdateMethod != 0)
 		{
+			//IVY_CORE_INFO("ScriptManager::callOnUpdate. scriptObject");
 			asIScriptContext *context = getScriptContextFromPool(controller->onUpdateMethod);
 			context->SetObject(scriptObject);
 			callScript(context);

@@ -93,7 +93,7 @@ namespace Ivy {
 	void Application::onEvent(Event& event)
 	{
 		// TODO - Propagate event through layers (iterate from end to begin)
-		IVY_CORE_WARN("OnEvent: {0}", event.toString());
+		//IVY_CORE_WARN("OnEvent: {0}", event.toString());
 		//event();
 		//TODO - call event in the update loop at some event processing stage, use EventHandles
 	}

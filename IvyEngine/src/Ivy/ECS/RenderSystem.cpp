@@ -22,11 +22,11 @@ namespace Ivy {
 			auto& object = *it;
 
 			auto& renderable = ECS::getInstance().getComponent<Renderable>(object);
-			if (renderable.getComponentId() == uint8_t(1))
+			if (renderable.getComponentId() != uint8_t(1))
 				continue;
 
 			auto& transform = ECS::getInstance().getComponent<Transform>(object);
-			if (transform.getComponentId() == uint8_t(0))
+			if (transform.getComponentId() != uint8_t(0))
 				continue;
 			
 

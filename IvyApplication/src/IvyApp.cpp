@@ -34,6 +34,7 @@ private:
 private:
 	// Entities
 	Entity player = getECS().createEntity();
+	// ISSUE - Script does not update fields
 	Transform playerTransform{ 0.0f, -3.6f, 0.0f, 2.0f, 2.0f };		//{ glm::vec2(0.0f, -3.6f), 0.0f, glm::vec2(2.0f, 2.0f) };
 	Renderable playerRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png" };
 	Script playerScript{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as" };
@@ -172,32 +173,7 @@ public:
 		// Run player.as
 
 		//IVY_TRACE("Update:  timestep={0}", ts);
-		/*jumpCooldown -= ts;
-		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_D))
-		{
-			//IVY_TRACE("KeyD down");
-			if (getECS().getComponent<Transform>(player).position.x < leftBorder)
-			{
-				getECS().getComponent<Transform>(player).position.x += playerMoveSpeed * ts;
-			}
-		}
-		else if (Ivy::InputHandler::IsKeyDown(IVY_KEY_A))
-		{
-			//IVY_TRACE("KeyA down");
-			if (getECS().getComponent<Transform>(player).position.x > rightBorder)
-			{
-				getECS().getComponent<Transform>(player).position.x -= playerMoveSpeed * ts;
-			}
-		}
-
-		if (Ivy::InputHandler::IsKeyDown(IVY_KEY_W))
-		{
-			if (!isJumping && jumpCooldown <= 0)
-			{
-				isJumping = true;
-			}
-		}
-
+		/*
 		if (isJumping)
 		{
 			jumpTime -= ts;
@@ -218,7 +194,8 @@ public:
 				jumpCooldown = 1.0f;
 				jumpTime = constJumpTime;
 			}
-		}*/
+		}
+		*/
 
 		// Render
 		Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
@@ -227,16 +204,16 @@ public:
 		Ivy::Renderer::Begin(camera);
 
 		renderSystem->update(ts);
-		scriptSystem->update(ts);
 
 		Ivy::Renderer::End();
+		scriptSystem->update(ts);
 	}
 
 	void imGuiRender() override
 	{
-		/*ImGui::SliderFloat(" Position X Player", &getECS().getComponent<Transform>(player).position.x, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Position Y Player", &getECS().getComponent<Transform>(player).position.y, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Size X Player",     &getECS().getComponent<Transform>(player).scale.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position X Player", &getECS().getComponent<Transform>(player).positionX, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Position Y Player", &getECS().getComponent<Transform>(player).positionY, leftBorder, rightBorder);
+		/*ImGui::SliderFloat(" Size X Player",     &getECS().getComponent<Transform>(player).scale.x, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Size Y Player",     &getECS().getComponent<Transform>(player).scale.y, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Rotation Player",   &getECS().getComponent<Transform>(player).rotation, 0.0f, 360.0f);
 		ImGui::SliderFloat(" Position X Cat",    &getECS().getComponent<Transform>(cat).position.x, leftBorder, rightBorder);
@@ -248,7 +225,7 @@ public:
 
 	void onEvent(Ivy::Event& event) override
 	{
-		IVY_INFO("Test Layer: {0}", event.toString());
+		//IVY_INFO("Test Layer: {0}", event.toString());
 	}
 
 	~TestLayer()

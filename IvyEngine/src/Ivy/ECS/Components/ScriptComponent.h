@@ -20,7 +20,7 @@ namespace Ivy
 			this->setComponentId(2);	//TODO - Remove hard-coded set id
 		}
 		~ScriptComponent() {
-			delete scriptableObject;
+			//delete scriptableObject;
 			scriptableObject = nullptr;
 		}
 	};

@@ -37,13 +37,14 @@ namespace Ivy
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
 
-		Transform(const Transform& other)
+		/*Transform(const Transform& other)
 		{
 			this->positionX = other.positionX;
 			this->positionY = other.positionY;
 			this->scaleX = other.scaleX;
 			this->scaleY = other.scaleY;
 			this->rotation = other.rotation;
+			this->setComponentId(0);
 		}
 		Transform& operator= (const Transform& other)
 		{
@@ -52,8 +53,9 @@ namespace Ivy
 			this->scaleX = other.scaleX;
 			this->scaleY = other.scaleY;
 			this->rotation = other.rotation;
+			this->setComponentId(0);
 			return *this;
-		}
+		}*/
 
 	};
 }

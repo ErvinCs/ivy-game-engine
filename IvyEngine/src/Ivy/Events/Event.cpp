@@ -36,7 +36,7 @@ namespace Ivy {
 			if (*func != nullptr && (*func)->id != 0) {
 				Event* e = (*func)->getEvent();
 				(*(*func))(*e);
-				IVY_CORE_TRACE("EventHandler.id: {0}", (*func)->id);
+				//IVY_CORE_TRACE("EventHandler.id: {0}", (*func)->id);
 			}
 		}
 	}
@@ -49,7 +49,7 @@ namespace Ivy {
 		vector<unique_ptr<EventHandler>>::iterator to_remove = this->handlers.begin();
 		for (; to_remove != this->handlers.end(); ++to_remove) {
 			if (*(*to_remove) == handler) {
-				IVY_CORE_TRACE("Removing: {0}",  (*to_remove)->id);
+				//IVY_CORE_TRACE("Removing: {0}",  (*to_remove)->id);
 				this->handlers.erase(to_remove);
 				break;
 			}

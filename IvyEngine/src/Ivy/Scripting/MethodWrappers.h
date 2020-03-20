@@ -6,6 +6,7 @@
 #include "../ECS/Components/Renderable.h"
 
 #include "../Core/InputHandler.h"
+#include "../Core/Logger.h"
 
 namespace Ivy {
 
@@ -35,6 +36,12 @@ namespace Ivy {
 		transform = ECS::getInstance().getComponent<Transform>(entity);
 	}
 
+	Transform* FindTransform(Entity entity) {
+		Transform* t = &ECS::getInstance().getComponent<Transform>(entity);
+		IVY_CORE_TRACE("Entity={0}, Transf.X={1}, Transf.Y={2}", entity, t->positionX, t->positionY);
+		return t;
+	}
+
 	void GetRenderable(Entity entity, Renderable& renderable)
 	{
 		renderable = ECS::getInstance().getComponent<Renderable>(entity);
@@ -43,10 +50,5 @@ namespace Ivy {
 	void GetScriptComponent(Entity entity, ScriptComponent& script)
 	{
 		script = ECS::getInstance().getComponent<ScriptComponent>(entity);
-	}
-
-	void aaa(Transform& transform)
-	{
-
 	}
 }
