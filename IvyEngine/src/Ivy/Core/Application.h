@@ -30,6 +30,7 @@ namespace Ivy {
 		
 	public:
 		//Timestep* globalTime;
+		//inline Timestep& getGlobalTimePtr() { return &globalTime; }
 		float globalTime;
 
 		inline static Application& getInstance()
@@ -49,7 +50,7 @@ namespace Ivy {
 
 		inline Window& getWindow() { return *window; }
 		inline static Application& GetApplication() { return *instance; }
-		//inline Timestep& getGlobalTimePtr() { return &globalTime; }
+		
 
 	private:
 		bool onWindowClose(WindowCloseEvent& event);

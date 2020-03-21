@@ -17,11 +17,13 @@ namespace Ivy
 		{
 			this->scriptName = scriptName;
 			this->scriptableObject = new ScriptableObject(scriptName);
-			this->setComponentId(2);	//TODO - Remove hard-coded set id
+			this->setComponentId(2);
 		}
-		~ScriptComponent() {
-			//delete scriptableObject;
-			scriptableObject = nullptr;
-		}
+		
+		//~ScriptComponent() {
+			// ScriptableObject manages its lifetime
+			//delete scriptableObject
+			//scriptableObject = nullptr;
+		//}
 	};
 }

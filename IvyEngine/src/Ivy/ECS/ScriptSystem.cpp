@@ -18,7 +18,7 @@ namespace Ivy {
 			if (scriptComponent.getComponentId() != uint8_t(2))
 				continue;
 			scriptComponent.setEntityId(object);
-			//SET EntityID for the script
+
 			ScriptManager::GetInstance().createScriptController(scriptComponent.scriptName, scriptComponent.scriptableObject, object);
 		}
 	}
@@ -34,7 +34,6 @@ namespace Ivy {
 				continue;
 
 			scriptComponent.scriptableObject->onUpdate();
-			//ScriptManager::GetInstance().callOnUpdate(scriptComponent.scriptableObject->getScriptObject()); // GetScriptObject returns null
 			
 			//TODO - Execute onCollide() for each script [Once the Collision System is implemented] - 
 		}

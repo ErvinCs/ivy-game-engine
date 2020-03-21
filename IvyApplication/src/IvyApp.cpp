@@ -34,12 +34,12 @@ private:
 private:
 	// Entities
 	Entity player = getECS().createEntity();
-	// ISSUE - Script does not update fields
-	Transform playerTransform{ glm::vec2(0.0f, -3.6f), 0.0f, glm::vec2(2.0f, 2.0f) }; 		//{ 0.0f, -3.6f, 0.0f, 2.0f, 2.0f };
+	Transform playerTransform{ glm::vec2(0.0f, -3.6f), 0.0f, glm::vec2(2.0f, 2.0f) }; 		
 	Renderable playerRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png" };
 	Script playerScript{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as" };
 
-	/*std::array<Entity, 20> tiles = {
+	const int noTiles = 20;
+	std::array<Entity, 20> tiles = {
 		getECS().createEntity(),
 		getECS().createEntity(),
 		getECS().createEntity(),
@@ -105,15 +105,17 @@ private:
 		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
 		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png",
 		"C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\tile.png"
-	};*/
+	};
 
-	/*Entity sprite = getECS().createEntity();
-	Transform spriteTransform{ 2.0f, 2.0f, 180.0f, 2.0f, 2.0f };
+	Entity sprite = getECS().createEntity();
+	Transform spriteTransform{ glm::vec2(0.0f, 2.0f), 180.0f, glm::vec2(2.0f, 2.0f) };
 	Renderable spriteRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png" };
+	Script spriteScript{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\patrol.as" };
 
 	Entity cat = getECS().createEntity();;
-	Transform catTransform{11.5f, 5.4f, 0.0f,2.0f, 2.0f };
-	Renderable catRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png" };*/
+	Transform catTransform{ glm::vec2(11.5f, 5.4f), 0.0f, glm::vec2(2.0f, 2.0f) };
+	Renderable catRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png" };
+
 	//Systems
 	std::shared_ptr<Ivy::System> renderSystem = std::make_shared<Ivy::RenderSystem>(getECS().getEntities());
 	std::shared_ptr<Ivy::System> scriptSystem = std::make_shared<Ivy::ScriptSystem>(getECS().getEntities());
@@ -125,16 +127,7 @@ private:
 	float cameraRotation = 0.0f;
 	float cameraRotationSpeed = 180.0f;
 
-	// Gameplay Related
-	/*float playerMoveSpeed = 5.0f;
-	bool isJumping = false;
-	bool isFalling = false;
-	const float constJumpTime = 1.3f;
-	const float jumpSpeed = 2.0f;
-	float jumpTime = constJumpTime;
-	float jumpCooldown = 1.0f;*/
-
-	// Screen Borders
+	// Screen Borders - Used for ImGui
 	float leftBorder = 12.3f;
 	float rightBorder = -11.8f;
 	float topBorder = 6.4f;
@@ -145,21 +138,16 @@ public:
 	{
 		IVY_TRACE("Creating TestLayer");
 
-		//TODO - MAKE THIS WORK
-		//player = getECS().createEntity();
-
-		getECS().addComponentType<Transform>();
-		getECS().addComponentType<Renderable>();
-		getECS().addComponentType<Script>();
+		//TODO - THIS: player = getECS().createEntity();
 
 		InitEntity(player, playerTransform, playerRenderable, playerScript);
-		/*InitEntity(sprite, spriteTransform, spriteRenderable);
+		InitEntity(sprite, spriteTransform, spriteRenderable, spriteScript);
 		InitEntity(cat, catTransform, catRenderable);
 
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < noTiles; i++)
 		{
 			InitEntity(tiles[i], transforms[i], renderables[i]);
-		}*/
+		}
 		
 		getECS().addSystem(renderSystem);
 		getECS().addSystem(scriptSystem);
@@ -170,20 +158,14 @@ public:
 
 	void update(Ivy::Timestep ts) override
 	{
-		// Run player.as
-
-		//IVY_TRACE("Update:  timestep={0}", ts);
-		
-
 		// Render
 		Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
 		Ivy::RenderCommand::clear();
-
 		Ivy::Renderer::Begin(camera);
-
 		renderSystem->update(ts);
-
 		Ivy::Renderer::End();
+
+		// Script
 		scriptSystem->update(ts);
 	}
 
@@ -191,19 +173,19 @@ public:
 	{
 		ImGui::SliderFloat(" Position X Player", &getECS().getComponent<Transform>(player).position.x, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Position Y Player", &getECS().getComponent<Transform>(player).position.y, leftBorder, rightBorder);
-		/*ImGui::SliderFloat(" Size X Player",     &getECS().getComponent<Transform>(player).scale.x, leftBorder, rightBorder);
+		ImGui::SliderFloat(" Size X Player",     &getECS().getComponent<Transform>(player).scale.x, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Size Y Player",     &getECS().getComponent<Transform>(player).scale.y, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Rotation Player",   &getECS().getComponent<Transform>(player).rotation, 0.0f, 360.0f);
 		ImGui::SliderFloat(" Position X Cat",    &getECS().getComponent<Transform>(cat).position.x, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Position Y Cat",    &getECS().getComponent<Transform>(cat).position.y, leftBorder, rightBorder);
 		ImGui::SliderFloat(" Position X Sprite", &getECS().getComponent<Transform>(sprite).position.x, leftBorder, rightBorder);
-		ImGui::SliderFloat(" Position Y Sprite", &getECS().getComponent<Transform>(sprite).position.y, botBorder, topBorder);*/
+		ImGui::SliderFloat(" Position Y Sprite", &getECS().getComponent<Transform>(sprite).position.y, botBorder, topBorder);
 
 	}
 
 	void onEvent(Ivy::Event& event) override
 	{
-		//IVY_INFO("Test Layer: {0}", event.toString());
+		IVY_INFO("Test Layer: {0}", event.toString());
 	}
 
 	~TestLayer()

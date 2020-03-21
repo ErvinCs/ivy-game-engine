@@ -13,8 +13,6 @@ namespace Ivy {
 		// Get the glfw window reference
 		auto window = static_cast<GLFWwindow*>(Application::GetApplication().getWindow().getNativeWindow());
 		auto state = glfwGetKey(window, keycode);
-		//WORKING PROPERLY
-		//IVY_CORE_TRACE("WindowsInputHandler::IsKeyDownImpl. keycode={0}, press={1}, repeat={2}", keycode, state == GLFW_PRESS, state == GLFW_REPEAT);
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 

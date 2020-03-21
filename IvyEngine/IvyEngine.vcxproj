@@ -171,11 +171,6 @@
     <ClInclude Include="src\Ivy\Exceptions\EventException.h" />
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Ivy\Managers\FileManager.h" />
-    <ClInclude Include="src\Ivy\Managers\InputManager.h" />
-    <ClInclude Include="src\Ivy\Managers\Manager.h" />
-    <ClInclude Include="src\Ivy\Managers\MemoryManager.h" />
-    <ClInclude Include="src\Ivy\Managers\RendererManager.h" />
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
     <ClInclude Include="src\Ivy\Renderer\Context.h" />
     <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
@@ -584,10 +579,6 @@
     <ClCompile Include="src\Ivy\Events\Event.cpp" />
     <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp" />
     <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Ivy\Managers\FileManager.cpp" />
-    <ClCompile Include="src\Ivy\Managers\InputManager.cpp" />
-    <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp" />
-    <ClCompile Include="src\Ivy\Managers\RendererManager.cpp" />
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
     <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
     <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp" />
@@ -631,6 +622,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res_temp\scripts\common.as" />
+    <None Include="res_temp\scripts\patrol.as" />
     <None Include="res_temp\scripts\player.as" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

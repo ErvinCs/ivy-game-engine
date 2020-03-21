@@ -17,7 +17,7 @@ namespace Ivy
 		{
 			this->spritePath = spritePath;
 			texture = Texture::Create(spritePath);
-			this->setComponentId(1);	//TODO - Remove hard-coded set id
+			this->setComponentId(1);
 		}
 	};
 }

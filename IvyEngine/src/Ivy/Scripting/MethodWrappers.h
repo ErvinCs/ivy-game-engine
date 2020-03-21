@@ -8,10 +8,13 @@
 #include "../Core/InputHandler.h"
 #include "../Core/Logger.h"
 
+#include "../Core/Timestep.h"
+
+#include <glm/glm.hpp>
+
 namespace Ivy {
 
-
-
+	// ---------- Input ----------
 	bool IsKeyDown(unsigned int keycode)
 	{
 		return InputHandler::GetInstance()->IsKeyDown(keycode);
@@ -33,14 +36,10 @@ namespace Ivy {
 		return InputHandler::GetInstance()->GetMouseY();
 	}
 
-	void GetTransform(Entity entity, Transform& transform)
-	{
-		transform = ECS::getInstance().getComponent<Transform>(entity);
-	}
 
+	// ---------- Find Components ----------
 	Transform* FindTransform(Entity entity) {
 		Transform* t = &ECS::getInstance().getComponent<Transform>(entity);
-		//IVY_CORE_TRACE("Entity={0}, Transf.X={1}, Transf.Y={2}", entity, t->positionX, t->positionY);
 		return t;
 	}
 
@@ -52,6 +51,71 @@ namespace Ivy {
 	void GetScriptComponent(Entity entity, ScriptComponent& script)
 	{
 		script = ECS::getInstance().getComponent<ScriptComponent>(entity);
+	}
+
+	// ---------- Timestep ----------
+
+	Timestep operator+(const Timestep& lhs, const Timestep& rhs)
+	{
+		return lhs.getSeconds() + rhs.getSeconds();
+	}
+
+	Timestep operator-(const Timestep& lhs, const Timestep& rhs)
+	{
+		return lhs.getSeconds() - rhs.getSeconds();
+	}
+
+	Timestep operator/(const Timestep& lhs, const Timestep& rhs)
+	{
+		return lhs.getSeconds() / rhs.getSeconds();
+	}
+
+	Timestep operator*(const Timestep& lhs, const Timestep& rhs)
+	{
+		return lhs.getSeconds() * rhs.getSeconds();
+	}
+
+	float operator+(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() + rhs;
+	}
+
+	float operator-(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() - rhs;
+	}
+
+	float operator*(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() * rhs;
+	}
+
+	float operator/(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() / rhs;
+	}
+
+	Transform* Transform_Factory1()
+	{
+		return new Transform(glm::vec2(0), 0, glm::vec2(0));
+	}
+
+	// ---------- GLM - Vec2 ----------
+
+	glm::vec2* Vec2Default() {
+		return new glm::vec2(1.0);
+	}
+
+	glm::vec2* Vec2Copy(const glm::vec2& in) {
+		return new glm::vec2(in);
+	}
+
+	glm::vec2* Vec2Init1(float x) {
+		return new glm::vec2(x);
+	}
+
+	glm::vec2* Vec2Init2(float x, float y) {
+		return new glm::vec2(x, y);
 	}
 
 	

@@ -9,10 +9,7 @@ namespace Ivy{
 	public:
 		~InputHandler() = default;
 
-		inline static bool IsKeyDown(unsigned int keycode) { 
-			//IVY_CORE_INFO("InputHandler::IsKeyDown. keycode={0}", keycode);	//GETTING CALLED PROPERLY
-			return instance->isKeyDownImpl(keycode); 
-		}
+		inline static bool IsKeyDown(unsigned int keycode) { return instance->isKeyDownImpl(keycode); }
 		inline static bool IsMouseButtonDown(unsigned int button) { return instance->isMouseButtonDownImpl(button); }
 		inline static std::pair<float, float> GetMousePosition() { return instance->getMousePositionImpl(); }
 		inline static float GetMouseX() { return instance->getMouseXImpl(); }

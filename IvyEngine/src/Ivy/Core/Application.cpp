@@ -59,6 +59,7 @@ namespace Ivy {
 
 	void Application::init()
 	{
+
 	}
 
 	void Application::run()

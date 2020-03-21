@@ -30,8 +30,6 @@ namespace Ivy {
 				continue;
 			
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
-			/*Renderer::DrawRect(glm::vec2(transform.positionX, transform.positionY), 
-				glm::vec2(transform.scaleX, transform.scaleY), transform.rotation, renderable.texture);*/
 		}
 	}
 

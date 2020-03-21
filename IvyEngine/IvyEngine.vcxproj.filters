@@ -159,21 +159,6 @@
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h">
       <Filter>src\Ivy\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\FileManager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\InputManager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\Manager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\MemoryManager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\RendererManager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h">
       <Filter>src\Ivy\Renderer</Filter>
     </ClInclude>
@@ -1392,18 +1377,6 @@
     <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp">
       <Filter>src\Ivy\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\FileManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\InputManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\RendererManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClCompile>
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp">
       <Filter>src\Ivy\Renderer</Filter>
     </ClCompile>
@@ -1480,5 +1453,6 @@
   <ItemGroup>
     <None Include="res_temp\scripts\player.as" />
     <None Include="res_temp\scripts\common.as" />
+    <None Include="res_temp\scripts\patrol.as" />
   </ItemGroup>
 </Project>

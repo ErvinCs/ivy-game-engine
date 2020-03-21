@@ -9,6 +9,9 @@
 #include "ComponentContainer.h"
 #include "Entity.h"
 #include "System.h"
+#include "Components/Transform.h"
+#include "Components/Renderable.h"
+#include "Components/ScriptComponent.h"
 
 namespace Ivy {
 
@@ -85,7 +88,6 @@ namespace Ivy {
 			for (auto& it = entities.begin(); it != entities.end(); it++)
 			{
 				if(*it == entity)
-				//if (it->getEntityId() == entity.getEntityId())
 				{
 					entities.erase(it);
 				}
@@ -94,7 +96,7 @@ namespace Ivy {
 
 		Entity& createEntity()
 		{
-			Entity entity = EntityIdGenerator; //Entity(EntityIdGenerator);
+			Entity entity = EntityIdGenerator; 
 			entities.push_back(entity);
 			EntityIdGenerator++;
 			return entities.at(entities.size() - 1);
@@ -122,8 +124,14 @@ namespace Ivy {
 
 		ECS()
 		{
+			// Ids
 			EntityIdGenerator = 0;
 			componentTypeCounter = 0;
+
+			// Component Types
+			this->addComponentType<Transform>();		//TransformID       = 0
+			this->addComponentType<Renderable>();		//RenderableID      = 1
+			this->addComponentType<ScriptComponent>();	//ScriptComponentID = 2	
 		}
 
 		ECS(const ECS&) = delete;

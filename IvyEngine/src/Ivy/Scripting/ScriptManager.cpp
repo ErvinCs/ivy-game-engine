@@ -15,71 +15,7 @@
 
 namespace Ivy {
 
-	Timestep operator+(const Timestep& lhs, const Timestep& rhs)
-	{
-		return lhs.getSeconds() + rhs.getSeconds();
-	}
 
-	Timestep operator-(const Timestep& lhs, const Timestep& rhs)
-	{
-		return lhs.getSeconds() - rhs.getSeconds();
-	}
-
-	Timestep operator/(const Timestep& lhs, const Timestep& rhs)
-	{
-		return lhs.getSeconds() / rhs.getSeconds();
-	}
-
-	Timestep operator*(const Timestep& lhs, const Timestep& rhs)
-	{
-		return lhs.getSeconds() * rhs.getSeconds();
-	}
-
-	float operator+(const Timestep& lhs, const float& rhs)
-	{
-		return lhs.getSeconds() + rhs;
-	}
-
-	float operator-(const Timestep& lhs, const float& rhs)
-	{
-		return lhs.getSeconds() - rhs;
-	}
-
-	float operator*(const Timestep& lhs, const float& rhs)
-	{
-		return lhs.getSeconds() * rhs;
-	}
-
-	float operator/(const Timestep& lhs, const float& rhs)
-	{
-		return lhs.getSeconds() / rhs;
-	}
-
-	Transform* Transform_Factory1()
-	{
-		return new Transform(glm::vec2(0), 0, glm::vec2(0));
-	}
-
-	/*Transform* Transform_Factory5(float posX, float posY, float rotate, float scaleX, float scaleY, void* ptr)
-	{
-		return new Transform(posX, posY, rotate, scaleX, scaleY);
-	}*/
-
-	glm::vec2* Vec2Default() {
-		return new glm::vec2(1.0);
-	}
-
-	glm::vec2* Vec2Copy(const glm::vec2& in) {
-		return new glm::vec2(in);
-	}
-
-	glm::vec2* Vec2Init1(float x) {
-		return new glm::vec2(x);
-	}
-
-	glm::vec2* Vec2Init2(float x, float y) {
-		return new glm::vec2(x, y);
-	}
 
 	ScriptManager::~ScriptManager()
 	{
@@ -153,17 +89,15 @@ namespace Ivy {
 			asFUNCTIONPR(operator/, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
 			*/
 
-		// Register variable where the script can store a handle to a Timestep type. 
-		// Assumes that the Timestep type has been registered with the engine already as a reference type.
+		// Register global time variable
 		r = scriptEngine->RegisterGlobalProperty("float deltatime", &Application::getInstance().globalTime); assert(r >= 0);
 		
 
-		// Register the game object. The scripts cannot create these directly, so there is no factory function.
+		// Register ScriptableObject. The scripts cannot create these directly, so there is no factory function.
 		r = scriptEngine->RegisterObjectType("ScriptableObject", 0, asOBJ_REF); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_ADDREF, "void f()", asMETHOD(ScriptableObject, addReference), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_RELEASE, "void f()", asMETHOD(ScriptableObject, release), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_GET_WEAKREF_FLAG, "int &f()", asMETHOD(ScriptableObject, getWeakRefereneFlag), asCALL_THISCALL); assert(r >= 0);
-
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void setOwner(uint16 ownerEntity)", asMETHOD(ScriptableObject, setOwner), asCALL_THISCALL); assert(r >= 0);
 
 		// The script can kill the owning object
@@ -232,9 +166,6 @@ namespace Ivy {
 		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opDivAssign(const float& in) const",
 			asMETHODPR(glm::vec2, operator/=, (const float&), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
 
-		//r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 opAdd(const float &in) const",
-		//	asFUNCTIONPR(glm::operator+, (const glm::vec2&, const float&), glm::vec2), asCALL_CDECL_OBJFIRST); 
-
 		// Register the components. The scripts cannot create these directly, so there is no factory function.
 		r = scriptEngine->RegisterObjectType("Transform", 0, asOBJ_REF); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_ADDREF, "void f()", asMETHOD(Transform, addReference), asCALL_THISCALL); assert(r >= 0);
@@ -249,17 +180,10 @@ namespace Ivy {
 		r = scriptEngine->RegisterObjectMethod("Transform", "Transform &opAssign(const Transform &in)", 
 			asMETHODPR(Transform, operator=, (const Transform &), Transform &), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
+	
 		
-		//r = scriptEngine->RegisterObjectType("Renderable", 0, asOBJ_REF | asOBJ_NOCOUNT); assert(r >= 0);
-		
-
 		// Register template specializations & factories for ECS methods
-		r = scriptEngine->RegisterGlobalFunction("void GetTransform(uint16, Transform &out)", asFUNCTION(GetTransform), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("Transform@ FindTransform(uint16)", asFUNCTION(FindTransform), asCALL_CDECL); assert(r >= 0);
-
-		//r = scriptEngine->RegisterGlobalFunction("void GetRenderable(uint16, Renderable &out)", asFUNCTION(GetRenderable), asCALL_CDECL); assert(r >= 0);
-		//r = scriptEngine->RegisterGlobalFunction("void GetScriptComponent(uint16, ScriptComponent &out)", asFUNCTION(GetScriptComponent), asCALL_CDECL); assert(r >= 0);
-		
 
 		return 0;
 	}

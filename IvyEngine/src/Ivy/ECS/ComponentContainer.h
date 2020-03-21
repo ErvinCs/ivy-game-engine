@@ -38,7 +38,6 @@ namespace Ivy {
 
 		void addComponent(Entity& entity, T& component) 
 		{
-			//component.setEntityId(entity.getEntityId());
 			component.setEntityId(entity);
 			componentArray[size] = component;
 			size++;
@@ -50,10 +49,7 @@ namespace Ivy {
 			for (int i = 0; i < size; i++)
 			{
 				if (componentArray[i].getEntityId() == entity)
-				//if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
-					//componentArray[i].setEntityId(-1);
-
 					T tempComponent = componentArray[i];
 					componentArray[i] = componentArray[size - 1];
 					componentArray[size - 1] = tempComponent;
@@ -67,12 +63,10 @@ namespace Ivy {
 			for (int i = 0; i < size; i++)
 			{
 				if(componentArray[i].getEntityId() == entity)
-				//if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
 					return componentArray[i];
 				}
 			}
-			//throw new ComponentNotFoundException("Could not find a component of the given type!");
 			return T();
 		}
 
