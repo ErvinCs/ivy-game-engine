@@ -41,7 +41,7 @@ namespace Ivy {
 		int init();
 		asIScriptObject* createScriptController(const std::string& script, ScriptableObject* gameObject, Entity entity);
 
-		void callOnUpdate(asIScriptObject* scriptObject);
+		void callOnUpdate(asIScriptObject* scriptObject);	//, Timestep* ts);
 		void callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, ScriptableObject* caller);
 
 		inline bool getHasCompileErrors() { return hasCompileErrors; }

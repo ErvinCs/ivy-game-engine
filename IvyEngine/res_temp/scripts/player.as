@@ -27,31 +27,48 @@ class CPlayer : IController
 	CPlayer(ScriptableObject@ object)
 	{
 		@self = object;
-		
 	}
 
 	void onUpdate()
 	{
-
 		@transform = FindTransform(self.getOwner());
 		if (IsKeyDown(RIGHT))
 		{
-			if (transform.positionX < leftBorder)
+			if (transform.position.x < leftBorder)
 			{
-				transform.positionX += playerMoveSpeed;
+				transform.position.x += playerMoveSpeed * deltatime;
 			}
 		}
 		else if (IsKeyDown(LEFT))
 		{
-			if (transform.positionX > rightBorder)
+			if (transform.position.x > rightBorder)
 			{
-				transform.positionX -= playerMoveSpeed;
+				transform.position.x -= playerMoveSpeed * deltatime;
 			}
 		}
 
 		if (IsKeyDown(UP))
 		{
 			isJumping = true;
+		}
+
+		if (isJumping)
+		{
+			jumpTime -= deltatime;
+			if (jumpTime > constJumpTime / 2)
+			{
+				transform.position.y += playerMoveSpeed * jumpSpeed * deltatime;	
+			}
+			else if (jumpTime < constJumpTime / 2 && jumpTime > 0)
+			{
+				transform.position.y -= playerMoveSpeed * jumpSpeed * deltatime;
+			}
+			else
+			{
+				isJumping = false;
+				jumpCooldown = 1.0f;
+				jumpTime = constJumpTime;
+			}
 		}
 	}
 }

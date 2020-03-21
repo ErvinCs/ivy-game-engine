@@ -19,6 +19,9 @@ namespace Ivy {
 
 	Application::Application()
 	{
+		//globalTime = new Timestep(0);
+		globalTime = 0;
+
 		int success;
 		instance = this;
 		window = Window::Create();
@@ -65,11 +68,11 @@ namespace Ivy {
 		{
 
 			float time = (float)glfwGetTime();
-			Timestep ts = time - lastFrameTime;
+			globalTime = time - lastFrameTime;
 			lastFrameTime = time;
 
 			for (SortingLayer* layer : layerStack)
-				layer->update(ts);
+				layer->update(globalTime);
 
 			imGuiLayer->begin();
 			for (SortingLayer* layer : layerStack)
@@ -82,6 +85,7 @@ namespace Ivy {
 
 	void Application::shutdown()
 	{
+		//delete globalTime;
 	}
 
 	void Application::pushLayer(SortingLayer* layer)

@@ -3,32 +3,82 @@
 
 #include "MethodWrappers.h"
 
+#include "../Core/Timestep.h"
 #include "../Core/Logger.h"
 #include "../Core/InputHandler.h"
 #include <new>
 
+#include <glm/glm.hpp>
 
+// TEMPORARY - THIS IS HERE ONLY FOR: Timestep globalTime
+#include "../Core/Application.h"
 
 namespace Ivy {
 
-	void Transform_Constructor(void* ptr)
+	Timestep operator+(const Timestep& lhs, const Timestep& rhs)
 	{
-		new(ptr) Transform(0,0,0,0,0);
+		return lhs.getSeconds() + rhs.getSeconds();
 	}
 
-	void Transform_Constructor(float posX, float posY, float rotate, float scaleX, float scaleY, void* ptr)
+	Timestep operator-(const Timestep& lhs, const Timestep& rhs)
 	{
-		new(ptr) Transform(posX, posY, rotate, scaleX, scaleY);
+		return lhs.getSeconds() - rhs.getSeconds();
+	}
+
+	Timestep operator/(const Timestep& lhs, const Timestep& rhs)
+	{
+		return lhs.getSeconds() / rhs.getSeconds();
+	}
+
+	Timestep operator*(const Timestep& lhs, const Timestep& rhs)
+	{
+		return lhs.getSeconds() * rhs.getSeconds();
+	}
+
+	float operator+(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() + rhs;
+	}
+
+	float operator-(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() - rhs;
+	}
+
+	float operator*(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() * rhs;
+	}
+
+	float operator/(const Timestep& lhs, const float& rhs)
+	{
+		return lhs.getSeconds() / rhs;
 	}
 
 	Transform* Transform_Factory1()
 	{
-		return new Transform(0, 0, 0, 0, 0);
+		return new Transform(glm::vec2(0), 0, glm::vec2(0));
 	}
 
-	Transform* Transform_Factory5(float posX, float posY, float rotate, float scaleX, float scaleY, void* ptr)
+	/*Transform* Transform_Factory5(float posX, float posY, float rotate, float scaleX, float scaleY, void* ptr)
 	{
 		return new Transform(posX, posY, rotate, scaleX, scaleY);
+	}*/
+
+	glm::vec2* Vec2Default() {
+		return new glm::vec2(1.0);
+	}
+
+	glm::vec2* Vec2Copy(const glm::vec2& in) {
+		return new glm::vec2(in);
+	}
+
+	glm::vec2* Vec2Init1(float x) {
+		return new glm::vec2(x);
+	}
+
+	glm::vec2* Vec2Init2(float x, float y) {
+		return new glm::vec2(x, y);
 	}
 
 	ScriptManager::~ScriptManager()
@@ -61,16 +111,59 @@ namespace Ivy {
 		// Register the weak ref template type
 		RegisterScriptWeakRef(scriptEngine);
 
+		// Register Timestep
+		/*r = scriptEngine->RegisterObjectType("Timestep", 0, asOBJ_REF); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Timestep", asBEHAVE_ADDREF, "void f()", asMETHOD(Timestep, addReference), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Timestep", asBEHAVE_RELEASE, "void f()", asMETHOD(Timestep, release), asCALL_THISCALL); assert(r >= 0);
+
+		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opAddAssign(const Timestep& in)",
+			asMETHODPR(Timestep, operator+=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opSubAssign(const Timestep& in)",
+			asMETHODPR(Timestep, operator-=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opMulAssign(const Timestep& in)",
+			asMETHODPR(Timestep, operator*=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opDivAssign(const Timestep& in)",
+			asMETHODPR(Timestep, operator/=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
+		
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opAddAssign(const float& in)",
+			asMETHODPR(Timestep, operator+=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opSubAssign(const float& in)",
+			asMETHODPR(Timestep, operator-=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opMulAssign(const float& in)",
+			asMETHODPR(Timestep, operator*=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opDivAssign(const float& in)",
+			asMETHODPR(Timestep, operator/=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);*/
+
+		/*r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opAdd(const Timestep &in)",
+			asFUNCTIONPR(operator+, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opSub(const Timestep &in)",
+			asFUNCTIONPR(operator-, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opMul(const Timestep &in)",
+			asFUNCTIONPR(operator*, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opDiv(const Timestep &in)",
+			asFUNCTIONPR(operator/, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+			
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float opAdd(const float &in)",
+			asFUNCTIONPR(operator+, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float opSub(const float &in)",
+			asFUNCTIONPR(operator-, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float opMul(const float &in)",
+			asFUNCTIONPR(operator*, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Timestep", "float opDiv(const float &in)",
+			asFUNCTIONPR(operator/, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+			*/
+
+		// Register variable where the script can store a handle to a Timestep type. 
+		// Assumes that the Timestep type has been registered with the engine already as a reference type.
+		r = scriptEngine->RegisterGlobalProperty("float deltatime", &Application::getInstance().globalTime); assert(r >= 0);
+		
+
 		// Register the game object. The scripts cannot create these directly, so there is no factory function.
 		r = scriptEngine->RegisterObjectType("ScriptableObject", 0, asOBJ_REF); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_ADDREF, "void f()", asMETHOD(ScriptableObject, addReference), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_RELEASE, "void f()", asMETHOD(ScriptableObject, release), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_GET_WEAKREF_FLAG, "int &f()", asMETHOD(ScriptableObject, getWeakRefereneFlag), asCALL_THISCALL); assert(r >= 0);
 
-		// The object's position is read-only to the script. The position is updated with the Move method
-		//r = scriptEngine->RegisterObjectMethod("ScriptableObject", "int get_x() const", asMETHOD(ScriptableObject, getX), asCALL_THISCALL); assert(r >= 0);
-		//r = scriptEngine->RegisterObjectMethod("ScriptableObject", "int get_y() const", asMETHOD(ScriptableObject, getY), asCALL_THISCALL); assert(r >= 0);
-		//r = scriptEngine->RegisterObjectMethod("ScriptableObject", "bool Move(int dx, int dy)", asMETHOD(ScriptableObject, Move), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void setOwner(uint16 ownerEntity)", asMETHOD(ScriptableObject, setOwner), asCALL_THISCALL); assert(r >= 0);
 
 		// The script can kill the owning object
@@ -100,12 +193,47 @@ namespace Ivy {
 		r = scriptEngine->RegisterGlobalFunction("float GetMouseX()", asFUNCTION(GetMouseX), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("float GetMouseY()", asFUNCTION(GetMouseY), asCALL_CDECL); assert(r >= 0);
 		
-		/*// Register glm types
-		r = scriptEngine->RegisterObjectType("Vec2", sizeof(glm::vec2), asOBJ_VALUE | asGetTypeTraits<glm::vec2>());
-		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(glm::vec2()), asCALL_CDECL_OBJLAST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(~glm::vec2()), asCALL_CDECL_OBJLAST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2& opAssign(const Vec2 &in)",
-			asMETHODPR(glm::vec2, operator=, (const glm::vec2&), glm::vec2&), asCALL_THISCALL);*/
+		// Register glm types
+		r = scriptEngine->RegisterObjectType("Vec2", sizeof(glm::vec2), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK | asOBJ_APP_CLASS_ALLFLOATS); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Vec2", "float x", asOFFSET(glm::vec2, x)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Vec2", "float y", asOFFSET(glm::vec2, y)); assert(r >= 0);		
+		
+		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Vec2Default), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_CONSTRUCT, "void f(const Vec2 &in)", asFUNCTION(Vec2Copy), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(Vec2Init1), asCALL_CDECL_OBJLAST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Vec2", asBEHAVE_CONSTRUCT, "void f(float, float)", asFUNCTION(Vec2Init2), asCALL_CDECL_OBJLAST); assert(r >= 0);
+
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opAddAssign(const Vec2& in) const", 
+			asMETHODPR(glm::vec2, operator+=, (const glm::vec2 &), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opSubAssign(const Vec2& in) const",
+			asMETHODPR(glm::vec2, operator-=, (const glm::vec2 &), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opMulAssign(const Vec2& in) const",
+			asMETHODPR(glm::vec2, operator*=, (const glm::vec2 &), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opDivAssign(const Vec2& in) const",
+			asMETHODPR(glm::vec2, operator/=, (const glm::vec2 &), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "bool opEquals(const Vec2& in) const",
+			asFUNCTIONPR(glm::operator==, (const glm::vec2&, const glm::vec2&), bool), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 opAdd(const Vec2 &in) const",
+			asFUNCTIONPR(glm::operator+, (const glm::vec2&, const glm::vec2&), glm::vec2), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 opSub(const Vec2 &in) const",
+			asFUNCTIONPR(glm::operator-, (const glm::vec2&, const glm::vec2&), glm::vec2), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 opMul(const Vec2 &in) const",
+			asFUNCTIONPR(glm::operator*, (const glm::vec2&, const glm::vec2&), glm::vec2), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 opDiv(const Vec2 &in) const",
+			asFUNCTIONPR(glm::operator/, (const glm::vec2&, const glm::vec2&), glm::vec2), asCALL_CDECL_OBJFIRST); assert(r >= 0);
+
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opAddAssign(const float& in) const",
+			asMETHODPR(glm::vec2, operator+=, (const float&), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opSubAssign(const float& in) const",
+			asMETHODPR(glm::vec2, operator-=, (const float&), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opMulAssign(const float& in) const",
+			asMETHODPR(glm::vec2, operator*=, (const float&), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 &opDivAssign(const float& in) const",
+			asMETHODPR(glm::vec2, operator/=, (const float&), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
+
+		//r = scriptEngine->RegisterObjectMethod("Vec2", "Vec2 opAdd(const float &in) const",
+		//	asFUNCTIONPR(glm::operator+, (const glm::vec2&, const float&), glm::vec2), asCALL_CDECL_OBJFIRST); 
 
 		// Register the components. The scripts cannot create these directly, so there is no factory function.
 		r = scriptEngine->RegisterObjectType("Transform", 0, asOBJ_REF); assert(r >= 0);
@@ -113,23 +241,17 @@ namespace Ivy {
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_RELEASE, "void f()", asMETHOD(Transform, release), asCALL_THISCALL); assert(r >= 0);
 		
 		r = scriptEngine->RegisterGlobalFunction("Transform@ InitTransform()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
-		//r = scriptEngine->RegisterGlobalFunction("Transform@ Transform(float,float,float,float,float)", asFUNCTION(Transform_Factory5), asCALL_CDECL); assert(r >= 0);
 		
-		r = scriptEngine->RegisterObjectProperty("Transform", "float positionX", asOFFSET(Transform, positionX)); assert(r >= 0);
-		r = scriptEngine->RegisterObjectProperty("Transform", "float positionY", asOFFSET(Transform, positionY)); assert(r >= 0);
-		r = scriptEngine->RegisterObjectProperty("Transform", "float scaleX", asOFFSET(Transform, scaleX)); assert(r >= 0);
-		r = scriptEngine->RegisterObjectProperty("Transform", "float scaleY", asOFFSET(Transform, scaleY)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Transform", "Vec2 position", asOFFSET(Transform, position)); assert(r >= 0);
 		r = scriptEngine->RegisterObjectProperty("Transform", "float rotation", asOFFSET(Transform, rotation)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Transform", "Vec2 scale", asOFFSET(Transform, scale)); assert(r >= 0);
+
 		r = scriptEngine->RegisterObjectMethod("Transform", "Transform &opAssign(const Transform &in)", 
 			asMETHODPR(Transform, operator=, (const Transform &), Transform &), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
-		//r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f(float, float, float, float, float)", asFUNCTION(Transform_Factory5), asCALL_CDECL); assert(r >= 0);
-		/*r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_CONSTRUCT, "void f()", 
-			asFUNCTIONPR(Transform_Constructor, (void*), void), asCALL_CDECL_OBJLAST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_CONSTRUCT, "void f(float, float, float, float, float)", 
-			asFUNCTIONPR(Transform_Constructor, (float, float, float, float, float, void*), void), asCALL_CDECL_OBJLAST); assert(r >= 0);
-		*///r = scriptEngine->RegisterObjectType("Renderable", 0, asOBJ_REF | asOBJ_NOCOUNT); assert(r >= 0);
-		//r = scriptEngine->RegisterObjectType("ScriptComponent", 0, asOBJ_REF | asOBJ_NOCOUNT); assert(r >= 0);
+		
+		//r = scriptEngine->RegisterObjectType("Renderable", 0, asOBJ_REF | asOBJ_NOCOUNT); assert(r >= 0);
+		
 
 		// Register template specializations & factories for ECS methods
 		r = scriptEngine->RegisterGlobalFunction("void GetTransform(uint16, Transform &out)", asFUNCTION(GetTransform), asCALL_CDECL); assert(r >= 0);
@@ -178,7 +300,7 @@ namespace Ivy {
 		return object;
 	}
 
-	void ScriptManager::callOnUpdate(asIScriptObject* scriptObject)
+	void ScriptManager::callOnUpdate(asIScriptObject* scriptObject)	//, Timestep* ts
 	{
 		// Find the cached onThink method id
 		SController *controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());	//scriptObject was nullptr
@@ -189,6 +311,7 @@ namespace Ivy {
 			//IVY_CORE_INFO("ScriptManager::callOnUpdate. scriptObject");
 			asIScriptContext *context = getScriptContextFromPool(controller->onUpdateMethod);
 			context->SetObject(scriptObject);
+			//context->SetArgObject(0, &deltaTime);
 			callScript(context);
 			returnScriptContextToPool(context);
 		}
@@ -344,7 +467,7 @@ namespace Ivy {
 
 		// Find the optional event handlers
 		controller->onUpdateMethod = type->GetMethodByDecl("void onUpdate()");
-		//controller->onMessageMethod = type->GetMethodByDecl("void OnMessage(ref @msg, const CGameObj @sender)");
+		controller->onMessageMethod = type->GetMethodByDecl("void onMessage(ref @msg, const CGameObj @sender)");
 
 		// Add the cache as user data to the type for quick access
 		type->SetUserData(controller);

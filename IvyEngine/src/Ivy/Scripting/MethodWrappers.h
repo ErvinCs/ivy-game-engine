@@ -10,6 +10,8 @@
 
 namespace Ivy {
 
+
+
 	bool IsKeyDown(unsigned int keycode)
 	{
 		return InputHandler::GetInstance()->IsKeyDown(keycode);
@@ -38,7 +40,7 @@ namespace Ivy {
 
 	Transform* FindTransform(Entity entity) {
 		Transform* t = &ECS::getInstance().getComponent<Transform>(entity);
-		IVY_CORE_TRACE("Entity={0}, Transf.X={1}, Transf.Y={2}", entity, t->positionX, t->positionY);
+		//IVY_CORE_TRACE("Entity={0}, Transf.X={1}, Transf.Y={2}", entity, t->positionX, t->positionY);
 		return t;
 	}
 
@@ -51,4 +53,6 @@ namespace Ivy {
 	{
 		script = ECS::getInstance().getComponent<ScriptComponent>(entity);
 	}
+
+	
 }

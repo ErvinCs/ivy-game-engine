@@ -1,12 +1,5 @@
 #pragma once
 
-/*
-#include "../Managers/FileManager.h"
-#include "../Managers/MemoryManager.h"
-#include "../Managers/InputManager.h"
-#include "../Managers/RendererManager.h"
-*/
-
 #include "Core.h"
 #include "SortingLayerStack.h"
 #include "../Windows/WindowsWindow.h"
@@ -22,6 +15,8 @@
 
 namespace Ivy {
 
+	
+
 	class Application 
 	{
 	private:
@@ -32,8 +27,11 @@ namespace Ivy {
 		ImGuiLayer* imGuiLayer;
 		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
-
+		
 	public:
+		//Timestep* globalTime;
+		float globalTime;
+
 		inline static Application& getInstance()
 		{
 			return *instance;
@@ -51,6 +49,8 @@ namespace Ivy {
 
 		inline Window& getWindow() { return *window; }
 		inline static Application& GetApplication() { return *instance; }
+		//inline Timestep& getGlobalTimePtr() { return &globalTime; }
+
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 
