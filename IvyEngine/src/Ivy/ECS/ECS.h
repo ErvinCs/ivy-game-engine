@@ -102,7 +102,7 @@ namespace Ivy {
 			return entities.at(entities.size() - 1);
 		}
 
-		const std::vector<Entity>& getEntities() {
+		std::vector<Entity>& getEntities() {
 			return this->entities;
 		}
 
