@@ -10,20 +10,20 @@ namespace Ivy
 	{
 	public:
 		std::string scriptName;
-		ScriptableObject* scriptableObject;
+		ScriptableObject scriptableObject;
 
 		ScriptComponent() : Component() {}
 		ScriptComponent(std::string scriptName)
 		{
 			this->scriptName = scriptName;
-			this->scriptableObject = new ScriptableObject(scriptName);
+			//this->scriptableObject = new ScriptableObject(scriptName);
+			this->scriptableObject.setName(scriptName);
 			this->setComponentId(2);
 		}
 		
 		//~ScriptComponent() {
-			// ScriptableObject manages its lifetime
-			//delete scriptableObject
-			//scriptableObject = nullptr;
+			//scriptableObject->destoryAndRelease();
+			//scriptableObject->release();
 		//}
 	};
 }

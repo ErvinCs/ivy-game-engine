@@ -10,10 +10,10 @@ namespace Ivy {
 	class System
 	{
 	protected:
-		std::vector<Entity> entities;
+		std::vector<Entity>* entities;
 	public:
-		inline const std::vector<Entity>& getEntities() const { return entities; }
-		inline void setEntities(const std::vector<Entity>& entities) { this->entities = entities; }
+		inline const std::vector<Entity>& getEntities() const { return *entities; }
+		inline void setEntities(std::vector<Entity>& inEntities) {  entities = &inEntities; }
 
 		virtual void init() = 0;
 		virtual void update(float deltatime) = 0;

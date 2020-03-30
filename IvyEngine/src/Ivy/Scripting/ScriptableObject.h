@@ -20,7 +20,7 @@ namespace Ivy {
 		int referenceCount;
 		asILockableSharedBool* weakReferenceFlag;
 	public:
-		//ScriptableObject();
+		ScriptableObject();
 		ScriptableObject(const std::string& name);
 		~ScriptableObject();
 
@@ -29,7 +29,7 @@ namespace Ivy {
 		asILockableSharedBool* getWeakRefereneFlag();
 		void destoryAndRelease();
 		void sendMessage(CScriptHandle message, ScriptableObject* target);
-		void killObject();
+		//void killObject();
 
 		void onUpdate();
 
@@ -37,6 +37,7 @@ namespace Ivy {
 		Entity getOwner();
 
 		inline const std::string& getName() { return this->name; }
+		inline const void setName(const std::string& name) { this->name = name; }
 		inline const bool& getIsAlive() { return isAlive; }
 		inline asIScriptObject* getScriptObject() { return this->scriptObject; }
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }

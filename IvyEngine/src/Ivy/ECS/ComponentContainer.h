@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "../Exceptions/ComponentNotFoundException.h"
 
-//TODO - Replace array with a more suitable data struct - hash_map 
+//TODO - Replace array with a more suitable data struct - hash_map  - or don't; idk yet
 namespace Ivy {
 
 	class BaseComponentContainer
@@ -18,7 +18,7 @@ namespace Ivy {
 	class ComponentContainer : public BaseComponentContainer
 	{
 	private:
-		std::array<T, 1000> componentArray{};
+		std::array<T, 100> componentArray{};
 		int size;
 	public:
 		ComponentContainer()
@@ -36,7 +36,7 @@ namespace Ivy {
 			return this->size;
 		}
 
-		void addComponent(Entity& entity, T& component) 
+		void addComponent(Entity& entity, T component) 
 		{
 			component.setEntityId(entity);
 			componentArray[size] = component;

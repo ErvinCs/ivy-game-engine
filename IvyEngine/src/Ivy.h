@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 //-------------------- EntryPoint --------------------
 #include "Ivy/Core/EntryPoint.h"
 
@@ -37,6 +39,8 @@
 #include "Ivy/ECS/Components/Transform.h"
 #include "Ivy/ECS/Components/Renderable.h"
 #include "Ivy/ECS/Components/ScriptComponent.h"
+//TEMPORARY
+#include "Ivy/ECS/JSONManager.h"
 
 //-------------------- Scripting --------------------
 #include "Ivy/Scripting/ScriptableObject.h"

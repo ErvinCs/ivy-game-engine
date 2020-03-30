@@ -6,6 +6,7 @@
 #include "Components/Transform.h"
 #include "../Renderer/RenderCommand.h"
 #include "../Renderer/Renderer.h"
+#include "../Core/Application.h"
 
 namespace Ivy {
 	
@@ -17,7 +18,10 @@ namespace Ivy {
 
 	void RenderSystem::update(float deltatime)
 	{
-		for (auto& it = entities.begin(); it != entities.end(); it++)
+		//Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
+		//Ivy::RenderCommand::clear();
+		//Ivy::Renderer::Begin(Application::GetApplication().getCamera());
+		for (auto& it = entities->begin(); it != entities->end(); it++)
 		{
 			auto& object = *it;
 
@@ -31,6 +35,7 @@ namespace Ivy {
 			
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
 		}
+		//Ivy::Renderer::End();
 	}
 
 }

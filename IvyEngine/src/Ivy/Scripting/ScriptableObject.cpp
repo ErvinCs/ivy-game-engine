@@ -16,6 +16,15 @@ namespace Ivy {
 		return this->ownerEntity;
 	}
 
+	ScriptableObject::ScriptableObject()
+	{
+		this->name = "";
+		this->referenceCount = 1;
+		this->isAlive = true;
+		this->scriptObject = 0;
+		this->weakReferenceFlag = 0;
+	}
+
 	ScriptableObject::ScriptableObject(const std::string& name)
 	{
 		this->name = name;
@@ -47,7 +56,7 @@ namespace Ivy {
 
 	int ScriptableObject::release()
 	{
-		if (--referenceCount == 0)
+		if (--referenceCount <= 0)
 		{
 			delete this;
 			return 0;
@@ -90,10 +99,10 @@ namespace Ivy {
 			ScriptManager::GetInstance().callOnMessage(target->scriptObject, message, this);
 	}
 
-	void ScriptableObject::killObject()
+	/*void ScriptableObject::killObject()
 	{
 		// Just flag the object as dead.The game manager will
 		// do the actual destroying at the end of the frame
 		isAlive = false;
-	}
+	}*/
 }

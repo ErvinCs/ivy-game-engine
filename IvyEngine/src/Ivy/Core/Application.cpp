@@ -3,15 +3,16 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Logger.h"
-#include "InputHandler.h"
-#include "../Renderer/Renderer.h"
-#include "../Renderer/BaseRenderer.h"
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "../imgui/imgui.h"
+
+#include "Logger.h"
+#include "InputHandler.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/BaseRenderer.h"
+#include "../ECS/ECS.h"
 
 namespace Ivy {
 
@@ -19,7 +20,7 @@ namespace Ivy {
 
 	Application::Application()
 	{
-		//globalTime = new Timestep(0);
+		//camera = OrthoCamera(-12.8f, 12.8f, -6.4f, 6.4f);
 		globalTime = 0;
 
 		int success;
@@ -59,7 +60,7 @@ namespace Ivy {
 
 	void Application::init()
 	{
-
+		//ECS::getInstance().loadEntities();
 	}
 
 	void Application::run()
@@ -75,6 +76,8 @@ namespace Ivy {
 			for (SortingLayer* layer : layerStack)
 				layer->update(globalTime);
 
+			//ECS::getInstance().updateSystems(globalTime);
+
 			imGuiLayer->begin();
 			for (SortingLayer* layer : layerStack)
 				layer->imGuiRender();
@@ -86,7 +89,8 @@ namespace Ivy {
 
 	void Application::shutdown()
 	{
-		//delete globalTime;
+		//ECS::getInstance().saveEntities();
+		Renderer::Shutdown();
 	}
 
 	void Application::pushLayer(SortingLayer* layer)

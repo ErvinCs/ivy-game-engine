@@ -13,6 +13,9 @@
 #include "../ImGui/ImGuiLayer.h"
 #include "../Scripting/ScriptManager.h"
 
+//#include "../Renderer/OrthoCamera.h"
+//#include "../ECS/JSONManager.h"
+
 namespace Ivy {
 
 	
@@ -27,6 +30,8 @@ namespace Ivy {
 		ImGuiLayer* imGuiLayer;
 		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
+		//OrthoCamera camera;
+		//const char* entitiesRepoPath = "C:\\Workspace\\ivy-game-engine\\IvyApplication\\res\\entities.json";
 		
 	public:
 		//Timestep* globalTime;
@@ -51,7 +56,9 @@ namespace Ivy {
 		inline Window& getWindow() { return *window; }
 		inline static Application& GetApplication() { return *instance; }
 		
-
+		//inline OrthoCamera& getCamera() {
+		//	return this->camera;
+		//}
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 

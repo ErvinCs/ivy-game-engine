@@ -101,7 +101,7 @@ namespace Ivy {
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void setOwner(uint16 ownerEntity)", asMETHOD(ScriptableObject, setOwner), asCALL_THISCALL); assert(r >= 0);
 
 		// The script can kill the owning object
-		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void killObject()", asMETHOD(ScriptableObject, killObject), asCALL_THISCALL); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void killObject()", asMETHOD(ScriptableObject, killObject), asCALL_THISCALL); assert(r >= 0);
 
 		// Access the owning object through the script - getOwner returns the entity id
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "uint16 getOwner()", asMETHOD(ScriptableObject, getOwner), asCALL_THISCALL); assert(r >= 0);

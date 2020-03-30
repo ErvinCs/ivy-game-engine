@@ -4,6 +4,7 @@
 #include <queue>
 #include <vector>
 #include <stdint.h>
+#include <filesystem>
 
 #include "Component.h"
 #include "ComponentContainer.h"
@@ -12,6 +13,10 @@
 #include "Components/Transform.h"
 #include "Components/Renderable.h"
 #include "Components/ScriptComponent.h"
+#include "../Core/Logger.h"
+#include "JSONManager.h"
+#include "RenderSystem.h"
+#include "ScriptSystem.h"
 
 namespace Ivy {
 
@@ -23,8 +28,9 @@ namespace Ivy {
 		std::map<const char*, std::shared_ptr<BaseComponentContainer>> componentContainers{};
 		std::map<const char*, uint8_t> componentTypes{};
 		std::vector<Entity> entities{};
-		std::set<std::shared_ptr<System>> systems{};
+		std::vector<std::shared_ptr<System>> systems{};
 	public:
+		const char* entitiesRepoPath = "C:\\Workspace\\ivy-game-engine\\IvyApplication\\res\\entities.json";
 		~ECS()
 		{
 			for (auto& it = entities.begin(); it != entities.end(); it++)
@@ -43,6 +49,17 @@ namespace Ivy {
 			return instance;
 		}
 
+		void loadEntities() {
+			if (std::filesystem::exists(entitiesRepoPath))
+				JSONManager::LoadEntities(entitiesRepoPath);
+			else
+				IVY_CORE_WARN("Entity JSON repository not found!");
+		}
+
+		void saveEntities() {
+			JSONManager::SaveEntities(entitiesRepoPath);
+		}
+
 		// Components
 		template<typename T>
 		void addComponentType()
@@ -57,8 +74,12 @@ namespace Ivy {
 			componentTypeCounter++;
 		}
 
+		const std::map<const char*, uint8_t>& getComponentTypes() {
+			return this->componentTypes;
+		}
+
 		template<typename T>
-		void addComponent(Entity& entity, T& component)
+		void addComponent(Entity& entity, T component)
 		{
 			getComponentContainer<T>()->addComponent(entity, component);
 		}
@@ -74,6 +95,8 @@ namespace Ivy {
 		{
 			return getComponentContainer<T>()->getComponent(entity);
 		}
+
+
 
 		// Entities
 		void destroyEntity(Entity& entity)
@@ -109,8 +132,22 @@ namespace Ivy {
 		// Systems
 		void addSystem(const std::shared_ptr<System>& system)
 		{
-			systems.insert(std::move(system));
+			systems.push_back(std::move(system));
 		}
+
+		/*void updateSystems(float ts) {
+			for (std::shared_ptr<System> system : systems)
+			{
+				system->update(ts);
+			}
+		}
+
+		void initSystems() {
+			std::shared_ptr<Ivy::System> renderSystem = std::make_shared<RenderSystem>(entities);
+			std::shared_ptr<Ivy::System> scriptSystem = std::make_shared<ScriptSystem>(entities);
+			systems.push_back(renderSystem);
+			systems.push_back(scriptSystem);
+		}*/
 
 
 	private:
@@ -129,6 +166,14 @@ namespace Ivy {
 			componentTypeCounter = 0;
 
 			// Component Types
+			this->registerComponentTypes();
+			
+
+			// Init systems
+			//this->initSystems();
+		}
+
+		void registerComponentTypes() {
 			this->addComponentType<Transform>();		//TransformID       = 0
 			this->addComponentType<Renderable>();		//RenderableID      = 1
 			this->addComponentType<ScriptComponent>();	//ScriptComponentID = 2	

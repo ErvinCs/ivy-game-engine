@@ -6,11 +6,13 @@ namespace Ivy {
 
 	class ScriptSystem : public System
 	{
+	private:
+
 	public:
 		ScriptSystem() = default;
-		ScriptSystem(const std::vector<Entity>& entities)
+		ScriptSystem(std::vector<Entity>& entities)
 		{
-			this->setEntities(entities);
+			this->setEntities(entities);		
 		}
 
 		virtual void init() override;

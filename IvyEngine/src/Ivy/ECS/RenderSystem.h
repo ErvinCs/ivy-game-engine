@@ -1,6 +1,7 @@
 #pragma once
 
 #include "System.h"
+#include "../Renderer/OrthoCamera.h"
 
 namespace Ivy {
 
@@ -8,7 +9,7 @@ namespace Ivy {
 	{
 	public:
 		RenderSystem() = default;
-		RenderSystem(const std::vector<Entity>& entities)
+		RenderSystem(std::vector<Entity>& entities)
 		{
 			this->setEntities(entities);
 		}

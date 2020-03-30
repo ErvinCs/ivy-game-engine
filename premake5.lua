@@ -18,6 +18,7 @@ IncludeDir["imgui"]       = "IvyEngine/vendor/imgui"
 IncludeDir["glm"]         = "IvyEngine/vendor/glm" 
 IncludeDir["stb_image"]   = "IvyEngine/vendor/stb_image"
 IncludeDir["angelscript"] = "IvyEngine/vendor/angelscript/include"
+IncludeDir["json"]		  = "IvyEngine/vendor/json_nlohmann"
 
 group "Dependencies"
     include "IvyEngine/vendor/glfw"
@@ -46,6 +47,7 @@ project "IvyEngine"
         "%{prj.name}/vendor/glm/glm/**.inl",
         "%{prj.name}/vendor/stb_image/**.h",
         "%{prj.name}/vendor/stb_image/**.cpp",
+        "%{prj.name}/vendor/json_nlohmann/**.hpp"
         --"%{prj.name}/vendor/eastl/include/EASTL/**.h"
     }
 
@@ -65,7 +67,8 @@ project "IvyEngine"
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
         --"%{prj.name}/vendor/eastl"
-        "%{IncludeDir.angelscript}"
+        "%{IncludeDir.angelscript}",
+        "%{IncludeDir.json}"
     }
 
     links 

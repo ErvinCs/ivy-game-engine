@@ -25,9 +25,6 @@
     <Filter Include="src\Ivy\ImGui">
       <UniqueIdentifier>{DE71FA24-4A32-765B-136D-BFD87FECBA37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Ivy\Managers">
-      <UniqueIdentifier>{11F20668-FDEA-25BA-261D-0B3F127505C6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Ivy\Renderer">
       <UniqueIdentifier>{DA736E39-C66C-8D8B-EF9E-7210DBF66C97}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,9 @@
     </Filter>
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\json_nlohmann">
+      <UniqueIdentifier>{16E741BF-0276-CB88-AB94-DF839702DC2E}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\stb_image">
       <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
@@ -124,6 +124,9 @@
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Entity.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\JSONManager.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\RenderSystem.h">
@@ -216,7 +219,13 @@
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h">
       <Filter>src\Ivy\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\MethodWrappers.h">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\Scripting\ScriptManager.h">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\ScriptableObject.h">
       <Filter>src\Ivy\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h">
@@ -1335,13 +1344,12 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\json_nlohmann\json.hpp">
+      <Filter>vendor\json_nlohmann</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Scripting\ScriptableObject.h">
-      <Filter>src\Ivy\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Scripting\MethodWrappers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1361,6 +1369,9 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Core\String.cpp">
       <Filter>src\Ivy\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\JSONManager.cpp">
+      <Filter>src\Ivy\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp">
       <Filter>src\Ivy\ECS</Filter>
@@ -1434,6 +1445,9 @@
     <ClCompile Include="src\Ivy\Scripting\ScriptManager.cpp">
       <Filter>src\Ivy\Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\Scripting\ScriptableObject.cpp">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp">
       <Filter>src\Ivy\Windows</Filter>
     </ClCompile>
@@ -1446,13 +1460,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Scripting\ScriptableObject.cpp">
-      <Filter>src\Ivy\Scripting</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res_temp\scripts\player.as" />
-    <None Include="res_temp\scripts\common.as" />
-    <None Include="res_temp\scripts\patrol.as" />
   </ItemGroup>
 </Project>
