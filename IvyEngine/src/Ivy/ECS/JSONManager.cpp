@@ -18,6 +18,10 @@ namespace Ivy {
 		std::ofstream writer(path);
 
 		for (Entity& entity : ECS::getInstance().getEntities()) {
+			IVY_INFO("Entity={0}", entity);
+			if (entity == NULL)
+				continue;
+
 			Json jsonObject;
 			jsonObject["entity_id"] = entity;
 
@@ -51,11 +55,17 @@ namespace Ivy {
 				jsonObject["components"]["script"] = ECS::getInstance().getComponent<ScriptComponent>(entity).scriptName;
 			}
 
+			if (ECS::getInstance().getComponent<Tag>(entity).getEntityId() != entity)
+			{
+				jsonObject["components"]["tag"] = jsonNull;
+			}
+			else {
+				jsonObject["components"]["tag"] = ECS::getInstance().getComponent<Tag>(entity).tag;
+			}
+
 			IVY_CORE_INFO("Read Json Entity {0}", entity);
 			IVY_CORE_INFO("Json Object={0}", jsonObject);
 
-			//writer << jsonObject << std::endl;
-			//std::cout << std::setw(4) << jsonObject;
 
 			finalObject[entity] = jsonObject;
 		}
@@ -74,6 +84,9 @@ namespace Ivy {
 		{
 			std::cout << *it << std::endl;
 			auto& current = *it;
+			//TEMPORARY - TODO FIX THIS
+			if (current == NULL)
+				continue;
 
 			Entity entity = ECS::getInstance().createEntity();
 			if (!current["components"]["transform"].is_null())
@@ -103,6 +116,15 @@ namespace Ivy {
 				current["components"]["script"].get_to(scriptPath);
 				ScriptComponent script{ scriptPath };
 				ECS::getInstance().addComponent<ScriptComponent>(entity, script);
+			}
+
+			if (!current["components"]["tag"].is_null())
+			{
+				std::string tagName;
+				current["components"]["tag"].get_to(tagName);
+				Tag tag{ tagName };
+				ECS::getInstance().addComponent<Tag>(entity, tag);
+				//IVY_CORE_INFO("Added Component - Tag={0}", ECS::getInstance().getComponent<Tag>(entity).tag);
 			}
 
 		}

@@ -39,6 +39,7 @@
 #include "Ivy/ECS/Components/Transform.h"
 #include "Ivy/ECS/Components/Renderable.h"
 #include "Ivy/ECS/Components/ScriptComponent.h"
+#include "Ivy/ECS/Components/Tag.h"
 //TEMPORARY
 #include "Ivy/ECS/JSONManager.h"
 

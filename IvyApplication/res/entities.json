@@ -3,12 +3,13 @@
     "components": {
       "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png",
       "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as",
+      "tag": "Player",
       "transform": {
-        "positionX": -3.0233473777770996,
-        "positionY": -3.5999903678894043,
-        "rotation": 1.5399999618530273,
-        "scaleX": 2.0,
-        "scaleY": 2.0
+        "positionX": 0.4169999957084656,
+        "positionY": -5.599999904632568,
+        "rotation": 0.0,
+        "scaleX": 20.0,
+        "scaleY": 1.0
       }
     },
     "entity_id": 0
@@ -17,6 +18,7 @@
     "components": {
       "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\platform-20.png",
       "script": null,
+      "tag": "Platform-20",
       "transform": {
         "positionX": 0.4169999957084656,
         "positionY": -5.599999904632568,
@@ -31,9 +33,10 @@
     "components": {
       "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png",
       "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\patrol.as",
+      "tag": "sprite",
       "transform": {
-        "positionX": 4.672484397888184,
-        "positionY": 2.0,
+        "positionX": -3.1516847610473633,
+        "positionY": 0.4169999957084656,
         "rotation": 180.0,
         "scaleX": 2.0,
         "scaleY": 2.0
@@ -45,6 +48,7 @@
     "components": {
       "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png",
       "script": null,
+      "tag": "cat1",
       "transform": {
         "positionX": 5.7729997634887695,
         "positionY": 5.400000095367432,
@@ -58,15 +62,31 @@
   {
     "components": {
       "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\new.png",
-      "script": null,
+      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as",
+      "tag": "corona",
       "transform": {
-        "positionX": 1.0870000123977661,
-        "positionY": 1.0870000123977661,
-        "rotation": 2.0329999923706055,
-        "scaleX": 30.0,
-        "scaleY": 30.0
+        "positionX": -3.451598644256592,
+        "positionY": 0.5726823806762695,
+        "rotation": -107374176.0,
+        "scaleX": 13.1850004196167,
+        "scaleY": 13.1850004196167
       }
     },
     "entity_id": 4
+  },
+  {
+    "components": {
+      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\jmp-enemy.png",
+      "script": null,
+      "tag": "Jumping Enemy",
+      "transform": {
+        "positionX": 8.654999732971191,
+        "positionY": 1.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 1.0
+      }
+    },
+    "entity_id": 5
   }
 ]

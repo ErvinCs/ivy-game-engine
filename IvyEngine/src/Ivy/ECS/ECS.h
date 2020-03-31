@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <queue>
 #include <vector>
 #include <stdint.h>
 #include <filesystem>
@@ -13,6 +12,8 @@
 #include "Components/Transform.h"
 #include "Components/Renderable.h"
 #include "Components/ScriptComponent.h"
+#include "Components/Tag.h"
+
 #include "../Core/Logger.h"
 #include "JSONManager.h"
 #include "RenderSystem.h"
@@ -113,6 +114,7 @@ namespace Ivy {
 				if(*it == entity)
 				{
 					entities.erase(it);
+					break;
 				}
 			}
 		}
@@ -177,6 +179,7 @@ namespace Ivy {
 			this->addComponentType<Transform>();		//TransformID       = 0
 			this->addComponentType<Renderable>();		//RenderableID      = 1
 			this->addComponentType<ScriptComponent>();	//ScriptComponentID = 2	
+			this->addComponentType<Tag>();				//TagID				= 3
 		}
 
 		ECS(const ECS&) = delete;

@@ -157,6 +157,7 @@
     <ClInclude Include="src\Ivy\ECS\ComponentContainer.h" />
     <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
     <ClInclude Include="src\Ivy\ECS\Components\ScriptComponent.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Tag.h" />
     <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
     <ClInclude Include="src\Ivy\ECS\ECS.h" />
     <ClInclude Include="src\Ivy\ECS\Entity.h" />

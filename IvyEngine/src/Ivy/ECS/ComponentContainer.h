@@ -4,7 +4,6 @@
 #include "Entity.h"
 #include "../Exceptions/ComponentNotFoundException.h"
 
-//TODO - Replace array with a more suitable data struct - hash_map  - or don't; idk yet
 namespace Ivy {
 
 	class BaseComponentContainer
@@ -45,7 +44,6 @@ namespace Ivy {
 
 		void removeComponent(Entity& entity)
 		{
-
 			for (int i = 0; i < size; i++)
 			{
 				if (componentArray[i].getEntityId() == entity)
@@ -54,6 +52,7 @@ namespace Ivy {
 					componentArray[i] = componentArray[size - 1];
 					componentArray[size - 1] = tempComponent;
 					size--;
+					break;
 				}
 			}
 		}

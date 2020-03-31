@@ -7,51 +7,28 @@ using ECS = Ivy::ECS&(*)(void);
 using Transform = Ivy::Transform;
 using Renderable = Ivy::Renderable;
 using Script = Ivy::ScriptComponent;
+using Tag = Ivy::Tag;
+
+/* TODOs
+ - Remove hardcoded strings - use <filesystem>
+ - Collision System ( + Events )
+ - PCG Module
+
+ - Move ImGui code to the engine side
+ - Place entities on Rendering Sorting Layers
+ - Remove Explicit camera creation from IvyApp - Move it to engine side and allow acces to it
+ - Remove Explicit system init from IvyApp - Move it to engine side
+ - Centralize Component IDs
+
+ - Prompt before terminating application & Auto-save state on shutdown
+ - Enable AngelScript Leak Checking ( in EntryPoint )
+ - Fix JSONManager & Renderer issues
+*/
 
 class TestLayer : public Ivy::SortingLayer
 {
 private:
 	ECS getECS = &Ivy::ECS::getInstance;
-
-	void InitEntity(Entity& entity, Transform& transform) {
-		getECS().addComponent<Transform>(entity, transform);
-	}
-
-	void InitEntity(Entity& entity, Renderable& renderable) {
-		getECS().addComponent<Renderable>(entity, renderable);
-	}
-
-	void InitEntity(Entity& entity, Transform& transform, Renderable& renderable) {
-		getECS().addComponent<Transform>(entity, transform);
-		getECS().addComponent<Renderable>(entity, renderable);
-	}
-
-	void InitEntity(Entity& entity, Transform& transform, Renderable& renderable, Script& script) {
-		getECS().addComponent<Transform>(entity, transform);
-		getECS().addComponent<Renderable>(entity, renderable);
-		getECS().addComponent<Script>(entity, script);
-	}
-
-private:
-	//TODO - Remove hard-coded strings
-	// Entities
-	/*Entity player = getECS().createEntity();
-	Transform playerTransform{ glm::vec2(0.0f, -3.6f), 0.0f, glm::vec2(2.0f, 2.0f) };
-	Renderable playerRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png" };
-	Script playerScript{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as" };
-
-	Entity platform = getECS().createEntity();
-	Renderable platformRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\platform-20.png" };
-	Transform platformTransform{ glm::vec2(0.0f, -5.6f), 0.0f, glm::vec2(20.0f, 1.0f) };
-
-	Entity sprite = getECS().createEntity();
-	Transform spriteTransform{ glm::vec2(0.0f, 2.0f), 180.0f, glm::vec2(2.0f, 2.0f) };
-	Renderable spriteRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png" };
-	Script spriteScript{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\patrol.as" };
-
-	Entity cat = getECS().createEntity();;
-	Transform catTransform{ glm::vec2(11.5f, 5.4f), 0.0f, glm::vec2(2.0f, 2.0f) };
-	Renderable catRenderable{ "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png" };*/
 
 	//Systems
 	std::shared_ptr<Ivy::System> renderSystem = std::make_shared<Ivy::RenderSystem>(getECS().getEntities());
@@ -60,8 +37,6 @@ private:
 private:
 	//Camera
 	Ivy::OrthoCamera camera;
-	//glm::vec3 cameraPos;
-	const char* hintText = "Input";
 
 	// Screen Borders - Used for ImGui
 	float leftBorder = 12.3f;
@@ -70,14 +45,9 @@ private:
 	float botBorder = -6.4f;
 
 public:
-	TestLayer() : SortingLayer("Test"), camera(-12.8f, 12.8f, -6.4f, 6.4f)//, cameraPos({ 0.0f, 4.0f, 0.0f })
+	TestLayer() : SortingLayer("Test"), camera(-12.8f, 12.8f, -6.4f, 6.4f)
 	{
 		IVY_TRACE("Creating TestLayer");
-
-		//InitEntity(player, playerTransform, playerRenderable, playerScript);
-		//InitEntity(sprite, spriteTransform, spriteRenderable, spriteScript);
-		//InitEntity(cat, catTransform, catRenderable);
-		//InitEntity(platform, platformTransform, platformRenderable);
 		
 		getECS().loadEntities();
 
@@ -91,7 +61,6 @@ public:
 	void update(Ivy::Timestep ts) override
 	{
 		// Render
-		
 		Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 		Ivy::RenderCommand::clear();
 		Ivy::Renderer::Begin(camera);
@@ -100,27 +69,58 @@ public:
 
 		// Script
 		scriptSystem->update(ts);
-
-		Entity testentity = 0;
-		//IVY_ERROR("Entity: {0}, TransformPosX: {1}", getECS().getEntities()[0], getECS().getComponent<Transform>(testentity).position.x);
 	}
 
 	void imGuiRender() override
 	{
-		/* TODOs
-		 - Hookup an InputText for Renderable Path - foreach Entity
-		 - Hookup an Input text for Script Path - foreach Entity
-		 - Create Entity Button - outside collapsing headers
-		 - Add Component Button - foreach Entity - Buttons should be placed in a drop-down
-		 - Display Entity names in Collapsing Headers
-		 - Move this code to the engine side
-		*/
-		static std::string globalTemp;
-		ImGuiIO& io = ImGui::GetIO();
+		static std::string pathTemp;
+		static std::string tagTemp;
 		for (Entity& entity : getECS().getEntities()) {
 			ImGui::PushID(&entity);
-			if (ImGui::CollapsingHeader("Entity##"))
+			// -------------------- Display Tag --------------------
+			if (getECS().getComponent<Tag>(entity).getComponentId() == uint8_t(3))
 			{
+				tagTemp = getECS().getComponent<Tag>(entity).tag;
+				if (tagTemp.size() <= 2)
+					tagTemp = "Entity##";
+			}
+			else
+			{
+				tagTemp = "Entity##";
+			}
+
+			if (ImGui::CollapsingHeader(tagTemp.c_str()))
+			{
+				// -------------------- Tag --------------------
+				if (ImGui::TreeNode("Tag"))
+				{
+					if (getECS().getComponent<Tag>(entity).getComponentId() == uint8_t(3))
+					{
+						ImGui::InputText("Tag", &pathTemp);
+						if (ImGui::Button("Rename Tag"))
+						{
+							getECS().getComponent<Tag>(entity).tag = pathTemp;
+							IVY_INFO("Updated Tag={0}", getECS().getComponent<Tag>(entity).tag);
+							pathTemp = "";
+						}
+					}
+					else
+					{
+						ImGui::InputText("Tag", &pathTemp);
+						if (ImGui::Button("Add Tag"))
+						{
+							if (pathTemp.size() > 2) {
+								Tag newTag = Tag(pathTemp);
+								newTag.setComponentId(3);
+								getECS().addComponent<Tag>(entity, newTag);
+								pathTemp = "";
+							}
+						}
+					}
+					ImGui::TreePop();
+				}
+
+				// -------------------- Transform --------------------
 				if (ImGui::TreeNode("Transform")) 
 				{
 					if (getECS().getComponent<Transform>(entity).getComponentId() == uint8_t(0))
@@ -133,7 +133,7 @@ public:
 					{
 						if (ImGui::Button("Add Transform"))
 						{
-							Transform newTransfrom = Transform();
+							Transform newTransfrom = Transform(glm::vec2(1, 1), 0, glm::vec2(1,1));
 							newTransfrom.setComponentId(0);
 							getECS().addComponent<Transform>(entity, newTransfrom);
 						}
@@ -141,6 +141,7 @@ public:
 					ImGui::TreePop();
 				}
 
+				// -------------------- Renderable --------------------
 				if (ImGui::TreeNode("Renderable")) 
 				{
 					const char* currentPath = nullptr;
@@ -159,21 +160,22 @@ public:
 					}
 					else
 					{
-						ImGui::InputText("PNG Path", &globalTemp);
+						ImGui::InputText("PNG Path", &pathTemp);
 						if (ImGui::Button("Add Renderable"))
 						{
-							IVY_INFO("Add Renderable BufferSize={0}", globalTemp.size());
-							if (globalTemp.size() > 2) {
-								Renderable newRenderable = Renderable(globalTemp);
+							IVY_INFO("Add Renderable BufferSize={0}", pathTemp.size());
+							if (pathTemp.size() > 2) {
+								Renderable newRenderable = Renderable(pathTemp);
 								newRenderable.setComponentId(1);
 								getECS().addComponent<Renderable>(entity, newRenderable);
-								globalTemp = "";
+								pathTemp = "";
 							}
 						}
 					}	
 					ImGui::TreePop();
 				}
 
+				// -------------------- Script --------------------
 				if (ImGui::TreeNode("Script")) {
 					if (getECS().getComponent<Script>(entity).getComponentId() == uint8_t(2))
 					{
@@ -182,7 +184,6 @@ public:
 						ImGui::InputTextWithHint("Script Path", currentPath, buffer);
 						if (ImGui::Button("Import Script"))
 						{
-							//getECS().getComponent<Script>(entity).scriptableObject.destoryAndRelease();
 							getECS().getComponent<Script>(entity).scriptName = *buffer;
 							Ivy::ScriptManager::GetInstance().createScriptController(
 								getECS().getComponent<Script>(entity).scriptName, 
@@ -202,6 +203,8 @@ public:
 					}
 					ImGui::TreePop();
 				}
+
+				// -------------------- Delete Entity --------------------
 				if (ImGui::Button("Delete Entity"))
 				{
 					getECS().destroyEntity(entity);
