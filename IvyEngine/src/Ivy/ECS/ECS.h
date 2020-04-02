@@ -3,8 +3,9 @@
 #include <map>
 #include <vector>
 #include <stdint.h>
-#include <filesystem>
 
+
+#include "EntityContainer.h"
 #include "Component.h"
 #include "ComponentContainer.h"
 #include "Entity.h"
@@ -14,6 +15,7 @@
 #include "Components/ScriptComponent.h"
 #include "Components/Tag.h"
 
+#include "../Core/ResourcePaths.h"
 #include "../Core/Logger.h"
 #include "JSONManager.h"
 #include "RenderSystem.h"
@@ -24,14 +26,12 @@ namespace Ivy {
 	class ECS
 	{
 	private:
-		uint16_t EntityIdGenerator;
 		uint8_t componentTypeCounter;
 		std::map<const char*, std::shared_ptr<BaseComponentContainer>> componentContainers{};
 		std::map<const char*, uint8_t> componentTypes{};
-		std::vector<Entity> entities{};
+		EntityContainer entities;
 		std::vector<std::shared_ptr<System>> systems{};
 	public:
-		const char* entitiesRepoPath = "C:\\Workspace\\ivy-game-engine\\IvyApplication\\res\\entities.json";
 		~ECS()
 		{
 			for (auto& it = entities.begin(); it != entities.end(); it++)
@@ -41,7 +41,6 @@ namespace Ivy {
 			componentTypes.clear();
 			componentContainers.clear();
 			systems.clear();
-			entities.clear();
 		}
 
 		static ECS& getInstance()
@@ -51,14 +50,20 @@ namespace Ivy {
 		}
 
 		void loadEntities() {
-			if (std::filesystem::exists(entitiesRepoPath))
-				JSONManager::LoadEntities(entitiesRepoPath);
-			else
-				IVY_CORE_WARN("Entity JSON repository not found!");
+			if (std::filesystem::exists(Paths::entitiesRepoPath)) {
+				JSONManager::LoadEntities(Paths::entitiesRepoPath.string());
+			}
+			else {
+				IVY_CORE_WARN("Entity JSON repository not found! Path accessed: {0}", Paths::entitiesRepoPath);
+			}
 		}
 
 		void saveEntities() {
-			JSONManager::SaveEntities(entitiesRepoPath);
+			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());
+		}
+
+		int getSizeEntities() {
+			return this->entities.size();
 		}
 
 		// Components
@@ -109,25 +114,26 @@ namespace Ivy {
 				container->onEntityDestroyed(entity);
 			}
 			
-			for (auto& it = entities.begin(); it != entities.end(); it++)
+			entities.destroyEntity(entity);
+			
+
+			/*for (auto& it = entities.begin(); it != entities.end(); it++)
 			{
 				if(*it == entity)
 				{
 					entities.erase(it);
 					break;
 				}
-			}
+			}*/
 		}
 
 		Entity& createEntity()
 		{
-			Entity entity = EntityIdGenerator; 
-			entities.push_back(entity);
-			EntityIdGenerator++;
-			return entities.at(entities.size() - 1);
+			return entities.createEntity();
 		}
 
-		std::vector<Entity>& getEntities() {
+		EntityContainer& getEntities()
+		{
 			return this->entities;
 		}
 
@@ -164,7 +170,6 @@ namespace Ivy {
 		ECS()
 		{
 			// Ids
-			EntityIdGenerator = 0;
 			componentTypeCounter = 0;
 
 			// Component Types

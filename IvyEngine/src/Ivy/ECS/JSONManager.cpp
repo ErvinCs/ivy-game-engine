@@ -12,15 +12,16 @@ using Json = nlohmann::json;
 namespace Ivy {
 
 	void JSONManager::SaveEntities(const std::string& path) {
+		IVY_INFO("Saving entities to location: {0}", path);
+
 		Json jsonNull;
 		Json finalObject;
 
 		std::ofstream writer(path);
 
-		for (Entity& entity : ECS::getInstance().getEntities()) {
-			IVY_INFO("Entity={0}", entity);
-			if (entity == NULL)
-				continue;
+		for (Entity& entity : ECS::getInstance().getEntities()) 
+		{
+			IVY_INFO("Writing Entity={0}", entity);
 
 			Json jsonObject;
 			jsonObject["entity_id"] = entity;
@@ -63,8 +64,7 @@ namespace Ivy {
 				jsonObject["components"]["tag"] = ECS::getInstance().getComponent<Tag>(entity).tag;
 			}
 
-			IVY_CORE_INFO("Read Json Entity {0}", entity);
-			IVY_CORE_INFO("Json Object={0}", jsonObject);
+			//IVY_CORE_INFO("Json Object={0}", jsonObject);
 
 
 			finalObject[entity] = jsonObject;
@@ -75,6 +75,8 @@ namespace Ivy {
 	}
 
 	void JSONManager::LoadEntities(const std::string& path) {
+		IVY_INFO("Loading entities from location: {0}", path);
+
 		std::ifstream reader(path);
 		Json json;
 		reader >> json;
@@ -82,13 +84,10 @@ namespace Ivy {
 		
 		for (auto& it = json.begin(); it != json.end(); ++it)
 		{
-			std::cout << *it << std::endl;
 			auto& current = *it;
-			//TEMPORARY - TODO FIX THIS
-			if (current == NULL)
-				continue;
-
 			Entity entity = ECS::getInstance().createEntity();
+			IVY_INFO("Loading Entity={0}", entity);
+
 			if (!current["components"]["transform"].is_null())
 			{
 				float posX, posY, rotation, scaleX, scaleY;
@@ -124,7 +123,6 @@ namespace Ivy {
 				current["components"]["tag"].get_to(tagName);
 				Tag tag{ tagName };
 				ECS::getInstance().addComponent<Tag>(entity, tag);
-				//IVY_CORE_INFO("Added Component - Tag={0}", ECS::getInstance().getComponent<Tag>(entity).tag);
 			}
 
 		}

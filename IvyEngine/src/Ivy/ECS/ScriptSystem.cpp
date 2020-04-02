@@ -25,7 +25,6 @@ namespace Ivy {
 
 	void ScriptSystem::update(float deltatime)
 	{
-		//TEMPORARY
 		for (auto& it = entities->begin(); it != entities->end(); it++)
 		{
 			auto& object = *it;

@@ -12,7 +12,6 @@ class CPlayer : IController
 	Transform@ transform;
 
 	bool isJumping = false;
-	bool isFalling = false;
 	float playerMoveSpeed = 5;
 	float constJumpTime = 1.3;
 	float jumpTime = 1.3;

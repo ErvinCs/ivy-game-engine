@@ -43,13 +43,16 @@ namespace Ivy {
 		}
 
 		imGuiLayer = new ImGuiLayer();
+		inspectorLayer = new InspectorLayer();
 		pushLayer(imGuiLayer);
+		pushLayer(inspectorLayer);
 	}
 
 
 	Application::~Application()
 	{
 		delete imGuiLayer;
+		delete inspectorLayer;
 		BaseRenderer::Shutdown();
 		if (scriptManager)
 		{

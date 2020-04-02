@@ -10,7 +10,7 @@ namespace Ivy {
 
 	public:
 		ScriptSystem() = default;
-		ScriptSystem(std::vector<Entity>& entities)
+		ScriptSystem(EntityContainer& entities)
 		{
 			this->setEntities(entities);		
 		}

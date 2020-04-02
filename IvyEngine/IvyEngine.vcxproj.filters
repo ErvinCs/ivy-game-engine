@@ -1351,6 +1351,9 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Components\Tag.h" />
+    <ClInclude Include="src\Ivy\ECS\EntityContainer.h" />
+    <ClInclude Include="src\Ivy\Core\ResourcePaths.h" />
+    <ClInclude Include="src\Ivy\ImGui\InspectorLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1461,5 +1464,12 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\ImGui\InspectorLayer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\blank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\base.glsl" />
   </ItemGroup>
 </Project>

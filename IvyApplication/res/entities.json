@@ -1,22 +1,22 @@
 [
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\ninja.png",
-      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as",
-      "tag": "Player",
+      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\ninja.png",
+      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\player.as",
+      "tag": "Sprite",
       "transform": {
-        "positionX": 0.4169999957084656,
-        "positionY": -5.599999904632568,
+        "positionX": 10.0,
+        "positionY": -2.0,
         "rotation": 0.0,
-        "scaleX": 20.0,
-        "scaleY": 1.0
+        "scaleX": 2.0,
+        "scaleY": 2.0
       }
     },
     "entity_id": 0
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\platform-20.png",
+      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\platform-20.png",
       "script": null,
       "tag": "Platform-20",
       "transform": {
@@ -31,11 +31,11 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\sprite.png",
-      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\patrol.as",
-      "tag": "sprite",
+      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\sprite.png",
+      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\patrol.as",
+      "tag": "Sprite",
       "transform": {
-        "positionX": -3.1516847610473633,
+        "positionX": 11.045001983642578,
         "positionY": 0.4169999957084656,
         "rotation": 180.0,
         "scaleX": 2.0,
@@ -46,9 +46,9 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\cat1.png",
+      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\cat1.png",
       "script": null,
-      "tag": "cat1",
+      "tag": "Cat",
       "transform": {
         "positionX": 5.7729997634887695,
         "positionY": 5.400000095367432,
@@ -61,12 +61,12 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\new.png",
-      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\scripts\\player.as",
-      "tag": "corona",
+      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\new.png",
+      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\patrol.as",
+      "tag": "Corona",
       "transform": {
-        "positionX": -3.451598644256592,
-        "positionY": 0.5726823806762695,
+        "positionX": -4.302825927734375,
+        "positionY": 0.39217090606689453,
         "rotation": -107374176.0,
         "scaleX": 13.1850004196167,
         "scaleY": 13.1850004196167
@@ -76,12 +76,12 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\jmp-enemy.png",
-      "script": null,
-      "tag": "Jumping Enemy",
+      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\jmp-enemy.png",
+      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\jumping.as",
+      "tag": "Not yet jumping enemy",
       "transform": {
         "positionX": 8.654999732971191,
-        "positionY": 1.0,
+        "positionY": -1.981302261352539,
         "rotation": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0

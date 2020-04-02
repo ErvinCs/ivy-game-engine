@@ -1,9 +1,10 @@
 #include "ivypch.h"
 #include "Renderer.h"
 #include "OpenGL/OpenGLShader.h"
-
+#include "../Core/Logger.h"
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "../Core/ResourcePaths.h"
 namespace Ivy {
 
 	struct Renderable
@@ -41,12 +42,14 @@ namespace Ivy {
 		data->vertexArray->setIndexBuffer(ib);
 
 		//TODO - FIX THIS
-		std::shared_ptr<Texture> textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\white.png");
-		//data->textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\textures\\white.png");
+		IVY_CORE_INFO("Loading blank texture from location: {0}", Paths::baseTexturePath);
+		std::shared_ptr<Texture> textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\blank.png");//(Paths::baseTexturePath.string());
+		//data->textureBlank = Texture::Create("baseTexturePath.string()");
 		//data->textureBlank->bind();
 		textureBlank->bind();
 
-		data->shaderTex = Shader::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res_temp\\shaders\\image.shader");
+		IVY_CORE_INFO("Loading shader from location: {0}", Paths::shaderPath);
+		data->shaderTex = Shader::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\shaders\\base.glsl");//(Paths::shaderPath.string());
 		data->shaderTex->bind();
 		data->shaderTex->setUniform1i("u_texture", 0);
 	}

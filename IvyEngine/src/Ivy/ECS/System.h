@@ -1,19 +1,17 @@
 #pragma once
 
-#include <set>
-#include <queue>
-#include <vector>
 #include "Entity.h"
+#include "EntityContainer.h"
 
 namespace Ivy {
 
 	class System
 	{
 	protected:
-		std::vector<Entity>* entities;
+		EntityContainer* entities;
 	public:
-		inline const std::vector<Entity>& getEntities() const { return *entities; }
-		inline void setEntities(std::vector<Entity>& inEntities) {  entities = &inEntities; }
+		inline const EntityContainer& getEntities() const { return *entities; }
+		inline void setEntities(EntityContainer& inEntities) {  entities = &inEntities; }
 
 		virtual void init() = 0;
 		virtual void update(float deltatime) = 0;

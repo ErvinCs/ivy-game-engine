@@ -9,7 +9,7 @@ namespace Ivy {
 	{
 	public:
 		RenderSystem() = default;
-		RenderSystem(std::vector<Entity>& entities)
+		RenderSystem(EntityContainer& entities)
 		{
 			this->setEntities(entities);
 		}

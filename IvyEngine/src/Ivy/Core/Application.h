@@ -11,6 +11,7 @@
 #include "../Events/MouseEvent.h"
 
 #include "../ImGui/ImGuiLayer.h"
+#include "../ImGui/InspectorLayer.h"
 #include "../Scripting/ScriptManager.h"
 
 //#include "../Renderer/OrthoCamera.h"
@@ -28,14 +29,13 @@ namespace Ivy {
 		std::unique_ptr<Window> window;
 		bool isRunning = true;
 		ImGuiLayer* imGuiLayer;
+		InspectorLayer* inspectorLayer;
 		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
 		//OrthoCamera camera;
 		//const char* entitiesRepoPath = "C:\\Workspace\\ivy-game-engine\\IvyApplication\\res\\entities.json";
 		
 	public:
-		//Timestep* globalTime;
-		//inline Timestep& getGlobalTimePtr() { return &globalTime; }
 		float globalTime;
 
 		inline static Application& getInstance()

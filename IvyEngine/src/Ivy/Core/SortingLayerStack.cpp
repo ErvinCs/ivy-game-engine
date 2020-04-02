@@ -25,7 +25,7 @@ namespace Ivy {
 		}
 		else
 		{
-			throw new LayerException("Sorting layer to delete was not found!");
+			throw new LayerException("Sorting layer was not found!");
 		}
 	}
 
