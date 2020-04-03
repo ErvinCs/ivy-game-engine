@@ -2,7 +2,7 @@
 
 #include <string>
 #include <unordered_map>
-
+#include "../../Core/ResourcePaths.h"
 #include "glm/glm.hpp"
 
 #include "../Shader.h"

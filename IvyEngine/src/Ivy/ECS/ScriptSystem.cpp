@@ -5,6 +5,7 @@
 #include "Components/ScriptComponent.h"
 
 #include "../Scripting/ScriptManager.h"
+#include "../Core/ResourcePaths.h"
 
 namespace Ivy {
 
@@ -19,7 +20,8 @@ namespace Ivy {
 				continue;
 			scriptComponent.setEntityId(object);
 
-			ScriptManager::GetInstance().createScriptController(scriptComponent.scriptName, &scriptComponent.scriptableObject, object);
+			ScriptManager::GetInstance().createScriptController((Paths::scriptsPath / scriptComponent.scriptName).string(), &scriptComponent.scriptableObject, object);
+			IVY_CORE_INFO("ScriptSystem: Creating ScriptController: {0}, Path={1}", scriptComponent.scriptName, scriptComponent.scriptableObject.getName());
 		}
 	}
 
@@ -33,6 +35,7 @@ namespace Ivy {
 			if (scriptComponent.getComponentId() != uint8_t(2))
 				continue;
 
+			//IVY_CORE_INFO("ScriptSystem: Updating ScriptController: {0}, Path={1}", scriptComponent.scriptName, scriptComponent.scriptableObject.getName());
 			scriptComponent.scriptableObject.onUpdate();
 			
 			//TODO - Execute onCollide() for each script [Once the Collision System is implemented] - 

@@ -1,22 +1,16 @@
 [
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\ninja.png",
-      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\player.as",
-      "tag": "Sprite",
-      "transform": {
-        "positionX": 10.0,
-        "positionY": -2.0,
-        "rotation": 0.0,
-        "scaleX": 2.0,
-        "scaleY": 2.0
-      }
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null
     },
     "entity_id": 0
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\platform-20.png",
+      "renderable": "platform-20.png",
       "script": null,
       "tag": "Platform-20",
       "transform": {
@@ -31,11 +25,11 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\sprite.png",
-      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\patrol.as",
+      "renderable": "sprite.png",
+      "script": "patrol.as",
       "tag": "Sprite",
       "transform": {
-        "positionX": 11.045001983642578,
+        "positionX": 20.236480712890625,
         "positionY": 0.4169999957084656,
         "rotation": 180.0,
         "scaleX": 2.0,
@@ -46,7 +40,7 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\cat1.png",
+      "renderable": "cat1.png",
       "script": null,
       "tag": "Cat",
       "transform": {
@@ -61,11 +55,11 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\new.png",
-      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\patrol.as",
+      "renderable": "new.png",
+      "script": "patrol.as",
       "tag": "Corona",
       "transform": {
-        "positionX": -4.302825927734375,
+        "positionX": 4.888637542724609,
         "positionY": 0.39217090606689453,
         "rotation": -107374176.0,
         "scaleX": 13.1850004196167,
@@ -76,12 +70,12 @@
   },
   {
     "components": {
-      "renderable": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\jmp-enemy.png",
-      "script": "C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\scripts\\jumping.as",
+      "renderable": "jmp-enemy.png",
+      "script": "jumping.as",
       "tag": "Not yet jumping enemy",
       "transform": {
         "positionX": 8.654999732971191,
-        "positionY": -1.981302261352539,
+        "positionY": 11.047722816467285,
         "rotation": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0

@@ -26,6 +26,7 @@ namespace Ivy {
 	{
 		static std::string pngPathTemp;
 		static std::string tagTemp, newTagTemp;
+		static std::string scriptPathTemp;
 		for (Entity& entity : getECS().getEntities()) {
 			ImGui::PushID(&entity);
 			// -------------------- Display Tag --------------------
@@ -51,6 +52,11 @@ namespace Ivy {
 							getECS().getComponent<Tag>(entity).tag = newTagTemp;
 							newTagTemp = "";
 						}
+						if (ImGui::Button("Remove Tag"))
+						{
+							getECS().removeComponent<Tag>(entity);
+							IVY_INFO("Destroyed Tag on Entity: {0}", entity);
+						}
 					}
 					else
 					{
@@ -66,11 +72,7 @@ namespace Ivy {
 							}
 						}
 					}
-					if (ImGui::Button("Remove Tag"))
-					{
-						getECS().removeComponent<Tag>(entity);
-						IVY_INFO("Destroyed Tag on Entity: {0}", entity);
-					}
+					
 					ImGui::TreePop();
 				}
 
@@ -82,6 +84,11 @@ namespace Ivy {
 						ImGui::InputFloat2("Position", (float*)&getECS().getComponent<Transform>(entity).position, 2);
 						ImGui::InputFloat2("Scale", (float*)&getECS().getComponent<Transform>(entity).scale, 2);
 						ImGui::InputFloat("Rotation", (float*)&getECS().getComponent<Transform>(entity).rotation, 2);
+						if (ImGui::Button("Remove Transform"))
+						{
+							getECS().removeComponent<Transform>(entity);
+							IVY_INFO("Destroyed Transform on Entity: {0}", entity);
+						}
 					}
 					else
 					{
@@ -98,11 +105,7 @@ namespace Ivy {
 								getECS().getComponent<Transform>(entity).rotation);
 						}
 					}
-					if (ImGui::Button("Remove Transform"))
-					{
-						getECS().removeComponent<Transform>(entity);
-						IVY_INFO("Destroyed Transform on Entity: {0}", entity);
-					}
+					
 					ImGui::TreePop();
 				}
 
@@ -121,6 +124,11 @@ namespace Ivy {
 							getECS().getComponent<Renderable>(entity).spritePath = *buffer;
 							getECS().getComponent<Renderable>(entity).texture = Ivy::Texture::Create(*buffer);
 						}
+						if (ImGui::Button("Remove Renderable"))
+						{
+							getECS().removeComponent<Renderable>(entity);
+							IVY_INFO("Destroyed Renderable on Entity: {0}", entity);
+						}
 					}
 					else
 					{
@@ -136,16 +144,13 @@ namespace Ivy {
 							}
 						}
 					}
-					if (ImGui::Button("Remove Renderable"))
-					{
-						getECS().removeComponent<Renderable>(entity);
-						IVY_INFO("Destroyed Renderable on Entity: {0}", entity);
-					}
+					
 					ImGui::TreePop();
 				}
 
 				// -------------------- Script --------------------
-				if (ImGui::TreeNode("Script")) {
+				if (ImGui::TreeNode("Script")) 
+				{
 					if (getECS().getComponent<ScriptComponent>(entity).getComponentId() == uint8_t(2))
 					{
 						const char* currentPath = getECS().getComponent<ScriptComponent>(entity).scriptName.c_str();
@@ -153,28 +158,43 @@ namespace Ivy {
 						ImGui::InputTextWithHint("Script Path", currentPath, buffer);
 						if (ImGui::Button("Import Script"))
 						{
-							getECS().getComponent<ScriptComponent>(entity).scriptName = *buffer;
+							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
+							getECS().removeComponent<ScriptComponent>(entity);
+							ScriptComponent newScript = ScriptComponent(*buffer);
+							newScript.setComponentId(2);
+							getECS().addComponent<ScriptComponent>(entity, newScript);
 							ScriptManager::GetInstance().createScriptController(
-								getECS().getComponent<ScriptComponent>(entity).scriptName,
+								(Paths::scriptsPath / *buffer).string(),
 								&getECS().getComponent<ScriptComponent>(entity).scriptableObject,
 								entity);
+						}
+						if (ImGui::Button("Remove Script"))
+						{
+							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
+							getECS().removeComponent<ScriptComponent>(entity);
+							IVY_INFO("Destroyed Script on Entity: {0}", entity);
 						}
 					}
 					else
 					{
+						ImGui::InputText("Script Path", &scriptPathTemp);
 						if (ImGui::Button("Add Script"))
 						{
-							ScriptComponent newScript = ScriptComponent();
-							newScript.setComponentId(2);
-							getECS().addComponent<ScriptComponent>(entity, newScript);
-							IVY_INFO("Added: Script Path={0}", getECS().getComponent<ScriptComponent>(entity).scriptName);
+							if (scriptPathTemp.size() > 2) {
+								ScriptComponent newScript = ScriptComponent(scriptPathTemp);
+								newScript.setComponentId(2);
+								getECS().addComponent<ScriptComponent>(entity, newScript);
+								ScriptManager::GetInstance().createScriptController(
+									(Paths::scriptsPath / scriptPathTemp).string(),
+									&getECS().getComponent<ScriptComponent>(entity).scriptableObject,
+									entity);
+								scriptPathTemp = "";
+								IVY_INFO("Added: Script Name={0}, Path={1}", 
+									getECS().getComponent<ScriptComponent>(entity).scriptName,
+									getECS().getComponent<ScriptComponent>(entity).scriptableObject.getName());
+							}
 						}
-					}
-					if (ImGui::Button("Remove Script"))
-					{
-						getECS().removeComponent<ScriptComponent>(entity);
-						IVY_INFO("Destroyed Script on Entity: {0}", entity);
-					}
+					}					
 					ImGui::TreePop();
 				}
 
@@ -190,7 +210,7 @@ namespace Ivy {
 		if (ImGui::Button("New Entity"))
 		{
 			Entity entity = getECS().createEntity();
-			IVY_INFO("Created Entity#{0}", entity);
+			IVY_INFO("Created Entity={0}", entity);
 		}
 		if (ImGui::Button("Save"))
 		{

@@ -4,20 +4,19 @@
 #include "imgui/misc/cpp/imgui_stdlib.h"
 
 
+//TODO - FIX ALL STRINGS
 
 /* TODOs
- - Remove hardcoded strings - use <filesystem>
  - Move all assets (except shaders) to engine side and fix paths accordingly
  - Asset Import
-	- When creating a new Renderable or Script allow user to pick a file anywhere on his computer 
+	- When creating a new Renderable or Script the user must specify full path to asset
 	- Use <filesystem> to copy that file into res and store a reference to that copy
+	- After adding the file imGui will display its path relative to res/
  - Collision System ( + Events )
  - PCG Module
 
  - Remove Explicit camera creation from IvyApp - Move it to engine side and allow acces to it
- - Move ImGui code to the engine side 
-	- Create a new layer for Component Management Menu
-	- Create a new layer for PCG Menu
+ - Create a new layer for PCG Menu
  - Place entities on Rendering Sorting Layers
  - Remove Explicit system init from IvyApp - Move it to engine side
  - Centralize Component IDs

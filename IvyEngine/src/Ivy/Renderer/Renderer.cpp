@@ -43,13 +43,13 @@ namespace Ivy {
 
 		//TODO - FIX THIS
 		IVY_CORE_INFO("Loading blank texture from location: {0}", Paths::baseTexturePath);
-		std::shared_ptr<Texture> textureBlank = Texture::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\textures\\blank.png");//(Paths::baseTexturePath.string());
+		std::shared_ptr<Texture> textureBlank = Texture::Create(Paths::baseTexturePath.string(), true);
 		//data->textureBlank = Texture::Create("baseTexturePath.string()");
 		//data->textureBlank->bind();
 		textureBlank->bind();
 
 		IVY_CORE_INFO("Loading shader from location: {0}", Paths::shaderPath);
-		data->shaderTex = Shader::Create("C:\\Workspace\\ivy-game-engine\\IvyEngine\\res\\shaders\\base.glsl");//(Paths::shaderPath.string());
+		data->shaderTex = Shader::Create(Paths::shaderPath.string());
 		data->shaderTex->bind();
 		data->shaderTex->setUniform1i("u_texture", 0);
 	}

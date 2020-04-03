@@ -2,13 +2,18 @@
 #include "OpenGLTexture.h"
 #include "../../Core/Core.h"
 #include "../../Core/Logger.h"
+
 #include <stb_image.h>
 
 namespace Ivy {
 
-	OpenGLTexture::OpenGLTexture(const std::string& path)
-		: filepath(path)
+	OpenGLTexture::OpenGLTexture(const std::string& path, bool isBaseTexture)
 	{
+		if (isBaseTexture)
+			filepath = Paths::baseTexturePath.string();
+		else
+			filepath = (Paths::texturesPath / path).string();
+
 		/*int width, height, channels;
 		//stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
@@ -33,7 +38,7 @@ namespace Ivy {
 
 		// Flip the texture vertically because OpenGL's (0,0) is the bottom left - depends on the texture format
 		stbi_set_flip_vertically_on_load(1);
-		localBuffer = stbi_load(path.c_str(), &width, &height, &bitsPerPixel, 4);
+		localBuffer = stbi_load(filepath.c_str(), &width, &height, &bitsPerPixel, 4);
 
 		GLCall(glGenTextures(1, &rendererId));
 		GLCall(glBindTexture(GL_TEXTURE_2D, rendererId));

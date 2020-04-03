@@ -2,6 +2,7 @@
 
 #include "OpenGLRenderAPI.h"
 #include "../Texture.h"
+#include "../../Core/ResourcePaths.h"
 
 #include <glad/glad.h>
 
@@ -12,12 +13,13 @@ namespace Ivy {
 	private:
 		GLenum rendererId;
 		std::string filepath;
+		bool isBaseTexture;
 		int width, height;
 		int bitsPerPixel;
 		unsigned char* localBuffer;
 
 	public:
-		OpenGLTexture(const std::string& path);
+		OpenGLTexture(const std::string& path, bool isBaseTexture);
 		~OpenGLTexture();
 
 		virtual void bind(uint32_t slot = 0) const override;

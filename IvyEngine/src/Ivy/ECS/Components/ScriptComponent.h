@@ -22,8 +22,8 @@ namespace Ivy
 		}
 		
 		//~ScriptComponent() {
-			//scriptableObject->destoryAndRelease();
-			//scriptableObject->release();
+		//	scriptableObject.destoryAndRelease();
+		//	scriptableObject->release();
 		//}
 	};
 }

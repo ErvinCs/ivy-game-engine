@@ -19,13 +19,15 @@ namespace Ivy {
 
 		std::ofstream writer(path);
 
-		for (Entity& entity : ECS::getInstance().getEntities()) 
+		EntityContainer container = ECS::getInstance().getEntities();
+		uint16_t entryCounter = 0;
+		for (Entity& entity : container)
 		{
 			IVY_INFO("Writing Entity={0}", entity);
 
 			Json jsonObject;
 			jsonObject["entity_id"] = entity;
-
+			
 			
 			if (ECS::getInstance().getComponent<Transform>(entity).getEntityId() != entity)
 			{
@@ -64,10 +66,8 @@ namespace Ivy {
 				jsonObject["components"]["tag"] = ECS::getInstance().getComponent<Tag>(entity).tag;
 			}
 
-			//IVY_CORE_INFO("Json Object={0}", jsonObject);
-
-
-			finalObject[entity] = jsonObject;
+			finalObject[entryCounter] = jsonObject;
+			entryCounter++;
 		}
 		writer << std::setw(2) << finalObject << std::endl;
 

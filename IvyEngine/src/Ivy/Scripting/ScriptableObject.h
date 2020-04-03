@@ -6,6 +6,9 @@
 #include "../angelscript/add_on/scripthandle/scripthandle.h"
 
 #include "../ECS/Entity.h"
+#include "../Core/ResourcePaths.h"
+
+#include "../Core/Logger.h"
 
 namespace Ivy {
 
@@ -13,7 +16,6 @@ namespace Ivy {
 	{
 	protected:
 		std::string name;
-		bool isAlive;
 		asIScriptObject* scriptObject;
 		Entity ownerEntity;
 
@@ -29,7 +31,6 @@ namespace Ivy {
 		asILockableSharedBool* getWeakRefereneFlag();
 		void destoryAndRelease();
 		void sendMessage(CScriptHandle message, ScriptableObject* target);
-		//void killObject();
 
 		void onUpdate();
 
@@ -37,8 +38,8 @@ namespace Ivy {
 		Entity getOwner();
 
 		inline const std::string& getName() { return this->name; }
-		inline const void setName(const std::string& name) { this->name = name; }
-		inline const bool& getIsAlive() { return isAlive; }
+		inline const void setName(const std::string& name) { this->name = (Paths::scriptsPath / name).string(); IVY_CORE_WARN("name={0}", this->name); }
+		inline const void setFullPath(const std::string& fullPath) { this->name = fullPath; }
 		inline asIScriptObject* getScriptObject() { return this->scriptObject; }
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }
 	};
