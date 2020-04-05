@@ -11,6 +11,7 @@ namespace Ivy {
 
 	void ScriptSystem::init()
 	{
+		IVY_CORE_INFO("ScriptSystem: Initializing System");
 		for (auto& it = entities->begin(); it != entities->end(); it++)
 		{
 			auto& object = *it;
@@ -21,7 +22,7 @@ namespace Ivy {
 			scriptComponent.setEntityId(object);
 
 			ScriptManager::GetInstance().createScriptController((Paths::scriptsPath / scriptComponent.scriptName).string(), &scriptComponent.scriptableObject, object);
-			IVY_CORE_INFO("ScriptSystem: Creating ScriptController: {0}, Path={1}", scriptComponent.scriptName, scriptComponent.scriptableObject.getName());
+			IVY_CORE_INFO("ScriptSystem: Creating ScriptController: scriptName={0}, path={1}", scriptComponent.scriptName, scriptComponent.scriptableObject.getName());
 		}
 	}
 
@@ -35,7 +36,6 @@ namespace Ivy {
 			if (scriptComponent.getComponentId() != uint8_t(2))
 				continue;
 
-			//IVY_CORE_INFO("ScriptSystem: Updating ScriptController: {0}, Path={1}", scriptComponent.scriptName, scriptComponent.scriptableObject.getName());
 			scriptComponent.scriptableObject.onUpdate();
 			
 			//TODO - Execute onCollide() for each script [Once the Collision System is implemented] - 

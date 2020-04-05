@@ -56,8 +56,6 @@ namespace Ivy {
 	{
 		static bool showDemo = true;
 		ImGui::ShowDemoWindow(&showDemo);
-		//TODO - New Project / Load Project
-
 	}
 
 	void ImGuiLayer::attach()  

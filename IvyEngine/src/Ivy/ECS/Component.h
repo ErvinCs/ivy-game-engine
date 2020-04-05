@@ -6,22 +6,24 @@
 
 namespace Ivy
 {
+#define ComponentType uint8_t
+
 	struct Component
 	{
 	protected:
-		uint8_t componentId;	// Unique per Component Type
-		Entity entityId;		// Maps to the ID of the owner Entity
+		ComponentType componentId;	// Unique per Component Type
+		Entity entityId;			// Maps to the ID of the owner Entity
 	public:
 		Component() : componentId(-1), entityId(-1) {}
-		Component(uint8_t componentId) : componentId(componentId) {}
-		Component(uint8_t componentId, Entity entityId) : componentId(componentId), entityId(entityId) {}
+		Component(ComponentType componentId) : componentId(componentId) {}
+		Component(ComponentType componentId, Entity entityId) : componentId(componentId), entityId(entityId) {}
 		~Component() = default;
 		
-		inline uint8_t getComponentId() { return componentId; }
+		inline ComponentType getComponentId() { return componentId; }
 
 		inline Entity getEntityId() { return entityId; }
 
-		inline void setComponentId(uint8_t id) { componentId = id; }
+		inline void setComponentId(ComponentType id) { componentId = id; }
 
 		inline void setEntityId(Entity& entityId) { this->entityId = entityId; }
 

@@ -1,8 +1,6 @@
 #include "ivypch.h"
 #include "Logger.h"
 
-
-
 namespace Ivy {
 
 	std::shared_ptr<spdlog::logger> Logger::coreLogger;

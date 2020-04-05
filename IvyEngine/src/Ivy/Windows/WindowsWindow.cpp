@@ -14,6 +14,7 @@ namespace Ivy {
 
 	std::unique_ptr<Window> Window::Create(const WindowProperties& properties)
 	{
+		IVY_CORE_INFO("Window: Creating WindowsWindow: properties{name={0}, height={1}, width={2}}", properties.name, properties.height, properties.width);
 		return std::make_unique<WindowsWindow>(properties);
 	}
 
@@ -24,6 +25,7 @@ namespace Ivy {
 
 	WindowsWindow::~WindowsWindow()
 	{
+		IVY_CORE_INFO("WindowsWindow: Destroying WindowsWindow");
 		shutdown();
 	}
 
@@ -35,6 +37,7 @@ namespace Ivy {
 
 	void WindowsWindow::init(const WindowProperties& wProps)
 	{
+		IVY_CORE_INFO("WindowsWindow: Initializing");
 		this->properties.wProps.name = wProps.name;
 		this->properties.wProps.width = wProps.width;
 		this->properties.wProps.height = wProps.height;
@@ -56,6 +59,7 @@ namespace Ivy {
 		glfwSwapInterval(1);
 
 		// Event Callbacks
+		IVY_CORE_INFO("WindowsWindow: Initializing: Setting WindowResizeEvent Callback");
 		glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
@@ -66,6 +70,7 @@ namespace Ivy {
 			data.callback(resizeEvent);
 		});
 
+		IVY_CORE_INFO("WindowsWindow: Initializing: Setting WindowCloseEvent Callback");
 		glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
@@ -73,6 +78,7 @@ namespace Ivy {
 			data.callback(closeEvent);
 		});
 
+		IVY_CORE_INFO("WindowsWindow: Initializing: Setting Key Callbacks");
 		glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
@@ -99,6 +105,7 @@ namespace Ivy {
 			}
 		});
 
+		IVY_CORE_INFO("WindowsWindow: Initializing: Setting Mouse Callback");
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);

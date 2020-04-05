@@ -18,25 +18,28 @@ namespace Ivy {
 			this->id = ++EventHandler::counter;
 		}
 		else {
-			throw new EventException("Assignment failed: invalid EventHandler function!");
+			IVY_CORE_WARN("EventHandler: Throwing EventException: Failed Assignment");
+			throw new EventException("EventHandler: Assignment failed: invalid EventHandler function!");
 		}
 	}
 
 	bool EventHandler::operator==(const EventHandler &del) {
 		return this->id == del.id;
 	}
+
 	bool EventHandler::operator!=(nullptr_t) {
 		return this->callback != nullptr;
 	}
 
 
 	void Event::notifyHandlers() {
+		IVY_CORE_TRACE("Event: Notifying Handlers.");
 		vector<unique_ptr<EventHandler>>::iterator func = this->handlers.begin();
 		for (; func != this->handlers.end(); ++func) {
 			if (*func != nullptr && (*func)->id != 0) {
 				Event* e = (*func)->getEvent();
 				(*(*func))(*e);
-				//IVY_CORE_TRACE("EventHandler.id: {0}", (*func)->id);
+				IVY_CORE_TRACE("Event: Calling EventHandler: handlerId={0}", (*func)->id);
 			}
 		}
 	}
@@ -49,7 +52,7 @@ namespace Ivy {
 		vector<unique_ptr<EventHandler>>::iterator to_remove = this->handlers.begin();
 		for (; to_remove != this->handlers.end(); ++to_remove) {
 			if (*(*to_remove) == handler) {
-				//IVY_CORE_TRACE("Removing: {0}",  (*to_remove)->id);
+				IVY_CORE_TRACE("Event: Removing Handler: handlerId={0}",  (*to_remove)->id);
 				this->handlers.erase(to_remove);
 				break;
 			}

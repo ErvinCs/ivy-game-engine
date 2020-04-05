@@ -12,6 +12,7 @@ namespace Ivy {
 	
 	void RenderSystem::init()
 	{
+		IVY_CORE_INFO("RenderSystem: Initializing System");
 		RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
 		RenderCommand::clear();
 	}

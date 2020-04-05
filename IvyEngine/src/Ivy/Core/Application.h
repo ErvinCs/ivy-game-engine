@@ -33,7 +33,6 @@ namespace Ivy {
 		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
 		//OrthoCamera camera;
-		//const char* entitiesRepoPath = "C:\\Workspace\\ivy-game-engine\\IvyApplication\\res\\entities.json";
 		
 	public:
 		float globalTime;

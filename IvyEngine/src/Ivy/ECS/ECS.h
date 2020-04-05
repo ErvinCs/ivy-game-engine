@@ -4,7 +4,6 @@
 #include <vector>
 #include <stdint.h>
 
-
 #include "EntityContainer.h"
 #include "Component.h"
 #include "ComponentContainer.h"
@@ -34,6 +33,7 @@ namespace Ivy {
 	public:
 		~ECS()
 		{
+			IVY_CORE_INFO("ECS: Clearing entities. Clearing components. Clearing systems.");
 			for (auto& it = entities.begin(); it != entities.end(); it++)
 			{
 				destroyEntity(*it);
@@ -50,15 +50,17 @@ namespace Ivy {
 		}
 
 		void loadEntities() {
+			IVY_CORE_INFO("ECS: Loading Entities from {0}", Paths::entitiesRepoPath.string());
 			if (std::filesystem::exists(Paths::entitiesRepoPath)) {
 				JSONManager::LoadEntities(Paths::entitiesRepoPath.string());
 			}
 			else {
-				IVY_CORE_WARN("Entity JSON repository not found! Path accessed: {0}", Paths::entitiesRepoPath);
+				IVY_CORE_WARN("ECS: Entity JSON repository not found! Path accessed: {0}", Paths::entitiesRepoPath.string());
 			}
 		}
 
 		void saveEntities() {
+			IVY_CORE_INFO("ECS: Saving Entities to {0}", Paths::entitiesRepoPath.string());
 			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());
 		}
 
@@ -70,6 +72,7 @@ namespace Ivy {
 		template<typename T>
 		void addComponentType()
 		{
+			IVY_CORE_INFO("ECS: Registering new Component: type={0}", typeid(T).name());
 			const char* typeName = typeid(T).name();
 
 			// Add a new component type
@@ -140,6 +143,7 @@ namespace Ivy {
 		// Systems
 		void addSystem(const std::shared_ptr<System>& system)
 		{
+			IVY_CORE_INFO("ECS: Registering System");
 			systems.push_back(std::move(system));
 		}
 
@@ -181,6 +185,7 @@ namespace Ivy {
 		}
 
 		void registerComponentTypes() {
+			IVY_CORE_INFO("ECS: Registering Ivy Component Types");
 			this->addComponentType<Transform>();		//TransformID       = 0
 			this->addComponentType<Renderable>();		//RenderableID      = 1
 			this->addComponentType<ScriptComponent>();	//ScriptComponentID = 2	

@@ -2,18 +2,20 @@
 
 #include <array>
 #include <cstdlib>
+#include <queue>
+
 #include "Entity.h"
+#include "../Core/Logger.h"
 
 class EntityContainer
 {
 private:
-	uint16_t EntityIdGenerator;
+	std::queue<Entity> freeEntities{};
 	std::array<Entity, 100> entities{};
 	size_t entitiesSize;
 public:
 	EntityContainer()
 	{
-		EntityIdGenerator = 0;
 		entitiesSize = 0;
 	}
 	~EntityContainer() = default;
@@ -28,6 +30,7 @@ public:
 
 	inline void destroyEntity(Entity& entity)
 	{
+		IVY_CORE_INFO("EntityContainer: Removing Entity {1}", entity);
 		// Efficient Way
 		/*for (int i = 0; i < this->entitiesSize; i++)
 		{
@@ -43,7 +46,9 @@ public:
 		// User-Friendly Way
 		for (int i = 0; i < this->entitiesSize; i++)
 		{
-			if (entities[i] == entity) {
+			if (entities[i] == entity) 
+			{
+				freeEntities.push(entities[i]);
 				for (int j = i; j < this->entitiesSize-1; j++)
 				{
 					entities[j] = entities[j + 1];
@@ -52,14 +57,24 @@ public:
 				break;
 			}
 		}
+		
 	}
 
 	inline Entity& createEntity()
 	{
-		Entity entity = EntityIdGenerator;
-		entities[entitiesSize] = entity;
+		Entity entity;
 		entitiesSize++;
-		EntityIdGenerator++;
+		if (freeEntities.empty())
+		{
+			entity = entitiesSize;
+		}
+		else
+		{
+			entity = entities.front();
+			freeEntities.pop();
+		}
+		entities[entitiesSize] = entity;
+		IVY_CORE_INFO("EntityContainer: Creating Entity {0}. Current number of entities is {1}.", entity, entitiesSize);
 		return entities.at(entitiesSize - 1);
 	}
 

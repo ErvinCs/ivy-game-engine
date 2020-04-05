@@ -23,7 +23,5 @@ namespace Ivy
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
-
-
 	};
 }

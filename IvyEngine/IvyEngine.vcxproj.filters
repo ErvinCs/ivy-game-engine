@@ -78,25 +78,16 @@
     <ClInclude Include="src\Ivy\Core\EntryPoint.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Core\HashTable.h">
-      <Filter>src\Ivy\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ivy\Core\InputHandler.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\Logger.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Core\Node.h">
-      <Filter>src\Ivy\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ivy\Core\SortingLayer.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\SortingLayerStack.h">
-      <Filter>src\Ivy\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Core\String.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\Timestep.h">
@@ -1359,9 +1350,6 @@
     <ClCompile Include="src\Ivy\Core\Application.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Core\HashTable.cpp">
-      <Filter>src\Ivy\Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Ivy\Core\Logger.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
@@ -1369,9 +1357,6 @@
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp">
-      <Filter>src\Ivy\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Core\String.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\ECS\JSONManager.cpp">

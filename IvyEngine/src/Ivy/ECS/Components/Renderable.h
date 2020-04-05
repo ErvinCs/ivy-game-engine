@@ -19,5 +19,8 @@ namespace Ivy
 			texture = Texture::Create(spritePath);
 			this->setComponentId(1);
 		}
+
+		inline void addReference() { /* do nothing */ }
+		inline void release() { /* do nothing */ }
 	};
 }

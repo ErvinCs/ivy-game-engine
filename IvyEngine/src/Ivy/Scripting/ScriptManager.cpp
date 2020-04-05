@@ -31,6 +31,7 @@ namespace Ivy {
 
 	int ScriptManager::init()
 	{
+		IVY_CORE_INFO("ScriptManager: Initializing ScriptManager Engine");
 		int r;
 
 		scriptEngine = asCreateScriptEngine();
@@ -221,13 +222,15 @@ namespace Ivy {
 		// Return the context to the pool so it can be reused
 		returnScriptContextToPool(context);
 
+		IVY_CORE_INFO("ScriptManager: Creating ScriptController: name={0}, entity={1}", gameObject->getName(), entity);
+
 		return object;
 	}
 
-	void ScriptManager::callOnUpdate(asIScriptObject* scriptObject)	//, Timestep* ts
+	void ScriptManager::callOnUpdate(asIScriptObject* scriptObject)
 	{
 		// Find the cached onThink method id
-		SController *controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());	//scriptObject was nullptr
+		SController *controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());
 
 		// Call the method using the shared context
 		if (controller->onUpdateMethod != 0)
@@ -245,15 +248,19 @@ namespace Ivy {
 	{
 		const char *type = "ERR ";
 		if (message.type == asMSGTYPE_WARNING)
+		{
 			type = "WARN";
+			IVY_CORE_WARN("ScriptManager: Message={4}, Section={0}, Position=({1},{2}), Type={3}", message.section, message.row, message.col, message.type, message.message);
+		}
 		else if (message.type == asMSGTYPE_INFORMATION)
+		{
 			type = "INFO";
-
-		IVY_CORE_INFO("Message={4}, Section={0}, Position=({1},{2}), Type={3}", message.section, message.row, message.col, message.type, message.message);
+			IVY_CORE_INFO("ScriptManager: Message={4}, Section={0}, Position=({1},{2}), Type={3}", message.section, message.row, message.col, message.type, message.message);
+		}
 
 		if (message.type == asMSGTYPE_ERROR)
 			hasCompileErrors = true;
-		IVY_CORE_INFO("HasCompileErrors={0}", hasCompileErrors);
+		IVY_CORE_INFO("ScriptManager: HasCompileErrors={0}", hasCompileErrors);
 	}
 
 	asIScriptContext* ScriptManager::getScriptContextFromPool(asIScriptFunction* function)
@@ -289,7 +296,7 @@ namespace Ivy {
 		{
 			if (success == asEXECUTION_EXCEPTION)
 			{
-				IVY_CORE_ERROR("Exception: {0} \n Function: {1} \n Line: {2}",
+				IVY_CORE_ERROR("ScriptManager: CallScript: Exception: {0} \n Function: {1} \n Line: {2}",
 					context->GetExceptionString(),
 					context->GetExceptionFunction()->GetDeclaration(),
 					context->GetExceptionLineNumber());
@@ -301,6 +308,7 @@ namespace Ivy {
 
 	ScriptManager::SController* ScriptManager::getScriptController(const std::string& script)
 	{
+		IVY_CORE_TRACE("ScriptManager: GetScriptController: name={0}", script);
 		int asReturnValue;
 
 		// Find the cached controller
@@ -371,7 +379,7 @@ namespace Ivy {
 
 		if (controller->controllerType == 0)
 		{
-			IVY_CORE_ERROR("Couldn't find the controller class for the type '{0}'", script);
+			IVY_CORE_ERROR("ScriptManager: Couldn't find the controller class for the type '{0}'", script);
 			controllerList.pop_back();
 			delete controller;
 			return 0;
@@ -383,7 +391,7 @@ namespace Ivy {
 		controller->createFunction = type->GetFactoryByDecl(s.c_str());
 		if (controller->createFunction == 0)
 		{
-			IVY_CORE_ERROR("Couldn't find the appropriate factory for the type '{0}'", script);
+			IVY_CORE_ERROR("ScriptManager: Couldn't find the appropriate factory for the type '{0}'", script);
 			controllerList.pop_back();
 			delete controller;
 			return 0;
@@ -401,6 +409,7 @@ namespace Ivy {
 
 	void ScriptManager::callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, ScriptableObject* caller)
 	{
+		IVY_CORE_TRACE("ScriptManager: CallOnMessage");
 		// Find the cached onMessage method id
 		SController* controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());
 

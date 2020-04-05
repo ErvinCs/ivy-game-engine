@@ -26,7 +26,7 @@ namespace Ivy {
 
 	ScriptableObject::ScriptableObject(const std::string& name)
 	{
-		this->name = name; //(Paths::scriptsPath / name).string();
+		this->name = name;
 		this->referenceCount = 1;
 		this->scriptObject = 0;
 		this->weakReferenceFlag = 0;
@@ -34,6 +34,7 @@ namespace Ivy {
 
 	ScriptableObject::~ScriptableObject()
 	{
+		//IVY_CORE_INFO("ScriptableObject: Destroying ScriptableObject: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
 		// Notify objects that hold weak references to this object that it has been destroyed
 		if (weakReferenceFlag)
 		{
@@ -49,11 +50,13 @@ namespace Ivy {
 
 	int ScriptableObject::addReference()
 	{
+		IVY_CORE_INFO("ScriptableObject: Adding reference: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
 		return ++referenceCount;
 	}
 
 	int ScriptableObject::release()
 	{
+		IVY_CORE_INFO("ScriptableObject: Releasing: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
 		if (--referenceCount <= 0)
 		{
 			delete this;
@@ -72,6 +75,7 @@ namespace Ivy {
 
 	void ScriptableObject::destoryAndRelease()
 	{
+		IVY_CORE_INFO("ScriptableObject: Destroy and Release: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
 		// Release all referrences that this object holds
 		if (scriptObject)
 		{
@@ -92,7 +96,8 @@ namespace Ivy {
 
 	void ScriptableObject::sendMessage(CScriptHandle message, ScriptableObject* target)
 	{
-		if (target && target->scriptObject)
+		if (target && target->scriptObject) {
 			ScriptManager::GetInstance().callOnMessage(target->scriptObject, message, this);
+		}
 	}
 }

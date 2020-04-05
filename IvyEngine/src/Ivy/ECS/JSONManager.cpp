@@ -12,7 +12,7 @@ using Json = nlohmann::json;
 namespace Ivy {
 
 	void JSONManager::SaveEntities(const std::string& path) {
-		IVY_INFO("Saving entities to location: {0}", path);
+		IVY_INFO("JSONManager: Saving entities to location: {0}", path);
 
 		Json jsonNull;
 		Json finalObject;
@@ -75,7 +75,7 @@ namespace Ivy {
 	}
 
 	void JSONManager::LoadEntities(const std::string& path) {
-		IVY_INFO("Loading entities from location: {0}", path);
+		IVY_INFO("JSONManager: Loading entities from location: {0}", path);
 
 		std::ifstream reader(path);
 		Json json;
@@ -114,6 +114,7 @@ namespace Ivy {
 				std::string scriptPath;
 				current["components"]["script"].get_to(scriptPath);
 				ScriptComponent script{ scriptPath };
+				script.setEntityId(entity);
 				ECS::getInstance().addComponent<ScriptComponent>(entity, script);
 			}
 

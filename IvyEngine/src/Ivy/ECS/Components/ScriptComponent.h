@@ -16,14 +16,11 @@ namespace Ivy
 		ScriptComponent(std::string scriptName)
 		{
 			this->scriptName = scriptName;
-			//this->scriptableObject = new ScriptableObject(scriptName);
 			this->scriptableObject.setName(scriptName);
 			this->setComponentId(2);
 		}
-		
-		//~ScriptComponent() {
-		//	scriptableObject.destoryAndRelease();
-		//	scriptableObject->release();
-		//}
+
+		inline void addReference() { /* do nothing */ }
+		inline void release() { /* do nothing */ }
 	};
 }

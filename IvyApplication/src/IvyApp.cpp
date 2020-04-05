@@ -3,37 +3,9 @@
 #include "imgui/imgui.h"
 #include "imgui/misc/cpp/imgui_stdlib.h"
 
-
-//TODO - FIX ALL STRINGS
-
-/* TODOs
- - Move all assets (except shaders) to engine side and fix paths accordingly
- - Asset Import
-	- When creating a new Renderable or Script the user must specify full path to asset
-	- Use <filesystem> to copy that file into res and store a reference to that copy
-	- After adding the file imGui will display its path relative to res/
- - Collision System ( + Events )
- - PCG Module
-
- - Remove Explicit camera creation from IvyApp - Move it to engine side and allow acces to it
- - Create a new layer for PCG Menu
- - Place entities on Rendering Sorting Layers
- - Remove Explicit system init from IvyApp - Move it to engine side
- - Centralize Component IDs
-
- - Prompt before terminating application & Auto-save state on shutdown
- - Enable AngelScript Leak Checking ( in EntryPoint )
- - Move AngelScript bind calls to separate files
- - Clean & Refactor Renderer
- - Fix JSONManager & Renderer issues
-*/
-
 class TestLayer : public Ivy::SortingLayer
 {
 private:
-	// These can probably be moved into the Menu Layer or in ECS
-	//ECS getECS = &Ivy::ECS::getInstance;
-
 	//Systems
 	std::shared_ptr<Ivy::System> renderSystem = std::make_shared<Ivy::RenderSystem>(Ivy::ECS::getInstance().getEntities());
 	std::shared_ptr<Ivy::System> scriptSystem = std::make_shared<Ivy::ScriptSystem>(Ivy::ECS::getInstance().getEntities());

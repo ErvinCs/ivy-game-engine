@@ -17,6 +17,9 @@ namespace Ivy {
 			this->tag = newTag;
 			this->setComponentId(3);
 		}
+
+		inline void addReference() { /* do nothing */ }
+		inline void release() { /* do nothing */ }
 	};
 
 }
