@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\IvyApp.cpp" />
+    <ClCompile Include="src\UserComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IvyEngine\IvyEngine.vcxproj">

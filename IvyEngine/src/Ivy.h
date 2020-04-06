@@ -1,10 +1,5 @@
 #pragma once
 
-
-
-//-------------------- EntryPoint --------------------
-#include "Ivy/Core/EntryPoint.h"
-
 //-------------------- Core --------------------
 #include "Ivy/Core/Application.h"
 #include "Ivy/Core/Logger.h"
@@ -40,6 +35,7 @@
 #include "Ivy/ECS/Components/Renderable.h"
 #include "Ivy/ECS/Components/ScriptComponent.h"
 #include "Ivy/ECS/Components/Tag.h"
+
 
 //-------------------- Scripting --------------------
 #include "Ivy/Scripting/ScriptableObject.h"

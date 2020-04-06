@@ -6,6 +6,7 @@
 
 namespace Ivy
 {
+
 	struct ScriptComponent : public Component
 	{
 	public:
@@ -13,12 +14,8 @@ namespace Ivy
 		ScriptableObject scriptableObject;
 
 		ScriptComponent() : Component() {}
-		ScriptComponent(std::string scriptName)
-		{
-			this->scriptName = scriptName;
-			this->scriptableObject.setName(scriptName);
-			this->setComponentId(2);
-		}
+		ScriptComponent(std::string scriptName);
+		
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }

@@ -11,16 +11,10 @@ namespace Ivy
 		glm::vec2 position;
 		float rotation;
 		glm::vec2 scale;
+
 		Transform() : Component() {}
-
-		Transform(glm::vec2 position, float rotation, glm::vec2 scale)
-		{
-			this->position = position;
-			this->rotation = rotation;
-			this->scale = scale;
-			this->setComponentId(0);
-		}
-
+		Transform(glm::vec2 position, float rotation, glm::vec2 scale);
+		
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
 	};

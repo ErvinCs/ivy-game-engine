@@ -18,6 +18,8 @@ namespace Ivy {
 
 	Application* Application::instance = nullptr;
 
+
+
 	Application::Application()
 	{
 		//camera = OrthoCamera(-12.8f, 12.8f, -6.4f, 6.4f);

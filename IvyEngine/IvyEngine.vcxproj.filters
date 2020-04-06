@@ -1463,5 +1463,9 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Components\Renderable.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\ScriptComponent.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\Tag.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\Transform.cpp" />
   </ItemGroup>
 </Project>

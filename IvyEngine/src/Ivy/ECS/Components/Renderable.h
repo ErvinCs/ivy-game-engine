@@ -6,6 +6,7 @@
 
 namespace Ivy
 {
+
 	struct Renderable : public Component
 	{
 	public:
@@ -13,12 +14,8 @@ namespace Ivy
 		std::shared_ptr<Ivy::Texture> texture;
 
 		Renderable() : Component() {}
-		Renderable(std::string spritePath)
-		{
-			this->spritePath = spritePath;
-			texture = Texture::Create(spritePath);
-			this->setComponentId(1);
-		}
+		Renderable(std::string spritePath);
+		
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }

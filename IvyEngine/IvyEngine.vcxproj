@@ -576,6 +576,10 @@
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\Renderable.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\ScriptComponent.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\Tag.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\Transform.cpp" />
     <ClCompile Include="src\Ivy\ECS\JSONManager.cpp" />
     <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\ScriptSystem.cpp" />

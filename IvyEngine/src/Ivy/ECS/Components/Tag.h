@@ -4,7 +4,8 @@
 
 #include "../Component.h"
 
-namespace Ivy {
+namespace Ivy 
+{
 
 	class Tag : public Component
 	{
@@ -12,11 +13,8 @@ namespace Ivy {
 		std::string tag = "";
 
 		Tag() : Component() {}
-		Tag(std::string newTag)
-		{
-			this->tag = newTag;
-			this->setComponentId(3);
-		}
+		Tag(std::string newTag);
+		
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
