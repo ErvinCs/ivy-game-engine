@@ -7,6 +7,7 @@
 #include <math.h>
 #include <utility>
 #include <functional>
+#include <filesystem>
 
 // Data structures
 #include <cwchar>

@@ -2,7 +2,7 @@
 
 #include "SortingLayer.h"
 #include "../Exceptions/LayerException.h"
-
+#include "Logger.h"
 #include <vector>
 
 namespace Ivy {

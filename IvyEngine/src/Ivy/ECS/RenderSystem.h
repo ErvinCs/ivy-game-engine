@@ -3,16 +3,13 @@
 #include "System.h"
 #include "../Renderer/OrthoCamera.h"
 
-#include <iostream>
-#include <set>
-
 namespace Ivy {
 
 	class RenderSystem : public System
 	{
 	public:
 		RenderSystem() = default;
-		RenderSystem(const std::vector<Entity>& entities)
+		RenderSystem(EntityContainer& entities)
 		{
 			this->setEntities(entities);
 		}

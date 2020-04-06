@@ -3,8 +3,8 @@
 #include <array>
 #include "Entity.h"
 #include "../Exceptions/ComponentNotFoundException.h"
+#include "../Core/Logger.h"
 
-//TODO - Replace array with a more suitable data struct - hash_map 
 namespace Ivy {
 
 	class BaseComponentContainer
@@ -18,12 +18,13 @@ namespace Ivy {
 	class ComponentContainer : public BaseComponentContainer
 	{
 	private:
-		std::array<T, 1000> componentArray{};
+		std::array<T, 100> componentArray{};
 		int size;
 	public:
 		ComponentContainer()
 		{
 			this->size = 0;
+			IVY_CORE_INFO("ComponentContainer: Constructing ComponentContainer: type={0}", typeid(T).name());
 		}
 		
 		std::array<T, 100>& getComponentArray()
@@ -36,28 +37,27 @@ namespace Ivy {
 			return this->size;
 		}
 
-		void addComponent(Entity& entity, T& component) 
+		void addComponent(Entity& entity, T component) 
 		{
-			//component.setEntityId(entity.getEntityId());
+			IVY_CORE_INFO("ComponentContainer: Adding Component {0} to Entity {1}", typeid(T).name(), entity);
 			component.setEntityId(entity);
 			componentArray[size] = component;
 			size++;
+
 		}
 
 		void removeComponent(Entity& entity)
 		{
-
+			IVY_CORE_INFO("ComponentContainer: Removing Component {0} from Entity {1}", typeid(T).name(), entity);
 			for (int i = 0; i < size; i++)
 			{
 				if (componentArray[i].getEntityId() == entity)
-				//if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
-					//componentArray[i].setEntityId(-1);
-
 					T tempComponent = componentArray[i];
 					componentArray[i] = componentArray[size - 1];
 					componentArray[size - 1] = tempComponent;
 					size--;
+					break;
 				}
 			}
 		}
@@ -67,16 +67,18 @@ namespace Ivy {
 			for (int i = 0; i < size; i++)
 			{
 				if(componentArray[i].getEntityId() == entity)
-				//if (componentArray[i].getEntityId() == entity.getEntityId())
 				{
+					//IVY_CORE_INFO("ComponentContainer: Accessing Component {0} of Entity {1}", typeid(T).name(), entity);
 					return componentArray[i];
 				}
 			}
-			throw new ComponentNotFoundException("Could not find a component of the given type!");
+			//IVY_CORE_WARN("ComponentContainer: Entity {1} does not have a Component of type {0}. Returning default component.", typeid(T).name(), entity);
+			return T();
 		}
 
 		void onEntityDestroyed(Entity& entity) override
 		{
+			IVY_CORE_INFO("ComponentContainer: Trigerring onEntityDestroyed: entity={0}", entity);
 			removeComponent(entity);
 		}
 	};

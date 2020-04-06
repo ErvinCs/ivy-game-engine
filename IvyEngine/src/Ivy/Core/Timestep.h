@@ -12,26 +12,108 @@ namespace Ivy {
 		{
 			this->time = time;
 		}
+		~Timestep() = default;
+		
+		float operator*(const float& seconds) {
+			this->time *= seconds;
+			return time;
+		}
 
-		float operator+(const float seconds)
+		Timestep operator*(const Timestep& ts) {
+			time *= ts.time;
+			return *this;
+		}
+
+		float operator/(const float& seconds) {
+			this->time /= seconds;
+			return time;
+		}
+
+		Timestep operator/(const Timestep& ts) {
+			time /= ts.time;
+			return *this;
+		}
+
+		float operator+(const float& seconds)
 		{
 			this->time += seconds;
+			return time;
 		}
 
-		float operator+=(const float seconds)
+		Timestep operator+(const Timestep& ts) {
+			time += ts.time;
+			return *this;
+		}
+
+		float operator-(const float& seconds)
+		{
+			this->time -= seconds;
+			return time;
+		}
+
+
+		Timestep operator-(const Timestep& ts) {
+			time -= ts.time;
+			return *this;
+		}
+
+		// ---------------------------------------------------------
+
+		float& operator+=(const float& seconds)
 		{
 			this->time += seconds;
+			return time;
 		}
 
-		float operator-(const float seconds)
+		Timestep& operator+=(const Timestep& ts) 
 		{
-			this->time -= seconds;
+			time += ts.time;
+			return *this;
 		}
 
-		float operator-=(const float seconds)
+		float& operator-=(const float& seconds) 
 		{
 			this->time -= seconds;
+			return time;
 		}
+
+		Timestep& operator-=(const Timestep& ts) 
+		{
+			time -= ts.time;
+			return *this;
+		}
+
+		float& operator*=(const float& seconds) {
+			this->time *= seconds;
+			return time;
+		}
+
+		Timestep& operator*=(const Timestep& ts) {
+			time *= ts.time;
+			return *this;
+		}
+
+		float& operator/=(const float& seconds) {
+			this->time /= seconds;
+			return time;
+		}
+
+		Timestep& operator/=(const Timestep& ts) {
+			time /= ts.time;
+			return *this;
+		}
+
+		// ---------------------------------------------------------
+
+		bool operator==(const Timestep& other) const {
+			return other.time == this->time;
+		}
+
+		bool operator!=(const Timestep& other) const {
+			return other.time != this->time;
+		}
+
+
 
 		/*
 		 * Allow time to be cast to a float value
@@ -47,6 +129,9 @@ namespace Ivy {
 		float getMilliseconds() const {
 			return time * 1000.0f;
 		}
+
+		inline void addReference() { /* do nothing */ }
+		inline void release() { /* do nothing */ }
 
 	};
 

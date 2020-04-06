@@ -22,16 +22,18 @@ namespace Ivy {
 		if (searched != layers.end())
 		{
 			layers.erase(searched);
+			IVY_CORE_INFO("SortingLayerStack: Popping Layer");
 		}
 		else
 		{
-			throw new LayerException("Sorting layer to delete was not found!");
+			throw new LayerException("Attempted to pop Layer, but Layer was not found!");
 		}
 	}
 
 	void SortingLayerStack::push(SortingLayer* layer)
 	{
 		this->layers.push_back(layer);
+		IVY_CORE_INFO("SortingLayerStack: Pushing Layer");
 	}
 
 }

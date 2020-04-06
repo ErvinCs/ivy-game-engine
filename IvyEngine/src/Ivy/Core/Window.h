@@ -2,6 +2,7 @@
 
 #include <string>
 #include "../Events/Event.h"
+
 namespace Ivy {
 
 	struct WindowProperties
@@ -30,10 +31,10 @@ namespace Ivy {
 		virtual unsigned int getHeight() const = 0;
 		virtual unsigned int getWidth() const = 0;
 
-		// Get the window - implemented per platform
+		// Get the window - Implemented per platform
 		virtual void* getNativeWindow() const = 0;
 
-		// Window factory method - implemented per platform
+		// Window factory method - Implemented per platform
 		static std::unique_ptr<Window> Create(const WindowProperties& properties = WindowProperties());
 	};
 

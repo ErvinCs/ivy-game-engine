@@ -2,6 +2,7 @@
 
 #include "../Events/Event.h"
 #include "Timestep.h"
+#include "Logger.h"
 
 #include <string>
 
@@ -12,14 +13,13 @@ namespace Ivy {
 	public:
 		SortingLayer(const std::string& name = "Layer");
 		SortingLayer(const std::string& name, const unsigned int& rank);
-		~SortingLayer() = default;
+		~SortingLayer();
 
 		virtual void attach() {}
 		virtual void detach() {}
 		virtual void update(Timestep ts) {}
 		virtual void onEvent(Event& event) {}
 		virtual void imGuiRender() {}
-
 	private:
 		std::string layerName;
 		unsigned int layerRank;

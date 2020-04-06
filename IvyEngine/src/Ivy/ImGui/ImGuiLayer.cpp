@@ -54,8 +54,8 @@ namespace Ivy {
 
 	void ImGuiLayer::imGuiRender() 
 	{
-		//static bool show = false;
-		//ImGui::ShowDemoWindow(&show);
+		static bool showDemo = true;
+		ImGui::ShowDemoWindow(&showDemo);
 	}
 
 	void ImGuiLayer::attach()  

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Core.h"
 #include "SortingLayerStack.h"
 #include "../Windows/WindowsWindow.h"
@@ -11,14 +10,16 @@
 #include "../Events/WindowEvent.h"
 #include "../Events/MouseEvent.h"
 
-#include "../Managers/FileManager.h"
-#include "../Managers/MemoryManager.h"
-#include "../Managers/InputManager.h"
-#include "../Managers/RendererManager.h"
-
 #include "../ImGui/ImGuiLayer.h"
+#include "../ImGui/InspectorLayer.h"
+#include "../Scripting/ScriptManager.h"
+
+//#include "../Renderer/OrthoCamera.h"
+//#include "../ECS/JSONManager.h"
 
 namespace Ivy {
+
+	
 
 	class Application 
 	{
@@ -28,9 +29,14 @@ namespace Ivy {
 		std::unique_ptr<Window> window;
 		bool isRunning = true;
 		ImGuiLayer* imGuiLayer;
+		InspectorLayer* inspectorLayer;
 		float lastFrameTime = 0.0f;
-
+		ScriptManager* scriptManager;
+		//OrthoCamera camera;
+		
 	public:
+		float globalTime;
+
 		inline static Application& getInstance()
 		{
 			return *instance;
@@ -48,6 +54,10 @@ namespace Ivy {
 
 		inline Window& getWindow() { return *window; }
 		inline static Application& GetApplication() { return *instance; }
+		
+		//inline OrthoCamera& getCamera() {
+		//	return this->camera;
+		//}
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 

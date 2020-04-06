@@ -13,6 +13,9 @@
     <Filter Include="src\Ivy\ECS">
       <UniqueIdentifier>{FE333E1C-6AE9-B611-F3DD-B0E85F92AD15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\ECS\Components">
+      <UniqueIdentifier>{53DEBBA3-3FD8-E4F5-2845-7B0614DE4A62}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Ivy\Events">
       <UniqueIdentifier>{183FA7BB-040D-9BC1-EDA0-0BE8D90D7726}</UniqueIdentifier>
     </Filter>
@@ -22,14 +25,14 @@
     <Filter Include="src\Ivy\ImGui">
       <UniqueIdentifier>{DE71FA24-4A32-765B-136D-BFD87FECBA37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Ivy\Managers">
-      <UniqueIdentifier>{11F20668-FDEA-25BA-261D-0B3F127505C6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Ivy\Renderer">
       <UniqueIdentifier>{DA736E39-C66C-8D8B-EF9E-7210DBF66C97}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Ivy\Renderer\OpenGL">
       <UniqueIdentifier>{CE03BB36-3A3B-03CE-4345-67F1AFFB29C7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Ivy\Scripting">
+      <UniqueIdentifier>{B6AB9043-22C2-8ED9-6B39-1AFBD78E5F61}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Ivy\Windows">
       <UniqueIdentifier>{EEA3717C-5A2F-DF40-6340-6235CF4A3B41}</UniqueIdentifier>
@@ -55,6 +58,9 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\json_nlohmann">
+      <UniqueIdentifier>{16E741BF-0276-CB88-AB94-DF839702DC2E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor\stb_image">
       <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
@@ -72,25 +78,19 @@
     <ClInclude Include="src\Ivy\Core\EntryPoint.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Core\HashTable.h">
-      <Filter>src\Ivy\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ivy\Core\InputHandler.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\Logger.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Core\Node.h">
+    <ClInclude Include="src\Ivy\Core\ResourcePaths.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\SortingLayer.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\SortingLayerStack.h">
-      <Filter>src\Ivy\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Core\String.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Core\Timestep.h">
@@ -105,10 +105,34 @@
     <ClInclude Include="src\Ivy\ECS\ComponentContainer.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\ScriptComponent.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\Tag.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\Transform.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\ECS\ECS.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Entity.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\EntityContainer.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\JSONManager.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\RenderSystem.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\ScriptSystem.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\System.h">
@@ -126,6 +150,9 @@
     <ClInclude Include="src\Ivy\Events\WindowEvent.h">
       <Filter>src\Ivy\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h">
+      <Filter>src\Ivy\Exceptions</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\Exceptions\EventException.h">
       <Filter>src\Ivy\Exceptions</Filter>
     </ClInclude>
@@ -135,20 +162,11 @@
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h">
       <Filter>src\Ivy\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\FileManager.h">
-      <Filter>src\Ivy\Managers</Filter>
+    <ClInclude Include="src\Ivy\ImGui\InspectorLayer.h">
+      <Filter>src\Ivy\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\InputManager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\Manager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\MemoryManager.h">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\Managers\RendererManager.h">
-      <Filter>src\Ivy\Managers</Filter>
+    <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h">
+      <Filter>src\Ivy\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\Context.h">
       <Filter>src\Ivy\Renderer</Filter>
@@ -203,6 +221,18 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h">
       <Filter>src\Ivy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\ASRegistrationCalls.h">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\MethodWrappers.h">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\ScriptManager.h">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\ScriptableObject.h">
+      <Filter>src\Ivy\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Windows\GLFWKeyCodes.h">
       <Filter>src\Ivy\Windows</Filter>
@@ -1320,20 +1350,15 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\json_nlohmann\json.hpp">
+      <Filter>vendor\json_nlohmann</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
-    <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
-    <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
-    <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
-    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
-      <Filter>src\Ivy\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Core\HashTable.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Core\Logger.cpp">
@@ -1345,8 +1370,14 @@
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Core\String.cpp">
-      <Filter>src\Ivy\Core</Filter>
+    <ClCompile Include="src\Ivy\ECS\JSONManager.cpp">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\ScriptSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Events\Event.cpp">
       <Filter>src\Ivy\Events</Filter>
@@ -1357,17 +1388,14 @@
     <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp">
       <Filter>src\Ivy\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\FileManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
+    <ClCompile Include="src\Ivy\ImGui\InspectorLayer.cpp">
+      <Filter>src\Ivy\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\InputManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
+    <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\MemoryManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\Managers\RendererManager.cpp">
-      <Filter>src\Ivy\Managers</Filter>
+    <ClCompile Include="src\Ivy\Renderer\Context.cpp">
+      <Filter>src\Ivy\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp">
       <Filter>src\Ivy\Renderer</Filter>
@@ -1417,6 +1445,12 @@
     <ClCompile Include="src\Ivy\Renderer\VertexBuffer.cpp">
       <Filter>src\Ivy\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\Scripting\ScriptManager.cpp">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\Scripting\ScriptableObject.cpp">
+      <Filter>src\Ivy\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ivy\Windows\WindowsInputHandler.cpp">
       <Filter>src\Ivy\Windows</Filter>
     </ClCompile>
@@ -1429,12 +1463,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
-    <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
-    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res_temp\shaders\color.shader" />
-    <None Include="res_temp\shaders\image.shader" />
   </ItemGroup>
 </Project>

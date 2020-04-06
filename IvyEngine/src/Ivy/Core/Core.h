@@ -20,7 +20,3 @@
 	#define IVY_ASSERT(x, ...)
 	#define IVY_CORE_ASSERT(x, ...)
 #endif
-
-// ECS
-//typedef uint16_t EntityID;
-//typedef uint16_t ComponentID;

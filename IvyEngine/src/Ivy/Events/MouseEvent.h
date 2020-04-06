@@ -13,7 +13,7 @@ namespace Ivy {
 		MouseMoveEvent(float x, float y)
 			: x(x), y(y) 
 		{
-			IVY_CORE_INFO("Created: MouseEvent/MouseMoveEvent: x={0},y={1}", x, y);
+			//IVY_CORE_TRACE("MouseMoveEvent: Created: MouseEvent/MouseMoveEvent: x={0},y={1}", x, y);
 		}
 
 		inline float getX() const { return x; }
@@ -24,9 +24,6 @@ namespace Ivy {
 			std::stringstream ss;
 			ss << "MouseMoveEvent: x=" << x << ",y=" << y;
 			return ss.str();
-
-			//int X = x, Y = y;
-			//String str = String("MouseMoveEvent: " + X) + String("," + Y);
 		}
 	};
 
@@ -38,7 +35,7 @@ namespace Ivy {
 		MouseScrollEvent(float x, float y)
 			: x(x), y(y) 
 		{
-			IVY_CORE_INFO("Created: MouseEvent/MouseScrollEvent: x={0},y={1}", x, y);
+			//IVY_CORE_TRACE("MouseScrollEvent: Created: MouseEvent/MouseScrollEvent: x={0},y={1}", x, y);
 		}
 
 		inline float getXOffset() const { return x; }
@@ -49,9 +46,6 @@ namespace Ivy {
 			std::stringstream ss;
 			ss << "MouseScrollEvent: x=" << x << ",y=" << y;
 			return ss.str();
-
-			//int X = x, Y = y;
-			//String str = String("MouseScrollEvent: " + X) + String("," + Y);
 		}
 
 	};
@@ -65,7 +59,7 @@ namespace Ivy {
 		MouseButtonEvent(int button)
 			: button(button) 
 		{
-			IVY_CORE_INFO("Created: MouseEvent/MouseButtonEvent: button={0}", button);
+			//IVY_CORE_TRACE("MouseButtonEvent: Created: MouseEvent/MouseButtonEvent: button={0}", button);
 		}
 
 		int button;
@@ -77,12 +71,11 @@ namespace Ivy {
 		MouseButtonDownEvent(int button)
 			: MouseButtonEvent(button) 
 		{
-			IVY_CORE_INFO("Created: MouseEvent/MouseButtonDownEvent: button={0}", button);
+			//IVY_CORE_TRACE("MouseButtonDownEvent: Created: MouseEvent/MouseButtonDownEvent: button={0}", button);
 		}
 
 		std::string toString() const override
 		{
-			//String str = String("MouseButtonDownEvent: " + button);
 			std::stringstream ss;
 			ss << "MouseButtonDownEvent: button=" << button;
 			return ss.str();
@@ -95,12 +88,11 @@ namespace Ivy {
 		MouseButtonUpEvent(int button)
 			: MouseButtonEvent(button) 
 		{
-			IVY_CORE_INFO("Created: MouseEvent/MouseButtonUpEvent: button={0}", button);
+			//IVY_CORE_TRACE("MouseButtonUpEvent: Created: MouseEvent/MouseButtonUpEvent: button={0}", button);
 		}
 
 		std::string toString() const override
 		{
-			//String str = String("MouseButtonUpEvent: " + button);
 			std::stringstream ss;
 			ss << "MouseButtonUpEvent: button=" << button;
 			return ss.str();

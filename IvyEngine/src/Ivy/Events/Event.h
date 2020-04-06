@@ -1,11 +1,12 @@
 #pragma once
 
-#include "../Core/String.h"
-#include "../Core/Logger.h"
-#include "../Exceptions/EventException.h"
 #include <memory>
 #include <vector>
 #include <functional>
+#include <sstream>
+
+#include "../Core/Logger.h"
+#include "../Exceptions/EventException.h"
 
 namespace Ivy {
 	
@@ -28,7 +29,7 @@ namespace Ivy {
 
 		EventHandler(const Func &func) : callback{ func } {
 			this->id = ++EventHandler::counter;
-			IVY_CORE_TRACE("EventHandlerCounter (id) = {0}", EventHandler::counter);	
+			//IVY_CORE_TRACE("EventHandlerCounter (id) = {0}", EventHandler::counter);	
 		}
 
 		Event* getEvent() {
