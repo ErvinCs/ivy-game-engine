@@ -135,6 +135,16 @@ namespace Ivy {
 			return entities.createEntity();
 		}
 
+		void addToFreeEntities(Entity entity)
+		{
+			entities.addToFreeEntities(entity);
+		}
+
+		void addToEntities(uint16_t entity)
+		{
+			entities.addToEntities(entity);
+		}
+
 		EntityContainer& getEntities()
 		{
 			return this->entities;

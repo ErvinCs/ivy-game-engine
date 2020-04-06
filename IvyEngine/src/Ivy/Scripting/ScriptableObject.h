@@ -38,7 +38,7 @@ namespace Ivy {
 		Entity getOwner();
 
 		inline const std::string& getName() { return this->name; }
-		inline const void setName(const std::string& name) { this->name = (Paths::scriptsPath / name).string(); IVY_CORE_WARN("name={0}", this->name); }
+		inline const void setName(const std::string& name) { this->name = (Paths::scriptsPath / name).string(); }
 		inline const void setFullPath(const std::string& fullPath) { this->name = fullPath; }
 		inline asIScriptObject* getScriptObject() { return this->scriptObject; }
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }

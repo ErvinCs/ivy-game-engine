@@ -84,6 +84,9 @@
     <ClInclude Include="src\Ivy\Core\Logger.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\Core\ResourcePaths.h">
+      <Filter>src\Ivy\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\Core\SortingLayer.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
@@ -108,6 +111,9 @@
     <ClInclude Include="src\Ivy\ECS\Components\ScriptComponent.h">
       <Filter>src\Ivy\ECS\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\Tag.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Components\Transform.h">
       <Filter>src\Ivy\ECS\Components</Filter>
     </ClInclude>
@@ -115,6 +121,9 @@
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Entity.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\EntityContainer.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\JSONManager.h">
@@ -151,6 +160,9 @@
       <Filter>src\Ivy\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h">
+      <Filter>src\Ivy\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ImGui\InspectorLayer.h">
       <Filter>src\Ivy\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h">
@@ -209,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h">
       <Filter>src\Ivy\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\Scripting\ASRegistrationCalls.h">
+      <Filter>src\Ivy\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Scripting\MethodWrappers.h">
       <Filter>src\Ivy\Scripting</Filter>
@@ -1341,10 +1356,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\Components\Tag.h" />
-    <ClInclude Include="src\Ivy\ECS\EntityContainer.h" />
-    <ClInclude Include="src\Ivy\Core\ResourcePaths.h" />
-    <ClInclude Include="src\Ivy\ImGui\InspectorLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1375,6 +1386,9 @@
       <Filter>src\Ivy\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp">
+      <Filter>src\Ivy\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ImGui\InspectorLayer.cpp">
       <Filter>src\Ivy\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp">
@@ -1449,12 +1463,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\ImGui\InspectorLayer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\textures\blank.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\shaders\base.glsl" />
   </ItemGroup>
 </Project>

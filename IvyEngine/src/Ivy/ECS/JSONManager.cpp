@@ -4,6 +4,7 @@
 #include <json.hpp>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 #include "ECS.h"
 #include "../Core/Logger.h"
@@ -20,10 +21,11 @@ namespace Ivy {
 		std::ofstream writer(path);
 
 		EntityContainer container = ECS::getInstance().getEntities();
+		std::vector<Entity> freeContainer = ECS::getInstance().getEntities().getFreeEntities();
 		uint16_t entryCounter = 0;
 		for (Entity& entity : container)
 		{
-			IVY_INFO("Writing Entity={0}", entity);
+			IVY_CORE_INFO("JSONManager: Writing Entity={0}", entity);
 
 			Json jsonObject;
 			jsonObject["entity_id"] = entity;
@@ -69,13 +71,21 @@ namespace Ivy {
 			finalObject[entryCounter] = jsonObject;
 			entryCounter++;
 		}
-		writer << std::setw(2) << finalObject << std::endl;
 
+		Json jsonFree;
+		if (freeContainer.empty())
+			jsonFree["free"] = jsonNull;
+		else {
+			jsonFree["free"] = freeContainer;
+		}
+		finalObject[entryCounter] = jsonFree;
+
+		writer << std::setw(2) << finalObject << std::endl;
 		writer.close();
 	}
 
 	void JSONManager::LoadEntities(const std::string& path) {
-		IVY_INFO("JSONManager: Loading entities from location: {0}", path);
+		IVY_CORE_INFO("JSONManager: Loading entities from location: {0}", path);
 
 		std::ifstream reader(path);
 		Json json;
@@ -85,47 +95,64 @@ namespace Ivy {
 		for (auto& it = json.begin(); it != json.end(); ++it)
 		{
 			auto& current = *it;
-			Entity entity = ECS::getInstance().createEntity();
-			IVY_INFO("Loading Entity={0}", entity);
 
-			if (!current["components"]["transform"].is_null())
+			if (!current["free"].is_null())
 			{
-				float posX, posY, rotation, scaleX, scaleY;
-				current["components"]["transform"]["positionX"].get_to(posX);
-				current["components"]["transform"]["positionY"].get_to(posY);
-				current["components"]["transform"]["rotation"].get_to(rotation);
-				current["components"]["transform"]["scaleX"].get_to(scaleX);
-				current["components"]["transform"]["scaleY"].get_to(scaleY);
-				Transform transform{ glm::vec2(posX, posY), rotation, glm::vec2(scaleX, scaleY) };
-				ECS::getInstance().addComponent<Transform>(entity, transform);
-
+				std::vector<Entity> freeEntities{};
+				current["free"].get_to(freeEntities);
+				for (auto it = freeEntities.begin(); it != freeEntities.end(); it++)
+				{
+					ECS::getInstance().addToFreeEntities(*it);
+				}
 			}
-			
-			if (!current["components"]["renderable"].is_null())
+			else
 			{
-				std::string renderablePath;
-				current["components"]["renderable"].get_to(renderablePath);
-				Renderable renderable{ renderablePath };
-				ECS::getInstance().addComponent<Renderable>(entity, renderable);
-			}
+				uint16_t entityId;
+				current["entity_id"].get_to(entityId);
+				ECS::getInstance().addToEntities(entityId);
 
-			if (!current["components"]["script"].is_null())
-			{
-				std::string scriptPath;
-				current["components"]["script"].get_to(scriptPath);
-				ScriptComponent script{ scriptPath };
-				script.setEntityId(entity);
-				ECS::getInstance().addComponent<ScriptComponent>(entity, script);
-			}
+				Entity entity = ECS::getInstance().getEntities().getEntity(entityId);
 
-			if (!current["components"]["tag"].is_null())
-			{
-				std::string tagName;
-				current["components"]["tag"].get_to(tagName);
-				Tag tag{ tagName };
-				ECS::getInstance().addComponent<Tag>(entity, tag);
-			}
+				IVY_CORE_INFO("JSONManager: Loading Entity={0}", entity);
 
+				if (!current["components"]["transform"].is_null())
+				{
+					float posX, posY, rotation, scaleX, scaleY;
+					current["components"]["transform"]["positionX"].get_to(posX);
+					current["components"]["transform"]["positionY"].get_to(posY);
+					current["components"]["transform"]["rotation"].get_to(rotation);
+					current["components"]["transform"]["scaleX"].get_to(scaleX);
+					current["components"]["transform"]["scaleY"].get_to(scaleY);
+					Transform transform{ glm::vec2(posX, posY), rotation, glm::vec2(scaleX, scaleY) };
+					ECS::getInstance().addComponent<Transform>(entity, transform);
+
+				}
+
+				if (!current["components"]["renderable"].is_null())
+				{
+					std::string renderablePath;
+					current["components"]["renderable"].get_to(renderablePath);
+					Renderable renderable{ renderablePath };
+					ECS::getInstance().addComponent<Renderable>(entity, renderable);
+				}
+
+				if (!current["components"]["script"].is_null())
+				{
+					std::string scriptPath;
+					current["components"]["script"].get_to(scriptPath);
+					ScriptComponent script{ scriptPath };
+					script.setEntityId(entity);
+					ECS::getInstance().addComponent<ScriptComponent>(entity, script);
+				}
+
+				if (!current["components"]["tag"].is_null())
+				{
+					std::string tagName;
+					current["components"]["tag"].get_to(tagName);
+					Tag tag{ tagName };
+					ECS::getInstance().addComponent<Tag>(entity, tag);
+				}
+			}
 		}
 	}
 

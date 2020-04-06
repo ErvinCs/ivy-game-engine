@@ -10,7 +10,7 @@
 class EntityContainer
 {
 private:
-	std::queue<Entity> freeEntities{};
+	std::vector<Entity> freeEntities{};
 	std::array<Entity, 100> entities{};
 	size_t entitiesSize;
 public:
@@ -48,7 +48,7 @@ public:
 		{
 			if (entities[i] == entity) 
 			{
-				freeEntities.push(entities[i]);
+				addToFreeEntities(entities[i]);
 				for (int j = i; j < this->entitiesSize-1; j++)
 				{
 					entities[j] = entities[j + 1];
@@ -63,17 +63,17 @@ public:
 	inline Entity& createEntity()
 	{
 		Entity entity;
-		entitiesSize++;
 		if (freeEntities.empty())
 		{
-			entity = entitiesSize;
+			entity = (uint16_t)entitiesSize;
 		}
 		else
 		{
-			entity = entities.front();
-			freeEntities.pop();
+			entity = freeEntities.back();
+			freeEntities.pop_back();
 		}
 		entities[entitiesSize] = entity;
+		entitiesSize++;
 		IVY_CORE_INFO("EntityContainer: Creating Entity {0}. Current number of entities is {1}.", entity, entitiesSize);
 		return entities.at(entitiesSize - 1);
 	}
@@ -92,6 +92,29 @@ public:
 
 	inline const auto cend() {
 		return entities.cend() + entitiesSize;
+	}
+
+	inline void addToFreeEntities(Entity entity)
+	{
+		freeEntities.emplace_back(entity);
+	}
+
+	inline void addToEntities(uint16_t entity)
+	{
+		entities[entitiesSize] = entity;
+		entitiesSize++;
+	}
+
+	inline Entity& getEntity(uint16_t entityId)
+	{
+		for (int i = 0; i < entitiesSize; i++)
+			if (entityId == entities[i])
+				return entities[i];
+	}
+
+	inline const std::vector<Entity>& getFreeEntities()
+	{
+		return this->freeEntities;
 	}
 };
 

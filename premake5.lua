@@ -145,7 +145,6 @@ project "IvyApplication"
     -- Windows specific properties
     filter "system:windows"
         systemversion "latest"
-
         defines
         {
             "IVY_PLATFORM_WINDOWS"

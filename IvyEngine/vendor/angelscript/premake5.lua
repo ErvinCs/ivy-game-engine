@@ -5,7 +5,7 @@ project "AngelScript"
     staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir   ("bin-int/" .. outputdir .. "/%{prj.name}")
+    objdir    ("bin-int/" .. outputdir .. "/%{prj.name}")
 
     files
     {
@@ -21,11 +21,18 @@ project "AngelScript"
         "include"
     }
 
+    postbuildcommands {
+      "{DELETE} %{prj.location}/AngelScript.vcxproj",
+      "{DELETE} %{prj.location}/AngelScript.vcxproj.filters",
+      "{COPY} %{prj.location}/projects/msvc2017/AngelScript.vcxproj %{prj.location}",
+      "{COPY} %{prj.location}/projects/msvc2017/AngelScript.vcxproj.filters %{prj.location}",
+      "{ECHO} %{prj.location}"
+    }
+
     filter "system:windows"
         systemversion "latest"
-        --buildcommands {
-        --    'ml64.exe /c  /nologo /Fo$(OutDir)\\as_callfunc_x64_msvc_asm.obj /W3 /Zi /Ta $(InputDir)\\$(InputFileName)'
-        --}
+
+
     --[[
     If the project does not build properly add the following to AngelScript.vcxproj
     <ItemGroup>
@@ -62,3 +69,7 @@ project "AngelScript"
     filter "configurations:Release"
         runtime "Release"
         optimize "on"
+
+
+
+

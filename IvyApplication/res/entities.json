@@ -1,10 +1,16 @@
 [
   {
     "components": {
-      "renderable": null,
-      "script": null,
-      "tag": null,
-      "transform": null
+      "renderable": "ninja.png",
+      "script": "player.as",
+      "tag": "Player",
+      "transform": {
+        "positionX": -5.894292831420898,
+        "positionY": 1.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 1.0
+      }
     },
     "entity_id": 0
   },
@@ -29,7 +35,7 @@
       "script": "patrol.as",
       "tag": "Sprite",
       "transform": {
-        "positionX": 20.236480712890625,
+        "positionX": 23.231609344482422,
         "positionY": 0.4169999957084656,
         "rotation": 180.0,
         "scaleX": 2.0,
@@ -59,7 +65,7 @@
       "script": "patrol.as",
       "tag": "Corona",
       "transform": {
-        "positionX": 4.888637542724609,
+        "positionX": 7.883730888366699,
         "positionY": 0.39217090606689453,
         "rotation": -107374176.0,
         "scaleX": 13.1850004196167,
@@ -75,12 +81,19 @@
       "tag": "Not yet jumping enemy",
       "transform": {
         "positionX": 8.654999732971191,
-        "positionY": 11.047722816467285,
+        "positionY": 14.042821884155273,
         "rotation": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0
       }
     },
-    "entity_id": 5
+    "entity_id": 6
+  },
+  {
+    "free": [
+      8,
+      7,
+      5
+    ]
   }
 ]

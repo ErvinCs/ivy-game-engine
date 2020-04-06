@@ -140,14 +140,13 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Ivy\Core\ResourcePaths.h" />
-    <ClInclude Include="src\Ivy\ECS\EntityContainer.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
     <ClInclude Include="src\Ivy\Core\EntryPoint.h" />
     <ClInclude Include="src\Ivy\Core\InputHandler.h" />
     <ClInclude Include="src\Ivy\Core\Logger.h" />
+    <ClInclude Include="src\Ivy\Core\ResourcePaths.h" />
     <ClInclude Include="src\Ivy\Core\SortingLayer.h" />
     <ClInclude Include="src\Ivy\Core\SortingLayerStack.h" />
     <ClInclude Include="src\Ivy\Core\Timestep.h" />
@@ -160,6 +159,7 @@
     <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
     <ClInclude Include="src\Ivy\ECS\ECS.h" />
     <ClInclude Include="src\Ivy\ECS\Entity.h" />
+    <ClInclude Include="src\Ivy\ECS\EntityContainer.h" />
     <ClInclude Include="src\Ivy\ECS\JSONManager.h" />
     <ClInclude Include="src\Ivy\ECS\RenderSystem.h" />
     <ClInclude Include="src\Ivy\ECS\ScriptSystem.h" />
@@ -192,6 +192,7 @@
     <ClInclude Include="src\Ivy\Renderer\VertexArray.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Ivy\Renderer\VertexBufferLayout.h" />
+    <ClInclude Include="src\Ivy\Scripting\ASRegistrationCalls.h" />
     <ClInclude Include="src\Ivy\Scripting\MethodWrappers.h" />
     <ClInclude Include="src\Ivy\Scripting\ScriptManager.h" />
     <ClInclude Include="src\Ivy\Scripting\ScriptableObject.h" />
@@ -622,12 +623,6 @@
     <ProjectReference Include="vendor\angelscript\AngelScript.vcxproj">
       <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\textures\blank.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\shaders\base.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
