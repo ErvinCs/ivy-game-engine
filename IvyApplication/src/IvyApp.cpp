@@ -38,6 +38,9 @@ public:
 		renderSystem->init();
 		scriptSystem->init();	
 		userSystem->init();
+
+		Ivy::JSONManager::addLoadFunction(loadUC);
+		Ivy::JSONManager::addSaveFunction(saveUC);
 	}
 
 	void update(Ivy::Timestep ts) override

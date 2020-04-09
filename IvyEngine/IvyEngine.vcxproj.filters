@@ -1370,6 +1370,18 @@
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp">
       <Filter>src\Ivy\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Components\Renderable.cpp">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Components\ScriptComponent.cpp">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Components\Tag.cpp">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Components\Transform.cpp">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ivy\ECS\JSONManager.cpp">
       <Filter>src\Ivy\ECS</Filter>
     </ClCompile>
@@ -1463,9 +1475,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\Components\Renderable.cpp" />
-    <ClCompile Include="src\Ivy\ECS\Components\ScriptComponent.cpp" />
-    <ClCompile Include="src\Ivy\ECS\Components\Tag.cpp" />
-    <ClCompile Include="src\Ivy\ECS\Components\Transform.cpp" />
   </ItemGroup>
 </Project>

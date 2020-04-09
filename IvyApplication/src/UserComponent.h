@@ -19,6 +19,35 @@ public:
 	}
 };
 
+void loadUC(Entity& entity, nlohmann::json& json)
+{
+	if (!json["components"]["user_component"].is_null())
+	{
+		float aField;
+		std::string anotherField;
+		json["components"]["user_component"]["a_field"].get_to(aField);
+		json["components"]["user_component"]["other_field"].get_to(anotherField);
+		UserComponent userComp{ aField, anotherField };
+		Ivy::ECS::getInstance().addComponent<UserComponent>(entity, userComp);
+
+	}
+}
+
+void saveUC(Entity& entity, nlohmann::json& json)
+{
+	nlohmann::json jsonNull;
+	if (Ivy::ECS::getInstance().getComponent<UserComponent>(entity).getEntityId() != entity)
+	{
+		json["components"]["user_component"] = jsonNull;
+	}
+	else {
+		UserComponent userComp = Ivy::ECS::getInstance().getComponent<UserComponent>(entity);
+		json["components"]["user_component"]["a_field"] = userComp.aField;
+		json["components"]["user_component"]["other_field"] = userComp.anotherField;
+	}
+}
+
+
 class UserComponentSystem : public Ivy::System
 {
 public:

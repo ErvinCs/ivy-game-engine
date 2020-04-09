@@ -66,9 +66,9 @@ project "IvyEngine"
         "%{IncludeDir.imgui}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
-        --"%{prj.name}/vendor/eastl"
         "%{IncludeDir.angelscript}",
         "%{IncludeDir.json}"
+        --"%{prj.name}/vendor/eastl"
     }
 
     links 
@@ -133,8 +133,9 @@ project "IvyApplication"
         "IvyEngine/vendor",
         "IvyEngine/src",
         "%{IncludeDir.glm}",
+        "%{IncludeDir.angelscript}",
+        "%{IncludeDir.json}"
         --"%{prj.name}/vendor/eastl"
-        "%{IncludeDir.angelscript}"
     }
 
     links

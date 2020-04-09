@@ -44,6 +44,8 @@ namespace Ivy {
 			IVY_CORE_ERROR("Compile errors on script load!");
 		}
 
+		JSONManager::InitFunctions();
+
 		imGuiLayer = new ImGuiLayer();
 		inspectorLayer = new InspectorLayer();
 		pushLayer(imGuiLayer);
