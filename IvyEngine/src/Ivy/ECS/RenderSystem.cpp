@@ -7,8 +7,10 @@
 #include "Components/Transform.h"
 #include "../Renderer/RenderCommand.h"
 #include "../Renderer/Renderer.h"
-#include "../Core/Application.h"
-//#include "../ECS/ComponentRegistration.h"
+
+//#include "../Core/Application.h"
+#include "Components/Collidable.h"
+#include "../Core/ResourcePaths.h"
 
 namespace Ivy {
 	
@@ -37,6 +39,12 @@ namespace Ivy {
 				continue;
 			
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
+
+			// TEMP
+			auto& collidable = ECS::getInstance().getComponent<Collidable>(object);
+			if (collidable.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Collidable).name())->second)
+				continue;
+			Renderer::DrawRect(collidable.centerPosition, collidable.halfScale * 2.0f + 0.1f, collidable.rotation, Texture::Create(Paths::collidablePath.string()));
 		}
 		//Ivy::Renderer::End();
 	}

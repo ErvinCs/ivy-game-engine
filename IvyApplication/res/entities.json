@@ -1,15 +1,22 @@
 [
   {
     "components": {
+      "collidable": {
+        "centerPositionX": -4.818029403686523,
+        "centerPositionY": 3.8368911743164063,
+        "halfScaleX": 1.0,
+        "halfScaleY": 1.0,
+        "rotation": 0.0
+      },
       "renderable": "ninja.png",
       "script": "player.as",
       "tag": "Player",
       "transform": {
-        "positionX": 1.0,
-        "positionY": 1.0,
+        "positionX": -4.818029403686523,
+        "positionY": 3.8368911743164063,
         "rotation": 0.0,
-        "scaleX": 1.0,
-        "scaleY": 1.0
+        "scaleX": 2.0,
+        "scaleY": 2.0
       },
       "user_component": null
     },
@@ -17,12 +24,19 @@
   },
   {
     "components": {
+      "collidable": {
+        "centerPositionX": 0.0,
+        "centerPositionY": -5.0,
+        "halfScaleX": 10.0,
+        "halfScaleY": 0.5,
+        "rotation": 0.0
+      },
       "renderable": "platform-20.png",
       "script": null,
       "tag": "Platform-20",
       "transform": {
-        "positionX": 1.0,
-        "positionY": 1.0,
+        "positionX": 0.0,
+        "positionY": -5.0,
         "rotation": 0.0,
         "scaleX": 20.0,
         "scaleY": 1.0
@@ -33,61 +47,73 @@
   },
   {
     "components": {
+      "collidable": null,
       "renderable": "sprite.png",
       "script": "patrol.as",
       "tag": "Sprite",
-      "transform": null,
+      "transform": {
+        "positionX": 6.628505706787109,
+        "positionY": 2.0,
+        "rotation": 0.0,
+        "scaleX": 2.0,
+        "scaleY": 1.5
+      },
       "user_component": null
     },
     "entity_id": 2
   },
   {
     "components": {
+      "collidable": {
+        "centerPositionX": 2.0,
+        "centerPositionY": -3.0,
+        "halfScaleX": 1.0,
+        "halfScaleY": 1.0,
+        "rotation": 0.0
+      },
       "renderable": "cat1.png",
       "script": null,
       "tag": "Cat",
-      "transform": null,
+      "transform": {
+        "positionX": 2.0,
+        "positionY": -3.0,
+        "rotation": 0.0,
+        "scaleX": 2.0,
+        "scaleY": 2.0
+      },
       "user_component": null
     },
-    "entity_id": 3
+    "entity_id": 5
   },
   {
     "components": {
-      "renderable": "new.png",
-      "script": "patrol.as",
-      "tag": "Corona",
-      "transform": null,
-      "user_component": null
-    },
-    "entity_id": 4
-  },
-  {
-    "components": {
-      "renderable": "jmp-enemy.png",
-      "script": "jumping.as",
-      "tag": "Not yet jumping enemy",
-      "transform": null,
+      "collidable": {
+        "centerPositionX": 1.0,
+        "centerPositionY": 1.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 0.5,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": {
+        "positionX": 1.0,
+        "positionY": 1.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 1.0
+      },
       "user_component": null
     },
     "entity_id": 6
   },
   {
-    "components": {
-      "renderable": null,
-      "script": null,
-      "tag": null,
-      "transform": null,
-      "user_component": {
-        "a_field": 15.001021385192871,
-        "other_field": "Hello World"
-      }
-    },
-    "entity_id": 5
-  },
-  {
     "free": [
       8,
-      7
+      7,
+      3,
+      4
     ]
   }
 ]

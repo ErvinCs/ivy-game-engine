@@ -68,6 +68,40 @@ namespace Ivy {
 		}
 	}
 
+	void saveCollidable(Entity& entity, Json& jsonObject)
+	{
+		Json jsonNull;
+		if (ECS::getInstance().getComponent<Collidable>(entity).getEntityId() != entity)
+		{
+			jsonObject["components"]["collidable"] = jsonNull;
+		}
+		else {
+			Collidable collidable = ECS::getInstance().getComponent<Collidable>(entity);
+			jsonObject["components"]["collidable"]["centerPositionX"] = collidable.centerPosition.x;
+			jsonObject["components"]["collidable"]["centerPositionY"] = collidable.centerPosition.y;
+			jsonObject["components"]["collidable"]["rotation"] = collidable.rotation;
+			jsonObject["components"]["collidable"]["halfScaleX"] = collidable.halfScale.x;
+			jsonObject["components"]["collidable"]["halfScaleY"] = collidable.halfScale.y;
+		}
+	}
+
+	void loadCollidable(Entity& entity, Json& current)
+	{
+		if (!current["components"]["collidable"].is_null())
+		{
+			float posX, posY, rotation, halfScaleX, halfScaleY;
+			// float unitXx, unitXy, unitYx, unitYy;
+			current["components"]["collidable"]["centerPositionX"].get_to(posX);
+			current["components"]["collidable"]["centerPositionY"].get_to(posY);
+			current["components"]["collidable"]["rotation"].get_to(rotation);
+			current["components"]["collidable"]["halfScaleX"].get_to(halfScaleX);
+			current["components"]["collidable"]["halfScaleY"].get_to(halfScaleY);
+			Collidable collidable{ glm::vec2(posX, posY), rotation, glm::vec2(halfScaleX, halfScaleY) };
+			ECS::getInstance().addComponent<Collidable>(entity, collidable);
+
+		}
+	}
+
 	void loadTransform(Entity& entity, Json& current)
 	{
 		if (!current["components"]["transform"].is_null())
@@ -173,11 +207,13 @@ namespace Ivy {
 		SaveFunctions.push_back(saveRenderable);
 		SaveFunctions.push_back(saveScriptComponent);
 		SaveFunctions.push_back(saveTag);
+		SaveFunctions.push_back(saveCollidable);
 
 		LoadFunctions.push_back(loadTransform);
 		LoadFunctions.push_back(loadRenderable);
 		LoadFunctions.push_back(loadScriptComponent);
 		LoadFunctions.push_back(loadTag);
+		LoadFunctions.push_back(loadCollidable);
 	}
 
 	void JSONManager::LoadEntities(const std::string& path) {

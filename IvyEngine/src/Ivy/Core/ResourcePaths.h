@@ -9,6 +9,8 @@ namespace Paths {
 	static const std::filesystem::path shaderPath = std::filesystem::absolute(std::filesystem::current_path() / ".." / "IvyEngine" / "res" / "shaders" / "base.glsl");
 	// Path to the texture used by shaders in the absence of specification of other textures
 	static const std::filesystem::path baseTexturePath = std::filesystem::absolute(std::filesystem::current_path() / ".." / "IvyEngine" / "res" / "textures" / "blank.png");
+	// Path to the texture used by collidables to display their area
+	static const std::filesystem::path collidablePath = std::filesystem::absolute(std::filesystem::current_path() / ".." / "IvyEngine" / "res" / "textures" / "coll.png");
 	// Path to the directory of texture resources
 	static const std::filesystem::path texturesPath = std::filesystem::absolute(std::filesystem::current_path() / "res" / "textures" / "");
 	// Path to the directory of AngelScript script resources
