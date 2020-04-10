@@ -2,11 +2,13 @@
 #include "RenderSystem.h"
 
 #include "ECS.h"
+#include "Component.h"
 #include "Components/Renderable.h"
 #include "Components/Transform.h"
 #include "../Renderer/RenderCommand.h"
 #include "../Renderer/Renderer.h"
 #include "../Core/Application.h"
+//#include "../ECS/ComponentRegistration.h"
 
 namespace Ivy {
 	
@@ -27,11 +29,11 @@ namespace Ivy {
 			auto& object = *it;
 
 			auto& renderable = ECS::getInstance().getComponent<Renderable>(object);
-			if (renderable.getComponentId() != uint8_t(1))
+			if (renderable.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Renderable).name())->second)
 				continue;
 
 			auto& transform = ECS::getInstance().getComponent<Transform>(object);
-			if (transform.getComponentId() != uint8_t(0))
+			if (transform.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Transform).name())->second)
 				continue;
 			
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);

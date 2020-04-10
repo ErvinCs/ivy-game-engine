@@ -18,16 +18,18 @@ namespace Ivy {
 	class ComponentContainer : public BaseComponentContainer
 	{
 	private:
-		std::array<T, 100> componentArray{};
+		std::array<T, MAX_Entities> componentArray{};
 		int size;
 	public:
 		ComponentContainer()
 		{
 			this->size = 0;
-			IVY_CORE_INFO("ComponentContainer: Constructing ComponentContainer: type={0}", typeid(T).name());
+			// Log produces error
+
+			//IVY_CORE_INFO("ComponentContainer: Constructing ComponentContainer: type={0}", typeid(T).name());
 		}
 		
-		std::array<T, 100>& getComponentArray()
+		std::array<T, MAX_Entities>& getComponentArray()
 		{
 			return this->componentArray;
 		}

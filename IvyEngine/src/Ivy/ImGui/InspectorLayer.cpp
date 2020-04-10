@@ -6,13 +6,6 @@
 #include "imgui.h"
 #include "misc/cpp/imgui_stdlib.h"
 
-#include "../ECS/ECS.h"
-#include "../ECS/Entity.h"
-#include "../ECS/Component.h"
-#include "../ECS/Components/Transform.h"
-#include "../ECS/Components/Renderable.h"
-#include "../ECS/Components/ScriptComponent.h"
-#include "../ECS/Components/Tag.h"
 #include "../ECS/JSONManager.h"
 
 #include "../Scripting/ScriptManager.h"
@@ -27,10 +20,11 @@ namespace Ivy {
 		static std::string pngPathTemp;
 		static std::string tagTemp, newTagTemp;
 		static std::string scriptPathTemp;
-		for (Entity& entity : getECS().getEntities()) {
-			ImGui::PushID(&entity);
+		for (Entity& entity : getECS().getEntities()) 
+		{
+			ImGui::PushID("Ivy: Entity#" + entity);
 			// -------------------- Display Tag --------------------
-			if (getECS().getComponent<Tag>(entity).getComponentId() == uint8_t(3) && tagTemp.size() > 0)
+			if (getECS().getComponent<Tag>(entity).getComponentId() == TagID && tagTemp.size() > 0)
 			{
 				tagTemp = getECS().getComponent<Tag>(entity).tag;
 			}
@@ -44,7 +38,7 @@ namespace Ivy {
 				// -------------------- Tag --------------------
 				if (ImGui::TreeNode("Tag"))
 				{
-					if (getECS().getComponent<Tag>(entity).getComponentId() == uint8_t(3))
+					if (getECS().getComponent<Tag>(entity).getComponentId() == TagID)
 					{
 						ImGui::InputTextWithHint("Tag", tagTemp.c_str(), &newTagTemp);
 						if (ImGui::Button("Rename Tag"))
@@ -63,9 +57,9 @@ namespace Ivy {
 						ImGui::InputText("Tag", &newTagTemp);
 						if (ImGui::Button("Add Tag"))
 						{
-							if (newTagTemp.size() > 2) {
+							if (newTagTemp.size() > 0) {
 								Tag newTag = Tag(newTagTemp);
-								newTag.setComponentId(3);
+								newTag.setComponentId(TagID);
 								getECS().addComponent<Tag>(entity, newTag);
 								newTagTemp = "";
 								IVY_INFO("Added: Tag={0}", newTagTemp);
@@ -79,7 +73,7 @@ namespace Ivy {
 				// -------------------- Transform --------------------
 				if (ImGui::TreeNode("Transform"))
 				{
-					if (getECS().getComponent<Transform>(entity).getComponentId() == uint8_t(0))
+					if (getECS().getComponent<Transform>(entity).getComponentId() == TransformID)
 					{
 						ImGui::InputFloat2("Position", (float*)&getECS().getComponent<Transform>(entity).position, 2);
 						ImGui::InputFloat2("Scale", (float*)&getECS().getComponent<Transform>(entity).scale, 2);
@@ -95,7 +89,7 @@ namespace Ivy {
 						if (ImGui::Button("Add Transform"))
 						{
 							Transform newTransfrom = Transform(glm::vec2(1, 1), 0, glm::vec2(1, 1));
-							newTransfrom.setComponentId(0);
+							newTransfrom.setComponentId(TransformID);
 							getECS().addComponent<Transform>(entity, newTransfrom);
 							IVY_INFO("Added: Transform=({0},{1}), ({2}, {3}), {4}",
 								getECS().getComponent<Transform>(entity).position.x,
@@ -114,7 +108,7 @@ namespace Ivy {
 				{
 					const char* currentPath = nullptr;
 					std::string* buffer = nullptr;
-					if (getECS().getComponent<Renderable>(entity).getComponentId() == uint8_t(1))
+					if (getECS().getComponent<Renderable>(entity).getComponentId() == RenderableID)
 					{
 						currentPath = getECS().getComponent<Renderable>(entity).spritePath.c_str();
 						buffer = &getECS().getComponent<Renderable>(entity).spritePath;
@@ -135,9 +129,9 @@ namespace Ivy {
 						ImGui::InputText("PNG Path", &pngPathTemp);
 						if (ImGui::Button("Add Renderable"))
 						{
-							if (pngPathTemp.size() > 2) {
+							if (pngPathTemp.size() > 0) {
 								Renderable newRenderable = Renderable(pngPathTemp);
-								newRenderable.setComponentId(1);
+								newRenderable.setComponentId(RenderableID);
 								getECS().addComponent<Renderable>(entity, newRenderable);
 								pngPathTemp = "";
 								IVY_INFO("Added: Renderable Sprite Path={0}", getECS().getComponent<Renderable>(entity).spritePath);
@@ -151,7 +145,7 @@ namespace Ivy {
 				// -------------------- Script --------------------
 				if (ImGui::TreeNode("Script")) 
 				{
-					if (getECS().getComponent<ScriptComponent>(entity).getComponentId() == uint8_t(2))
+					if (getECS().getComponent<ScriptComponent>(entity).getComponentId() == ScriptComponentID)
 					{
 						const char* currentPath = getECS().getComponent<ScriptComponent>(entity).scriptName.c_str();
 						std::string* buffer = &getECS().getComponent<ScriptComponent>(entity).scriptName;
@@ -161,7 +155,7 @@ namespace Ivy {
 							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
 							getECS().removeComponent<ScriptComponent>(entity);
 							ScriptComponent newScript = ScriptComponent(*buffer);
-							newScript.setComponentId(2);
+							newScript.setComponentId(ScriptComponentID);
 							getECS().addComponent<ScriptComponent>(entity, newScript);
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / *buffer).string(),
@@ -180,9 +174,9 @@ namespace Ivy {
 						ImGui::InputText("Script Path", &scriptPathTemp);
 						if (ImGui::Button("Add Script"))
 						{
-							if (scriptPathTemp.size() > 2) {
+							if (scriptPathTemp.size() > 0) {
 								ScriptComponent newScript = ScriptComponent(scriptPathTemp);
-								newScript.setComponentId(2);
+								newScript.setComponentId(ScriptComponentID);
 								getECS().addComponent<ScriptComponent>(entity, newScript);
 								ScriptManager::GetInstance().createScriptController(
 									(Paths::scriptsPath / scriptPathTemp).string(),

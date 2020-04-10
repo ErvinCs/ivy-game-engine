@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\IvyEngine\vendor\spdlog\include;..\IvyEngine\vendor;..\IvyEngine\src;..\IvyEngine\vendor\glm;..\IvyEngine\vendor\angelscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\IvyEngine\vendor\spdlog\include;..\IvyEngine\vendor;..\IvyEngine\src;..\IvyEngine\vendor\glm;..\IvyEngine\vendor\angelscript\include;..\IvyEngine\vendor\json_nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -95,7 +95,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\IvyEngine\vendor\spdlog\include;..\IvyEngine\vendor;..\IvyEngine\src;..\IvyEngine\vendor\glm;..\IvyEngine\vendor\angelscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\IvyEngine\vendor\spdlog\include;..\IvyEngine\vendor;..\IvyEngine\src;..\IvyEngine\vendor\glm;..\IvyEngine\vendor\angelscript\include;..\IvyEngine\vendor\json_nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IVY_PLATFORM_WINDOWS;IVY_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\IvyEngine\vendor\spdlog\include;..\IvyEngine\vendor;..\IvyEngine\src;..\IvyEngine\vendor\glm;..\IvyEngine\vendor\angelscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\IvyEngine\vendor\spdlog\include;..\IvyEngine\vendor;..\IvyEngine\src;..\IvyEngine\vendor\glm;..\IvyEngine\vendor\angelscript\include;..\IvyEngine\vendor\json_nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -130,6 +130,9 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\UserComponent.h" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IvyApp.cpp" />
   </ItemGroup>

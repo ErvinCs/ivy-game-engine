@@ -17,7 +17,7 @@ namespace Ivy {
 			auto& object = *it;
 			
 			auto& scriptComponent = ECS::getInstance().getComponent<ScriptComponent>(object);
-			if (scriptComponent.getComponentId() != uint8_t(2))
+			if (scriptComponent.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
 				continue;
 			scriptComponent.setEntityId(object);
 
@@ -33,7 +33,7 @@ namespace Ivy {
 			auto& object = *it;
 
 			auto& scriptComponent = ECS::getInstance().getComponent<ScriptComponent>(object);
-			if (scriptComponent.getComponentId() != uint8_t(2))
+			if (scriptComponent.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
 				continue;
 
 			scriptComponent.scriptableObject.onUpdate();

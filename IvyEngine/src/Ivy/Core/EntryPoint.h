@@ -23,6 +23,8 @@ int main(int argc, char** argv)
 	IVY_CORE_WARN("Initialized Core Logger!");
 	IVY_INFO("Initialized Client Logger!");
 
+	// TODO - Somewhere in here the NEW/LOAD PROJECT functionality should be called
+
 	auto application = Ivy::CreateApp();
 	application->init();
 	application->run();

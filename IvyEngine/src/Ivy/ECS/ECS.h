@@ -31,6 +31,7 @@ namespace Ivy {
 		EntityContainer entities;
 		std::vector<std::shared_ptr<System>> systems{};
 	public:
+
 		~ECS()
 		{
 			IVY_CORE_INFO("ECS: Clearing entities. Clearing components. Clearing systems.");
@@ -38,6 +39,7 @@ namespace Ivy {
 			{
 				destroyEntity(*it);
 			}
+			
 			componentTypes.clear();
 			componentContainers.clear();
 			systems.clear();
@@ -70,9 +72,10 @@ namespace Ivy {
 
 		// Components
 		template<typename T>
-		void addComponentType()
+		uint8_t addComponentType()
 		{
-			IVY_CORE_INFO("ECS: Registering new Component: type={0}", typeid(T).name());
+			// Log produces error
+			//IVY_CORE_INFO("ECS: Registering new Component: type={0}, id={1}", typeid(T).name(), componentTypeCounter);
 			const char* typeName = typeid(T).name();
 
 			// Add a new component type
@@ -81,6 +84,13 @@ namespace Ivy {
 			componentContainers.insert({ typeName, std::move(std::make_shared<ComponentContainer<T>>()) });
 
 			componentTypeCounter++;
+			return componentTypeCounter - 1;
+		}
+
+		//TEMPORARY - Until bitset is implemented
+		uint8_t generateComponentId()
+		{
+			return componentTypeCounter;
 		}
 
 		const std::map<const char*, uint8_t>& getComponentTypes() {
@@ -118,16 +128,6 @@ namespace Ivy {
 			}
 			
 			entities.destroyEntity(entity);
-			
-
-			/*for (auto& it = entities.begin(); it != entities.end(); it++)
-			{
-				if(*it == entity)
-				{
-					entities.erase(it);
-					break;
-				}
-			}*/
 		}
 
 		Entity& createEntity()
@@ -184,7 +184,7 @@ namespace Ivy {
 		ECS()
 		{
 			// Ids
-			componentTypeCounter = 0;
+			componentTypeCounter = 1;
 
 			// Component Types
 			this->registerComponentTypes();
@@ -195,7 +195,7 @@ namespace Ivy {
 		}
 
 		void registerComponentTypes() {
-			IVY_CORE_INFO("ECS: Registering Ivy Component Types");
+			//IVY_CORE_INFO("ECS: Registering Ivy Component Types");
 			this->addComponentType<Transform>();		//TransformID       = 0
 			this->addComponentType<Renderable>();		//RenderableID      = 1
 			this->addComponentType<ScriptComponent>();	//ScriptComponentID = 2	
@@ -204,5 +204,7 @@ namespace Ivy {
 
 		ECS(const ECS&) = delete;
 		ECS& operator=(const ECS&) = delete;
+	public:
+
 	};
 }
