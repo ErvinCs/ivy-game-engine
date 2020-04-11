@@ -130,6 +130,34 @@ namespace Ivy
 
 		// Register FindTransform(uint16). Provides access to the transform component of an Entity if it exists.
 		r = scriptEngine->RegisterGlobalFunction("Transform@ FindTransform(uint16)", asFUNCTION(FindTransform), asCALL_CDECL); assert(r >= 0);
+
+		// Flip the Transform of a scriptable object by 90/180/270 degrees
+		r = scriptEngine->RegisterGlobalFunction("void Rotate90(Transform &)", asFUNCTION(Rotate90), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void Rotate180(Transform &)", asFUNCTION(Rotate180), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void Rotate270(Transform &)", asFUNCTION(Rotate270), asCALL_CDECL); assert(r >= 0);
+	}
+
+	static void RegisterRenderable(asIScriptEngine* scriptEngine)
+	{
+		int r;
+
+		// Register the Renderable component. The scripts cannot create these directly, so there is no factory function.
+		r = scriptEngine->RegisterObjectType("Sprite", 0, asOBJ_REF); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_ADDREF, "void f()", asMETHOD(Renderable, addReference), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_RELEASE, "void f()", asMETHOD(Renderable, release), asCALL_THISCALL); assert(r >= 0);
+
+		r = scriptEngine->RegisterGlobalFunction("Sprite@ InitSprite()", asFUNCTION(Renderable_Factory1), asCALL_CDECL); assert(r >= 0);
+
+		r = scriptEngine->RegisterObjectMethod("Sprite", "Sprite &opAssign(const Sprite &in)",
+			asMETHODPR(Renderable, operator=, (const Renderable &), Renderable &), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite@ f()", asFUNCTION(Renderable_Factory1), asCALL_CDECL); assert(r >= 0);
+
+
+		// Register FindRenderable(uint16). Provides access to the renderable component of an Entity if it exists.
+		r = scriptEngine->RegisterGlobalFunction("Sprite@ FindSprite(uint16)", asFUNCTION(FindRenderable), asCALL_CDECL); assert(r >= 0);
+		// Register changeTexture(Renderable&, std::string). Changes the texture a renderable displays with the texture at the given string location
+		r = scriptEngine->RegisterGlobalFunction("void LoadSprite(uint16, string)", asFUNCTION(LoadNewTexture), asCALL_CDECL); assert(r >= 0);
+
 	}
 
 	static void RegisterScriptableObject(asIScriptEngine* scriptEngine)
@@ -150,6 +178,7 @@ namespace Ivy
 		// Observe the autohandle @+ to tell AngelScript to automatically release the handle after the call
 		// The generic handle type is used to allow the script to pass any object to another script without the application having to know anything about it
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void sendMessage(ref message, const ScriptableObject @+ to)", asMETHOD(ScriptableObject, sendMessage), asCALL_THISCALL); assert(r >= 0);
+
 	}
 
 	static void RegisterInputHandler(asIScriptEngine* scriptEngine)

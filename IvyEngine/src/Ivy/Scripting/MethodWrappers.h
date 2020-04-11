@@ -7,10 +7,12 @@
 
 #include "../Core/InputHandler.h"
 #include "../Core/Logger.h"
-
+#include "../Core/ResourcePaths.h"
 #include "../Core/Timestep.h"
 
 #include <glm/glm.hpp>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 namespace Ivy {
 
@@ -43,14 +45,42 @@ namespace Ivy {
 		return t;
 	}
 
-	void GetRenderable(Entity entity, Renderable& renderable)
+	Transform* Transform_Factory1()
 	{
-		renderable = ECS::getInstance().getComponent<Renderable>(entity);
+		return new Transform(glm::vec2(0), 0, glm::vec2(0));
 	}
 
-	void GetScriptComponent(Entity entity, ScriptComponent& script)
+	Renderable* FindRenderable(Entity entity)
 	{
-		script = ECS::getInstance().getComponent<ScriptComponent>(entity);
+		Renderable* r = &ECS::getInstance().getComponent<Renderable>(entity);
+		return r;
+	}
+
+	Renderable* Renderable_Factory1()
+	{
+		return new Renderable(Paths::baseTexturePath.string());
+	}
+
+	void Rotate180(Transform& transform)
+	{
+		transform.rotation += M_PI;
+	}
+
+	void Rotate90(Transform& transform)
+	{
+		transform.rotation += M_PI_2;
+	}
+
+	void Rotate270(Transform& transform)
+	{
+		transform.rotation += 3.0f * M_PI_2;
+	}
+
+	void LoadNewTexture(Entity entity, std::string newPath)
+	{
+		Renderable* r = &ECS::getInstance().getComponent<Renderable>(entity);
+		r->spritePath = newPath;
+		r->texture = Texture::Create(newPath);
 	}
 
 	// ---------- Timestep ----------
@@ -93,11 +123,6 @@ namespace Ivy {
 	float operator/(const Timestep& lhs, const float& rhs)
 	{
 		return lhs.getSeconds() / rhs;
-	}
-
-	Transform* Transform_Factory1()
-	{
-		return new Transform(glm::vec2(0), 0, glm::vec2(0));
 	}
 
 	// ---------- GLM - Vec2 ----------

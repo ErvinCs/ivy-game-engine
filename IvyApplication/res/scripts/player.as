@@ -1,9 +1,10 @@
 enum Actions
 {
-	UP = 87,
-	DOWN = 83,
-	LEFT = 65,
-	RIGHT = 68  
+	UP = 87,	//W
+	DOWN = 83,	//S
+	LEFT = 65,	//A
+	RIGHT = 68,	//D
+	RAGE = 81	//Q
 }
 
 class CPlayer : IController
@@ -11,17 +12,11 @@ class CPlayer : IController
 	ScriptableObject@ self;
 	Transform@ transform;
 
-	bool isJumping = false;
+	// 1-right, 2-left, 3-up, 4-down
+	int isFacing = 1;
+	int rageCount = 1;
 	float playerMoveSpeed = 5;
-	float constJumpTime = 1.3;
-	float jumpTime = 1.3;
-	float jumpSpeed = 2.0;
-	float jumpCooldown = 1.0;
 
-	float leftBorder = 12.3;
-	float rightBorder = -11.8;
-	float topBorder = 6.4;
-	float botBorder = -6.4;
 
 	CPlayer(ScriptableObject@ object)
 	{
@@ -31,43 +26,27 @@ class CPlayer : IController
 	void onUpdate()
 	{
 		@transform = FindTransform(self.getOwner());
+		
 		if (IsKeyDown(RIGHT))
 		{
-			if (transform.position.x < leftBorder)
-			{
-				transform.position.x += playerMoveSpeed * deltatime;
-			}
+			transform.position.x += playerMoveSpeed * deltatime;			
 		}
 		else if (IsKeyDown(LEFT))
 		{
-			if (transform.position.x > rightBorder)
-			{
-				transform.position.x -= playerMoveSpeed * deltatime;
-			}
+			transform.position.x -= playerMoveSpeed * deltatime;
+		}
+		else if (IsKeyDown(UP))
+		{
+			transform.position.y += playerMoveSpeed * deltatime;
+		}
+		else if (IsKeyDown(DOWN))
+		{
+			transform.position.y -= playerMoveSpeed * deltatime;
 		}
 
-		if (IsKeyDown(UP))
+		if (IsKeyDown(RAGE) and rageCount > 0)
 		{
-			isJumping = true;
-		}
-
-		if (isJumping)
-		{
-			jumpTime -= deltatime;
-			if (jumpTime > constJumpTime / 2)
-			{
-				transform.position.y += playerMoveSpeed * jumpSpeed * deltatime;	
-			}
-			else if (jumpTime < constJumpTime / 2 && jumpTime > 0)
-			{
-				transform.position.y -= playerMoveSpeed * jumpSpeed * deltatime;
-			}
-			else
-			{
-				isJumping = false;
-				jumpCooldown = 1.0f;
-				jumpTime = constJumpTime;
-			}
+			LoadSprite(self.getOwner(), "rage.png");
 		}
 	}
 }

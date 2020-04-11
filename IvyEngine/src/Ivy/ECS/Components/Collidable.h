@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 #include "../Component.h"
+#include "../Entity.h"
+#include <unordered_set>
 
 namespace Ivy {
 
@@ -12,6 +14,7 @@ namespace Ivy {
 		glm::vec2 halfScale;
 		float rotation;
 		bool isTrigger;
+		std::unordered_set<Entity> isCollidingWith{};
 
 		glm::vec2 unitX;
 		glm::vec2 unitY;

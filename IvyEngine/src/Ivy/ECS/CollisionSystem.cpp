@@ -64,25 +64,33 @@ namespace Ivy
 				glm::vec2 T = A.centerPosition - B.centerPosition;			
 				// Rectangles A and B collide iff and only if the 4 cases bellow are all false
 				if (glm::abs(glm::dot(T, A.unitX)) > A.halfScale.x + glm::abs(glm::dot(B.halfScale.x * B.unitX, A.unitX)) +
-					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitX)))
-					continue;
-				if (glm::abs(glm::dot(T, A.unitY)) > A.halfScale.y + glm::abs(glm::dot(B.halfScale.x * B.unitX, A.unitY)) +
-					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitY)))
-					continue;
-				if (glm::abs(glm::dot(T, B.unitX)) > B.halfScale.x + glm::abs(glm::dot(A.halfScale.x * A.unitX, B.unitX)) +
-					glm::abs(glm::dot(A.halfScale.y * A.unitY, B.unitX)))
-					continue;
-				if (glm::abs(glm::dot(T, B.unitY)) > B.halfScale.y + glm::abs(glm::dot(A.halfScale.x * A.unitX, B.unitY)) +
+					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitX)) ||
+					glm::abs(glm::dot(T, A.unitY)) > A.halfScale.y + glm::abs(glm::dot(B.halfScale.x * B.unitX, A.unitY)) +
+					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitY)) ||
+					glm::abs(glm::dot(T, B.unitX)) > B.halfScale.x + glm::abs(glm::dot(A.halfScale.x * A.unitX, B.unitX)) +
+					glm::abs(glm::dot(A.halfScale.y * A.unitY, B.unitX)) ||
+					glm::abs(glm::dot(T, B.unitY)) > B.halfScale.y + glm::abs(glm::dot(A.halfScale.x * A.unitX, B.unitY)) +
 					glm::abs(glm::dot(A.halfScale.y * A.unitY, B.unitY)))
+				{
+					const bool areColliding = A.isCollidingWith.find(otherObject) != A.isCollidingWith.end();
+					if (areColliding)
+					{
+						A.isCollidingWith.erase(otherObject);
+						B.isCollidingWith.erase(object);
+					}
 					continue;
+				}
+
+				A.isCollidingWith.insert(otherObject);
+				B.isCollidingWith.insert(object);
 
 				if (A.isTrigger || B.isTrigger)
 				{
-					IVY_CORE_TRACE("Trigger! Entity {0} with Entity {1}", object, otherObject);
-				}
+					IVY_CORE_TRACE("CollisionSystem: Trigger: Entity {0} with Entity {1}", object, otherObject);
+				} 
 				else
 				{
-					IVY_CORE_TRACE("Collided! Entity {0} with Entity {1}", object, otherObject);
+					IVY_CORE_TRACE("CollisionSystem: Collider: Entity {0} with Entity {1}", object, otherObject);
 					A.centerPosition = oldPosition;
 					ATransform.position = oldPosition;
 				}
