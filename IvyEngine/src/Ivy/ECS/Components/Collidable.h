@@ -5,18 +5,19 @@
 
 namespace Ivy {
 
-	struct Collidable : public Component
+	struct CollidableBox : public Component
 	{
 	public:
 		glm::vec2 centerPosition;
 		glm::vec2 halfScale;
 		float rotation;
+		bool isTrigger;
 
 		glm::vec2 unitX;
 		glm::vec2 unitY;
 		
-		Collidable() : Component() {}
-		Collidable(glm::vec2 position, float rotation, glm::vec2 scale);	
+		CollidableBox() : Component() {}
+		CollidableBox(glm::vec2 position, float rotation, glm::vec2 scale);
 	};
 
 }

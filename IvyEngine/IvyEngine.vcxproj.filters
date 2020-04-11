@@ -1358,6 +1358,7 @@
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Components\Collidable.h" />
     <ClInclude Include="src\Ivy\ECS\CollisionSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\CollidableGizmoSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1479,5 +1480,6 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\ECS\Components\Collidable.cpp" />
     <ClCompile Include="src\Ivy\ECS\CollisionSystem.cpp" />
+    <ClCompile Include="src\Ivy\ECS\CollidableGizmoSystem.cpp" />
   </ItemGroup>
 </Project>

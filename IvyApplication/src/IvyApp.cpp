@@ -13,6 +13,7 @@ private:
 	std::shared_ptr<Ivy::System> renderSystem    = std::make_shared<Ivy::RenderSystem>(Ivy::ECS::getInstance().getEntities());
 	std::shared_ptr<Ivy::System> scriptSystem    = std::make_shared<Ivy::ScriptSystem>(Ivy::ECS::getInstance().getEntities());
 	std::shared_ptr<Ivy::System> collisionSystem = std::make_shared<Ivy::CollisionSystem>(Ivy::ECS::getInstance().getEntities());
+	std::shared_ptr<Ivy::System> collisionGizmos = std::make_shared<Ivy::CollidableGizmoSystem>(Ivy::ECS::getInstance().getEntities());
 	std::shared_ptr<Ivy::System> userSystem      = std::make_shared<UserComponentSystem>(Ivy::ECS::getInstance().getEntities());
 
 
@@ -36,11 +37,13 @@ public:
 		Ivy::ECS::getInstance().addSystem(renderSystem);
 		Ivy::ECS::getInstance().addSystem(scriptSystem);
 		Ivy::ECS::getInstance().addSystem(collisionSystem);
+		Ivy::ECS::getInstance().addSystem(collisionGizmos);
 		Ivy::ECS::getInstance().addSystem(userSystem);
 
 		renderSystem->init();
 		scriptSystem->init();	
 		collisionSystem->init();
+		collisionGizmos->init();
 		userSystem->init();
 
 		Ivy::JSONManager::addLoadFunction(loadUC);
@@ -54,6 +57,7 @@ public:
 		Ivy::RenderCommand::clear();
 		Ivy::Renderer::Begin(camera);
 		renderSystem->update(ts);
+		collisionGizmos->update(ts);
 		Ivy::Renderer::End();
 
 		// Script

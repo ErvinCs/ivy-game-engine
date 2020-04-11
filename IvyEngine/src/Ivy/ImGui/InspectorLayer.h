@@ -19,7 +19,7 @@ namespace Ivy {
 		ComponentType RenderableID;
 		ComponentType TransformID;
 		ComponentType ScriptComponentID;
-		ComponentType CollidableID;
+		ComponentType CollidableBoxID;
 	public:
 		InspectorLayer()
 		{
@@ -27,7 +27,7 @@ namespace Ivy {
 			RenderableID = ECS::getInstance().getComponentTypes().find(typeid(Renderable).name())->second;
 			ScriptComponentID = ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second;
 			TagID = ECS::getInstance().getComponentTypes().find(typeid(Tag).name())->second;
-			CollidableID = ECS::getInstance().getComponentTypes().find(typeid(Collidable).name())->second;
+			CollidableBoxID = ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second;
 
 		}
 		~InspectorLayer() = default;

@@ -1,19 +1,20 @@
 [
   {
     "components": {
-      "collidable": {
-        "centerPositionX": -4.818029403686523,
-        "centerPositionY": 3.8368911743164063,
+      "collidable_box": {
+        "centerPositionX": -2.8687524795532227,
+        "centerPositionY": -1.0989837646484375,
         "halfScaleX": 1.0,
         "halfScaleY": 1.0,
+        "is_trigger": false,
         "rotation": 0.0
       },
       "renderable": "ninja.png",
       "script": "player.as",
       "tag": "Player",
       "transform": {
-        "positionX": -4.818029403686523,
-        "positionY": 3.8368911743164063,
+        "positionX": -2.8687524795532227,
+        "positionY": -1.0989837646484375,
         "rotation": 0.0,
         "scaleX": 2.0,
         "scaleY": 2.0
@@ -24,11 +25,12 @@
   },
   {
     "components": {
-      "collidable": {
+      "collidable_box": {
         "centerPositionX": 0.0,
         "centerPositionY": -5.0,
         "halfScaleX": 10.0,
         "halfScaleY": 0.5,
+        "is_trigger": false,
         "rotation": 0.0
       },
       "renderable": "platform-20.png",
@@ -47,12 +49,19 @@
   },
   {
     "components": {
-      "collidable": null,
+      "collidable_box": {
+        "centerPositionX": -0.4907245635986328,
+        "centerPositionY": 2.0,
+        "halfScaleX": 1.0,
+        "halfScaleY": 0.75,
+        "is_trigger": true,
+        "rotation": 0.0
+      },
       "renderable": "sprite.png",
       "script": "patrol.as",
       "tag": "Sprite",
       "transform": {
-        "positionX": 6.628505706787109,
+        "positionX": -0.4907245635986328,
         "positionY": 2.0,
         "rotation": 0.0,
         "scaleX": 2.0,
@@ -64,11 +73,12 @@
   },
   {
     "components": {
-      "collidable": {
+      "collidable_box": {
         "centerPositionX": 2.0,
         "centerPositionY": -3.0,
         "halfScaleX": 1.0,
         "halfScaleY": 1.0,
+        "is_trigger": false,
         "rotation": 0.0
       },
       "renderable": "cat1.png",
@@ -86,34 +96,12 @@
     "entity_id": 5
   },
   {
-    "components": {
-      "collidable": {
-        "centerPositionX": 1.0,
-        "centerPositionY": 1.0,
-        "halfScaleX": 0.5,
-        "halfScaleY": 0.5,
-        "rotation": 0.0
-      },
-      "renderable": null,
-      "script": null,
-      "tag": null,
-      "transform": {
-        "positionX": 1.0,
-        "positionY": 1.0,
-        "rotation": 0.0,
-        "scaleX": 1.0,
-        "scaleY": 1.0
-      },
-      "user_component": null
-    },
-    "entity_id": 6
-  },
-  {
     "free": [
       8,
       7,
       3,
-      4
+      4,
+      6
     ]
   }
 ]

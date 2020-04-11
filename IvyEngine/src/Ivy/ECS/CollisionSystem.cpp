@@ -36,19 +36,19 @@ namespace Ivy
 			if (ATransform.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Transform).name())->second)
 				continue;	
 
-			auto& A = ECS::getInstance().getComponent<Collidable>(object);
-			if (A.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Collidable).name())->second)
+			auto& A = ECS::getInstance().getComponent<CollidableBox>(object);
+			if (A.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second)
 				continue;
 
 			// Cache the old position of the transform in case it needs to be set back on collision
 			glm::vec2 oldPosition = (A.centerPosition);
-			A.centerPosition = ATransform.position;
+			A.centerPosition      = ATransform.position;
 
 			// For now I've decided to also update the rotation and scale of a Collidable when changing the transform
-			// If support for gizmos will be added in the feature, then I'll consider removing this segment
+			// If support for gizmos will be added in the feature, then I'll consider removing it
 			// For now there isn't really a use-case for a collidable with different properties than the transform
-			//TODO update scale ?
-			//TODO update rotation ? 
+			A.halfScale = ATransform.scale / 2.0f;
+			A.rotation  = ATransform.rotation;
 
 			for (auto& itOther = entities->begin(); itOther != entities->end(); itOther++)
 			{
@@ -57,8 +57,8 @@ namespace Ivy
 				
 				auto& otherObject = *itOther;
 
-				auto& B = ECS::getInstance().getComponent<Collidable>(otherObject);
-				if (B.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Collidable).name())->second)
+				auto& B = ECS::getInstance().getComponent<CollidableBox>(otherObject);
+				if (B.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second)
 					continue;
 
 				glm::vec2 T = A.centerPosition - B.centerPosition;			
@@ -76,10 +76,16 @@ namespace Ivy
 					glm::abs(glm::dot(A.halfScale.y * A.unitY, B.unitY)))
 					continue;
 
-				A.centerPosition = oldPosition;
-				IVY_CORE_TRACE("Collided!");
-				// Temporary - Should raise event onCollision
-				ATransform.position = oldPosition;
+				if (A.isTrigger || B.isTrigger)
+				{
+					IVY_CORE_TRACE("Trigger! Entity {0} with Entity {1}", object, otherObject);
+				}
+				else
+				{
+					IVY_CORE_TRACE("Collided! Entity {0} with Entity {1}", object, otherObject);
+					A.centerPosition = oldPosition;
+					ATransform.position = oldPosition;
+				}
 			}
 		}
 
