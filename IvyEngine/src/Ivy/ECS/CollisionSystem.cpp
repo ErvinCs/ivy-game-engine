@@ -86,11 +86,11 @@ namespace Ivy
 
 				if (A.isTrigger || B.isTrigger)
 				{
-					IVY_CORE_TRACE("CollisionSystem: Trigger: Entity {0} with Entity {1}", object, otherObject);
+					//IVY_CORE_TRACE("CollisionSystem: Trigger: Entity {0} with Entity {1}", object, otherObject);
 				} 
 				else
 				{
-					IVY_CORE_TRACE("CollisionSystem: Collider: Entity {0} with Entity {1}", object, otherObject);
+					//IVY_CORE_TRACE("CollisionSystem: Collider: Entity {0} with Entity {1}", object, otherObject);
 					A.centerPosition = oldPosition;
 					ATransform.position = oldPosition;
 				}

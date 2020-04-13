@@ -2,13 +2,13 @@
 #include "ScriptManager.h"
 
 #include <new>
-
 #include "ASRegistrationCalls.h"
+#include "../angelscript/add_on/scriptstdstring/scriptstdstring.h"
+#include "../angelscript/add_on/scriptbuilder/scriptbuilder.h"
+#include "../angelscript/add_on/weakref/weakref.h"
 #include "../Core/Logger.h"
 
 namespace Ivy {
-
-
 
 	ScriptManager::~ScriptManager()
 	{
@@ -51,14 +51,17 @@ namespace Ivy {
 		RegisterVec2(scriptEngine);
 
 		// The scripts cannot create these directly, so there is no factory function:
-		// Register the Transform component. 
+		// Register the Transform component
 		RegisterTransform(scriptEngine);
-
-		// Register ScriptableObject.
-		RegisterScriptableObject(scriptEngine);
 
 		// Register the Sprite component
 		RegisterRenderable(scriptEngine);
+
+		// Register collision checking
+		RegisterCollision(scriptEngine);
+
+		// Register ScriptableObject
+		RegisterScriptableObject(scriptEngine);
 
 		// The game engine will determine the class that represents the controller by checking if the class implements the IController interface. 
 		// No methods are registered for this interface, as the script shouldn't be required to implement the methods. 
@@ -275,7 +278,7 @@ namespace Ivy {
 
 		// Find the optional event handlers
 		controller->onUpdateMethod = type->GetMethodByDecl("void onUpdate()");
-		controller->onMessageMethod = type->GetMethodByDecl("void onMessage(ref @msg, const CGameObj @sender)");
+		controller->onMessageMethod = type->GetMethodByDecl("void onMessage(ref @message, const ScriptableObject @sender)");
 
 		// Add the cache as user data to the type for quick access
 		type->SetUserData(controller);

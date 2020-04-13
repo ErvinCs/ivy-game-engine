@@ -26,6 +26,9 @@ namespace Ivy {
 
 		inline int getWidth() const override { return width; }
 		inline int getHeight() const override { return height; }
+
+		virtual void flipX() override;
+		virtual void flipY() override;
 	};
 
 }

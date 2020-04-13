@@ -22,6 +22,7 @@ namespace Ivy {
 		this->referenceCount = 1;
 		this->scriptObject = 0;
 		this->weakReferenceFlag = 0;
+		this->isAlive = true;
 	}
 
 	ScriptableObject::ScriptableObject(const std::string& name)
@@ -30,6 +31,8 @@ namespace Ivy {
 		this->referenceCount = 1;
 		this->scriptObject = 0;
 		this->weakReferenceFlag = 0;
+		this->isAlive = true;
+
 	}
 
 	ScriptableObject::~ScriptableObject()
@@ -48,15 +51,20 @@ namespace Ivy {
 		}
 	}
 
+	void ScriptableObject::kill()
+	{
+		this->isAlive = false;
+	}
+
 	int ScriptableObject::addReference()
 	{
-		IVY_CORE_INFO("ScriptableObject: Adding reference: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
+		//IVY_CORE_INFO("ScriptableObject: Adding reference: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
 		return ++referenceCount;
 	}
 
 	int ScriptableObject::release()
 	{
-		IVY_CORE_INFO("ScriptableObject: Releasing: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
+		//IVY_CORE_INFO("ScriptableObject: Releasing: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
 		if (--referenceCount <= 0)
 		{
 			delete this;

@@ -14,6 +14,9 @@ namespace Ivy {
 		virtual int getWidth() const = 0;
 		virtual int getHeight() const = 0;
 
+		virtual void flipX() = 0;
+		virtual void flipY() = 0;
+
 		static std::shared_ptr<Texture> Create(const std::string& filepath, bool isBaseTexture = false);
 	};
 

@@ -57,6 +57,16 @@ namespace Ivy {
 			stbi_image_free(localBuffer);
 	}
 
+	void OpenGLTexture::flipX()
+	{
+
+	}
+
+	void OpenGLTexture::flipY()
+	{
+
+	}
+
 	OpenGLTexture::~OpenGLTexture()
 	{
 		GLCall(glDeleteTextures(1, &rendererId));

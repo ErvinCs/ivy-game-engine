@@ -37,8 +37,6 @@ namespace Ivy {
 				continue;
 
 			scriptComponent.scriptableObject.onUpdate();
-			
-			//TODO - Execute onCollide() for each script [Once the Collision System is implemented] - 
 		}
 	}
 

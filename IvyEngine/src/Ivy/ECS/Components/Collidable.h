@@ -21,6 +21,9 @@ namespace Ivy {
 		
 		CollidableBox() : Component() {}
 		CollidableBox(glm::vec2 position, float rotation, glm::vec2 scale);
+
+		inline void addReference() { /* do nothing */ }
+		inline void release() { /* do nothing */ }
 	};
 
 }

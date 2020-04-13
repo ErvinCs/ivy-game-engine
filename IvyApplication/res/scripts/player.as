@@ -1,10 +1,12 @@
+#include 'common.as'
+
 enum Actions
 {
 	UP = 87,	//W
 	DOWN = 83,	//S
 	LEFT = 65,	//A
 	RIGHT = 68,	//D
-	RAGE = 81	//Q
+	THROW = 81	//Q
 }
 
 class CPlayer : IController
@@ -21,6 +23,7 @@ class CPlayer : IController
 	CPlayer(ScriptableObject@ object)
 	{
 		@self = object;
+		
 	}
 
 	void onUpdate()
@@ -43,10 +46,15 @@ class CPlayer : IController
 		{
 			transform.position.y -= playerMoveSpeed * deltatime;
 		}
+	}
 
-		if (IsKeyDown(RAGE) and rageCount > 0)
+	void onMessage(ref @message, const ScriptableObject @sender)
+	{
+		CMessage@ msg = cast<CMessage>(message);
+		
+		if( msg !is null && msg.txt == 'ATK' && rageCount > 0)
 		{
-			LoadSprite(self.getOwner(), "rage.png");
+			LoadSprite(self.getOwner(), 'rage.png');
 		}
 	}
 }

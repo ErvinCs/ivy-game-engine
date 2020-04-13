@@ -41,9 +41,9 @@ public:
 		Ivy::ECS::getInstance().addSystem(userSystem);
 
 		renderSystem->init();
-		scriptSystem->init();	
 		collisionSystem->init();
 		collisionGizmos->init();
+		scriptSystem->init();
 		userSystem->init();
 
 		Ivy::JSONManager::addLoadFunction(loadUC);
