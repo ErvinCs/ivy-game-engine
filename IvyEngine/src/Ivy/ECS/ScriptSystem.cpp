@@ -36,6 +36,13 @@ namespace Ivy {
 			if (scriptComponent.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
 				continue;
 
+			if (!scriptComponent.scriptableObject.isAlive())
+			{
+				ECS::getInstance().destroyEntity(object);
+				it--;
+				continue;
+			}
+
 			scriptComponent.scriptableObject.onUpdate();
 		}
 	}

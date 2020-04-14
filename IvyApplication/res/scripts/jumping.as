@@ -5,12 +5,12 @@ class Jumping : IController
 	ScriptableObject@ self;
 	Transform@ transform;
 	Collidable@ collidable;
-	Collidable@ otherCollidable;
+	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
 
 	float moveSpeed = 5;
-	float topMargin = -4;
-	float botMargin = 4;
+	float topMargin = -3;
+	float botMargin = 2;
 	float patrolPosition = 0;
 	bool direction = true;
 
@@ -29,7 +29,7 @@ class Jumping : IController
 			@playerRef = player;
 		}
 		@collidable = FindCollidable(self.getOwner());
-		@otherCollidable = FindCollidable(player.getOwner());
+		@playerCollidable = FindCollidable(player.getOwner());
 
 		if(direction) {
 			transform.position.y += moveSpeed * deltatime;
@@ -45,10 +45,9 @@ class Jumping : IController
 			direction = false;
 		}
 
-		if (AreColliding(collidable, otherCollidable))
+		if (AreColliding(collidable, playerCollidable))
 		{
-			self.sendMessage(CMessage('ATK'), player);
+			self.kill();
 		}
-
 	}
 }

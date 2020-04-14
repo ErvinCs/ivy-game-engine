@@ -3,6 +3,7 @@
 
 #include "ScriptManager.h"
 #include "../Core/Logger.h"
+#include "../ECS/ECS.h"
 
 namespace Ivy {
 
@@ -22,7 +23,7 @@ namespace Ivy {
 		this->referenceCount = 1;
 		this->scriptObject = 0;
 		this->weakReferenceFlag = 0;
-		this->isAlive = true;
+		this->alive = true;
 	}
 
 	ScriptableObject::ScriptableObject(const std::string& name)
@@ -31,7 +32,7 @@ namespace Ivy {
 		this->referenceCount = 1;
 		this->scriptObject = 0;
 		this->weakReferenceFlag = 0;
-		this->isAlive = true;
+		this->alive = true;
 
 	}
 
@@ -53,7 +54,7 @@ namespace Ivy {
 
 	void ScriptableObject::kill()
 	{
-		this->isAlive = false;
+		this->alive = false;		
 	}
 
 	int ScriptableObject::addReference()

@@ -2,8 +2,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": -2.8687524795532227,
-        "centerPositionY": -1.0989837646484375,
+        "centerPositionX": 0.3074626922607422,
+        "centerPositionY": -1.769209384918213,
         "halfScaleX": 1.0,
         "halfScaleY": 1.0,
         "is_trigger": false,
@@ -13,8 +13,8 @@
       "script": "player.as",
       "tag": "Player",
       "transform": {
-        "positionX": -2.8687524795532227,
-        "positionY": -1.0989837646484375,
+        "positionX": 0.3074626922607422,
+        "positionY": -1.769209384918213,
         "rotation": 0.0,
         "scaleX": 2.0,
         "scaleY": 2.0
@@ -50,19 +50,19 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": -0.4907245635986328,
-        "centerPositionY": 2.0,
+        "centerPositionX": -6.628332614898682,
+        "centerPositionY": 5.0,
         "halfScaleX": 1.0,
         "halfScaleY": 0.75,
         "is_trigger": true,
         "rotation": 0.0
       },
-      "renderable": "sprite.png",
+      "renderable": "virus.png",
       "script": "patrol.as",
-      "tag": "Sprite",
+      "tag": "Virus",
       "transform": {
-        "positionX": -0.4907245635986328,
-        "positionY": 2.0,
+        "positionX": -6.628332614898682,
+        "positionY": 5.0,
         "rotation": 0.0,
         "scaleX": 2.0,
         "scaleY": 1.5
@@ -74,8 +74,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": 2.0,
-        "centerPositionY": -3.0,
+        "centerPositionX": 8.0,
+        "centerPositionY": -3.4000000953674316,
         "halfScaleX": 1.0,
         "halfScaleY": 1.0,
         "is_trigger": false,
@@ -85,8 +85,8 @@
       "script": null,
       "tag": "Cat",
       "transform": {
-        "positionX": 2.0,
-        "positionY": -3.0,
+        "positionX": 8.0,
+        "positionY": -3.4000000953674316,
         "rotation": 0.0,
         "scaleX": 2.0,
         "scaleY": 2.0
@@ -97,8 +97,6 @@
   },
   {
     "free": [
-      8,
-      7,
       3,
       4,
       6

@@ -5,7 +5,7 @@ class Patrol : IController
 	ScriptableObject@ self;
 	Transform@ transform;
 	Collidable@ collidable;
-	Collidable@ otherCollidable;
+	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
 
 	float moveSpeed = 5;
@@ -29,7 +29,7 @@ class Patrol : IController
 			@playerRef = player;
 		}
 		@collidable = FindCollidable(self.getOwner());
-		@otherCollidable = FindCollidable(player.getOwner());
+		@playerCollidable = FindCollidable(player.getOwner());
 
 		if(direction) {
 			transform.position.x += moveSpeed * deltatime;
@@ -46,7 +46,7 @@ class Patrol : IController
 		}
 
 		
-		if (AreColliding(collidable, otherCollidable))
+		if (AreColliding(collidable, playerCollidable))
 		{
 			self.sendMessage(CMessage('ATK'), player);
 		}

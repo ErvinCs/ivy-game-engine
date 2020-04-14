@@ -177,6 +177,9 @@ namespace Ivy
 		// Access the owning object through the script. Note that getOwner() returns the entity id
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "uint16 getOwner()", asMETHOD(ScriptableObject, getOwner), asCALL_THISCALL); assert(r >= 0);
 
+		// Kill the ScriptableObject. The alive flag is set to false and onEntityDestroyed will be called by the ECS
+		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void kill()", asMETHOD(ScriptableObject, kill), asCALL_THISCALL); assert(r >= 0);
+
 		// The script can send a message to the other object through this method
 		// Observe the autohandle @+ to tell AngelScript to automatically release the handle after the call
 		// The generic handle type is used to allow the script to pass any object to another script without the application having to know anything about it
