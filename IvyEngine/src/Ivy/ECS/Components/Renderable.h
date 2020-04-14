@@ -15,7 +15,6 @@ namespace Ivy
 
 		Renderable() : Component() {}
 		Renderable(std::string spritePath);
-		
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }

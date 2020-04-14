@@ -68,6 +68,43 @@ namespace Ivy {
 		}
 	}
 
+	void saveCollidableBox(Entity& entity, Json& jsonObject)
+	{
+		Json jsonNull;
+		if (ECS::getInstance().getComponent<CollidableBox>(entity).getEntityId() != entity)
+		{
+			jsonObject["components"]["collidable_box"] = jsonNull;
+		}
+		else {
+			CollidableBox collidable = ECS::getInstance().getComponent<CollidableBox>(entity);
+			jsonObject["components"]["collidable_box"]["centerPositionX"] = collidable.centerPosition.x;
+			jsonObject["components"]["collidable_box"]["centerPositionY"] = collidable.centerPosition.y;
+			jsonObject["components"]["collidable_box"]["rotation"] = collidable.rotation;
+			jsonObject["components"]["collidable_box"]["halfScaleX"] = collidable.halfScale.x;
+			jsonObject["components"]["collidable_box"]["halfScaleY"] = collidable.halfScale.y;
+			jsonObject["components"]["collidable_box"]["is_trigger"] = collidable.isTrigger;
+		}
+	}
+
+	void loadCollidableBox(Entity& entity, Json& current)
+	{
+		if (!current["components"]["collidable_box"].is_null())
+		{
+			float posX, posY, rotation, halfScaleX, halfScaleY;
+			bool isTrigger;
+			current["components"]["collidable_box"]["centerPositionX"].get_to(posX);
+			current["components"]["collidable_box"]["centerPositionY"].get_to(posY);
+			current["components"]["collidable_box"]["rotation"].get_to(rotation);
+			current["components"]["collidable_box"]["halfScaleX"].get_to(halfScaleX);
+			current["components"]["collidable_box"]["halfScaleY"].get_to(halfScaleY);
+			current["components"]["collidable_box"]["is_trigger"].get_to(isTrigger);
+			CollidableBox collidable{ glm::vec2(posX, posY), rotation, glm::vec2(halfScaleX, halfScaleY) };
+			collidable.isTrigger = isTrigger;
+			ECS::getInstance().addComponent<CollidableBox>(entity, collidable);
+
+		}
+	}
+
 	void loadTransform(Entity& entity, Json& current)
 	{
 		if (!current["components"]["transform"].is_null())
@@ -173,11 +210,13 @@ namespace Ivy {
 		SaveFunctions.push_back(saveRenderable);
 		SaveFunctions.push_back(saveScriptComponent);
 		SaveFunctions.push_back(saveTag);
+		SaveFunctions.push_back(saveCollidableBox);
 
 		LoadFunctions.push_back(loadTransform);
 		LoadFunctions.push_back(loadRenderable);
 		LoadFunctions.push_back(loadScriptComponent);
 		LoadFunctions.push_back(loadTag);
+		LoadFunctions.push_back(loadCollidableBox);
 	}
 
 	void JSONManager::LoadEntities(const std::string& path) {

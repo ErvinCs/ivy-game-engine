@@ -36,9 +36,14 @@ namespace Ivy {
 			if (scriptComponent.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
 				continue;
 
+			if (!scriptComponent.scriptableObject.isAlive())
+			{
+				ECS::getInstance().destroyEntity(object);
+				it--;
+				continue;
+			}
+
 			scriptComponent.scriptableObject.onUpdate();
-			
-			//TODO - Execute onCollide() for each script [Once the Collision System is implemented] - 
 		}
 	}
 

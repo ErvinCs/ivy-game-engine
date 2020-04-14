@@ -18,6 +18,7 @@ namespace Ivy {
 		std::string name;
 		asIScriptObject* scriptObject;
 		Entity ownerEntity;
+		bool alive;
 
 		int referenceCount;
 		asILockableSharedBool* weakReferenceFlag;
@@ -37,6 +38,9 @@ namespace Ivy {
 		void setOwner(Entity ownerEntity);
 		Entity getOwner();
 
+		void kill();
+
+		inline bool isAlive() { return alive; }
 		inline const std::string& getName() { return this->name; }
 		inline const void setName(const std::string& name) { this->name = (Paths::scriptsPath / name).string(); }
 		inline const void setFullPath(const std::string& fullPath) { this->name = fullPath; }

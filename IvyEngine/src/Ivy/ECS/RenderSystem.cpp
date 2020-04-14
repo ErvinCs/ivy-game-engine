@@ -7,8 +7,9 @@
 #include "Components/Transform.h"
 #include "../Renderer/RenderCommand.h"
 #include "../Renderer/Renderer.h"
-#include "../Core/Application.h"
-//#include "../ECS/ComponentRegistration.h"
+
+//#include "../Core/Application.h"
+
 
 namespace Ivy {
 	
@@ -37,6 +38,8 @@ namespace Ivy {
 				continue;
 			
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
+
+
 		}
 		//Ivy::Renderer::End();
 	}

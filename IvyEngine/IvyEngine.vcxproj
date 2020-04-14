@@ -140,6 +140,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ivy\ECS\CollidableGizmoSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\CollisionSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\Collidable.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
@@ -572,6 +575,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ivy\ECS\CollidableGizmoSystem.cpp" />
+    <ClCompile Include="src\Ivy\ECS\CollisionSystem.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\Collidable.cpp" />
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
@@ -631,4 +637,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project> 
+</Project>

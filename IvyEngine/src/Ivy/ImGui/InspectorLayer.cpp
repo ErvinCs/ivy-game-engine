@@ -1,13 +1,12 @@
 #include "ivypch.h"
 #include "InspectorLayer.h"
 
-#include "../Core/Logger.h"
-
 #include "imgui.h"
 #include "misc/cpp/imgui_stdlib.h"
 
+#include "../Core/Logger.h"
 #include "../ECS/JSONManager.h"
-
+#include "../ECS/CollidableGizmoSystem.h"
 #include "../Scripting/ScriptManager.h"
 
 
@@ -92,11 +91,11 @@ namespace Ivy {
 							newTransfrom.setComponentId(TransformID);
 							getECS().addComponent<Transform>(entity, newTransfrom);
 							IVY_INFO("Added: Transform=({0},{1}), ({2}, {3}), {4}",
-								getECS().getComponent<Transform>(entity).position.x,
-								getECS().getComponent<Transform>(entity).position.y,
-								getECS().getComponent<Transform>(entity).scale.x,
-								getECS().getComponent<Transform>(entity).scale.y,
-								getECS().getComponent<Transform>(entity).rotation);
+								newTransfrom.position.x,
+								newTransfrom.position.y,
+								newTransfrom.scale.x,
+								newTransfrom.scale.y,
+								newTransfrom.rotation);
 						}
 					}
 					
@@ -134,7 +133,7 @@ namespace Ivy {
 								newRenderable.setComponentId(RenderableID);
 								getECS().addComponent<Renderable>(entity, newRenderable);
 								pngPathTemp = "";
-								IVY_INFO("Added: Renderable Sprite Path={0}", getECS().getComponent<Renderable>(entity).spritePath);
+								IVY_INFO("Added: Renderable Sprite Path={0}", newRenderable.spritePath);
 							}
 						}
 					}
@@ -184,11 +183,61 @@ namespace Ivy {
 									entity);
 								scriptPathTemp = "";
 								IVY_INFO("Added: Script Name={0}, Path={1}", 
-									getECS().getComponent<ScriptComponent>(entity).scriptName,
-									getECS().getComponent<ScriptComponent>(entity).scriptableObject.getName());
+									newScript.scriptName,
+									newScript.scriptableObject.getName());
 							}
 						}
 					}					
+					ImGui::TreePop();
+				}
+
+				if (ImGui::TreeNode("CollidableBox"))
+				{
+					if (getECS().getComponent<CollidableBox>(entity).getComponentId() == CollidableBoxID)
+					{
+						ImGui::Checkbox("Is Trigger", &getECS().getComponent<CollidableBox>(entity).isTrigger);
+						ImGui::InputFloat2("Position", (float*)&getECS().getComponent<CollidableBox>(entity).centerPosition, 2);
+						ImGui::InputFloat("Rotation", (float*)&getECS().getComponent<CollidableBox>(entity).rotation, 2);
+						ImGui::InputFloat2("Scale", (float*)&getECS().getComponent<CollidableBox>(entity).halfScale, 2);
+						ImGui::Text("Note that for the CollidableBox to cover the whole object");
+						ImGui::Text(" it should have half the scale of the transform");
+						
+						//TODO: if rotation changes then update collidable
+						if (ImGui::Button("Remove CollidableBox"))
+						{
+							getECS().removeComponent<CollidableBox>(entity);
+							IVY_INFO("Destroyed CollidableBox on Entity: {0}", entity);
+						}
+					}
+					else
+					{
+						if (ImGui::Button("Add CollidableBox"))
+						{
+							if (getECS().getComponent<Transform>(entity).getComponentId() != TransformID)
+							{
+								Transform newTransfrom = Transform(glm::vec2(1, 1), 0, glm::vec2(1, 1));
+								newTransfrom.setComponentId(TransformID);
+								getECS().addComponent<Transform>(entity, newTransfrom);
+								IVY_INFO("Added: Transform=({0},{1}), ({2}, {3}), {4}",
+									newTransfrom.position.x,
+									newTransfrom.position.y,
+									newTransfrom.scale.x,
+									newTransfrom.scale.y,
+									newTransfrom.rotation);
+							}
+							Transform transform = getECS().getComponent<Transform>(entity);
+							CollidableBox newCollidable = CollidableBox(transform.position, transform.rotation, transform.scale / 2.0f);;
+							newCollidable.setComponentId(CollidableBoxID);
+							getECS().addComponent<CollidableBox>(entity, newCollidable);
+							IVY_INFO("Added: CollidableBox=({0},{1}), ({2}, {3}), {4}, {5}",
+								newCollidable.centerPosition.x,
+								newCollidable.centerPosition.y,
+								newCollidable.halfScale.x,
+								newCollidable.halfScale.y,
+								newCollidable.rotation,
+								newCollidable.isTrigger);
+						}
+					}
 					ImGui::TreePop();
 				}
 
@@ -206,6 +255,7 @@ namespace Ivy {
 			Entity entity = getECS().createEntity();
 			IVY_INFO("Created Entity={0}", entity);
 		}
+		ImGui::Checkbox("Show Gizmos", &CollidableGizmoSystem::showGizmos);
 		if (ImGui::Button("Save"))
 		{
 			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());

@@ -13,6 +13,7 @@
 #include "Components/Renderable.h"
 #include "Components/ScriptComponent.h"
 #include "Components/Tag.h"
+#include "Components/Collidable.h"
 
 #include "../Core/ResourcePaths.h"
 #include "../Core/Logger.h"
@@ -196,10 +197,11 @@ namespace Ivy {
 
 		void registerComponentTypes() {
 			//IVY_CORE_INFO("ECS: Registering Ivy Component Types");
-			this->addComponentType<Transform>();		//TransformID       = 0
-			this->addComponentType<Renderable>();		//RenderableID      = 1
-			this->addComponentType<ScriptComponent>();	//ScriptComponentID = 2	
-			this->addComponentType<Tag>();				//TagID				= 3
+			this->addComponentType<Transform>();		
+			this->addComponentType<Renderable>();		
+			this->addComponentType<ScriptComponent>();	
+			this->addComponentType<Tag>();	
+			this->addComponentType<CollidableBox>();
 		}
 
 		ECS(const ECS&) = delete;

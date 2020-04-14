@@ -130,6 +130,37 @@ namespace Ivy
 
 		// Register FindTransform(uint16). Provides access to the transform component of an Entity if it exists.
 		r = scriptEngine->RegisterGlobalFunction("Transform@ FindTransform(uint16)", asFUNCTION(FindTransform), asCALL_CDECL); assert(r >= 0);
+
+		// Flip the Transform of a scriptable object by 90/180/270 degrees
+		r = scriptEngine->RegisterGlobalFunction("void Rotate90(Transform &)", asFUNCTION(Rotate90Transform), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void Rotate180(Transform &)", asFUNCTION(Rotate180Transform), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void Rotate270(Transform &)", asFUNCTION(Rotate270Transform), asCALL_CDECL); assert(r >= 0);
+	}
+
+	static void RegisterRenderable(asIScriptEngine* scriptEngine)
+	{
+		int r;
+
+		// Register the Renderable component. The scripts cannot create these directly, so there is no factory function.
+		r = scriptEngine->RegisterObjectType("Sprite", 0, asOBJ_REF); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_ADDREF, "void f()", asMETHOD(Renderable, addReference), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_RELEASE, "void f()", asMETHOD(Renderable, release), asCALL_THISCALL); assert(r >= 0);
+
+		r = scriptEngine->RegisterGlobalFunction("Sprite@ InitSprite()", asFUNCTION(Renderable_Factory1), asCALL_CDECL); assert(r >= 0);
+
+		r = scriptEngine->RegisterObjectMethod("Sprite", "Sprite &opAssign(const Sprite &in)",
+			asMETHODPR(Renderable, operator=, (const Renderable &), Renderable &), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite@ f()", asFUNCTION(Renderable_Factory1), asCALL_CDECL); assert(r >= 0);
+
+
+		// Register FindRenderable(uint16). Provides access to the renderable component of an Entity if it exists.
+		r = scriptEngine->RegisterGlobalFunction("Sprite@ FindSprite(uint16)", asFUNCTION(FindRenderable), asCALL_CDECL); assert(r >= 0);
+		// Register LoadNewTexture(Entity, std::string). Changes the texture a renderable of an entity displays with the texture at the given string location
+		r = scriptEngine->RegisterGlobalFunction("void LoadSprite(uint16, string)", asFUNCTION(LoadNewTextureToEntity), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void LoadSprite(Sprite &, string)", asFUNCTION(LoadNewTextureToRenderable), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void FlipX(Sprite &)", asFUNCTION(FlipX), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void FlipY(Sprite &)", asFUNCTION(FlipY), asCALL_CDECL); assert(r >= 0);
+
 	}
 
 	static void RegisterScriptableObject(asIScriptEngine* scriptEngine)
@@ -146,10 +177,18 @@ namespace Ivy
 		// Access the owning object through the script. Note that getOwner() returns the entity id
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "uint16 getOwner()", asMETHOD(ScriptableObject, getOwner), asCALL_THISCALL); assert(r >= 0);
 
+		// Kill the ScriptableObject. The alive flag is set to false and onEntityDestroyed will be called by the ECS
+		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void kill()", asMETHOD(ScriptableObject, kill), asCALL_THISCALL); assert(r >= 0);
+
 		// The script can send a message to the other object through this method
 		// Observe the autohandle @+ to tell AngelScript to automatically release the handle after the call
 		// The generic handle type is used to allow the script to pass any object to another script without the application having to know anything about it
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void sendMessage(ref message, const ScriptableObject @+ to)", asMETHOD(ScriptableObject, sendMessage), asCALL_THISCALL); assert(r >= 0);
+		
+		// Register a method that will allow the script to find an object by its Tag.
+		// This returns the object as const handle, as the script should only be allowed to directly modify its owner object.
+		// The @+ that tells AngelScript to automatically increase the refcount
+		r = scriptEngine->RegisterGlobalFunction("ScriptableObject @+ FindObjectByTag(const string &in)", asFUNCTION(FindObjectByTag), asCALL_CDECL); assert(r >= 0);
 	}
 
 	static void RegisterInputHandler(asIScriptEngine* scriptEngine)
@@ -161,5 +200,31 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("bool IsMouseButtonDown(uint)", asFUNCTION(IsMouseButtonDown), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("float GetMouseX()", asFUNCTION(GetMouseX), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("float GetMouseY()", asFUNCTION(GetMouseY), asCALL_CDECL); assert(r >= 0);
+	}
+
+	static void RegisterCollision(asIScriptEngine* scriptEngine)
+	{
+		int r;
+		// Register the Renderable component. The scripts cannot create these directly, so there is no factory function.
+		r = scriptEngine->RegisterObjectType("Collidable", 0, asOBJ_REF); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_ADDREF, "void f()", asMETHOD(CollidableBox, addReference), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_RELEASE, "void f()", asMETHOD(CollidableBox, release), asCALL_THISCALL); assert(r >= 0);
+
+		r = scriptEngine->RegisterGlobalFunction("Collidable@ InitCollidable()", asFUNCTION(Collidable_Factory1), asCALL_CDECL); assert(r >= 0);
+
+		r = scriptEngine->RegisterObjectMethod("Collidable", "Collidable &opAssign(const Collidable &in)",
+			asMETHODPR(CollidableBox, operator=, (const CollidableBox &), CollidableBox &), asCALL_THISCALL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_FACTORY, "Collidable@ f()", asFUNCTION(Collidable_Factory1), asCALL_CDECL); assert(r >= 0);
+
+		// Register FindRenderable(uint16). Provides access to the renderable component of an Entity if it exists.
+		r = scriptEngine->RegisterGlobalFunction("Collidable@ FindCollidable(uint16)", asFUNCTION(FindCollidable), asCALL_CDECL); assert(r >= 0);
+		// Register AreColliding functions. Checks for entity-entity and collidable-collidable and entity-collidable.
+		r = scriptEngine->RegisterGlobalFunction("bool AreColliding(uint16, uint16)", asFUNCTION(AreEntitiesColliding), asCALL_CDECL);
+		r = scriptEngine->RegisterGlobalFunction("bool AreColliding(Collidable &in, Collidable &in)", asFUNCTION(AreCollidablesColliding), asCALL_CDECL);
+		r = scriptEngine->RegisterGlobalFunction("bool AreColliding(uint16, Collidable &in)", asFUNCTION(IsEntityCollidingCollidable), asCALL_CDECL);
+		// Flip the Transform of a scriptable object by 90/180/270 degrees
+		r = scriptEngine->RegisterGlobalFunction("void Rotate90(Collidable &)", asFUNCTION(Rotate90Collidable), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void Rotate180(Collidable &)", asFUNCTION(Rotate180Collidable), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterGlobalFunction("void Rotate270(Collidable &)", asFUNCTION(Rotate270Collidable), asCALL_CDECL); assert(r >= 0);
 	}
 }

@@ -31,10 +31,13 @@
 #include "Ivy/ECS/ECS.h"
 #include "Ivy/ECS/RenderSystem.h"
 #include "Ivy/ECS/ScriptSystem.h"
+#include "Ivy/ECS/CollisionSystem.h"
+#include "Ivy/ECS/CollidableGizmoSystem.h"
 #include "Ivy/ECS/Components/Transform.h"
 #include "Ivy/ECS/Components/Renderable.h"
 #include "Ivy/ECS/Components/ScriptComponent.h"
 #include "Ivy/ECS/Components/Tag.h"
+#include "Ivy/ECS/Components/Collidable.h"
 #include "Ivy/ECS/JSONManager.h"
 
 //-------------------- Scripting --------------------

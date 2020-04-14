@@ -2,13 +2,13 @@
 #include "ScriptManager.h"
 
 #include <new>
-
 #include "ASRegistrationCalls.h"
+#include "../angelscript/add_on/scriptstdstring/scriptstdstring.h"
+#include "../angelscript/add_on/scriptbuilder/scriptbuilder.h"
+#include "../angelscript/add_on/weakref/weakref.h"
 #include "../Core/Logger.h"
 
 namespace Ivy {
-
-
 
 	ScriptManager::~ScriptManager()
 	{
@@ -44,17 +44,24 @@ namespace Ivy {
 		// Register deltaTime. Currently a float variable.
 		RegisterTimestep(scriptEngine);
 
-		// Register ScriptableObject. The scripts cannot create these directly, so there is no factory function.
-		RegisterScriptableObject(scriptEngine);
-
 		// Register InputHandler function handles. Note that InputHandler provides only static functions which are registered as global functions.
 		RegisterInputHandler(scriptEngine);
 
 		// Register Vec2 GLM Type
 		RegisterVec2(scriptEngine);
 
-		// Register the Transform component. The scripts cannot create these directly, so there is no factory function.
+		// The scripts cannot create these directly, so there is no factory function:
+		// Register the Transform component
 		RegisterTransform(scriptEngine);
+
+		// Register the Sprite component
+		RegisterRenderable(scriptEngine);
+
+		// Register collision checking
+		RegisterCollision(scriptEngine);
+
+		// Register ScriptableObject
+		RegisterScriptableObject(scriptEngine);
 
 		// The game engine will determine the class that represents the controller by checking if the class implements the IController interface. 
 		// No methods are registered for this interface, as the script shouldn't be required to implement the methods. 
@@ -128,12 +135,12 @@ namespace Ivy {
 		else if (message.type == asMSGTYPE_INFORMATION)
 		{
 			type = "INFO";
-			IVY_CORE_INFO("ScriptManager: Message={4}, Section={0}, Position=({1},{2}), Type={3}", message.section, message.row, message.col, message.type, message.message);
+			IVY_CORE_WARN("ScriptManager: Message={4}, Section={0}, Position=({1},{2}), Type={3}", message.section, message.row, message.col, message.type, message.message);
 		}
 
 		if (message.type == asMSGTYPE_ERROR)
 			hasCompileErrors = true;
-		IVY_CORE_INFO("ScriptManager: HasCompileErrors={0}", hasCompileErrors);
+		IVY_CORE_WARN("ScriptManager: HasCompileErrors={0}", hasCompileErrors);
 	}
 
 	asIScriptContext* ScriptManager::getScriptContextFromPool(asIScriptFunction* function)
@@ -271,7 +278,7 @@ namespace Ivy {
 
 		// Find the optional event handlers
 		controller->onUpdateMethod = type->GetMethodByDecl("void onUpdate()");
-		controller->onMessageMethod = type->GetMethodByDecl("void onMessage(ref @msg, const CGameObj @sender)");
+		controller->onMessageMethod = type->GetMethodByDecl("void onMessage(ref @message, const ScriptableObject @sender)");
 
 		// Add the cache as user data to the type for quick access
 		type->SetUserData(controller);
