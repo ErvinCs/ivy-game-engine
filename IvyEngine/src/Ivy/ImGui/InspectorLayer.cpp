@@ -8,20 +8,61 @@
 #include "../ECS/JSONManager.h"
 #include "../ECS/CollidableGizmoSystem.h"
 #include "../Scripting/ScriptManager.h"
-
+#include "../Renderer/OrthoCamera.h"
+#include "../Core/Application.h"
 
 namespace Ivy {
 	using ECSPTR = ECS & (*)(void);
 	ECSPTR getECS = &ECS::getInstance;
+
+	InspectorLayer::InspectorLayer()
+	{
+		TransformID = ECS::getInstance().getComponentTypes().find(typeid(Transform).name())->second;
+		RenderableID = ECS::getInstance().getComponentTypes().find(typeid(Renderable).name())->second;
+		ScriptComponentID = ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second;
+		TagID = ECS::getInstance().getComponentTypes().find(typeid(Tag).name())->second;
+		CollidableBoxID = ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second;
+	}
 
 	void InspectorLayer::imGuiRender()
 	{
 		static std::string pngPathTemp;
 		static std::string tagTemp, newTagTemp;
 		static std::string scriptPathTemp;
+
+		//Menu Bar
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("Project"))
+			{
+				if (ImGui::MenuItem("Save"))
+				{
+					getECS().saveEntities();
+				}
+				if (ImGui::MenuItem("Exit"))
+				{
+					Application::getInstance().isRunning = false;
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
+		}
+
+		ImGui::Begin("Inspector");
+		// Camera
+		if (ImGui::CollapsingHeader("Camera"))
+		{
+			ImGui::InputFloat2("Position", (float*)&Application::GetCamera().position, 2);
+			ImGui::InputFloat("Rotation", (float*)&Application::GetCamera().rotation, 0.5f);
+			ImGui::RadioButton("Unbind Camera", &Application::GetCamera().owner, -1);
+		}
+
+		// Entities
 		for (Entity& entity : getECS().getEntities()) 
 		{
 			ImGui::PushID("Ivy: Entity#" + entity);
+	
+			
 			// -------------------- Display Tag --------------------
 			if (getECS().getComponent<Tag>(entity).getComponentId() == TagID && tagTemp.size() > 0)
 			{
@@ -76,7 +117,7 @@ namespace Ivy {
 					{
 						ImGui::InputFloat2("Position", (float*)&getECS().getComponent<Transform>(entity).position, 2);
 						ImGui::InputFloat2("Scale", (float*)&getECS().getComponent<Transform>(entity).scale, 2);
-						ImGui::InputFloat("Rotation", (float*)&getECS().getComponent<Transform>(entity).rotation, 2);
+						ImGui::InputFloat("Rotation", (float*)&getECS().getComponent<Transform>(entity).rotation, 0.5f);
 						if (ImGui::Button("Remove Transform"))
 						{
 							getECS().removeComponent<Transform>(entity);
@@ -202,7 +243,6 @@ namespace Ivy {
 						ImGui::Text("Note that for the CollidableBox to cover the whole object");
 						ImGui::Text(" it should have half the scale of the transform");
 						
-						//TODO: if rotation changes then update collidable
 						if (ImGui::Button("Remove CollidableBox"))
 						{
 							getECS().removeComponent<CollidableBox>(entity);
@@ -240,7 +280,8 @@ namespace Ivy {
 					}
 					ImGui::TreePop();
 				}
-
+				// -------------------- Camera Binding -----------------
+				ImGui::RadioButton("Bind Camera", &Application::GetCamera().owner, entity);
 				// -------------------- Delete Entity --------------------
 				if (ImGui::Button("Delete Entity"))
 				{
@@ -258,8 +299,8 @@ namespace Ivy {
 		ImGui::Checkbox("Show Gizmos", &CollidableGizmoSystem::showGizmos);
 		if (ImGui::Button("Save"))
 		{
-			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());
-			IVY_INFO("Entities saved. Location: {0}", Paths::entitiesRepoPath.string());
+			getECS().saveEntities();
 		}
+		ImGui::End();
 	}
 }

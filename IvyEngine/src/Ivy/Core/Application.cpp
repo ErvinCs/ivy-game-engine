@@ -18,11 +18,10 @@ namespace Ivy {
 
 	Application* Application::instance = nullptr;
 
-
+	OrthoCamera Application::camera = OrthoCamera(-12.8f, 12.8f, -6.4f, 6.4f);
 
 	Application::Application()
 	{
-		//camera = OrthoCamera(-12.8f, 12.8f, -6.4f, 6.4f);
 		globalTime = 0;
 
 		int success;
@@ -67,7 +66,8 @@ namespace Ivy {
 
 	void Application::init()
 	{
-		//ECS::getInstance().loadEntities();
+		ECS::getInstance().loadEntities();
+		ECS::getInstance().initSystems();
 	}
 
 	void Application::run()
@@ -80,10 +80,10 @@ namespace Ivy {
 			globalTime = time - lastFrameTime;
 			lastFrameTime = time;
 
+			ECS::getInstance().updateSystems(globalTime);
+
 			for (SortingLayer* layer : layerStack)
 				layer->update(globalTime);
-
-			//ECS::getInstance().updateSystems(globalTime);
 
 			imGuiLayer->begin();
 			for (SortingLayer* layer : layerStack)
@@ -96,7 +96,7 @@ namespace Ivy {
 
 	void Application::shutdown()
 	{
-		//ECS::getInstance().saveEntities();
+		ECS::getInstance().saveEntities();
 		Renderer::Shutdown();
 	}
 
@@ -108,10 +108,6 @@ namespace Ivy {
 
 	void Application::onEvent(Event& event)
 	{
-		// TODO - Propagate event through layers (iterate from end to begin)
-		//IVY_CORE_WARN("OnEvent: {0}", event.toString());
-		//event();
-		//TODO - call event in the update loop at some event processing stage, use EventHandles
 	}
 
 	bool Application::onWindowClose(WindowCloseEvent& event)

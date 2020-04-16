@@ -16,6 +16,8 @@ namespace Ivy {
 		static void InitFunctions();
 		static void LoadEntities(const std::string& path);
 		static void SaveEntities(const std::string& path);
+		static void LoadCamera(const std::string& path);
+		static void SaveCamera(const std::string& path);
 
 		static void addLoadFunction(std::function<void(Entity&, nlohmann::json&)> func);
 		static void addSaveFunction(std::function<void(Entity&, nlohmann::json&)> func);

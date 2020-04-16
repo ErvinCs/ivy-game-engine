@@ -7,6 +7,8 @@
 
 #include "ECS.h"
 #include "../Core/Logger.h"
+#include "../Core//Application.h"
+#include "../Renderer/OrthoCamera.h"
 
 
 namespace Ivy {
@@ -14,6 +16,7 @@ namespace Ivy {
 
 	std::vector<std::function<void(Entity&, nlohmann::json&)>> JSONManager::SaveFunctions;
 	std::vector<std::function<void(Entity&, nlohmann::json&)>> JSONManager::LoadFunctions;
+
 
 	void saveTransform(Entity& entity, Json& jsonObject)
 	{
@@ -191,6 +194,47 @@ namespace Ivy {
 		finalObject[entryCounter] = jsonFree;
 
 		writer << std::setw(2) << finalObject << std::endl;
+		writer.close();
+	}
+
+	void JSONManager::LoadCamera(const std::string & path)
+	{
+		IVY_INFO("JSONManager: Loading camera from location: {0}", path);
+
+		std::ifstream reader(path);
+		Json json;
+		reader >> json;
+		reader.close();
+
+		float posX, posY, posZ, rotation;
+		int owner;
+		json["camera"]["position_x"].get_to(posX);
+		json["camera"]["position_y"].get_to(posY);
+		json["camera"]["position_z"].get_to(posZ);
+		json["camera"]["rotation"].get_to(rotation);
+		json["camera"]["owner"].get_to(owner);
+		Application::GetCamera().setPosition(glm::vec3(posX, posY, posZ));
+		Application::GetCamera().setRotation(rotation);
+		Application::GetCamera().setOwner(owner);
+	}
+
+	void JSONManager::SaveCamera(const std::string & path)
+	{
+		IVY_INFO("JSONManager: Saving camera to location: {0}", path);
+
+		Json jsonObject;
+
+		std::ofstream writer(path);
+
+		OrthoCamera camera = Application::GetCamera();
+
+		jsonObject["camera"]["position_x"] = camera.getPosition().x;
+		jsonObject["camera"]["position_y"] = camera.getPosition().y;
+		jsonObject["camera"]["position_z"] = camera.getPosition().z;
+		jsonObject["camera"]["rotation"]   = camera.getRotation();
+		jsonObject["camera"]["owner"] = camera.getOwner();
+
+		writer << std::setw(2) << jsonObject << std::endl;
 		writer.close();
 	}
 

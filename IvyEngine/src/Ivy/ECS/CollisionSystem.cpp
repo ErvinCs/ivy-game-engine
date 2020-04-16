@@ -61,7 +61,24 @@ namespace Ivy
 				if (B.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second)
 					continue;
 
-				glm::vec2 T = A.centerPosition - B.centerPosition;			
+				// Distance between the object centers
+				glm::vec2 T = A.centerPosition - B.centerPosition;
+
+				// Check if the objects are close to eachother and ignore other computations otherwise
+				maxDistA = A.halfScale.x > A.halfScale.y ? A.halfScale.x + 0.5f : A.halfScale.y + 0.5f;
+				maxDistB = B.halfScale.x > B.halfScale.y ? B.halfScale.x + 0.5f : B.halfScale.y + 0.5f;
+
+				if (glm::length(T) > maxDistA + maxDistB)
+				{
+					const bool areColliding = A.isCollidingWith.find(otherObject) != A.isCollidingWith.end();
+					if (areColliding)
+					{
+						A.isCollidingWith.erase(otherObject);
+						B.isCollidingWith.erase(object);
+					}
+					continue;
+				}
+						
 				// Rectangles A and B collide iff and only if the 4 cases bellow are all false
 				if (glm::abs(glm::dot(T, A.unitX)) > A.halfScale.x + glm::abs(glm::dot(B.halfScale.x * B.unitX, A.unitX)) +
 					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitX)) ||
