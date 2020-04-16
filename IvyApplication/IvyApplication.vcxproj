@@ -141,25 +141,6 @@
       <Project>{F35D2C1B-5FC8-E091-A806-923714B0BEE6}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="res\camera.json" />
-    <None Include="res\entities.json" />
-    <None Include="res\scripts\common.as" />
-    <None Include="res\scripts\jumping.as" />
-    <None Include="res\scripts\patrol.as" />
-    <None Include="res\scripts\player.as" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\textures\cat1.png" />
-    <Image Include="res\textures\jmp-enemy.png" />
-    <Image Include="res\textures\ninja.png" />
-    <Image Include="res\textures\platform-20.png" />
-    <Image Include="res\textures\rage.png" />
-    <Image Include="res\textures\ramen.png" />
-    <Image Include="res\textures\sprite.png" />
-    <Image Include="res\textures\tile.png" />
-    <Image Include="res\textures\virus.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
