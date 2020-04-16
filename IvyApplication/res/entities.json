@@ -2,8 +2,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": 0.3074626922607422,
-        "centerPositionY": -1.769209384918213,
+        "centerPositionX": -8.639763832092285,
+        "centerPositionY": -3.4745495319366455,
         "halfScaleX": 1.0,
         "halfScaleY": 1.0,
         "is_trigger": false,
@@ -13,8 +13,8 @@
       "script": "player.as",
       "tag": "Player",
       "transform": {
-        "positionX": 0.3074626922607422,
-        "positionY": -1.769209384918213,
+        "positionX": -8.639763832092285,
+        "positionY": -3.4745495319366455,
         "rotation": 0.0,
         "scaleX": 2.0,
         "scaleY": 2.0
@@ -50,7 +50,7 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": -6.628332614898682,
+        "centerPositionX": 0.8640727996826172,
         "centerPositionY": 5.0,
         "halfScaleX": 1.0,
         "halfScaleY": 0.75,
@@ -61,7 +61,7 @@
       "script": "patrol.as",
       "tag": "Virus",
       "transform": {
-        "positionX": -6.628332614898682,
+        "positionX": 0.9505138397216797,
         "positionY": 5.0,
         "rotation": 0.0,
         "scaleX": 2.0,

@@ -4,7 +4,8 @@
 #include "Application.h"
 
 #ifdef IVY_PLATFORM_WINDOWS
-
+#include <stdlib.h>
+#include <crtdbg.h>
 // Return an application from IvyApp in IvyApplication project
 extern Ivy::Application* Ivy::CreateApp();
 
@@ -13,6 +14,7 @@ int main(int argc, char** argv)
 {
 #ifdef _MSC_VER
 	// Detect memory leaks
+#define _CRTDBG_MAP_ALLOC
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
 	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
 	_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
@@ -30,6 +32,7 @@ int main(int argc, char** argv)
 	application->run();
 	application->shutdown();
 	delete application;
+	_CrtDumpMemoryLeaks();
 
 	return 0;
 }

@@ -5,10 +5,11 @@
 #include "Component.h"
 #include "Components/Renderable.h"
 #include "Components/Transform.h"
+#include "CollidableGizmoSystem.h"
 #include "../Renderer/RenderCommand.h"
 #include "../Renderer/Renderer.h"
 
-//#include "../Core/Application.h"
+#include "../Core/Application.h"
 
 
 namespace Ivy {
@@ -16,15 +17,14 @@ namespace Ivy {
 	void RenderSystem::init()
 	{
 		IVY_CORE_INFO("RenderSystem: Initializing System");
-		RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
+		RenderCommand::setClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		RenderCommand::clear();
 	}
 
 	void RenderSystem::update(float deltatime)
 	{
-		//Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1 });
-		//Ivy::RenderCommand::clear();
-		//Ivy::Renderer::Begin(Application::GetApplication().getCamera());
+		RenderCommand::clear();
+		Renderer::Begin(Application::GetCamera());
 		for (auto& it = entities->begin(); it != entities->end(); it++)
 		{
 			auto& object = *it;
@@ -38,10 +38,9 @@ namespace Ivy {
 				continue;
 			
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
-
-
 		}
-		//Ivy::Renderer::End();
+		if (!CollidableGizmoSystem::showGizmos)
+			Renderer::End();
 	}
 
 }

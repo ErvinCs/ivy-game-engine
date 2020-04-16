@@ -1359,6 +1359,7 @@
     <ClInclude Include="src\Ivy\ECS\Components\Collidable.h" />
     <ClInclude Include="src\Ivy\ECS\CollisionSystem.h" />
     <ClInclude Include="src\Ivy\ECS\CollidableGizmoSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\CameraSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1481,5 +1482,13 @@
     <ClCompile Include="src\Ivy\ECS\Components\Collidable.cpp" />
     <ClCompile Include="src\Ivy\ECS\CollisionSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\CollidableGizmoSystem.cpp" />
+    <ClCompile Include="src\Ivy\ECS\CameraSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\collBox.png" />
+    <Image Include="res\textures\blank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\base.glsl" />
   </ItemGroup>
 </Project>

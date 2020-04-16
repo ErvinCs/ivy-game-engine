@@ -10,40 +10,18 @@ class TestLayer : public Ivy::SortingLayer
 {
 private:
 	//Systems
-	std::shared_ptr<Ivy::System> renderSystem    = std::make_shared<Ivy::RenderSystem>(Ivy::ECS::getInstance().getEntities());
-	std::shared_ptr<Ivy::System> scriptSystem    = std::make_shared<Ivy::ScriptSystem>(Ivy::ECS::getInstance().getEntities());
-	std::shared_ptr<Ivy::System> collisionSystem = std::make_shared<Ivy::CollisionSystem>(Ivy::ECS::getInstance().getEntities());
-	std::shared_ptr<Ivy::System> collisionGizmos = std::make_shared<Ivy::CollidableGizmoSystem>(Ivy::ECS::getInstance().getEntities());
 	std::shared_ptr<Ivy::System> userSystem      = std::make_shared<UserComponentSystem>(Ivy::ECS::getInstance().getEntities());
 
-
-private:
-	//Camera
 	Ivy::OrthoCamera camera;
-
-	// Screen Borders - Used for ImGui
-	float leftBorder = 12.3f;
-	float rightBorder = -11.8f;
-	float topBorder = 6.4f;
-	float botBorder = -6.4f;
-
 public:
-	TestLayer() : SortingLayer("Test"), camera(-12.8f, 12.8f, -6.4f, 6.4f)
+	TestLayer() : SortingLayer("Test")
 	{
 		IVY_TRACE("Creating TestLayer");
-		
-		Ivy::ECS::getInstance().loadEntities();
 
-		Ivy::ECS::getInstance().addSystem(renderSystem);
-		Ivy::ECS::getInstance().addSystem(scriptSystem);
-		Ivy::ECS::getInstance().addSystem(collisionSystem);
-		Ivy::ECS::getInstance().addSystem(collisionGizmos);
+		camera = Ivy::Application::GetCamera();
+
 		Ivy::ECS::getInstance().addSystem(userSystem);
 
-		renderSystem->init();
-		collisionSystem->init();
-		collisionGizmos->init();
-		scriptSystem->init();
 		userSystem->init();
 
 		Ivy::JSONManager::addLoadFunction(loadUC);
@@ -52,19 +30,6 @@ public:
 
 	void update(Ivy::Timestep ts) override
 	{
-		// Render
-		Ivy::RenderCommand::setClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-		Ivy::RenderCommand::clear();
-		Ivy::Renderer::Begin(camera);
-		renderSystem->update(ts);
-		collisionGizmos->update(ts);
-		Ivy::Renderer::End();
-
-		// Script
-		scriptSystem->update(ts);
-
-		collisionSystem->update(ts);
-
 		// User System
 		userSystem->update(ts);
 	}
@@ -128,8 +93,6 @@ public:
 	{
 	}
 };
-
-
 
 class IvyApp : public Ivy::Application
 {

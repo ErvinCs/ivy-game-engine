@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <stdint.h>
+#include <fstream>
 
 #include "EntityContainer.h"
 #include "Component.h"
@@ -20,6 +21,9 @@
 #include "JSONManager.h"
 #include "RenderSystem.h"
 #include "ScriptSystem.h"
+#include "CollisionSystem.h"
+#include "CollidableGizmoSystem.h"
+#include "CameraSystem.h"
 
 namespace Ivy {
 
@@ -58,14 +62,29 @@ namespace Ivy {
 				JSONManager::LoadEntities(Paths::entitiesRepoPath.string());
 			}
 			else {
-				IVY_CORE_WARN("ECS: Entity JSON repository not found! Path accessed: {0}", Paths::entitiesRepoPath.string());
+				std::ofstream writer(Paths::entitiesRepoPath.string());
+				writer.close();
+				IVY_CORE_INFO("ECS: Entitiy JSON file was not found. Creating empty entities.json.");
+			}
+			IVY_CORE_INFO("ECS: Loading camera from {0}", Paths::cameraRepoPath.string());
+			if (std::filesystem::exists(Paths::cameraRepoPath)) {
+				JSONManager::LoadCamera(Paths::cameraRepoPath.string());
+			}
+			else {
+				std::ofstream writer(Paths::cameraRepoPath.string());
+				writer.close();
+				IVY_CORE_INFO("ECS: Camera JSON file was not found. Creating empty camera.json.");
 			}
 		}
 
 		void saveEntities() {
 			IVY_CORE_INFO("ECS: Saving Entities to {0}", Paths::entitiesRepoPath.string());
 			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());
+			IVY_CORE_INFO("ECS: Saving Camera to {0}", Paths::cameraRepoPath.string());
+			JSONManager::SaveCamera(Paths::cameraRepoPath.string());
 		}
+
+
 
 		int getSizeEntities() {
 			return this->entities.size();
@@ -158,7 +177,7 @@ namespace Ivy {
 			systems.push_back(std::move(system));
 		}
 
-		/*void updateSystems(float ts) {
+		void updateSystems(float ts) {
 			for (std::shared_ptr<System> system : systems)
 			{
 				system->update(ts);
@@ -166,11 +185,24 @@ namespace Ivy {
 		}
 
 		void initSystems() {
-			std::shared_ptr<Ivy::System> renderSystem = std::make_shared<RenderSystem>(entities);
-			std::shared_ptr<Ivy::System> scriptSystem = std::make_shared<ScriptSystem>(entities);
-			systems.push_back(renderSystem);
-			systems.push_back(scriptSystem);
-		}*/
+			std::shared_ptr<System> renderSystem    = std::make_shared<RenderSystem>(entities);
+			std::shared_ptr<System> scriptSystem    = std::make_shared<ScriptSystem>(entities);
+			std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>(entities);
+			std::shared_ptr<System> collisionGizmos = std::make_shared<CollidableGizmoSystem>(entities);
+			std::shared_ptr<System> cameraSystem    = std::make_shared<CameraSystem>(entities);
+			
+			renderSystem->init();
+			collisionSystem->init();
+			collisionGizmos->init();
+			scriptSystem->init();
+			cameraSystem->init();
+
+			addSystem(renderSystem);
+			addSystem(collisionSystem);
+			addSystem(collisionGizmos);
+			addSystem(scriptSystem);
+			addSystem(cameraSystem);
+		}
 
 
 	private:
@@ -189,10 +221,6 @@ namespace Ivy {
 
 			// Component Types
 			this->registerComponentTypes();
-			
-
-			// Init systems
-			//this->initSystems();
 		}
 
 		void registerComponentTypes() {

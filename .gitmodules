@@ -1,14 +1,14 @@
 [submodule "IvyEngine/vendor/spdlog"]
 	path = IvyEngine/vendor/spdlog
-	url = https://github.com/gabime/spdlog
+	url = https://github.com/ErvinCs/spdlog
 	branch = master
 [submodule "IvyEngine/vendor/glm"]
 	path = IvyEngine/vendor/glm
-	url = https://github.com/g-truc/glm
+	url = https://github.com/ErvinCs/glm
 	branch = master
 [submodule "IvyEngine/vendor/glfw"]
 	path = IvyEngine/vendor/glfw
-	url = https://github.com/glfw/glfw
+	url = https://github.com/ErvinCs/glfw
 	branch = master
 [submodule "IvyEngine/vendor/imgui"]
 	path = IvyEngine/vendor/imgui

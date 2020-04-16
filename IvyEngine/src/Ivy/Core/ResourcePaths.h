@@ -10,9 +10,11 @@ namespace Paths {
 	// Path to the texture used by shaders in the absence of specification of other textures
 	static const std::filesystem::path baseTexturePath = std::filesystem::absolute(std::filesystem::current_path() / ".." / "IvyEngine" / "res" / "textures" / "blank.png");
 	// Path to the texture used by collidables to display their area
-	static const std::filesystem::path collidablePath = std::filesystem::absolute(std::filesystem::current_path() / ".." / "IvyEngine" / "res" / "textures" / "coll.png");
+	static const std::filesystem::path collidablePath = std::filesystem::absolute(std::filesystem::current_path() / ".." / "IvyEngine" / "res" / "textures" / "collBox.png");
 	// Path to the directory of texture resources
 	static const std::filesystem::path texturesPath = std::filesystem::absolute(std::filesystem::current_path() / "res" / "textures" / "");
 	// Path to the directory of AngelScript script resources
 	static const std::filesystem::path scriptsPath = std::filesystem::absolute(std::filesystem::current_path() / "res" / "scripts" / "");
+	// Path to camera.json. Holds the data for the gloval orthographic camera 
+	static const std::filesystem::path cameraRepoPath = std::filesystem::absolute(std::filesystem::current_path() / "res" / "camera.json");
 }

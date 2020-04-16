@@ -5,7 +5,7 @@
 
 namespace Ivy {
 
-	OrthoCamera::OrthoCamera(const float left, const float right, const float bottom, const float top)
+	OrthoCamera::OrthoCamera(float left, float right, float bottom, float top)
 		: projMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), viewMatrix(1.0f)
 	{
 		viewProjMatrix = projMatrix * viewMatrix;
@@ -19,4 +19,11 @@ namespace Ivy {
 		viewMatrix = glm::inverse(transform);
 		viewProjMatrix = projMatrix * viewMatrix;
 	}
+
+	// Needs testing
+	//void OrthoCamera::zoomCamera(float factor)
+	//{
+	//	projMatrix *= factor;
+	//	calculateViewMatrix();
+	//}
 }

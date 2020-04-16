@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ivy\ECS\CameraSystem.h" />
     <ClInclude Include="src\Ivy\ECS\CollidableGizmoSystem.h" />
     <ClInclude Include="src\Ivy\ECS\CollisionSystem.h" />
     <ClInclude Include="src\Ivy\ECS\Components\Collidable.h" />
@@ -575,6 +576,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ivy\ECS\CameraSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\CollidableGizmoSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\CollisionSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\Collidable.cpp" />
@@ -633,6 +635,13 @@
     <ProjectReference Include="vendor\angelscript\AngelScript.vcxproj">
       <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\blank.png" />
+    <Image Include="res\textures\collBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\base.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

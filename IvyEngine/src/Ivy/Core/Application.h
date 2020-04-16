@@ -14,8 +14,8 @@
 #include "../ImGui/InspectorLayer.h"
 #include "../Scripting/ScriptManager.h"
 
-//#include "../Renderer/OrthoCamera.h"
-//#include "../ECS/JSONManager.h"
+#include "../Renderer/OrthoCamera.h"
+#include "../ECS/JSONManager.h"
 
 namespace Ivy {
 
@@ -25,16 +25,16 @@ namespace Ivy {
 	{
 	private:
 		static Application* instance;
+		static OrthoCamera camera;
 		SortingLayerStack layerStack;
 		std::unique_ptr<Window> window;
-		bool isRunning = true;
 		ImGuiLayer* imGuiLayer;
 		InspectorLayer* inspectorLayer;
 		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
-		//OrthoCamera camera;
-		
+
 	public:
+		bool isRunning = true;
 		float globalTime;
 
 		inline static Application& getInstance()
@@ -53,11 +53,9 @@ namespace Ivy {
 		void onEvent(Event& event);
 
 		inline Window& getWindow() { return *window; }
+
 		inline static Application& GetApplication() { return *instance; }
-		
-		//inline OrthoCamera& getCamera() {
-		//	return this->camera;
-		//}
+		inline static OrthoCamera& GetCamera() { return camera; }
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 
