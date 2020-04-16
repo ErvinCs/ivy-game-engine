@@ -6,6 +6,9 @@ namespace Ivy {
 
 	class CollisionSystem : public System
 	{
+	private:
+		float maxDistA;
+		float maxDistB;
 	public:
 		CollisionSystem() = default;
 		CollisionSystem(EntityContainer& entities)
