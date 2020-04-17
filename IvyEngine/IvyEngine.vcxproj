@@ -140,6 +140,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ivy\PCG\DesignElements\LevelElement.h" />
+    <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
+    <ClInclude Include="src\Ivy\PCG\FI2Pop.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
@@ -177,6 +180,9 @@
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Ivy\ImGui\InspectorLayer.h" />
+    <ClInclude Include="src\Ivy\PCG\Individual.h" />
+    <ClInclude Include="src\Ivy\PCG\Population.h" />
+    <ClInclude Include="src\Ivy\PCG\DesignElement.h" />
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
     <ClInclude Include="src\Ivy\Renderer\Context.h" />
     <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
@@ -616,6 +622,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ivy\PCG\DesignElements\LevelElement.cpp" />
+    <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
+    <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp" />
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
@@ -635,6 +644,8 @@
     <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp" />
     <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Ivy\ImGui\InspectorLayer.cpp" />
+    <ClCompile Include="src\Ivy\PCG\Individual.cpp" />
+    <ClCompile Include="src\Ivy\PCG\Population.cpp" />
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
     <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
     <ClCompile Include="src\Ivy\Renderer\IndexBuffer.cpp" />
