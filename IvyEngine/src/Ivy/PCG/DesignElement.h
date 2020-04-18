@@ -10,8 +10,20 @@
 #include "../ECS/Components/ScriptComponent.h"
 
 namespace Ivy {
+	enum ElementType
+	{
+		Hallway,
+		VerticalWall,
+		HorizontalWall,
+		Pillar,
+		Hole,
+		RangedEnemy
+	};
+
     class DesignElement
 	{
+	protected:
+		ElementType elementType;
 	public:
 		Entity entity;
 		Tag tag{};
@@ -19,40 +31,35 @@ namespace Ivy {
 		Renderable renderable{};
 		CollidableBox collidable{};
 		ScriptComponent scriptComponent{};
+
+		const static int ElementTypeCount = 6;
+		const static int HostileTypeCount = 2;
 	public:
-		//TODO: Rework Constructors
-		DesignElement()
-		{
-			this->position = glm::vec2(1.0f, 1.0f);
-			this->rotation = 0.0f;
-			this->scale = glm::vec2(1.0f, 1.0f);
-		}
-		DesignElement(glm::vec2 position, float rotation, glm::vec2 scale)
-		{
-			this->position = position;
-			this->rotation = rotation;
-			this->scale = scale;
-		}
+		DesignElement() = default;
 		DesignElement(const DesignElement& other)
 		{
-			this->position = other.position;
-			this->rotation = other.rotation;
-			this->scale = other.scale;
+			this->transform = other.transform;
+			this->collidable = other.collidable;
+			this->tag = other.tag;
+			this->renderable = other.renderable;
+			this->scriptComponent = other.scriptComponent;
 		}
-		DesignElement(const DesignElement&& other)
-		{
-			this->position = std::move(other.position);
-			this->rotation = std::move(other.rotation);
-			this->scale = std::move(other.scale);
-		}
-	
-		virtual void DUMMY_TEMP() = 0;
+		//DesignElement(const DesignElement&& other)
+		//{
+		//	this->transform = std::move(other.transform);
+		//	this->collidable = std::move(other.collidable);
+		//	this->tag = std::move(other.tag);
+		//	this->renderable = std::move(other.renderable);
+		//	this->scriptComponent = std::move(other.scriptComponent);
+		//}
 
 		DesignElement& operator=(const DesignElement& other)
 		{
-			this->position = other.position;
-			this->rotation = other.rotation;
-			this->scale = other.scale;
+			this->transform = other.transform;
+			this->collidable = other.collidable;
+			this->tag = other.tag;
+			this->renderable = other.renderable;
+			this->scriptComponent = other.scriptComponent;
 			return *this;
 		}
 		bool operator==(const DesignElement& other)
@@ -119,5 +126,10 @@ namespace Ivy {
 
 			return false;
 		}
+
+		inline const ElementType& getElementType() { return this->elementType; }
+		inline void setElementType(const ElementType& elementType) { this->elementType = elementType; }
+
+		virtual void dummy() = 0;
 	};
 }

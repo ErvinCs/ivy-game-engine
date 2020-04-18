@@ -10,14 +10,14 @@ namespace Ivy {
 		this->alive = true;
 	}
 
-	Individual::Individual(Individual& other)
+	Individual::Individual(const Individual& other)
 	{
 		std::copy(other.designElements.begin(), other.designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = other.getFitness();
 		this->alive = true;
 	}
 
-	Individual::Individual(const std::vector<DesignElement>& designElements)
+	Individual::Individual(const std::vector<DesignElement*>& designElements)
 	{
 		std::copy(designElements.begin(), designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = 0;
@@ -32,19 +32,19 @@ namespace Ivy {
 	/*
 	 *
 	 */
-	float Individual::getDiversityFactor(Individual& other)
+	float Individual::getDiversityFactor(const Individual& other)
 	{
 		float difersityFactor = 0;
 		for (int i = 0; i < this->designElements.size(); i++)
 		{
 			// Check rotation
-			if (designElements[i].transform.rotation != other.getDesignElements()[i].transform.rotation)
+			if (designElements[i]->transform.rotation != other.getDesignElements()[i]->transform.rotation)
 			{
 				difersityFactor += 1;
 			}
 
 			// Check tile type
-			if (((LevelElement)designElements[i]).type != ((LevelElement)other.designElements[i]).type)
+			if (((LevelElement*)designElements[i])->getElementType() != ((LevelElement*)other.designElements[i])->getElementType())
 			{
 				difersityFactor += 1;
 			}
@@ -58,9 +58,11 @@ namespace Ivy {
 	 */
 	float Individual::getLinearityFactor()
 	{
-		for (LevelElement element : designElements)
+		for (DesignElement* element : designElements)
 		{
-			int type = (int)element.type;
+			int type = (int)element->getElementType();
+			if (!(type < DesignElement::ElementTypeCount))
+				continue;
 			//...
 		}
 		//...

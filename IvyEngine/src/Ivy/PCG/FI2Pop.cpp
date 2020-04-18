@@ -8,15 +8,6 @@ namespace Ivy
 {
 	FI2Pop::FI2Pop()
 	{
-		feasiblePop = Population();
-		infeasiblePop = Population();
-
-		fittestFeasibleIndividual = Individual();
-		fittestInfeasibleIndividual = Individual();
-
-		fittestFeasibleFitness = 0.0f;
-		fittestInfeasibleFitness = 0.0f;
-
 		mutationRate = 0.05f;
 		uniformRate = 0.5f;
 		singlePointCrossoverFrequency = 3;
@@ -24,11 +15,8 @@ namespace Ivy
 		populationSize = 50;
 		tournamentSize = 8;	    //???
 		maxGeneration = 20;		//???
-		currGeneration = 1;
-		genotypeSize = 20;
+		genotypeSize = 10;
 		targetFeasibleSize = 5;	    //???
-		currentFeasibleSize = 0;	//???
-		connectedComponents = 0;	//???
 
 		maxNodes = 144;
 		minNodes = 0;
@@ -38,6 +26,21 @@ namespace Ivy
 
 	void FI2Pop::init()
 	{
+		feasiblePop = Population();
+		infeasiblePop = Population();
+
+		fittestFeasibleIndividual = Individual();
+		fittestInfeasibleIndividual = Individual();
+
+		fittestFeasibleFitness = 0.0f;
+		fittestInfeasibleFitness = 0.0f;
+
+		initialisedFeasible = false;
+		initialisedInfeasible = false;
+		currGeneration = 1;
+		currentFeasibleSize = 0;	//???
+		connectedComponents = 0;	//???
+
 		generateInitialPopulation();
 	}
 
@@ -45,15 +48,23 @@ namespace Ivy
 	{
 		while (currGeneration < maxGeneration || currentFeasibleSize < targetFeasibleSize)
 		{
-			//TODO
+			if (initialisedInfeasible && (initialisedFeasible || feasiblePop.getPopulationSize() == 0))
+			{
+				while (infeasiblePop.getPopulationSize() > populationSize)
+				{
+					infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
+				}
+
+				feasiblePop.removeDeadIndividuals();
+
+				currGeneration += 1;
+				feasiblePop = this->evolvePopulation(feasiblePop);
+				infeasiblePop = this->evolvePopulation(infeasiblePop);
+				
+			}
 		}
 		// First: on finding pop load into the ECS
 		// Afterwards: On finding pop, write to JSON
-	}
-
-	void FI2Pop::clearPopulations()
-	{
-		//TODO
 	}
 
 	Population FI2Pop::evolvePopulation(const Population & pop)
@@ -64,7 +75,7 @@ namespace Ivy
 		{
 			int i = 0;
 			while(i < eliteCount)
-				pop.addIndividual(pop.getFittestIndividual());
+				population.addIndividual(pop.getFittestIndividual());
 		}
 
 		// Crossover
@@ -82,6 +93,7 @@ namespace Ivy
 
 		// Mutation
 		// Mutate one elite
+		population.getIndividuals[eliteCount - 1];
 		this->mutate(population.getIndividuals()[eliteCount-1]);
 		for (int i = eliteCount; i < pop.getPopulationSize(); i++)
 		{
@@ -217,8 +229,7 @@ namespace Ivy
 			}
 			else if (mutationType == 1)
 			{
-				this->mutateLevelElement()
-				MutateLevelPiece((LevelPiece)ind.getDesignElements()[i], i);
+				this->mutateLevelElement((LevelPiece)ind.getDesignElements()[i], i);
 			}
 
 		}

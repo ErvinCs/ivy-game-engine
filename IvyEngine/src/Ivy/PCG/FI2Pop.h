@@ -18,11 +18,13 @@ namespace Ivy
 		Individual fittestInfeasibleIndividual;
 		float fittestFeasibleFitness;
 		float fittestInfeasibleFitness;
+		bool initialisedFeasible;
+		bool initialisedInfeasible;
 
-		float mutationRate;	//0.05f
-		float uniformRate;	//0.5f
-		int singlePointCrossoverFrequency;	//3
-		int eliteCount;	//2
+		float mutationRate;
+		float uniformRate;	
+		int singlePointCrossoverFrequency;	
+		int eliteCount;
 		int populationSize;
 		int tournamentSize;
 		int maxGeneration;
@@ -39,11 +41,11 @@ namespace Ivy
 
 		void init();
 		void run();
-		void clearPopulations();
+		//void clearPopulations();
 		inline const Population& getFeasiblePopulation() { return feasiblePop; }
 		inline const Population& getInfeasiblePopulation() { return infeasiblePop; }
-		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasible; }
-		inline const Individual getFittestInfeasibleIndividual() { return fittestInfeasible; }
+		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasibleIndividual; }
+		inline const Individual getFittestInfeasibleIndividual() { return fittestInfeasibleIndividual; }
 
 		Population evolvePopulation(const Population& pop);
 		Population generateInitialPopulation();

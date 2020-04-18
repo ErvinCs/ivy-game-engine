@@ -10,7 +10,7 @@ namespace Ivy
 	private:
 		FI2Pop generator;
 	public:
-		LevelGenerator();
+		LevelGenerator(const FI2Pop& generator);
 		
 		void init();
 		void run();
