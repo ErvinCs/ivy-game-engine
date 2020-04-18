@@ -47,19 +47,19 @@ namespace Ivy
 		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasibleIndividual; }
 		inline const Individual getFittestInfeasibleIndividual() { return fittestInfeasibleIndividual; }
 
-		Population evolvePopulation(const Population& pop);
+		Population evolvePopulation(Population& pop);
 		Population generateInitialPopulation();
 		Individual generateRandomIndividual();
 
-		Individual uniformCrossover(const Individual& ind1, const Individual& ind2);
-		Individual singlePointCrossover(const Individual& ind1, const Individual& ind2);
-		Individual tournamentSelection(const Population& pop);
+		Individual uniformCrossover(Individual& ind1, Individual& ind2);
+		Individual singlePointCrossover(Individual& ind1, Individual& ind2);
+		Individual tournamentSelection(Population& pop);
 		void mutate(Individual& ind);
 
 		float computeFitness();
 	private:
-		void mutateRotation(DesignElement& designElement);
-		void mutateLevelElement(LevelElement& levelElement, int geneIndex);
+		void mutateRotation(DesignElement* designElement);
+		void mutateLevelElement(LevelElement* levelElement, int geneIndex);
 
 		inline float computeKConnectivityFitness()
 		{

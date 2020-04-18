@@ -185,6 +185,8 @@ namespace Ivy {
 				// -------------------- Script --------------------
 				if (ImGui::TreeNode("Script")) 
 				{
+					const char* currentPath = nullptr;
+					std::string* buffer = nullptr;
 					if (getECS().getComponent<ScriptComponent>(entity).getComponentId() == ScriptComponentID)
 					{
 						const char* currentPath = getECS().getComponent<ScriptComponent>(entity).scriptName.c_str();
@@ -204,7 +206,7 @@ namespace Ivy {
 						}
 						if (ImGui::Button("Remove Script"))
 						{
-							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
+							//ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
 							getECS().removeComponent<ScriptComponent>(entity);
 							IVY_INFO("Destroyed Script on Entity: {0}", entity);
 						}

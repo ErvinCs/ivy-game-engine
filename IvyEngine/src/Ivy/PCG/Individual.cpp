@@ -32,7 +32,7 @@ namespace Ivy {
 	/*
 	 *
 	 */
-	float Individual::getDiversityFactor(const Individual& other)
+	float Individual::getDiversityFactor(Individual& other)
 	{
 		float difersityFactor = 0;
 		for (int i = 0; i < this->designElements.size(); i++)
@@ -58,7 +58,7 @@ namespace Ivy {
 	 */
 	float Individual::getLinearityFactor()
 	{
-		for (DesignElement* element : designElements)
+		/*for (DesignElement* element : designElements)
 		{
 			int type = (int)element->getElementType();
 			if (!(type < DesignElement::ElementTypeCount))
@@ -79,7 +79,8 @@ namespace Ivy {
 		float linearity = 0;
 		if (max > min)
 			linearity = max / designElements.size();
-		return linearity;
+		return linearity;*/
+		return 0.0f;
 	}
 
 	bool Individual::operator==(Individual& other)

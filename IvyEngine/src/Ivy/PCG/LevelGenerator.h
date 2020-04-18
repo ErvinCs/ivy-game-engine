@@ -9,13 +9,15 @@ namespace Ivy
 	{
 	private:
 		FI2Pop generator;
+		Population finalPopulation;
+		Individual fittest;
 	public:
+		LevelGenerator() = default;
 		LevelGenerator(const FI2Pop& generator);
 		
-		void init();
 		void run();
 
-		void exportLevelSet();
+		void exportLevelSet() {}
 	};
 
 }

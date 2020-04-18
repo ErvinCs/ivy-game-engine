@@ -17,7 +17,7 @@ class CPlayer : IController
 	// 1-right, 2-left, 3-up, 4-down
 	int isFacing = 1;
 	int rageCount = 1;
-	float playerMoveSpeed = 5;
+	float playerMoveSpeed = 7;
 
 
 	CPlayer(ScriptableObject@ object)

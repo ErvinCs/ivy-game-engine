@@ -3,7 +3,7 @@
 #include "Population.h"
 namespace Ivy {
 
-	Population::Population(const Population& other)
+	Population::Population(Population& other)
 	{
 		std::copy(other.getIndividuals().begin(), other.getIndividuals().end(), std::back_inserter(this->individuals));
 	}
@@ -66,13 +66,6 @@ namespace Ivy {
 	void Population::addIndividual(const Individual& individual)
 	{
 		this->individuals.push_back(individual);
-	}
-
-	void Population::removeIndividual(const Individual& individual)
-	{
-		std::vector<Individual>::iterator it = std::find(individuals.begin, individuals.end, individual);
-		if (it != individuals.end())
-			this->individuals.erase(it);
 	}
 
 	void Population::removeIndividualAtIndex(int index)

@@ -2,8 +2,7 @@
 #include "FI2Pop.h"
 
 #include "DesignElements/LevelElement.h"
-#include "../ECS/JSONManager.h"
-
+#include "../Core/Logger.h"
 namespace Ivy 
 {
 	FI2Pop::FI2Pop()
@@ -26,9 +25,6 @@ namespace Ivy
 
 	void FI2Pop::init()
 	{
-		feasiblePop = Population();
-		infeasiblePop = Population();
-
 		fittestFeasibleIndividual = Individual();
 		fittestInfeasibleIndividual = Individual();
 
@@ -36,30 +32,42 @@ namespace Ivy
 		fittestInfeasibleFitness = 0.0f;
 
 		initialisedFeasible = false;
-		initialisedInfeasible = false;
+		initialisedInfeasible = true;
 		currGeneration = 1;
 		currentFeasibleSize = 0;	//???
 		connectedComponents = 0;	//???
 
-		generateInitialPopulation();
+		feasiblePop = Population();
+		infeasiblePop = generateInitialPopulation();
 	}
 
 	void FI2Pop::run()
 	{
-		while (currGeneration < maxGeneration || currentFeasibleSize < targetFeasibleSize)
+		IVY_CORE_TRACE("FI2POP: Starting run");
+		while (currGeneration < maxGeneration)	// || currentFeasibleSize < targetFeasibleSize
 		{
+			IVY_CORE_TRACE("FI2POP: Generation {0}", currGeneration);
 			if (initialisedInfeasible && (initialisedFeasible || feasiblePop.getPopulationSize() == 0))
 			{
 				while (infeasiblePop.getPopulationSize() > populationSize)
 				{
+					IVY_CORE_TRACE("FI2POP: Removing extra individual at index {0}. Size of Infeasible: {1}", infeasiblePop.getLeastFitIndividualIndex(), infeasiblePop.getPopulationSize());
 					infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
 				}
 
+				//IVY_CORE_TRACE("FI2POP: Removing feasible individuals that became infeasible.");
 				feasiblePop.removeDeadIndividuals();
 
 				currGeneration += 1;
-				feasiblePop = this->evolvePopulation(feasiblePop);
+				IVY_CORE_TRACE("FI2POP: Evolving Infeasible");
 				infeasiblePop = this->evolvePopulation(infeasiblePop);
+				//initialisedInfeasible = false;
+				if (initialisedFeasible)
+				{
+					IVY_CORE_TRACE("FI2POP: Evolving Infeasible");
+					feasiblePop = this->evolvePopulation(feasiblePop);
+					//initialisedFeasible = false;
+				}
 				
 			}
 		}
@@ -67,19 +75,25 @@ namespace Ivy
 		// Afterwards: On finding pop, write to JSON
 	}
 
-	Population FI2Pop::evolvePopulation(const Population & pop)
+	Population FI2Pop::evolvePopulation(Population& pop)
 	{
+		//IVY_CORE_TRACE("FI2POP: Evolving Population. Size={0}", pop.getPopulationSize());
 		Population population = Population();
 		
 		if (pop.getPopulationSize() != 0)
 		{
 			int i = 0;
-			while(i < eliteCount)
+			while (i < eliteCount)
+			{
+				//IVY_CORE_TRACE("FI2POP: Adding elite {0}", i);
 				population.addIndividual(pop.getFittestIndividual());
+				i++;
+			}
 		}
 
+		//IVY_CORE_TRACE("FI2POP: Starting Crossover");
 		// Crossover
-		for (int i = eliteCount; i < pop.getPopulationSize())
+		for (int i = eliteCount; i < pop.getPopulationSize(); i++)
 		{
 			Individual ind1 = this->tournamentSelection(pop);
 			Individual ind2 = this->tournamentSelection(pop);
@@ -90,10 +104,11 @@ namespace Ivy
 				offspring = singlePointCrossover(ind1, ind2);
 			population.addIndividual(offspring);
 		}
+		//IVY_CORE_TRACE("FI2POP: Ending Crossover");
 
 		// Mutation
 		// Mutate one elite
-		population.getIndividuals[eliteCount - 1];
+		//IVY_CORE_TRACE("FI2POP: Starting Mutation");
 		this->mutate(population.getIndividuals()[eliteCount-1]);
 		for (int i = eliteCount; i < pop.getPopulationSize(); i++)
 		{
@@ -101,12 +116,14 @@ namespace Ivy
 			if (randomUnit <= mutationRate)
 				this->mutate(population.getIndividuals()[i]);
 		}
+		//IVY_CORE_TRACE("FI2POP: Ending Mutation");
 
 		return population;
 	}
 
 	Population FI2Pop::generateInitialPopulation()
 	{
+		// Generating Initial Population
 		Population randomPop = Population();
 		for (int i = 0; i < populationSize; i++)
 		{
@@ -129,8 +146,8 @@ namespace Ivy
 				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount - LevelElement::HostileTypeCount));
 			else
 				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount));
-			LevelElement piece = LevelElement(Tag("LevelElement" + LevelElement::TagCounter++), Transform(glm::vec2(1.0f), rotation, glm::vec2(1.0f)));
-			piece.setElementType((ElementType)roomType);
+			LevelElement* piece = new LevelElement(Tag("LevelElement" + LevelElement::TagCounter++), Transform(glm::vec2(1.0f), rotation, glm::vec2(1.0f)));
+			piece->setElementType((ElementType)roomType);
 			individual.addDesignElement(piece);
 		}
 
@@ -138,7 +155,7 @@ namespace Ivy
 	}
 
 	// Copy rate of each
-	Individual FI2Pop::uniformCrossover(const Individual & ind1, const Individual & ind2)
+	Individual FI2Pop::uniformCrossover(Individual& ind1, Individual& ind2)
 	{
 		Individual offspring{};
 		for (int i = 0; i < ind1.getDesignElements().size(); i++)
@@ -171,7 +188,7 @@ namespace Ivy
 	}
 
 	// CopyHalf of each
-	Individual FI2Pop::singlePointCrossover(const Individual & ind1, const Individual & ind2)
+	Individual FI2Pop::singlePointCrossover(Individual& ind1, Individual& ind2)
 	{
 		Individual offspring{};
 		int midPoint = genotypeSize / 2;
@@ -205,7 +222,7 @@ namespace Ivy
 		}
 		return offspring;
 	}
-	Individual FI2Pop::tournamentSelection(const Population & pop)
+	Individual FI2Pop::tournamentSelection(Population & pop)
 	{
 		Population tournamentPop{};
 
@@ -229,29 +246,29 @@ namespace Ivy
 			}
 			else if (mutationType == 1)
 			{
-				this->mutateLevelElement((LevelPiece)ind.getDesignElements()[i], i);
+				this->mutateLevelElement((LevelElement*)ind.getDesignElements()[i], i);
 			}
 
 		}
 	}
 
-	void FI2Pop::mutateRotation(DesignElement& designElement)
+	void FI2Pop::mutateRotation(DesignElement* designElement)
 	{
 		float rotation = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
-		while (rotation * 90.0f == designElement.transform.rotation)
+		while (rotation * 90.0f == designElement->transform.rotation)
 		{
 			rotation = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
 		}
 		rotation *= 90.0f;
-		designElement.transform.rotation = rotation;
+		designElement->transform.rotation = rotation;
 	}
 
-	void FI2Pop::mutateLevelElement(LevelElement& levelElement, int geneIndex)
+	void FI2Pop::mutateLevelElement(LevelElement* levelElement, int geneIndex)
 	{
 		// Select random room type
 		int roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount));
 		// Keep changing piece until it's different
-		while ((ElementType)roomType == levelElement.getElementType())
+		while ((ElementType)roomType == levelElement->getElementType())
 		{
 			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount));
 		}
@@ -259,7 +276,7 @@ namespace Ivy
 		if (geneIndex == 0 || geneIndex == genotypeSize - 1)
 			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount - LevelElement::HostileTypeCount));
 
-		levelElement.setElementType((ElementType)roomType); 
+		levelElement->setElementType((ElementType)roomType); 
 	}
 
 	float FI2Pop::computeFitness()
@@ -267,7 +284,7 @@ namespace Ivy
 		// Normalize path costs
 		float maxPathCost = (genotypeSize - 1) * maxNodes;
 		float minPathCost = ((genotypeSize / 2) - 1) * minNodes;
-		float normalizedShortestPathCost = (LevelGenerator.shortestPathCost - minPathCost) / (maxPathCost - minPathCost);
+		//float normalizedShortestPathCost = (LevelGenerator.shortestPathCost - minPathCost) / (maxPathCost - minPathCost);
 
 		// Normalize connected components
 		float maxConnectedComponents = genotypeSize - 1;
@@ -275,6 +292,7 @@ namespace Ivy
 		float connectedComponentsScore = genotypeSize - connectedComponents;
 		float normalizedConnectedComponentsScore = (connectedComponentsScore - minConnectedComponents) / (maxConnectedComponents - minConnectedComponents);
 
-		return (float)(normalizedShortestPathCost + normalizedConnectedComponentsScore) / 3.0f;
+		return 0;
+		//return (float)(normalizedShortestPathCost + normalizedConnectedComponentsScore) / 3.0f;
 	}
 }

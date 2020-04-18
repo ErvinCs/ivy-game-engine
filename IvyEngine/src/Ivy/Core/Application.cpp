@@ -14,6 +14,7 @@
 #include "../Renderer/BaseRenderer.h"
 #include "../ECS/ECS.h"
 
+
 namespace Ivy {
 
 	Application* Application::instance = nullptr;
@@ -49,6 +50,8 @@ namespace Ivy {
 		inspectorLayer = new InspectorLayer();
 		pushLayer(imGuiLayer);
 		pushLayer(inspectorLayer);
+
+		generator = LevelGenerator(FI2Pop());
 	}
 
 
@@ -72,7 +75,9 @@ namespace Ivy {
 
 	void Application::run()
 	{
-
+		IVY_CORE_INFO("Starting generation");
+		generator.run();
+		IVY_CORE_INFO("Ending generation");
 		while (isRunning)
 		{
 
