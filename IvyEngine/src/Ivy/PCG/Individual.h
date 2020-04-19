@@ -25,7 +25,6 @@ namespace Ivy {
 
 		void sortDesignElements();
 		float getDiversityFactor(Individual& other);
-		float getLinearityFactor();
 		void addDesignElement(DesignElement* designElement) { designElements.push_back(designElement); }
 
 		/*

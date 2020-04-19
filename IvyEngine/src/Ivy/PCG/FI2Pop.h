@@ -1,10 +1,14 @@
 #pragma once
 
 #include <stdlib.h>
+#include <math.h>
+#define _USE_MATH_DEFINES
 
 #include "Population.h"
 #include "Individual.h"
 #include "DesignElements/LevelElement.h"
+#include "Graph.h"
+
 
 namespace Ivy 
 {
@@ -33,15 +37,19 @@ namespace Ivy
 		int targetFeasibleSize;
 		int currentFeasibleSize;
 		int connectedComponents;
+		int shortestPathCost;
 
 		int maxNodes;
 		int minNodes;
+
+		Graph* graph;
 	public:
-		FI2Pop();
+		FI2Pop() = default;
+		FI2Pop(Graph* graph);
 
 		void init();
 		void run();
-		//void clearPopulations();
+
 		inline const Population& getFeasiblePopulation() { return feasiblePop; }
 		inline const Population& getInfeasiblePopulation() { return infeasiblePop; }
 		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasibleIndividual; }
@@ -63,27 +71,36 @@ namespace Ivy
 
 		inline float computeKConnectivityFitness()
 		{
-
+			int k = this->graph->getKConnectivity();
+			return k / (genotypeSize * 2);
 		}
 
-		inline float computeConnectivityFitness()
+		inline float computeVariableConnectivityFitness()
 		{
-
+			int k = this->graph->getVariableKConnectivity();
+			return k / (genotypeSize * 4);
 		}
 
 		inline float computeConstraintFitness()
 		{
-
+			return (genotypeSize - connectedComponents) / (genotypeSize - 1);
 		}
 
 		inline float computePathFitness()
 		{
-
+			float minPathCost = (genotypeSize - 1) * maxNodes;
+			float maxPathCost = 0;
+			if (maxPathCost - minPathCost == 0)
+				return 0;
+			else
+				return (shortestPathCost - minPathCost) / (maxPathCost - minPathCost);
 		}
 
 		inline float computeObjectiveFitness()
 		{
-
+			float pathFitness = computePathFitness();
+			float kScore = computeKConnectivityFitness();
+			return ((float)(pathFitness + kScore)) / 2.0f;
 		}
 
 	};

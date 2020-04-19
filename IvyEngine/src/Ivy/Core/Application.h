@@ -30,7 +30,7 @@ namespace Ivy {
 		InspectorLayer* inspectorLayer;
 		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
-		LevelGenerator generator;
+		LevelGenerator generator{};
 
 	public:
 		bool isRunning = true;

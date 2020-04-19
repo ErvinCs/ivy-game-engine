@@ -1494,6 +1494,8 @@
     <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
     <ClInclude Include="src\Ivy\PCG\DesignElement.h" />
     <ClInclude Include="src\Ivy\PCG\DesignElements\LevelElement.h" />
+    <ClInclude Include="src\Ivy\PCG\Graph.h" />
+    <ClInclude Include="src\Ivy\PCG\Node.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1630,5 +1632,9 @@
     <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp" />
     <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
     <ClCompile Include="src\Ivy\PCG\DesignElements\LevelElement.cpp" />
+    <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

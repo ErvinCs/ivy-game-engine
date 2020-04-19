@@ -50,8 +50,6 @@ namespace Ivy {
 		inspectorLayer = new InspectorLayer();
 		pushLayer(imGuiLayer);
 		pushLayer(inspectorLayer);
-
-		generator = LevelGenerator(FI2Pop());
 	}
 
 

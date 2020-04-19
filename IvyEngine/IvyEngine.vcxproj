@@ -140,6 +140,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ivy\PCG\Node.h" />
+    <ClInclude Include="src\Ivy\PCG\Graph.h" />
     <ClInclude Include="src\Ivy\PCG\DesignElements\LevelElement.h" />
     <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
     <ClInclude Include="src\Ivy\PCG\FI2Pop.h" />
@@ -622,6 +624,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
     <ClCompile Include="src\Ivy\PCG\DesignElements\LevelElement.cpp" />
     <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
     <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp" />
@@ -686,6 +689,9 @@
     <ProjectReference Include="vendor\angelscript\AngelScript.vcxproj">
       <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

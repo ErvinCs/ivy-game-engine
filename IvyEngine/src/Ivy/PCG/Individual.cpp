@@ -53,36 +53,6 @@ namespace Ivy {
 		return (difersityFactor / designElements.size() * 2.0f);
 	}
 
-	/*
-	 *
-	 */
-	float Individual::getLinearityFactor()
-	{
-		/*for (DesignElement* element : designElements)
-		{
-			int type = (int)element->getElementType();
-			if (!(type < DesignElement::ElementTypeCount))
-				continue;
-			//...
-		}
-		//...
-		float min = 15 / designElements.size();
-		float max = 0, maxValue = 0;
-		for (auto SOMETHING : ...)
-		{
-			if (SOMETHING.size() > max)
-			{
-				max = SOMETHING.size();
-				max = SOMETHING.value;
-			}
-		}
-		float linearity = 0;
-		if (max > min)
-			linearity = max / designElements.size();
-		return linearity;*/
-		return 0.0f;
-	}
-
 	bool Individual::operator==(Individual& other)
 	{
 		if (other.getDesignElements().size() <= 0)

@@ -12,11 +12,13 @@
 namespace Ivy {
 	enum ElementType
 	{
-		Hallway,
+		StandardRoom1,
+		StandardRoom2,
+		Hallway, 
 		VerticalWall,
-		HorizontalWall,
-		Pillar,
-		Hole,
+		HorizontalWall,	
+		Pillar,	
+		Hole, 
 		RangedEnemy
 	};
 
@@ -32,8 +34,8 @@ namespace Ivy {
 		CollidableBox collidable{};
 		ScriptComponent scriptComponent{};
 
-		const static int ElementTypeCount = 6;
-		const static int HostileTypeCount = 2;
+		const static int ElementTypeCount = 8;
+		const static int HostileTypeCount = 6;
 	public:
 		DesignElement() = default;
 		DesignElement(const DesignElement& other)

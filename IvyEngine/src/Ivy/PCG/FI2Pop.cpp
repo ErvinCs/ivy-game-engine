@@ -3,9 +3,10 @@
 
 #include "DesignElements/LevelElement.h"
 #include "../Core/Logger.h"
+
 namespace Ivy 
 {
-	FI2Pop::FI2Pop()
+	FI2Pop::FI2Pop(Graph* graph)
 	{
 		mutationRate = 0.05f;
 		uniformRate = 0.5f;
@@ -14,13 +15,15 @@ namespace Ivy
 		populationSize = 50;
 		tournamentSize = 8;	    //???
 		maxGeneration = 20;		//???
-		genotypeSize = 10;
+		genotypeSize = 12;
 		targetFeasibleSize = 5;	    //???
+		shortestPathCost = 0;
 
 		maxNodes = 144;
 		minNodes = 0;
 
 		init();
+		this->graph = graph;
 	}
 
 	void FI2Pop::init()
@@ -55,18 +58,15 @@ namespace Ivy
 					infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
 				}
 
-				//IVY_CORE_TRACE("FI2POP: Removing feasible individuals that became infeasible.");
 				feasiblePop.removeDeadIndividuals();
 
 				currGeneration += 1;
 				IVY_CORE_TRACE("FI2POP: Evolving Infeasible");
 				infeasiblePop = this->evolvePopulation(infeasiblePop);
-				//initialisedInfeasible = false;
 				if (initialisedFeasible)
 				{
 					IVY_CORE_TRACE("FI2POP: Evolving Infeasible");
 					feasiblePop = this->evolvePopulation(feasiblePop);
-					//initialisedFeasible = false;
 				}
 				
 			}
@@ -138,15 +138,57 @@ namespace Ivy
 		
 		for (int i = 0; i < genotypeSize; i++)
 		{
-			int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 5));
-			float rotation = randomRotationQuadrant * 90.0f;
+			int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
+			float rotation;
+			switch (randomRotationQuadrant)
+			{
+			case 0:
+				rotation = 0;
+				break;
+			case 1:
+				rotation = M_PI_2;
+				break;
+			case 2:
+				rotation = M_PI_2;
+				break;
+			case 3:
+				rotation = 3.0f * M_PI_2;
+				break;
+			default:
+				rotation = 0;
+				break;
+			}
 			int roomType;
+			const glm::vec2 roomSize = glm::vec2(8.0f, 8.0f);
 			// Do not allow traps at level beginning and end
 			if (i == 0 || i == genotypeSize - 1)
 				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount - LevelElement::HostileTypeCount));
 			else
 				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount));
-			LevelElement* piece = new LevelElement(Tag("LevelElement" + LevelElement::TagCounter++), Transform(glm::vec2(1.0f), rotation, glm::vec2(1.0f)));
+			Transform roomTransform;
+			switch (roomType)
+			{
+			case ElementType::Hallway:
+				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
+				break;
+			case ElementType::Hole:
+				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
+				break;
+			case ElementType::HorizontalWall:
+				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
+				break;
+			case ElementType::Pillar:
+				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
+				break;
+			case ElementType::VerticalWall:
+				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
+				break;
+			case ElementType::RangedEnemy:
+				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
+				break;
+			}
+
+			LevelElement* piece = new LevelElement(Tag(std::string("LevelElement" + LevelElement::TagCounter++)), roomTransform);
 			piece->setElementType((ElementType)roomType);
 			individual.addDesignElement(piece);
 		}
@@ -254,12 +296,48 @@ namespace Ivy
 
 	void FI2Pop::mutateRotation(DesignElement* designElement)
 	{
-		float rotation = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
-		while (rotation * 90.0f == designElement->transform.rotation)
+		int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
+		float rotation;
+		switch (randomRotationQuadrant)
 		{
-			rotation = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
+		case 0:
+			rotation = 0;
+			break;
+		case 1:
+			rotation = M_PI_2;
+			break;
+		case 2:
+			rotation = M_PI_2;
+			break;
+		case 3:
+			rotation = 3.0f * M_PI_2;
+			break;
+		default:
+			rotation = 0;
+			break;
 		}
-		rotation *= 90.0f;
+		while (rotation == designElement->transform.rotation)
+		{
+			randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
+			switch (randomRotationQuadrant)
+			{
+			case 0:
+				rotation = 0;
+				break;
+			case 1:
+				rotation = M_PI_2;
+				break;
+			case 2:
+				rotation = M_PI_2;
+				break;
+			case 3:
+				rotation = 3.0f * M_PI_2;
+				break;
+			default:
+				rotation = 0;
+				break;
+			}
+		}
 		designElement->transform.rotation = rotation;
 	}
 
@@ -283,16 +361,17 @@ namespace Ivy
 	{
 		// Normalize path costs
 		float maxPathCost = (genotypeSize - 1) * maxNodes;
-		float minPathCost = ((genotypeSize / 2) - 1) * minNodes;
-		//float normalizedShortestPathCost = (LevelGenerator.shortestPathCost - minPathCost) / (maxPathCost - minPathCost);
+		float normalizedShortestPathCost = shortestPathCost / maxPathCost;
 
 		// Normalize connected components
 		float maxConnectedComponents = genotypeSize - 1;
-		float minConnectedComponents = 0;
 		float connectedComponentsScore = genotypeSize - connectedComponents;
-		float normalizedConnectedComponentsScore = (connectedComponentsScore - minConnectedComponents) / (maxConnectedComponents - minConnectedComponents);
+		float normalizedConnectedComponentsScore = connectedComponentsScore / maxConnectedComponents;
 
-		return 0;
-		//return (float)(normalizedShortestPathCost + normalizedConnectedComponentsScore) / 3.0f;
+		// Normalize K connectivity
+		int kConnectivity = graph->getKConnectivity();
+		float normalizedVertexConnectivity = (kConnectivity) / (genotypeSize * 2);
+
+		return ((float)(normalizedShortestPathCost + normalizedConnectedComponentsScore + normalizedVertexConnectivity)) / 3.0f;
 	}
 }

@@ -20,3 +20,4 @@
 	#define IVY_ASSERT(x, ...)
 	#define IVY_CORE_ASSERT(x, ...)
 #endif
+
