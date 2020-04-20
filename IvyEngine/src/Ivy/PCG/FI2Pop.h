@@ -6,7 +6,7 @@
 
 #include "Population.h"
 #include "Individual.h"
-#include "DesignElements/LevelElement.h"
+#include "DesignElement.h"
 #include "Graph.h"
 
 
@@ -66,8 +66,8 @@ namespace Ivy
 
 		float computeFitness();
 	private:
-		void mutateRotation(DesignElement* designElement);
-		void mutateLevelElement(LevelElement* levelElement, int geneIndex);
+		void mutateRotation(DesignElement& designElement);
+		void mutateLevelElement(DesignElement& levelElement, int geneIndex);
 
 		inline float computeKConnectivityFitness()
 		{

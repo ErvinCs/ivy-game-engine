@@ -1,7 +1,6 @@
 #include "ivypch.h"
 
 #include "Individual.h"
-#include "DesignElements/LevelElement.h"
 
 namespace Ivy {
 	Individual::Individual()
@@ -17,7 +16,7 @@ namespace Ivy {
 		this->alive = true;
 	}
 
-	Individual::Individual(const std::vector<DesignElement*>& designElements)
+	Individual::Individual(const std::vector<DesignElement>& designElements)
 	{
 		std::copy(designElements.begin(), designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = 0;
@@ -38,13 +37,13 @@ namespace Ivy {
 		for (int i = 0; i < this->designElements.size(); i++)
 		{
 			// Check rotation
-			if (designElements[i]->transform.rotation != other.getDesignElements()[i]->transform.rotation)
+			if (designElements[i].transform.rotation != other.getDesignElements()[i].transform.rotation)
 			{
 				difersityFactor += 1;
 			}
 
 			// Check tile type
-			if (((LevelElement*)designElements[i])->getElementType() != ((LevelElement*)other.designElements[i])->getElementType())
+			if (designElements[i].getElementType() != other.designElements[i].getElementType())
 			{
 				difersityFactor += 1;
 			}

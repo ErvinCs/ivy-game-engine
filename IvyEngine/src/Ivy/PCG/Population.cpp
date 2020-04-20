@@ -1,6 +1,7 @@
 #include "ivypch.h"
 
 #include "Population.h"
+
 namespace Ivy {
 
 	Population::Population(Population& other)

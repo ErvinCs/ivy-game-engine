@@ -13,7 +13,7 @@ namespace Ivy
 		Individual fittest;
 		Graph graph;
 		const float positionOffset = 8.0f;
-		const float wallOfsset = 3.5f;
+		const float wallOfsset = 4.5f;
 	public:
 		LevelGenerator();
 		

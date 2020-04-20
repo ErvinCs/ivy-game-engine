@@ -12,9 +12,10 @@
 namespace Ivy {
 	enum ElementType
 	{
-		StandardRoom1,
+		StandardRoom1 = 0,
 		StandardRoom2,
 		Hallway, 
+		TShaped,
 		VerticalWall,
 		HorizontalWall,	
 		Pillar,	
@@ -30,38 +31,21 @@ namespace Ivy {
 		Entity entity;
 		Tag tag{};
 		Transform transform{};
-		Renderable renderable{};
-		CollidableBox collidable{};
-		ScriptComponent scriptComponent{};
 
-		const static int ElementTypeCount = 8;
-		const static int HostileTypeCount = 6;
+		static int TagCounter;
+		const static int ElementTypeCount = 9;
+		const static int HostileTypeCount = 7;
 	public:
 		DesignElement() = default;
-		DesignElement(const DesignElement& other)
-		{
-			this->transform = other.transform;
-			this->collidable = other.collidable;
-			this->tag = other.tag;
-			this->renderable = other.renderable;
-			this->scriptComponent = other.scriptComponent;
-		}
-		//DesignElement(const DesignElement&& other)
-		//{
-		//	this->transform = std::move(other.transform);
-		//	this->collidable = std::move(other.collidable);
-		//	this->tag = std::move(other.tag);
-		//	this->renderable = std::move(other.renderable);
-		//	this->scriptComponent = std::move(other.scriptComponent);
-		//}
+		DesignElement(const DesignElement& other);
+		DesignElement(const DesignElement&& other);
+		DesignElement(Tag tag, Transform transform);
 
 		DesignElement& operator=(const DesignElement& other)
 		{
 			this->transform = other.transform;
-			this->collidable = other.collidable;
 			this->tag = other.tag;
-			this->renderable = other.renderable;
-			this->scriptComponent = other.scriptComponent;
+			this->elementType = other.elementType;
 			return *this;
 		}
 		bool operator==(const DesignElement& other)
@@ -129,9 +113,15 @@ namespace Ivy {
 			return false;
 		}
 
-		inline const ElementType& getElementType() { return this->elementType; }
-		inline void setElementType(const ElementType& elementType) { this->elementType = elementType; }
-
-		virtual void dummy() = 0;
+		inline const ElementType& getElementType()
+		{ 
+			//IVY_CORE_INFO("Returning Element type : {0}", elementType);
+			return this->elementType; 
+		}
+		inline void setElementType(const ElementType& elementType) 
+		{ 
+			//IVY_CORE_INFO("Setting Element type to {0}", elementType);
+			this->elementType = elementType; 
+		}
 	};
 }

@@ -1,7 +1,6 @@
 #include "ivypch.h"
 #include "FI2Pop.h"
 
-#include "DesignElements/LevelElement.h"
 #include "../Core/Logger.h"
 
 namespace Ivy 
@@ -14,7 +13,7 @@ namespace Ivy
 		eliteCount = 2;
 		populationSize = 50;
 		tournamentSize = 8;	    //???
-		maxGeneration = 20;		//???
+		maxGeneration = 15;		//???
 		genotypeSize = 12;
 		targetFeasibleSize = 5;	    //???
 		shortestPathCost = 0;
@@ -162,34 +161,13 @@ namespace Ivy
 			const glm::vec2 roomSize = glm::vec2(8.0f, 8.0f);
 			// Do not allow traps at level beginning and end
 			if (i == 0 || i == genotypeSize - 1)
-				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount - LevelElement::HostileTypeCount));
+				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount - DesignElement::HostileTypeCount));
 			else
-				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount));
-			Transform roomTransform;
-			switch (roomType)
-			{
-			case ElementType::Hallway:
-				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
-				break;
-			case ElementType::Hole:
-				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
-				break;
-			case ElementType::HorizontalWall:
-				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
-				break;
-			case ElementType::Pillar:
-				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
-				break;
-			case ElementType::VerticalWall:
-				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
-				break;
-			case ElementType::RangedEnemy:
-				roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
-				break;
-			}
+				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount));
+			Transform roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
 
-			LevelElement* piece = new LevelElement(Tag(std::string("LevelElement" + LevelElement::TagCounter++)), roomTransform);
-			piece->setElementType((ElementType)roomType);
+			DesignElement piece = DesignElement(Tag(std::string("LevelElement" + std::to_string(DesignElement::TagCounter++))), roomTransform);
+			piece.setElementType((ElementType)roomType);
 			individual.addDesignElement(piece);
 		}
 
@@ -288,13 +266,13 @@ namespace Ivy
 			}
 			else if (mutationType == 1)
 			{
-				this->mutateLevelElement((LevelElement*)ind.getDesignElements()[i], i);
+				this->mutateLevelElement(ind.getDesignElements()[i], i);
 			}
 
 		}
 	}
 
-	void FI2Pop::mutateRotation(DesignElement* designElement)
+	void FI2Pop::mutateRotation(DesignElement& designElement)
 	{
 		int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
 		float rotation;
@@ -316,7 +294,7 @@ namespace Ivy
 			rotation = 0;
 			break;
 		}
-		while (rotation == designElement->transform.rotation)
+		while (rotation == designElement.transform.rotation)
 		{
 			randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
 			switch (randomRotationQuadrant)
@@ -338,23 +316,23 @@ namespace Ivy
 				break;
 			}
 		}
-		designElement->transform.rotation = rotation;
+		designElement.transform.rotation = rotation;
 	}
 
-	void FI2Pop::mutateLevelElement(LevelElement* levelElement, int geneIndex)
+	void FI2Pop::mutateLevelElement(DesignElement& levelElement, int geneIndex)
 	{
 		// Select random room type
-		int roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount));
+		int roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount));
 		// Keep changing piece until it's different
-		while ((ElementType)roomType == levelElement->getElementType())
+		while ((ElementType)roomType == levelElement.getElementType())
 		{
-			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount));
+			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount));
 		}
 		// Do not allow traps at level beginning and end
 		if (geneIndex == 0 || geneIndex == genotypeSize - 1)
-			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / LevelElement::ElementTypeCount - LevelElement::HostileTypeCount));
+			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount - DesignElement::HostileTypeCount));
 
-		levelElement->setElementType((ElementType)roomType); 
+		levelElement.setElementType((ElementType)roomType); 
 	}
 
 	float FI2Pop::computeFitness()

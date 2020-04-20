@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+
 #include "Individual.h"
 
 namespace Ivy {
