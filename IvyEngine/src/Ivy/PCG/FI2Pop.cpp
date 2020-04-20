@@ -5,7 +5,7 @@
 
 namespace Ivy 
 {
-	FI2Pop::FI2Pop(Graph* graph)
+	FI2Pop::FI2Pop()
 	{
 		mutationRate = 0.05f;
 		uniformRate = 0.5f;
@@ -13,16 +13,13 @@ namespace Ivy
 		eliteCount = 2;
 		populationSize = 50;
 		tournamentSize = 8;	    //???
-		maxGeneration = 15;		//???
+		maxGeneration = 15;		
 		genotypeSize = 12;
-		targetFeasibleSize = 5;	    //???
-		shortestPathCost = 0;
+		targetFeasibleSize = 1;
 
-		maxNodes = 144;
-		minNodes = 0;
+		completeGraphEdges = (genotypeSize * (genotypeSize - 1)) / 2;
 
 		init();
-		this->graph = graph;
 	}
 
 	void FI2Pop::init()
@@ -34,10 +31,8 @@ namespace Ivy
 		fittestInfeasibleFitness = 0.0f;
 
 		initialisedFeasible = false;
-		initialisedInfeasible = true;
 		currGeneration = 1;
-		currentFeasibleSize = 0;	//???
-		connectedComponents = 0;	//???
+		currentFeasibleSize = 0;
 
 		feasiblePop = Population();
 		infeasiblePop = generateInitialPopulation();
@@ -141,14 +136,11 @@ namespace Ivy
 			float rotation;
 			switch (randomRotationQuadrant)
 			{
-			case 0:
-				rotation = 0;
-				break;
 			case 1:
 				rotation = M_PI_2;
 				break;
 			case 2:
-				rotation = M_PI_2;
+				rotation = M_PI;
 				break;
 			case 3:
 				rotation = 3.0f * M_PI_2;
@@ -278,14 +270,11 @@ namespace Ivy
 		float rotation;
 		switch (randomRotationQuadrant)
 		{
-		case 0:
-			rotation = 0;
-			break;
 		case 1:
 			rotation = M_PI_2;
 			break;
 		case 2:
-			rotation = M_PI_2;
+			rotation = M_PI;
 			break;
 		case 3:
 			rotation = 3.0f * M_PI_2;
@@ -299,14 +288,11 @@ namespace Ivy
 			randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
 			switch (randomRotationQuadrant)
 			{
-			case 0:
-				rotation = 0;
-				break;
 			case 1:
 				rotation = M_PI_2;
 				break;
 			case 2:
-				rotation = M_PI_2;
+				rotation = M_PI;
 				break;
 			case 3:
 				rotation = 3.0f * M_PI_2;
@@ -319,12 +305,12 @@ namespace Ivy
 		designElement.transform.rotation = rotation;
 	}
 
-	void FI2Pop::mutateLevelElement(DesignElement& levelElement, int geneIndex)
+	void FI2Pop::mutateLevelElement(DesignElement& designElement, int geneIndex)
 	{
 		// Select random room type
 		int roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount));
 		// Keep changing piece until it's different
-		while ((ElementType)roomType == levelElement.getElementType())
+		while ((ElementType)roomType == designElement.getElementType())
 		{
 			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount));
 		}
@@ -332,24 +318,7 @@ namespace Ivy
 		if (geneIndex == 0 || geneIndex == genotypeSize - 1)
 			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / DesignElement::ElementTypeCount - DesignElement::HostileTypeCount));
 
-		levelElement.setElementType((ElementType)roomType); 
+		designElement.setElementType((ElementType)roomType);
 	}
 
-	float FI2Pop::computeFitness()
-	{
-		// Normalize path costs
-		float maxPathCost = (genotypeSize - 1) * maxNodes;
-		float normalizedShortestPathCost = shortestPathCost / maxPathCost;
-
-		// Normalize connected components
-		float maxConnectedComponents = genotypeSize - 1;
-		float connectedComponentsScore = genotypeSize - connectedComponents;
-		float normalizedConnectedComponentsScore = connectedComponentsScore / maxConnectedComponents;
-
-		// Normalize K connectivity
-		int kConnectivity = graph->getKConnectivity();
-		float normalizedVertexConnectivity = (kConnectivity) / (genotypeSize * 2);
-
-		return ((float)(normalizedShortestPathCost + normalizedConnectedComponentsScore + normalizedVertexConnectivity)) / 3.0f;
-	}
 }

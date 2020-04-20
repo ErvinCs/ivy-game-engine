@@ -8,9 +8,7 @@ namespace Ivy
 {
 	LevelGenerator::LevelGenerator()
 	{
-		this->graph = Graph();
-		this->generator = FI2Pop(&graph);
-		
+		this->generator = FI2Pop();
 	}
 
 	void LevelGenerator::run()
@@ -109,6 +107,7 @@ namespace Ivy
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("rangedEnemy.png"));
+						break;
 					case ElementType::StandardRoom1:
 						IVY_CORE_TRACE("Adding StandardRoom1, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
@@ -126,6 +125,12 @@ namespace Ivy
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("tshape.png"));
+						break;
+					case ElementType::ClosedRoom:
+						IVY_CORE_TRACE("Adding ClosedRoom, Type={0}", std::to_string(type));
+						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
+						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
+						ECS::getInstance().addComponent<Renderable>(entity, Renderable("closedRoom.png"));
 						break;
 					default:
 						IVY_CORE_WARN("Default Generation Case! Type={0}", std::to_string(type));

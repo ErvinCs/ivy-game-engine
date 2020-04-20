@@ -23,7 +23,6 @@ namespace Ivy
 		float fittestFeasibleFitness;
 		float fittestInfeasibleFitness;
 		bool initialisedFeasible;
-		bool initialisedInfeasible;
 
 		float mutationRate;
 		float uniformRate;	
@@ -36,16 +35,9 @@ namespace Ivy
 		int genotypeSize;
 		int targetFeasibleSize;
 		int currentFeasibleSize;
-		int connectedComponents;
-		int shortestPathCost;
-
-		int maxNodes;
-		int minNodes;
-
-		Graph* graph;
+		int completeGraphEdges;
 	public:
-		FI2Pop() = default;
-		FI2Pop(Graph* graph);
+		FI2Pop();
 
 		void init();
 		void run();
@@ -64,45 +56,10 @@ namespace Ivy
 		Individual tournamentSelection(Population& pop);
 		void mutate(Individual& ind);
 
-		float computeFitness();
 	private:
 		void mutateRotation(DesignElement& designElement);
-		void mutateLevelElement(DesignElement& levelElement, int geneIndex);
-
-		inline float computeKConnectivityFitness()
-		{
-			int k = this->graph->getKConnectivity();
-			return k / (genotypeSize * 2);
-		}
-
-		inline float computeVariableConnectivityFitness()
-		{
-			int k = this->graph->getVariableKConnectivity();
-			return k / (genotypeSize * 4);
-		}
-
-		inline float computeConstraintFitness()
-		{
-			return (genotypeSize - connectedComponents) / (genotypeSize - 1);
-		}
-
-		inline float computePathFitness()
-		{
-			float minPathCost = (genotypeSize - 1) * maxNodes;
-			float maxPathCost = 0;
-			if (maxPathCost - minPathCost == 0)
-				return 0;
-			else
-				return (shortestPathCost - minPathCost) / (maxPathCost - minPathCost);
-		}
-
-		inline float computeObjectiveFitness()
-		{
-			float pathFitness = computePathFitness();
-			float kScore = computeKConnectivityFitness();
-			return ((float)(pathFitness + kScore)) / 2.0f;
-		}
-
+		void mutateLevelElement(DesignElement& designElement, int geneIndex);
+		//void mutateNumberOfEnemies(DesignElement& designElement);
 	};
 
 }

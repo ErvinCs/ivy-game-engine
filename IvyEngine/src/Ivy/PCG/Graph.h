@@ -21,12 +21,16 @@ namespace Ivy
 		Node& getNode(int nodeId);
 		
 		int getNumberOfConnections();
+		int getVertexConnections(int nodeId);
 		bool isKVertexConnected();
 		int getKConnectivity();
 		int getVariableKConnectivity();
 		int getConnectivity();
 		int getStrongConnectivity();
 		Graph getTransposedGraph();
+
+		void addNode(Node& node);
+		void addEdge(Node& from, Node& to);
 
 		inline Graph& operator=(const Graph& other)
 		{

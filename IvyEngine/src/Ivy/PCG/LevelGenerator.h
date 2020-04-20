@@ -11,7 +11,6 @@ namespace Ivy
 		FI2Pop generator;
 		Population finalPopulation;
 		Individual fittest;
-		Graph graph;
 		const float positionOffset = 8.0f;
 		const float wallOfsset = 4.5f;
 	public:

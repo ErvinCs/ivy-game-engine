@@ -42,6 +42,11 @@ namespace Ivy
 		return numberOfConnections;
 	}
 
+	int Graph::getVertexConnections(int nodeId)
+	{
+		return this->getNode(nodeId).getChildren().size();
+	}
+
 	bool Graph::isKVertexConnected()
 	{
 		for (Node& node : nodes)

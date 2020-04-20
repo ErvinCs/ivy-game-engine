@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "DesignElement.h"
+#include "Graph.h"
 
 namespace Ivy {
 	class Individual
@@ -11,9 +12,10 @@ namespace Ivy {
 		std::vector<DesignElement> designElements{};
 		float fitness;
 		bool alive;
+		Graph graph;
 	public:
 		Individual();
-		Individual(const Individual& other);
+		Individual(Individual& other);
 		Individual(const std::vector<DesignElement>& designElements);
 
 		inline std::vector<DesignElement>& getDesignElements() { return designElements; }
@@ -22,10 +24,18 @@ namespace Ivy {
 		inline void setDesignElements(const std::vector<DesignElement>& designElements) { this->designElements = designElements; }
 		inline void setFitness(const float& fitness) { this->fitness = fitness; }
 		inline void setAlive(const bool& alive) { this->alive = alive; }
+		inline const Graph& getGraph() { return this->graph; }
+		inline Graph copyGraph() { return this->graph; }
 
 		void sortDesignElements();
-		float getDiversityFactor(Individual& other);
 		void addDesignElement(DesignElement designElement) { designElements.push_back(designElement); }
+
+		float computeDiversity(Individual& other);
+		float computeFitness();
+		float computeDistanceFromFeasibility();
+
+		void generateGraph();
+		void addNeighbours(Node& node, int& nodeId, int& x, int& y, int& xMax, int& yMax);
 
 		/*
 		 * Two individuals are equal if all their design elements are equal.

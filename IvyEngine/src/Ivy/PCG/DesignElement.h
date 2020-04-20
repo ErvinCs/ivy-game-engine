@@ -14,7 +14,8 @@ namespace Ivy {
 	{
 		StandardRoom1 = 0,
 		StandardRoom2,
-		Hallway, 
+		Hallway,
+		ClosedRoom,
 		TShaped,
 		VerticalWall,
 		HorizontalWall,	
@@ -34,7 +35,7 @@ namespace Ivy {
 
 		static int TagCounter;
 		const static int ElementTypeCount = 9;
-		const static int HostileTypeCount = 7;
+		const static int HostileTypeCount = 6;
 	public:
 		DesignElement() = default;
 		DesignElement(const DesignElement& other);
