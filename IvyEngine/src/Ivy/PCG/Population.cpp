@@ -14,6 +14,20 @@ namespace Ivy {
 		std::copy(individualList.begin(), individualList.end(), std::back_inserter(this->individuals));
 	}
 
+	Individual Population::getMostFitAndDiverseIndividual()
+	{
+		Individual best = individuals[0];
+		for (int i = 0; i < individuals.size(); i++)
+		{
+			if (individuals[i].getFitness() > best.getFitness())
+			{
+				if(individuals[i].getDiversity() > best.getDiversity())
+					best = individuals[i];
+			}
+		}
+		return best;
+	}
+
 	Individual Population::getFittestIndividual()
 	{
 		Individual fittest = individuals[0];
@@ -62,6 +76,9 @@ namespace Ivy {
 		{
 			individuals[i].sortDesignElements();
 		}
+		std::sort(individuals.begin(), individuals.end(), [](Individual ind1, Individual ind2) {
+			return ind1.getFitness() > ind2.getFitness();
+		});
 	}
 
 	void Population::addIndividual(const Individual& individual)
@@ -84,4 +101,8 @@ namespace Ivy {
 		}
 	}
 
+	Individual& Population::getIndividualAt(int index)
+	{
+		return this->individuals[index];
+	}
 }

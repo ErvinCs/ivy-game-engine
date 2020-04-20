@@ -35,7 +35,6 @@ namespace Ivy
 		int genotypeSize;
 		int targetFeasibleSize;
 		int currentFeasibleSize;
-		int completeGraphEdges;
 	public:
 		FI2Pop();
 

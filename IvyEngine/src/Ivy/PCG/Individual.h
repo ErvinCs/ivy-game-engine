@@ -11,11 +11,12 @@ namespace Ivy {
 	private:
 		std::vector<DesignElement> designElements{};
 		float fitness;
+		float diversity;
 		bool alive;
 		Graph graph;
 	public:
 		Individual();
-		Individual(Individual& other);
+		Individual(const Individual& other);
 		Individual(const std::vector<DesignElement>& designElements);
 
 		inline std::vector<DesignElement>& getDesignElements() { return designElements; }
@@ -25,17 +26,20 @@ namespace Ivy {
 		inline void setFitness(const float& fitness) { this->fitness = fitness; }
 		inline void setAlive(const bool& alive) { this->alive = alive; }
 		inline const Graph& getGraph() { return this->graph; }
+		inline int getDesignElementsSize() { return this->designElements.size(); }
+		inline DesignElement& getDesignElementAt(int index) { return this->designElements[index]; }
 		inline Graph copyGraph() { return this->graph; }
+		inline float getDiversity() { return this->diversity; }
+		inline void setDiversity(float diversity) { this->diversity = diversity; }
 
 		void sortDesignElements();
 		void addDesignElement(DesignElement designElement) { designElements.push_back(designElement); }
 
 		float computeDiversity(Individual& other);
 		float computeFitness();
-		float computeDistanceFromFeasibility();
 
 		void generateGraph();
-		void addNeighbours(Node& node, int& nodeId, int& x, int& y, int& xMax, int& yMax);
+		void addNeighbours(Node* node, int nodeId, int x, int y, int xMax, int yMax);
 
 		/*
 		 * Two individuals are equal if all their design elements are equal.

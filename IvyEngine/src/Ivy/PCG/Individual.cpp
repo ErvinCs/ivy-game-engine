@@ -13,12 +13,12 @@ namespace Ivy {
 		this->graph = Graph();
 	}
 
-	Individual::Individual(Individual& other)
+	Individual::Individual(const Individual& other)
 	{
 		std::copy(other.designElements.begin(), other.designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = other.getFitness();
 		this->alive = true;
-		this->graph = other.copyGraph();
+		this->graph = other.graph;
 	}
 
 	Individual::Individual(const std::vector<DesignElement>& designElements)
@@ -72,63 +72,60 @@ namespace Ivy {
 			}
 		}
 		// Normalize the diversity factor of the 2 individuals and return it
-		return (difersityFactor / designElements.size() * 2.0f);
+		return (difersityFactor / designElements.size() / 2.0f);
 	}
 
 	float Individual::computeFitness()
 	{
-		// Returns 1 if all vertices are fully connected
-		// TODO : Change to return 1 if the longest path goes through all the vertices
-		float vertexConnectivity = 0;
-		for (int i = 0; i < designElements.size(); i++)
-			vertexConnectivity += graph.getVertexConnections(i);
-		vertexConnectivity /= designElements.size() * (designElements.size() - 1);
-
-		return vertexConnectivity;
+		// Returns 1.0f if there is a single longest path that connects all vertices
+		// Penalizez by 1.0f / Number_Of_Vertices for each vertex that is not part of the longest path
+		this->generateGraph();
+		float vertexConnectivity = graph.getConnectivity();
+		if (vertexConnectivity != this->designElements.size() - 1)
+		{
+			this->fitness = 1.0f / this->designElements.size() - vertexConnectivity;
+			return fitness;
+		}
+		else
+		{
+			this->fitness = 1.0f;
+			return fitness;
+		}
 	}
 
-	float Individual::computeDistanceFromFeasibility()
-	{
-		float vertexConnectivity = 0;
-		for (int i = 0; i < designElements.size(); i++)
-			vertexConnectivity += graph.getVertexConnections(i);
-		vertexConnectivity /= designElements.size() * (designElements.size() - 1);
-
-		return 1 - vertexConnectivity;
-	}
-
-	void Individual::addNeighbours(Node& node, int& nodeId, int& x, int& y, int& xMax, int& yMax)
+	void Individual::addNeighbours(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
 		if (x == 0)
 		{
-			node.addChild(graph.getNode(nodeId + xMax));
+			node->addChild(graph.getNode(nodeId + xMax));
 		}
 		else if (x == xMax - 1)
 		{
-			node.addChild(graph.getNode(nodeId - xMax));
+			node->addChild(graph.getNode(nodeId - xMax));
 		}
 		else
 		{
-			node.addChild(graph.getNode(nodeId + xMax));
-			node.addChild(graph.getNode(nodeId - xMax));
+			node->addChild(graph.getNode(nodeId + xMax));
+			node->addChild(graph.getNode(nodeId - xMax));
 		}
 		if (y == 0)
 		{
-			node.addChild(graph.getNode(nodeId + 1));
+			node->addChild(graph.getNode(nodeId + 1));
 		}
 		else if (y == yMax - 1)
 		{
-			node.addChild(graph.getNode(nodeId - 1));
+			node->addChild(graph.getNode(nodeId - 1));
 		}
 		else
 		{
-			node.addChild(graph.getNode(nodeId + 1));
-			node.addChild(graph.getNode(nodeId - 1));
+			node->addChild(graph.getNode(nodeId + 1));
+			node->addChild(graph.getNode(nodeId - 1));
 		}
 	}
 
 	void Individual::generateGraph()
 	{
+		this->graph = Graph();
 		int nodeId = 0;
 		for (auto& it = designElements.begin(); it != designElements.end(); it++)
 		{
@@ -146,7 +143,7 @@ namespace Ivy {
 			{
 				if (it != designElements.end())
 				{
-					Node node = graph.getNode(nodeId);
+					Node* node = &graph.getNode(nodeId);
 					DesignElement& levelElement = *it;
 					ElementType type = levelElement.getElementType();
 					float rotation = levelElement.transform.rotation;
@@ -157,25 +154,25 @@ namespace Ivy {
 						if (rotation == M_PI_2 || rotation == 3 * M_PI / 2)
 						{
 							if (x == 0)
-								node.addChild(graph.getNode(nodeId + xMax));
+								node->addChild(graph.getNode(nodeId + xMax));
 							else if (x == xMax - 1)
-								node.addChild(graph.getNode(nodeId - xMax));
+								node->addChild(graph.getNode(nodeId - xMax));
 							else
 							{
-								node.addChild(graph.getNode(nodeId + xMax));
-								node.addChild(graph.getNode(nodeId - xMax));
+								node->addChild(graph.getNode(nodeId + xMax));
+								node->addChild(graph.getNode(nodeId - xMax));
 							}
 						}
 						else
 						{
 							if (y == 0)
-								node.addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + 1));
 							else if (y == yMax - 1)
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - 1));
 							else
 							{
-								node.addChild(graph.getNode(nodeId + yMax));
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId - 1));
 							}
 						}
 						break;
@@ -201,107 +198,129 @@ namespace Ivy {
 						addNeighbours(node, nodeId, x, y, xMax, yMax);
 						break;
 					case ElementType::TShaped:
-						if (rotation == M_PI_2)
+						/*if (rotation == M_PI_2)
 						{
 							if (y != 0)
 							{
-								node.addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId - 1));
 							}
 							if (x == 0)
 							{
-								node.addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + yMax));
 							}
 							else if (x == xMax - 1)
 							{
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - yMax));
 							}
 							else
 							{
-								node.addChild(graph.getNode(nodeId + yMax));
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId - yMax));
 							}
 						}
 						else if (rotation == M_PI)
 						{
 							if (x != 0)
 							{
-								node.addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + yMax));
 							}
 							if (y == 0)
 							{
-								node.addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId + 1));
 							}
 							else if (y == yMax - 1)
 							{
-								node.addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId - 1));
 							}
 							else
 							{
-								node.addChild(graph.getNode(nodeId - 1));
-								node.addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId + 1));
 							}
 						}
 						else if (rotation == 3 * M_PI / 2)
 						{
 							if (y != yMax - 1)
 							{
-								node.addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId + 1));
 							}
 							if (x == 0)
 							{
-								node.addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + yMax));
 							}
 							else if (x == xMax - 1)
 							{
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - yMax));
 							}
 							else
 							{
-								node.addChild(graph.getNode(nodeId + yMax));
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId - yMax));
 							}
 						}
 						else
 						{
 							if (x != xMax - 1)
 							{
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - yMax));
 							}
 							if (y == 0)
 							{
-								node.addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId + 1));
 							}
 							else if (y == yMax - 1)
 							{
-								node.addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId - 1));
 							}
 							else
 							{
-								node.addChild(graph.getNode(nodeId - 1));
-								node.addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId + 1));
 							}
-						}
+						}*/
 						break;
 					case ElementType::ClosedRoom:
-						if (rotation == M_PI_2)
+						if (rotation == 3 * M_PI / 2)
 						{
 							if (x != 0)
-								node.addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - yMax));
 						}
 						else if (rotation == M_PI)
 						{
 							if (y != yMax)
-								node.addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId + 1));
 						}
-						else if (rotation == 3 * M_PI / 2)
+						else if (rotation == M_PI_2)
 						{
 							if (x != xMax)
-								node.addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + yMax));
 						}
 						else
 						{
 							if (y != 0)
-								node.addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId - 1));
+						}
+						break;
+					case ElementType::MeleeEnemy:
+						if (rotation == 3 * M_PI / 2)
+						{
+							if (x != 0)
+								node->addChild(graph.getNode(nodeId - yMax));
+						}
+						else if (rotation == M_PI)
+						{
+							if (y != yMax)
+								node->addChild(graph.getNode(nodeId + 1));
+						}
+						else if (rotation == M_PI_2)
+						{
+							if (x != xMax)
+								node->addChild(graph.getNode(nodeId + yMax));
+						}
+						else
+						{
+							if (y != 0)
+								node->addChild(graph.getNode(nodeId - 1));
 						}
 						break;
 					default:

@@ -21,7 +21,8 @@ namespace Ivy {
 		HorizontalWall,	
 		Pillar,	
 		Hole, 
-		RangedEnemy
+		RangedEnemy,	//BOSS
+		MeleeEnemy		//BOSS
 	};
 
     class DesignElement
@@ -34,8 +35,8 @@ namespace Ivy {
 		Transform transform{};
 
 		static int TagCounter;
-		const static int ElementTypeCount = 9;
-		const static int HostileTypeCount = 6;
+		const static int ElementTypeCount = 11;
+		const static int HostileTypeCount = 8;
 	public:
 		DesignElement() = default;
 		DesignElement(const DesignElement& other);

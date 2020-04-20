@@ -18,9 +18,11 @@ namespace Ivy {
 
 		Individual getFittestIndividual();
 		Individual getLeastFitIndividual();
+		Individual getMostFitAndDiverseIndividual();
 		int getLeastFitIndividualIndex();
 		int getPopulationSize();
-
+		Individual& getIndividualAt(int index);
+		
 		void sortIndividuals();
 		void addIndividual(const Individual& individual);
 		void removeIndividualAtIndex(int index);
