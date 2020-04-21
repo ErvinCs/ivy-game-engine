@@ -7,15 +7,14 @@ namespace Ivy
 {
 	FI2Pop::FI2Pop()
 	{
-		mutationRate = 0.05f;
+		mutationRate = 0.15f;
 		uniformRate = 0.5f;
 		singlePointCrossoverFrequency = 3;
 		eliteCount = 2;
-		populationSize = 30;
-		tournamentSize = 8;	    
-		maxGeneration = 10;		
+		populationSize = 28;
+		tournamentSize = 6;	    
+		maxGeneration = 12;		
 		genotypeSize = 12;
-		targetFeasibleSize = 1;
 
 		init();
 	}
@@ -78,7 +77,7 @@ namespace Ivy
 					if (thisFitness > fittestInfeasibleFitness)
 					{
 						fittestInfeasibleFitness = thisFitness;
-						fittestFeasibleIndividual = ind;
+						this->setFittestInfeasibleFeasibleIndividual(infeasiblePop.getIndividualAt(i));
 
 					}
 				}
@@ -89,30 +88,36 @@ namespace Ivy
 			{
 				IVY_CORE_TRACE("FI2POP: Computing Feasible Fitnesses");
 				int popSize = feasiblePop.getPopulationSize();
+				float diversity = 0.0f;
+				
 				for (int i = 0; i < popSize; i++)
 				{
-					float fitness = feasiblePop.getIndividualAt(i).computeFitness();
+					Individual& ind = feasiblePop.getIndividualAt(i);
+					bool removed = false;
+					float fitness = ind.computeFitness();
 					if (fitness < 1.0f)
 					{
 						feasiblePop.removeIndividualAtIndex(i);
 						popSize--;
+						i--;
+						continue;
 					}
-					float diversity = 0.0f;
-					for (int j = 0; j < feasiblePop.getPopulationSize(); j++)
+					if (popSize > 1)
 					{
-						if (i != j)
-						{
-							diversity += feasiblePop.getIndividualAt(i).computeDiversity(feasiblePop.getIndividualAt(j));
-						}
+						if (i == 0)
+							diversity = ind.computeDiversity(feasiblePop.getIndividualAt(i + 1));
+						else if (i == popSize - 1)
+							diversity += (ind.computeDiversity(feasiblePop.getIndividualAt(0)) / 2.0f);
+						else
+							diversity += (ind.computeDiversity(feasiblePop.getIndividualAt(i + 1)) / 2.0f);
 					}
-					diversity /= (feasiblePop.getPopulationSize() - 1);
-					feasiblePop.getIndividualAt(i).setDiversity(diversity);
-					feasiblePop.getIndividualAt(i).setFitness(diversity);
+					
+					ind.setDiversity(diversity);
+					ind.setFitness(diversity);
 					if (diversity > fittestFeasibleFitness)
 					{
 						fittestFeasibleFitness = diversity;
-						fittestFeasibleIndividual = feasiblePop.getIndividualAt(i);
-
+						this->setFittestFeasibleIndividual(feasiblePop.getIndividualAt(i));
 					}
 				}
 			}
@@ -153,8 +158,24 @@ namespace Ivy
 					offspring = singlePointCrossover(ind1, ind2);
 				population.addIndividual(offspring);
 			}
+
+			// Mutation
+			// Mutate one elite
+			//IVY_CORE_TRACE("FI2POP: Starting Mutation");
+			this->mutate(population.getIndividualAt(eliteCount - 1));
+			//this->mutate(population.getIndividuals()[eliteCount-1]);
+			for (int i = eliteCount; i < popSize; i++)
+			{
+				float randomUnit = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+				if (randomUnit <= mutationRate)
+				{
+					this->mutate(population.getIndividualAt(i));
+					//this->mutate(population.getIndividuals()[i]);
+				}
+			}
+			//IVY_CORE_TRACE("FI2POP: Ending Mutation");
 		}
-		else
+		else if (popSize != 0)
 		{
 			int randIndex;
 			for (int i = eliteCount; i < populationSize; i++)
@@ -170,24 +191,26 @@ namespace Ivy
 					offspring = singlePointCrossover(ind1, ind2);
 				population.addIndividual(offspring);
 			}
-		}
-		//IVY_CORE_TRACE("FI2POP: Ending Crossover");
 
-		// Mutation
-		// Mutate one elite
-		//IVY_CORE_TRACE("FI2POP: Starting Mutation");
-		this->mutate(population.getIndividualAt(eliteCount - 1));
-		//this->mutate(population.getIndividuals()[eliteCount-1]);
-		for (int i = eliteCount; i < popSize; i++)
-		{
-			float randomUnit = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			if (randomUnit <= mutationRate)
+			//IVY_CORE_TRACE("FI2POP: Ending Crossover");
+
+			// Mutation
+			// Mutate one elite
+			//IVY_CORE_TRACE("FI2POP: Starting Mutation");
+			this->mutate(population.getIndividualAt(eliteCount - 1));
+			//this->mutate(population.getIndividuals()[eliteCount-1]);
+			for (int i = eliteCount; i < popSize; i++)
 			{
-				this->mutate(population.getIndividualAt(i));
-				//this->mutate(population.getIndividuals()[i]);
+				float randomUnit = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+				if (randomUnit <= mutationRate)
+				{
+					this->mutate(population.getIndividualAt(i));
+					//this->mutate(population.getIndividuals()[i]);
+				}
 			}
+			//IVY_CORE_TRACE("FI2POP: Ending Mutation");
 		}
-		//IVY_CORE_TRACE("FI2POP: Ending Mutation");
+		
 
 		return population;
 	}

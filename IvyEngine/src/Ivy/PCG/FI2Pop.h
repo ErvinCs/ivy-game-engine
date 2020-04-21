@@ -33,7 +33,6 @@ namespace Ivy
 		int maxGeneration;
 		int currGeneration;
 		int genotypeSize;
-		int targetFeasibleSize;
 		int currentFeasibleSize;
 	public:
 		FI2Pop();
@@ -44,6 +43,8 @@ namespace Ivy
 		inline const Population& getFeasiblePopulation() { return feasiblePop; }
 		inline const Population& getInfeasiblePopulation() { return infeasiblePop; }
 		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasibleIndividual; }
+		inline void setFittestFeasibleIndividual(const Individual& other) { this->fittestFeasibleIndividual = other; }
+		inline void setFittestInfeasibleFeasibleIndividual(const Individual& other) { this->fittestInfeasibleIndividual = other; }
 		inline const Individual& getFittestInfeasibleIndividual() { return fittestInfeasibleIndividual; }
 		inline const bool getInitialisedFeasible() { return this->initialisedFeasible; }
 
