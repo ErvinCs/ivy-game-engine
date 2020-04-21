@@ -21,7 +21,7 @@ namespace Ivy
 		float xMax = (int)std::sqrtf(fittest.getDesignElements().size());
 		float yMax = (int)(fittest.getDesignElements().size() / xMax);
 		IVY_CORE_INFO("LevelGenerator: xMax={0}, yMax={1}", xMax, yMax);
-		//Entity waal1, wall2, wall3, wall4, hole;
+		Entity wall1, wall2, wall3, wall4, hole;
 		auto& it = fittest.getDesignElements().begin();
 		for (int x = 0; x < (int)xMax; x++)
 		{
@@ -80,67 +80,67 @@ namespace Ivy
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("hallway.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2 || levelElement.transform.rotation == 3 * M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2 || levelElement.transform.rotation == 3.0f * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - 8 * halfTileSize, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 4.0f, 4.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + 8 * halfTileSize, levelElement.transform.position.y), 0, glm::vec2(halfTileSize* 4.0f, 4.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - 5 * halfTileSize), 0, glm::vec2(4.0f, halfTileSize * 3.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 5 * halfTileSize), 0, glm::vec2(4.0f, halfTileSize * 3.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-						}*/
+						}
 						break;
 					case ElementType::VerticalWall:
 						IVY_CORE_TRACE("Adding VerticalWall Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("verticalWall.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
 						wall3 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 3.5f), 0, glm::vec2(1.0f, 4.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTileSize, levelElement.transform.position.y - halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTileSize, levelElement.transform.position.y + halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == M_PI)
+						else if (levelElement.transform.rotation == (float)M_PI)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + 3.5f, levelElement.transform.position.y), 0, glm::vec2(4.0f, 1.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(1.0f, 1.5f));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(1.0f, 1.5f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == 3 * M_PI_2)
+						else if (levelElement.transform.rotation == 3.0f * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - 3.5f, levelElement.transform.position.y), 0, glm::vec2(1.0f, 4.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y - halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y + halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
@@ -148,15 +148,15 @@ namespace Ivy
 						else 
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - 3.5f), 0, glm::vec2(4.0f, 1.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTileSize * 3, levelElement.transform.position.y + halfTileSize), 0, glm::vec2(1.0f, 1.5f));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTileSize * 3, levelElement.transform.position.y + halfTileSize), 0, glm::vec2(1.0f, 1.5f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}*/
+						}
 						break;
 					case ElementType::HorizontalWall:
 						IVY_CORE_TRACE("Adding HorizontalWall Room, Type={0}", std::to_string(type));

@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h" />
     <ClInclude Include="src\Ivy\PCG\Node.h" />
     <ClInclude Include="src\Ivy\PCG\Graph.h" />
     <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
@@ -623,6 +624,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ivy\ImGui\GenerationLayer.cpp" />
     <ClCompile Include="src\Ivy\PCG\DesignElement.cpp" />
     <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
     <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />

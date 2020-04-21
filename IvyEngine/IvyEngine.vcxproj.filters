@@ -1495,6 +1495,7 @@
     <ClInclude Include="src\Ivy\PCG\DesignElement.h" />
     <ClInclude Include="src\Ivy\PCG\Graph.h" />
     <ClInclude Include="src\Ivy\PCG\Node.h" />
+    <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1632,6 +1633,7 @@
     <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
     <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
     <ClCompile Include="src\Ivy\PCG\DesignElement.cpp" />
+    <ClCompile Include="src\Ivy\ImGui\GenerationLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

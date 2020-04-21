@@ -111,29 +111,29 @@ namespace Ivy {
 	{
 		if (x == 0)
 		{
-			node->addChild(graph.getNode(nodeId + xMax));
+			node->addChild(graph.getNode(nodeId + xMax));	//Below
 		}
 		else if (x == xMax - 1)
 		{
-			node->addChild(graph.getNode(nodeId - xMax));
+			node->addChild(graph.getNode(nodeId - xMax));	//Above
 		}
 		else
 		{
-			node->addChild(graph.getNode(nodeId + xMax));
-			node->addChild(graph.getNode(nodeId - xMax));
+			node->addChild(graph.getNode(nodeId + xMax));	//Below
+			node->addChild(graph.getNode(nodeId - xMax));	//Above
 		}
 		if (y == 0)
 		{
-			node->addChild(graph.getNode(nodeId + 1));
+			node->addChild(graph.getNode(nodeId + 1));	//Right
 		}
 		else if (y == yMax - 1)
 		{
-			node->addChild(graph.getNode(nodeId - 1));
+			node->addChild(graph.getNode(nodeId - 1));	//Left
 		}
 		else
 		{
-			node->addChild(graph.getNode(nodeId + 1));
-			node->addChild(graph.getNode(nodeId - 1));
+			node->addChild(graph.getNode(nodeId + 1));	//Right
+			node->addChild(graph.getNode(nodeId - 1));	//Left
 		}
 	}
 
@@ -165,7 +165,7 @@ namespace Ivy {
 					switch (type)
 					{
 					case ElementType::Hallway:
-						if (rotation == M_PI_2 || rotation == 3 * M_PI / 2)
+						if (rotation == M_PI_2 || rotation == 3.0f * M_PI_2)
 						{
 							if (x == 0)
 								node->addChild(graph.getNode(nodeId + xMax));
@@ -191,13 +191,135 @@ namespace Ivy {
 						}
 						break;
 					case ElementType::VerticalWall:
-						addNeighbours(node, nodeId, x, y, xMax, yMax);
+						if (rotation == M_PI_2)
+						{
+							if (x == 0)
+							{
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
+							}
+							else if (x == xMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
+							}
+							else
+							{
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
+							}
+							if (y != 0)
+							{
+								node->addChild(graph.getNode(nodeId - 1));	//Left
+							}
+						}
+						else if (rotation == M_PI)
+						{
+							if (x != xMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
+							}
+							if (y == 0)
+							{
+								node->addChild(graph.getNode(nodeId + 1));		//Right
+							}
+							else if (y == yMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId - 1));		//Left
+							}
+							else
+							{
+								node->addChild(graph.getNode(nodeId + 1));		//Right
+								node->addChild(graph.getNode(nodeId - 1));		//Left
+							}
+						}
+						else if (rotation == 3.0f * M_PI_2)
+						{
+							if (x == 0)
+							{
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
+							}
+							else if (x == xMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
+							}
+							else
+							{
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
+							}
+							if (y != yMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId + 1));	//Right
+							}
+						}
+						else
+						{
+							if (x != 0)
+							{
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
+							}
+							if (y == 0)
+							{
+								node->addChild(graph.getNode(nodeId + 1));	// Right
+							}
+							else if (y == yMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId - 1));	//Left
+							}
+							else
+							{
+								node->addChild(graph.getNode(nodeId + 1));	//Right
+								node->addChild(graph.getNode(nodeId - 1));	//Left
+							}	
+						}
 						break;
 					case ElementType::HorizontalWall:
 						addNeighbours(node, nodeId, x, y, xMax, yMax);
 						break;
 					case ElementType::Pillar:
-						addNeighbours(node, nodeId, x, y, xMax, yMax);
+						if (rotation == M_PI_2)
+						{
+							if (x != 0)
+							{
+								node->addChild(graph.getNode(nodeId - xMax));
+							}
+							if (y != 0)
+							{
+								node->addChild(graph.getNode(nodeId - 1));
+							}
+						}
+						else if (rotation == M_PI)
+						{
+							if (x != xMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId + xMax));
+							}
+							if (y != 0)
+							{
+								node->addChild(graph.getNode(nodeId - 1));
+							}
+						}
+						else if (rotation == 3.0f * M_PI_2)
+						{
+							if (x != xMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId + xMax));
+							}
+							if (y != yMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId + 1));
+							}
+						}
+						else
+						{
+							if (x != 0)
+							{
+								node->addChild(graph.getNode(nodeId - xMax));
+							}
+							if (y != yMax - 1)
+							{
+								node->addChild(graph.getNode(nodeId + 1));
+							}
+						}
 						break;
 					case ElementType::Hole:
 						addNeighbours(node, nodeId, x, y, xMax, yMax);
@@ -212,92 +334,87 @@ namespace Ivy {
 						addNeighbours(node, nodeId, x, y, xMax, yMax);
 						break;
 					case ElementType::TShaped:
-						/*if (rotation == M_PI_2)
+						if (rotation == M_PI_2)
 						{
-							if (y != 0)
-							{
-								node->addChild(graph.getNode(nodeId - 1));
-							}
 							if (x == 0)
 							{
-								node->addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
 							}
 							else if (x == xMax - 1)
 							{
-								node->addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
 							}
-							else
+							if (y != yMax - 1)
 							{
-								node->addChild(graph.getNode(nodeId + yMax));
-								node->addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - 1));	//To-Left
 							}
 						}
 						else if (rotation == M_PI)
 						{
 							if (x != 0)
 							{
-								node->addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
 							}
 							if (y == 0)
 							{
-								node->addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId + 1));	//To-Right
 							}
 							else if (y == yMax - 1)
 							{
-								node->addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId - 1));	//To-Left
 							}
 							else
 							{
-								node->addChild(graph.getNode(nodeId - 1));
-								node->addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId + 1));	//To-Right
+								node->addChild(graph.getNode(nodeId - 1));	//To-Left
 							}
 						}
-						else if (rotation == 3 * M_PI / 2)
+						else if (rotation == 3.0f * M_PI_2)
 						{
-							if (y != yMax - 1)
+							if (y != 0)
 							{
-								node->addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId - 1));	//To-Left
 							}
 							if (x == 0)
 							{
-								node->addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
 							}
 							else if (x == xMax - 1)
 							{
-								node->addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
 							}
 							else
 							{
-								node->addChild(graph.getNode(nodeId + yMax));
-								node->addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - xMax));	//Above
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
 							}
 						}
 						else
-						{
+						{  
 							if (x != xMax - 1)
 							{
-								node->addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId + xMax));	//Below
 							}
-							if (y == 0)
+							if (y == yMax - 1)
 							{
-								node->addChild(graph.getNode(nodeId + 1));
+								node->addChild(graph.getNode(nodeId - 1));	//To-Left
 							}
-							else if (y == yMax - 1)
+							else if (y == 0)
 							{
-								node->addChild(graph.getNode(nodeId - 1));
+								node->addChild(graph.getNode(nodeId + 1));	//To-Right
 							}
 							else
 							{
 								node->addChild(graph.getNode(nodeId - 1));
 								node->addChild(graph.getNode(nodeId + 1));
 							}
-						}*/
+						}
 						break;
 					case ElementType::ClosedRoom:
-						if (rotation == 3 * M_PI / 2)
+						if (rotation == 3.0f * M_PI_2)
 						{
 							if (x != 0)
-								node->addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - xMax));
 						}
 						else if (rotation == M_PI)
 						{
@@ -307,7 +424,7 @@ namespace Ivy {
 						else if (rotation == M_PI_2)
 						{
 							if (x != xMax)
-								node->addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + xMax));
 						}
 						else
 						{
@@ -316,10 +433,10 @@ namespace Ivy {
 						}
 						break;
 					case ElementType::MeleeEnemy:
-						if (rotation == 3 * M_PI / 2)
+						if (rotation == 3.0f * M_PI_2)
 						{
 							if (x != 0)
-								node->addChild(graph.getNode(nodeId - yMax));
+								node->addChild(graph.getNode(nodeId - xMax));
 						}
 						else if (rotation == M_PI)
 						{
@@ -329,7 +446,7 @@ namespace Ivy {
 						else if (rotation == M_PI_2)
 						{
 							if (x != xMax)
-								node->addChild(graph.getNode(nodeId + yMax));
+								node->addChild(graph.getNode(nodeId + xMax));
 						}
 						else
 						{

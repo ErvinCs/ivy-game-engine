@@ -13,7 +13,7 @@ namespace Ivy
 		eliteCount = 2;
 		populationSize = 28;
 		tournamentSize = 6;	    
-		maxGeneration = 12;		
+		maxGeneration = 3;		
 		genotypeSize = 12;
 
 		init();

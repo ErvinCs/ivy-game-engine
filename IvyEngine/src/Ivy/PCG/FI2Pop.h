@@ -30,11 +30,11 @@ namespace Ivy
 		int eliteCount;
 		int populationSize;
 		int tournamentSize;
-		int maxGeneration;
 		int currGeneration;
 		int genotypeSize;
 		int currentFeasibleSize;
 	public:
+		int maxGeneration;
 		FI2Pop();
 
 		void init();
