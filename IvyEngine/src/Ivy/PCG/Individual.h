@@ -47,6 +47,9 @@ namespace Ivy {
 		 */
 		bool operator==(Individual& other);
 		bool operator!=(Individual& other);
+
+		Individual& operator=(const Individual& other);
+		
 		
 	};
 }

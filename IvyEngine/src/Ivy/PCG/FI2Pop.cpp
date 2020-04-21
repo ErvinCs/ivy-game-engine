@@ -11,9 +11,9 @@ namespace Ivy
 		uniformRate = 0.5f;
 		singlePointCrossoverFrequency = 3;
 		eliteCount = 2;
-		populationSize = 20;
-		tournamentSize = 5;	    //???
-		maxGeneration = 3;		
+		populationSize = 30;
+		tournamentSize = 8;	    
+		maxGeneration = 10;		
 		genotypeSize = 12;
 		targetFeasibleSize = 1;
 
@@ -42,13 +42,12 @@ namespace Ivy
 		while (currGeneration < maxGeneration)	
 		{
 			IVY_CORE_TRACE("FI2POP: Generation {0}", currGeneration);
+
 			while (infeasiblePop.getPopulationSize() > populationSize)
 			{
 				IVY_CORE_TRACE("FI2POP: Removing extra individual at index {0}. Size of Infeasible: {1}", infeasiblePop.getLeastFitIndividualIndex(), infeasiblePop.getPopulationSize());
 				infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
 			}
-			feasiblePop.removeDeadIndividuals();
-			currGeneration += 1;
 
 			IVY_CORE_TRACE("FI2POP: Evolving Infeasible");
 			infeasiblePop = this->evolvePopulation(infeasiblePop);
@@ -58,27 +57,46 @@ namespace Ivy
 				feasiblePop = this->evolvePopulation(feasiblePop);
 			}
 
-			IVY_CORE_TRACE("FI2POP: Computing Fitnesses");
-			for (auto& ind : infeasiblePop.getIndividuals())
+			IVY_CORE_TRACE("FI2POP: Computing Infeasible Fitnesses");
+			int infeasiblePopSize = infeasiblePop.getPopulationSize();
+			for (int i = 0; i < infeasiblePopSize; i++)
 			{
+				Individual& ind = infeasiblePop.getIndividualAt(i);
 				ind.computeFitness();
-				//IVY_CORE_INFO("FI2POP: Fitness={0}", ind.getFitness());
 				if (ind.getFitness() == 1.0f)
 				{
-					//IVY_CORE_TRACE("FI2POP: Migrating");
+					IVY_CORE_TRACE("FI2POP: Migrating");
 					feasiblePop.addIndividual(ind);
+					infeasiblePop.removeIndividualAtIndex(i);
+					infeasiblePopSize--;
+					i--;
 					initialisedFeasible = true;
+				}
+				else
+				{
+					float thisFitness = ind.getFitness();
+					if (thisFitness > fittestInfeasibleFitness)
+					{
+						fittestInfeasibleFitness = thisFitness;
+						fittestFeasibleIndividual = ind;
+
+					}
 				}
 			}
 
 			
 			if (initialisedFeasible)
 			{
-				for (int i = 0; i < feasiblePop.getPopulationSize(); i++)
+				IVY_CORE_TRACE("FI2POP: Computing Feasible Fitnesses");
+				int popSize = feasiblePop.getPopulationSize();
+				for (int i = 0; i < popSize; i++)
 				{
 					float fitness = feasiblePop.getIndividualAt(i).computeFitness();
 					if (fitness < 1.0f)
-						feasiblePop.getIndividualAt(i).setAlive(false);
+					{
+						feasiblePop.removeIndividualAtIndex(i);
+						popSize--;
+					}
 					float diversity = 0.0f;
 					for (int j = 0; j < feasiblePop.getPopulationSize(); j++)
 					{
@@ -90,8 +108,16 @@ namespace Ivy
 					diversity /= (feasiblePop.getPopulationSize() - 1);
 					feasiblePop.getIndividualAt(i).setDiversity(diversity);
 					feasiblePop.getIndividualAt(i).setFitness(diversity);
+					if (diversity > fittestFeasibleFitness)
+					{
+						fittestFeasibleFitness = diversity;
+						fittestFeasibleIndividual = feasiblePop.getIndividualAt(i);
+
+					}
 				}
 			}
+
+			currGeneration += 1;
 		}
 	}
 
@@ -113,16 +139,37 @@ namespace Ivy
 
 		//IVY_CORE_TRACE("FI2POP: Starting Crossover");
 		// Crossover
-		for (int i = eliteCount; i < pop.getPopulationSize(); i++)
+		int popSize = pop.getPopulationSize();
+		if (popSize >= eliteCount && popSize >= tournamentSize)
 		{
-			Individual ind1 = this->tournamentSelection(pop);
-			Individual ind2 = this->tournamentSelection(pop);
-			Individual offspring = Individual();
-			if (i % singlePointCrossoverFrequency == 0)
-				offspring = uniformCrossover(ind1, ind2);
-			else
-				offspring = singlePointCrossover(ind1, ind2);
-			population.addIndividual(offspring);
+			for (int i = eliteCount; i < populationSize; i++)
+			{
+				Individual ind1 = this->tournamentSelection(pop);
+				Individual ind2 = this->tournamentSelection(pop);
+				Individual offspring = Individual();
+				if (i % singlePointCrossoverFrequency == 0)
+					offspring = uniformCrossover(ind1, ind2);
+				else
+					offspring = singlePointCrossover(ind1, ind2);
+				population.addIndividual(offspring);
+			}
+		}
+		else
+		{
+			int randIndex;
+			for (int i = eliteCount; i < populationSize; i++)
+			{
+				randIndex = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / popSize));
+				Individual ind1 = pop.getIndividualAt(randIndex);
+				randIndex = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / popSize));
+				Individual ind2 = pop.getIndividualAt(randIndex);
+				Individual offspring = Individual();
+				if (i % singlePointCrossoverFrequency == 0)
+					offspring = uniformCrossover(ind1, ind2);
+				else
+					offspring = singlePointCrossover(ind1, ind2);
+				population.addIndividual(offspring);
+			}
 		}
 		//IVY_CORE_TRACE("FI2POP: Ending Crossover");
 
@@ -131,7 +178,7 @@ namespace Ivy
 		//IVY_CORE_TRACE("FI2POP: Starting Mutation");
 		this->mutate(population.getIndividualAt(eliteCount - 1));
 		//this->mutate(population.getIndividuals()[eliteCount-1]);
-		for (int i = eliteCount; i < pop.getPopulationSize(); i++)
+		for (int i = eliteCount; i < popSize; i++)
 		{
 			float randomUnit = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			if (randomUnit <= mutationRate)
@@ -144,6 +191,8 @@ namespace Ivy
 
 		return population;
 	}
+
+
 
 	Population FI2Pop::generateInitialPopulation()
 	{
@@ -200,7 +249,8 @@ namespace Ivy
 	Individual FI2Pop::uniformCrossover(Individual& ind1, Individual& ind2)
 	{
 		Individual offspring{};
-		for (int i = 0; i < ind1.getDesignElementsSize(); i++)
+		//int deSize = ind1.getDesignElementsSize();
+		for (int i = 0; i < genotypeSize; i++)
 		{
 			float copyDesignElemProb = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			if (ind1.getFitness() > ind2.getFitness())
@@ -235,7 +285,8 @@ namespace Ivy
 		Individual offspring{};
 		int midPoint = genotypeSize / 2;
 		float copyDesignElemProb = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		for (int i = 0; i < ind1.getDesignElementsSize(); i++)
+		//int deSize = ind1.getDesignElementsSize();
+		for (int i = 0; i < genotypeSize; i++)
 		{
 			if (copyDesignElemProb <= uniformRate)
 			{
@@ -264,6 +315,8 @@ namespace Ivy
 		}
 		return offspring;
 	}
+
+
 	Individual FI2Pop::tournamentSelection(Population & pop)
 	{
 		Population tournamentPop{};
@@ -272,7 +325,6 @@ namespace Ivy
 		{
 			int randIndex = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / pop.getPopulationSize()));
 			tournamentPop.addIndividual(pop.getIndividualAt(i));
-			//tournamentPop.addIndividual(pop.getIndividuals()[i]);
 		}
 
 		return tournamentPop.getFittestIndividual();
@@ -280,7 +332,8 @@ namespace Ivy
 
 	void FI2Pop::mutate(Individual & ind)
 	{
-		for (int i = 0; i < ind.getDesignElementsSize(); i++)
+		//int deSize = ind.getDesignElementsSize();
+		for (int i = 0; i < genotypeSize; i++)
 		{
 			int mutationType = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 2));
 			if (mutationType == 0)

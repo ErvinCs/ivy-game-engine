@@ -22,10 +22,9 @@ namespace Ivy
 		void addNode(Node node);
 
 		int getConnectivity();
-		// Might need these again
-		//int getStrongConnectivity();
-		//Graph getTransposedGraph();
-		//void fill(int vertex, bool* visisted, std::stack<int>& stack);
+		int getStrongConnectivity();
+		Graph getTransposedGraph();
+		void fill(int vertex, bool* visisted, std::stack<int>* stack);
 
 		inline Graph& operator=(const Graph& other)
 		{
@@ -33,7 +32,8 @@ namespace Ivy
 			return *this;
 		}
 	private:
-		void depthFirstSearch(int vertex, bool* visited, int* currPath);
+		void depthFirstSearch(int vertex, bool* visited);	// , int* currPath);
+		Graph(int numberOfNodes);
 		
 
 	};

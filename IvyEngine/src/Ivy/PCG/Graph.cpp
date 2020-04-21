@@ -10,14 +10,23 @@ namespace Ivy
 		this->nodes = other;
 	}
 
+	Graph::Graph(int numberOfNodes)
+	{
+		for (int i = 0; i < numberOfNodes; i++)
+		{
+			this->nodes.emplace_back(Node(i));
+		}
+	}
+
 	Node& Graph::getNode(int nodeId)
 	{
-		for (auto& it = nodes.begin(); it != nodes.end(); it++)
+		return this->nodes[nodeId];
+		/*for (auto& it = nodes.begin(); it != nodes.end(); it++)
 		{
 			Node& node = *it;
 			if (node.getNodeId() == nodeId)
 				return *it;
-		}
+		}*/
 	}
 
 	void Graph::addNode(Node node)
@@ -25,15 +34,12 @@ namespace Ivy
 		this->nodes.push_back(node);
 	}
 
+	// Returns the number of connected components
 	int Graph::getConnectivity()
 	{
 		int connectedComponents = 0;
 		const int nodesSize = nodes.size();
 		bool* visited = new bool[nodesSize];
-		int* longestPath = new int;
-		*longestPath = 0;
-		int* currPath = new int;
-		*currPath = 0;
 
 		for (int i = 0; i < nodesSize; i++)
 		{
@@ -42,37 +48,106 @@ namespace Ivy
 
 		for (int i = 0; i < nodesSize; i++)
 		{
-			//IVY_CORE_TRACE("Graph: LongestPath={0}", *longestPath);
 			if (visited[i] == false)
 			{
-				depthFirstSearch(i, visited, currPath);
+				depthFirstSearch(i, visited);
 				connectedComponents += 1;
-				if (*currPath > *longestPath)
-					*longestPath = *currPath;
-				*currPath = 0;
 			}
-			if (*longestPath == maximumPath)
-				break;
 		}
 
-		int result = *longestPath;
-		delete longestPath;
-		delete currPath;
 		delete[] visited;
-		return result;
+		return connectedComponents;
 	}
 
-	void Graph::depthFirstSearch(int vertex, bool* visited, int* currPath)
+	// Using Kosaraju Algorithm
+	// Returns the number of strongly connected components - should be 1 for a feasible graph
+	// FIX THIS
+	int Graph::getStrongConnectivity()
+	{
+		int strongConnectedComponents = 0;
+		std::stack<int> stack{};
+		const int nodesSize = nodes.size();
+		bool* visited = new bool[nodesSize];
+
+		// Find reachable vertices
+		for (int i = 0; i < nodesSize; i++)
+		{
+			visited[i] = false;
+		}
+
+		for (int i = 0; i < nodesSize; i++)
+		{
+			if (visited[i] == false)
+			{
+				fill(i, visited, &stack);
+			}
+		}
+
+		// Process the vertices in the order they were added in the stack
+		Graph transposedGrpah = this->getTransposedGraph();
+
+		for (int i = 0; i < nodesSize; i++)
+		{
+			visited[i] = false;
+		}
+
+		while (stack.size() > 0)
+		{
+			int vertex = stack.top();
+			stack.pop();
+
+			if (visited[vertex] == false)
+			{
+				transposedGrpah.depthFirstSearch(vertex, visited);
+				strongConnectedComponents += 1;
+			}
+		}
+
+		delete[] visited;
+		return strongConnectedComponents;
+	}
+
+	Graph Graph::getTransposedGraph()
+	{
+		Graph transposedGraph = Graph(this->nodes.size());
+		
+		int numberOfNodes = this->nodes.size();
+		for (int i = 0; i < numberOfNodes; i++)
+		{
+			std::vector<Node> childNodes = this->nodes[i].getChildren();
+			int childNodesSize = childNodes.size();
+			for (int j = 0; j < childNodesSize; j++)
+			{
+				int childNodeId = childNodes[j].getNodeId();
+				transposedGraph.nodes[childNodeId].addChild(Node(i));
+			}
+		}
+		
+		return transposedGraph;
+	}
+
+	void Graph::depthFirstSearch(int vertex, bool* visited)	//, int* currPath)
 	{
 		visited[vertex] = true;
 		for (Node& node : nodes[vertex].getChildren())
 		{
 			if (!visited[node.getNodeId()])
 			{
-				*currPath += 1;
-				depthFirstSearch(node.getNodeId(), visited, currPath);
+				//*currPath += 1;
+				depthFirstSearch(node.getNodeId(), visited);	//, currPath);
 			}
 		}
+	}
+
+	void Graph::fill(int vertex, bool* visited, std::stack<int>* stack)
+	{
+		visited[vertex] = true;
+		for (Node& node : nodes[vertex].getChildren())
+		{
+			if (!visited[node.getNodeId()])
+				fill(node.getNodeId(), visited, stack);
+		}
+		stack->push(vertex);
 	}
 
 }

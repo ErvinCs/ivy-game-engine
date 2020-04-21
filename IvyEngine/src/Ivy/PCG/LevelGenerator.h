@@ -9,7 +9,6 @@ namespace Ivy
 	{
 	private:
 		FI2Pop generator;
-		Population finalPopulation;
 		Individual fittest;
 		const float positionOffset = 8.0f;
 		const float wallOfsset = 4.5f;
@@ -17,8 +16,6 @@ namespace Ivy
 		LevelGenerator();
 		
 		void run();
-
-		void exportLevelSet() {}
 	};
 
 }

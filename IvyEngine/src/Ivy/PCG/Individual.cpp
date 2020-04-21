@@ -15,14 +15,16 @@ namespace Ivy {
 
 	Individual::Individual(const Individual& other)
 	{
+		this->designElements.clear();
 		std::copy(other.designElements.begin(), other.designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = other.getFitness();
-		this->alive = true;
+		this->alive = other.alive;
 		this->graph = other.graph;
 	}
 
 	Individual::Individual(const std::vector<DesignElement>& designElements)
 	{
+		this->designElements.clear();
 		std::copy(designElements.begin(), designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = 0;
 		this->alive = true;
@@ -54,6 +56,16 @@ namespace Ivy {
 		return !(*this == other);
 	}
 
+	Individual& Individual::operator=(const Individual& other)
+	{
+		this->designElements.clear();
+		std::copy(other.designElements.begin(), other.designElements.end(), std::back_inserter(this->designElements));
+		this->fitness = other.getFitness();
+		this->alive = other.alive;
+		this->graph = other.graph;
+		return *this;
+	}
+
 	float Individual::computeDiversity(Individual& other)
 	{
 		float difersityFactor = 0;
@@ -80,17 +92,19 @@ namespace Ivy {
 		// Returns 1.0f if there is a single longest path that connects all vertices
 		// Penalizez by 1.0f / Number_Of_Vertices for each vertex that is not part of the longest path
 		this->generateGraph();
-		float vertexConnectivity = graph.getConnectivity();
-		if (vertexConnectivity != this->designElements.size() - 1)
+		float vertexConnectivity = graph.getStrongConnectivity();
+		this->fitness = 1.0f / vertexConnectivity;
+		return fitness;
+		/*if (vertexConnectivity != 1)
 		{
-			this->fitness = 1.0f / this->designElements.size() - vertexConnectivity;
+			this->fitness = 1.0f / (vertexConnectivity - 1)
 			return fitness;
 		}
 		else
 		{
 			this->fitness = 1.0f;
 			return fitness;
-		}
+		}*/
 	}
 
 	void Individual::addNeighbours(Node* node, int nodeId, int x, int y, int xMax, int yMax)
@@ -327,6 +341,7 @@ namespace Ivy {
 						IVY_CORE_WARN("Individual: Default Generation Case! Type={0}", std::to_string(type));
 					}
 					nodeId++;
+					it++;
 				}
 			}
 		}

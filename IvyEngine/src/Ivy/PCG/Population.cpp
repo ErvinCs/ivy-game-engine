@@ -4,13 +4,15 @@
 
 namespace Ivy {
 
-	Population::Population(Population& other)
+	Population::Population(const Population& other)
 	{
-		std::copy(other.getIndividuals().begin(), other.getIndividuals().end(), std::back_inserter(this->individuals));
+		this->individuals.clear();
+		std::copy(other.getIndividualsConst().begin(), other.getIndividualsConst().end(), std::back_inserter(this->individuals));
 	}
 
 	Population::Population(const std::vector<Individual>& individualList)
 	{
+		this->individuals.clear();
 		std::copy(individualList.begin(), individualList.end(), std::back_inserter(this->individuals));
 	}
 
@@ -91,18 +93,32 @@ namespace Ivy {
 		this->individuals.erase(individuals.begin() + index);
 	}
 
-	void Population::removeDeadIndividuals()
-	{
-		for (auto& it = individuals.begin(); it < individuals.end(); it++)
-		{
-			Individual& ind = *it;
-			if (!ind.isAlive())
-				individuals.erase(it);
-		}
-	}
+	//void Population::removeDeadIndividuals()
+	//{
+	//	auto& it = individuals.begin();
+	//	while (it != individuals.end())
+	//	{
+	//		Individual& ind = *it;
+	//		if (!ind.isAlive())
+	//		{
+	//			individuals.erase(it);
+	//		}
+	//		else
+	//		{
+	//			it++;
+	//		}
+	//	}
+	//}
 
 	Individual& Population::getIndividualAt(int index)
 	{
 		return this->individuals[index];
+	}
+
+	Population& Population::Population::operator=(const Population& other)
+	{
+		this->individuals.clear();
+		std::copy(other.getIndividualsConst().begin(), other.getIndividualsConst().end(), std::back_inserter(this->individuals));
+		return *this;
 	}
 }

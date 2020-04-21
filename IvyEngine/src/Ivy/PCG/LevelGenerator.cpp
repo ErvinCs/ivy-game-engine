@@ -14,11 +14,14 @@ namespace Ivy
 	void LevelGenerator::run()
 	{
 		generator.run();
-		finalPopulation = generator.getFeasiblePopulation();
-		fittest = finalPopulation.getMostFitAndDiverseIndividual();
+		if (generator.getInitialisedFeasible())
+			fittest = generator.getFittestFeasibleIndividual();
+		else
+			fittest = generator.getFittestInfeasibleIndividual();
 		float xMax = (int)std::sqrtf(fittest.getDesignElements().size());
 		float yMax = (int)(fittest.getDesignElements().size() / xMax);
 		IVY_CORE_INFO("LevelGenerator: xMax={0}, yMax={1}", xMax, yMax);
+		//Entity waal1, wall2, wall3, wall4, hole;
 		auto& it = fittest.getDesignElements().begin();
 		for (int x = 0; x < (int)xMax; x++)
 		{
@@ -77,8 +80,8 @@ namespace Ivy
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("hallway.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2 || levelElement.transform.rotation == 3 * M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -96,16 +99,16 @@ namespace Ivy
 								glm::vec2(), 0, glm::vec2());
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-						}
+						}*/
 						break;
 					case ElementType::VerticalWall:
 						IVY_CORE_TRACE("Adding VerticalWall Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("verticalWall.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
-						Entity wall3 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
+						wall3 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -153,17 +156,17 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}
+						}*/
 						break;
 					case ElementType::HorizontalWall:
 						IVY_CORE_TRACE("Adding HorizontalWall Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("horizontalWall.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
-						Entity wall3 = ECS::getInstance().createEntity();
-						Entity wall4 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
+						wall3 = ECS::getInstance().createEntity();
+						wall4 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -227,16 +230,16 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall4Transform.position, wall4Transform.rotation, wall4Transform.scale));
 
-						}
+						}*/
 						break;
 					case ElementType::Pillar:
 						IVY_CORE_TRACE("Adding Pillar Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("pillar.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
-						Entity wall3 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
+						wall3 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -284,25 +287,25 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}
+						}*/
 						break;
 					case ElementType::Hole:
 						IVY_CORE_TRACE("Adding Hole Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("hole.png"));
-						Entity hole = ECS::getInstance().createEntity();
-						Transform holeTransform = Transform(
-							glm::vec2(), 0, glm::vec2());
-						ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(holeTransform.position, holeTransform.rotation, holeTransform.scale));
+						//hole = ECS::getInstance().createEntity();
+						//Transform holeTransform = Transform(
+						//	glm::vec2(), 0, glm::vec2());
+						//ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(holeTransform.position, holeTransform.rotation, holeTransform.scale));
 						break;
 					case ElementType::RangedEnemy:
 						IVY_CORE_TRACE("Adding RangedEnemy Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("rangedEnemy.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2 || levelElement.transform.rotation == 3 * M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -320,7 +323,7 @@ namespace Ivy
 								glm::vec2(), 0, glm::vec2());
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-						}
+						}*/
 						break;
 					case ElementType::StandardRoom1:
 						IVY_CORE_TRACE("Adding StandardRoom1, Type={0}", std::to_string(type));
@@ -333,15 +336,16 @@ namespace Ivy
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("standardRoom2.png"));
+						//WALLS
 						break;
 					case ElementType::TShaped:
 						IVY_CORE_TRACE("Adding TShaped, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("tshape.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
-						Entity wall3 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
+						wall3 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -389,16 +393,16 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}
+						}*/
 						break;
 					case ElementType::ClosedRoom:
 						IVY_CORE_TRACE("Adding ClosedRoom, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("closedRoom.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
-						Entity wall3 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
+						wall3 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -446,16 +450,16 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}
+						}*/
 						break;
 					case ElementType::MeleeEnemy:
 						IVY_CORE_TRACE("Adding MeleeEnemy, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("meleeEnemy.png"));
-						Entity wall1 = ECS::getInstance().createEntity();
-						Entity wall2 = ECS::getInstance().createEntity();
-						Entity wall3 = ECS::getInstance().createEntity();
+						/*wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
+						wall3 = ECS::getInstance().createEntity();
 						if (levelElement.transform.rotation == M_PI_2)
 						{
 							Transform wall1Transform = Transform(
@@ -503,7 +507,7 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}
+						}*/
 						break;
 					default:
 						IVY_CORE_WARN("Default Generation Case! Type={0}", std::to_string(type));

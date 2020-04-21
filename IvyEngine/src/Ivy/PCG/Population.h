@@ -11,10 +11,11 @@ namespace Ivy {
 		std::vector<Individual> individuals{};
 	public:
 		Population() = default;
-		Population(Population& other);
+		Population(const Population& other);
 		Population(const std::vector<Individual>& individualList);
 
 		inline std::vector<Individual>& getIndividuals() { return this->individuals; }
+		inline const std::vector<Individual>& getIndividualsConst() const { return this->individuals; }
 
 		Individual getFittestIndividual();
 		Individual getLeastFitIndividual();
@@ -26,6 +27,9 @@ namespace Ivy {
 		void sortIndividuals();
 		void addIndividual(const Individual& individual);
 		void removeIndividualAtIndex(int index);
-		void removeDeadIndividuals();
+	//	void removeDeadIndividuals();
+
+		Population& Population::operator=(const Population& other);
+
 	};
 }

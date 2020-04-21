@@ -44,7 +44,8 @@ namespace Ivy
 		inline const Population& getFeasiblePopulation() { return feasiblePop; }
 		inline const Population& getInfeasiblePopulation() { return infeasiblePop; }
 		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasibleIndividual; }
-		inline const Individual getFittestInfeasibleIndividual() { return fittestInfeasibleIndividual; }
+		inline const Individual& getFittestInfeasibleIndividual() { return fittestInfeasibleIndividual; }
+		inline const bool getInitialisedFeasible() { return this->initialisedFeasible; }
 
 		Population evolvePopulation(Population& pop);
 		Population generateInitialPopulation();
@@ -54,6 +55,7 @@ namespace Ivy
 		Individual singlePointCrossover(Individual& ind1, Individual& ind2);
 		Individual tournamentSelection(Population& pop);
 		void mutate(Individual& ind);
+
 
 	private:
 		void mutateRotation(DesignElement& designElement);
