@@ -21,7 +21,7 @@ namespace Ivy
 		float xMax = (int)std::sqrtf(fittest.getDesignElements().size());
 		float yMax = (int)(fittest.getDesignElements().size() / xMax);
 		IVY_CORE_INFO("LevelGenerator: xMax={0}, yMax={1}", xMax, yMax);
-		Entity wall1, wall2, wall3, wall4, hole;
+		Entity wall1 = -1, wall2 = -1, wall3 = -1, wall4 = -1, hole = -1;
 		auto& it = fittest.getDesignElements().begin();
 		for (int x = 0; x < (int)xMax; x++)
 		{
@@ -82,21 +82,21 @@ namespace Ivy
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("hallway.png"));
 						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == (float)M_PI_2 || levelElement.transform.rotation == 3.0f * (float)M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2 || levelElement.transform.rotation == 3 * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - 8 * halfTileSize, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 4.0f, 4.0f));
+								glm::vec2(levelElement.transform.position.x - 5 * halfTilePos, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 3.0f, halfTileSize * 8.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(levelElement.transform.position.x + 8 * halfTileSize, levelElement.transform.position.y), 0, glm::vec2(halfTileSize* 4.0f, 4.0f));
+								glm::vec2(levelElement.transform.position.x + 5 * halfTilePos, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 3.0f, halfTileSize * 8.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - 5 * halfTileSize), 0, glm::vec2(4.0f, halfTileSize * 3.0f));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - 5 * halfTilePos), 0, glm::vec2(halfTileSize * 8.0f, halfTileSize * 3.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 5 * halfTileSize), 0, glm::vec2(4.0f, halfTileSize * 3.0f));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 5 * halfTilePos), 0, glm::vec2(halfTileSize * 8.0f, halfTileSize * 3.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 						}
@@ -112,50 +112,50 @@ namespace Ivy
 						if (levelElement.transform.rotation == (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 3.5f), 0, glm::vec2(1.0f, 4.0f));
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - halfTileSize, levelElement.transform.position.y - halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y - halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - halfTileSize, levelElement.transform.position.y + halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y + halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
 						else if (levelElement.transform.rotation == (float)M_PI)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x + 3.5f, levelElement.transform.position.y), 0, glm::vec2(4.0f, 1.0f));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 7 * halfTilePos), 0, glm::vec2(halfTileSize * 8.0f, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(levelElement.transform.position.x + halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(1.0f, 1.5f));
+								glm::vec2(levelElement.transform.position.x + halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(1.0f, 1.5f));
+								glm::vec2(levelElement.transform.position.x - halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == 3.0f * (float)M_PI_2)
+						else if (levelElement.transform.rotation == 3 * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - 3.5f, levelElement.transform.position.y), 0, glm::vec2(1.0f, 4.0f));
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8.0f));
 							Transform wall2Transform = Transform(
-								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y - halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
+								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y - halfTileSize * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y + halfTileSize * 3), 0, glm::vec2(1.5f, 1.0f));
+								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y + halfTileSize * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
 						else 
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - 3.5f), 0, glm::vec2(4.0f, 1.0f));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 8.0f, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - halfTileSize * 3, levelElement.transform.position.y + halfTileSize), 0, glm::vec2(1.0f, 1.5f));
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 3, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x + halfTileSize * 3, levelElement.transform.position.y + halfTileSize), 0, glm::vec2(1.0f, 1.5f));
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 3, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
 						break;
 					case ElementType::HorizontalWall:
@@ -163,351 +163,364 @@ namespace Ivy
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("horizontalWall.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
 						wall3 = ECS::getInstance().createEntity();
 						wall4 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2 || levelElement.transform.rotation == 3 * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 3, levelElement.transform.position.y - halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 3));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 3, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 3));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 5, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							Transform wall4Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 5, levelElement.transform.position.y + halfTilePos * 7), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall4Transform.position, wall4Transform.rotation, wall4Transform.scale));
-
-						}
-						else if (levelElement.transform.rotation == M_PI)
-						{
-							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall4Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall4Transform.position, wall4Transform.rotation, wall4Transform.scale));
-
-						}
-						else if (levelElement.transform.rotation == 3 * M_PI_2)
-						{
-							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall4Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall4Transform.position, wall4Transform.rotation, wall4Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall4, CollidableBox(wall4Transform.position, wall4Transform.rotation, wall4Transform.scale));
 
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y + halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos, levelElement.transform.position.y - halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y - halfTilePos * 5), 0, glm::vec2(halfTileSize, halfTileSize * 3));
 							Transform wall4Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y + halfTilePos * 5), 0, glm::vec2(halfTileSize, halfTileSize * 3));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall4Transform.position, wall4Transform.rotation, wall4Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall4, CollidableBox(wall4Transform.position, wall4Transform.rotation, wall4Transform.scale));
 
-						}*/
+						}
 						break;
 					case ElementType::Pillar:
 						IVY_CORE_TRACE("Adding Pillar Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("pillar.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
 						wall3 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2)
 						{
-							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == M_PI)
+						if (levelElement.transform.rotation == (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 7));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == 3 * M_PI_2)
+						else if (levelElement.transform.rotation == (float)M_PI)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y + 7 * halfTilePos), 0, glm::vec2(halfTileSize * 7, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
+						else if (levelElement.transform.rotation == 3 * (float)M_PI_2)
+						{
+							Transform wall1Transform = Transform(
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
+							Transform wall2Transform = Transform(
+								glm::vec2(levelElement.transform.position.x + halfTilePos, levelElement.transform.position.y + halfTilePos * 7), 0, glm::vec2(halfTileSize * 7, halfTileSize));
+							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
-							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 7));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}*/
+						}
 						break;
 					case ElementType::Hole:
 						IVY_CORE_TRACE("Adding Hole Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("hole.png"));
-						//hole = ECS::getInstance().createEntity();
-						//Transform holeTransform = Transform(
-						//	glm::vec2(), 0, glm::vec2());
-						//ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(holeTransform.position, holeTransform.rotation, holeTransform.scale));
+						hole = ECS::getInstance().createEntity();
+						{
+							Transform holeTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 4, halfTileSize * 4));
+							ECS::getInstance().addComponent<CollidableBox>(hole, CollidableBox(holeTransform.position, holeTransform.rotation, holeTransform.scale));
+						}
 						break;
 					case ElementType::RangedEnemy:
 						IVY_CORE_TRACE("Adding RangedEnemy Room, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("rangedEnemy.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2 || levelElement.transform.rotation == 3 * M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2 || levelElement.transform.rotation == 3 * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 3, levelElement.transform.position.y - halfTilePos * 3), 0, glm::vec2(halfTileSize, halfTileSize * 3));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 3, levelElement.transform.position.y + halfTilePos * 3), 0, glm::vec2(halfTileSize, halfTileSize * 3));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 3, levelElement.transform.position.y + halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 3, levelElement.transform.position.y - halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-						}*/
+						}
 						break;
 					case ElementType::StandardRoom1:
 						IVY_CORE_TRACE("Adding StandardRoom1, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("standardRoom1.png"));
+						wall1 = ECS::getInstance().createEntity();
+						wall2 = ECS::getInstance().createEntity();
+						wall3 = ECS::getInstance().createEntity();
+						if (levelElement.transform.rotation == (float)M_PI_2)
+						{
+							Transform wall1Transform = Transform(
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 3, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 2));
+							Transform wall2Transform = Transform(
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y - halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
+							Transform wall3Transform = Transform(
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y + halfTilePos * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
+							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
+						else if (levelElement.transform.rotation == (float)M_PI)
+						{
+							Transform wall1Transform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 3), 0, glm::vec2(halfTileSize * 2, halfTileSize));
+							Transform wall2Transform = Transform(
+								glm::vec2(levelElement.transform.position.x + halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
+							Transform wall3Transform = Transform(
+								glm::vec2(levelElement.transform.position.x - halfTileSize * 3, levelElement.transform.position.y - halfTileSize), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
+							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
+						else if (levelElement.transform.rotation == 3 * (float)M_PI_2)
+						{
+							Transform wall1Transform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 3), 0, glm::vec2(halfTileSize, halfTileSize * 2));
+							Transform wall2Transform = Transform(
+								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y - halfTileSize * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
+							Transform wall3Transform = Transform(
+								glm::vec2(levelElement.transform.position.x + halfTileSize, levelElement.transform.position.y + halfTileSize * 3), 0, glm::vec2(halfTileSize * 3, halfTileSize));
+							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
+						else
+						{
+							Transform wall1Transform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 3), 0, glm::vec2(halfTileSize * 2, halfTileSize));
+							Transform wall2Transform = Transform(
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 3, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
+							Transform wall3Transform = Transform(
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 3, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize * 3.0f));
+							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
 						break;
 					case ElementType::StandardRoom2:
 						IVY_CORE_TRACE("Adding StandardRoom2, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
-						ECS::getInstance().addComponent<Renderable>(entity, Renderable("standardRoom2.png"));
-						//WALLS
+						ECS::getInstance().addComponent<Renderable>(entity, Renderable("standardRoom2.png"));						
 						break;
 					case ElementType::TShaped:
 						IVY_CORE_TRACE("Adding TShaped, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("tshape.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
 						wall3 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 6, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 8));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 5, levelElement.transform.position.y - halfTilePos * 6), 0, glm::vec2(halfTileSize * 3, halfTileSize * 2));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 5, levelElement.transform.position.y + halfTilePos * 6), 0, glm::vec2(halfTileSize * 3, halfTileSize * 2));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == M_PI)
+						else if (levelElement.transform.rotation == (float)M_PI)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 6), 0, glm::vec2(halfTileSize * 8, halfTileSize * 2));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 6, levelElement.transform.position.y + halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 3));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 6, levelElement.transform.position.y + halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 3));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == 3 * M_PI_2)
+						else if (levelElement.transform.rotation == 3 * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 6, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 8));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 5, levelElement.transform.position.y - halfTilePos * 6), 0, glm::vec2(halfTileSize * 3, halfTileSize * 2));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 5, levelElement.transform.position.y + halfTilePos * 6), 0, glm::vec2(halfTileSize * 3, halfTileSize * 2));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 6), 0, glm::vec2(halfTileSize * 8, halfTileSize * 2));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 6, levelElement.transform.position.y - halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 3));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 6, levelElement.transform.position.y - halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 3));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}*/
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
 						break;
 					case ElementType::ClosedRoom:
 						IVY_CORE_TRACE("Adding ClosedRoom, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("closedRoom.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
 						wall3 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 7 * halfTileSize), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == M_PI)
+						else if (levelElement.transform.rotation == (float)M_PI)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTileSize * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 6));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == 3 * M_PI_2)
+						else if (levelElement.transform.rotation == 3 * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTileSize * 7), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTileSize * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 6));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}*/
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
 						break;
 					case ElementType::MeleeEnemy:
 						IVY_CORE_TRACE("Adding MeleeEnemy, Type={0}", std::to_string(type));
 						ECS::getInstance().addComponent<Tag>(entity, Tag(levelElement.tag));
 						ECS::getInstance().addComponent<Transform>(entity, Transform(levelElement.transform));
 						ECS::getInstance().addComponent<Renderable>(entity, Renderable("meleeEnemy.png"));
-						/*wall1 = ECS::getInstance().createEntity();
+						wall1 = ECS::getInstance().createEntity();
 						wall2 = ECS::getInstance().createEntity();
 						wall3 = ECS::getInstance().createEntity();
-						if (levelElement.transform.rotation == M_PI_2)
+						if (levelElement.transform.rotation == (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 7 * halfTileSize), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == M_PI)
+						else if (levelElement.transform.rotation == (float)M_PI)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTileSize * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 6));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
-						else if (levelElement.transform.rotation == 3 * M_PI_2)
+						else if (levelElement.transform.rotation == 3 * (float)M_PI_2)
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x - halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTileSize * 7), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
 						}
 						else
 						{
 							Transform wall1Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall2Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 7), 0, glm::vec2(halfTileSize * 8, halfTileSize));
 							Transform wall3Transform = Transform(
-								glm::vec2(), 0, glm::vec2());
+								glm::vec2(levelElement.transform.position.x + halfTileSize * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 6));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
-							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
-						}*/
+							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
+						}
 						break;
 					default:
 						IVY_CORE_WARN("Default Generation Case! Type={0}", std::to_string(type));

@@ -7,13 +7,13 @@ namespace Ivy
 {
 	FI2Pop::FI2Pop()
 	{
-		mutationRate = 0.15f;
+		mutationRate = 0.10f;
 		uniformRate = 0.5f;
 		singlePointCrossoverFrequency = 3;
 		eliteCount = 2;
-		populationSize = 28;
+		populationSize = 25;
 		tournamentSize = 6;	    
-		maxGeneration = 3;		
+		maxGeneration = 2;		
 		genotypeSize = 12;
 
 		init();
