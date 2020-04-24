@@ -119,15 +119,14 @@ namespace Ivy
 		return transposedGraph;
 	}
 
-	void Graph::depthFirstSearch(int vertex, bool* visited)	//, int* currPath)
+	void Graph::depthFirstSearch(int vertex, bool* visited)	
 	{
 		visited[vertex] = true;
 		for (Node& node : nodes[vertex].getChildren())
 		{
 			if (!visited[node.getNodeId()])
 			{
-				//*currPath += 1;
-				depthFirstSearch(node.getNodeId(), visited);	//, currPath);
+				depthFirstSearch(node.getNodeId(), visited);	
 			}
 		}
 	}

@@ -149,7 +149,7 @@ namespace Ivy
 							enemy1 = ECS::getInstance().createEntity();
 							ECS::getInstance().addComponent<Tag>(entity, Tag(std::string("Enemy-Fly-" + enemyTagCounter++)));
 							Transform fly1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize, halfTileSize)
 							);
 							CollidableBox fly1box = CollidableBox(fly1Transform.position, fly1Transform.rotation, fly1Transform.scale);
 							fly1box.isTrigger = true;
@@ -644,7 +644,7 @@ namespace Ivy
 						}
 						break;
 					default:
-						IVY_CORE_WARN("Default Generation Case! Type={0}", std::to_string(type));
+						IVY_CORE_WARN("LevelGenerator: Default Generation Case! Type={0}", std::to_string(type));
 					}
 					IVY_CORE_TRACE("Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", entity, levelElement.tag.tag, 
 						levelElement.transform.position.x, levelElement.transform.position.y, levelElement.transform.rotation, 

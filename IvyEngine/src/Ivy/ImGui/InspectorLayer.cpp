@@ -198,8 +198,10 @@ namespace Ivy {
 						ImGui::InputTextWithHint("Script Path", currentPath, buffer);
 						if (ImGui::Button("Import Script"))
 						{
-							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
+							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);				
 							getECS().removeComponent<ScriptComponent>(entity);
+							//script->scriptableObject.destoryAndRelease(); (?)
+
 							ScriptComponent newScript = ScriptComponent(*buffer);
 							newScript.setComponentId(ScriptComponentID);
 							getECS().addComponent<ScriptComponent>(entity, newScript);
@@ -210,8 +212,9 @@ namespace Ivy {
 						}
 						if (ImGui::Button("Remove Script"))
 						{
-							//ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
+							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
 							getECS().removeComponent<ScriptComponent>(entity);
+							//script->scriptableObject.destoryAndRelease(); (?)
 							IVY_INFO("Destroyed Script on Entity: {0}", entity);
 						}
 					}

@@ -26,11 +26,11 @@ namespace Ivy {
 		inline void setFitness(const float& fitness) { this->fitness = fitness; }
 		inline void setAlive(const bool& alive) { this->alive = alive; }
 		inline const Graph& getGraph() { return this->graph; }
+		inline Graph copyGraph() { return this->graph; }
 		inline int getDesignElementsSize() { return this->designElements.size(); }
 		inline DesignElement& getDesignElementAt(int index) { return this->designElements[index]; }
-		inline Graph copyGraph() { return this->graph; }
-		inline float getDiversity() { return this->diversity; }
-		inline void setDiversity(float diversity) { this->diversity = diversity; }
+		inline const float getDiversity() const { return this->diversity; }
+		inline void setDiversity(const float diversity) { this->diversity = diversity; }
 
 		void sortDesignElements();
 		void addDesignElement(DesignElement designElement) { designElements.push_back(designElement); }
@@ -39,11 +39,6 @@ namespace Ivy {
 		float computeFitness();
 
 		void generateGraph();
-		void addNeighbours(Node* node, int nodeId, int x, int y, int xMax, int yMax);
-		void addLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax);
-		void addRight(Node* node, int nodeId, int x, int y, int xMax, int yMax);
-		void addTop(Node* node, int nodeId, int x, int y, int xMax, int yMax);
-		void addBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax);
 
 		/*
 		 * Two individuals are equal if all their design elements are equal.
@@ -51,8 +46,19 @@ namespace Ivy {
 		 */
 		bool operator==(Individual& other);
 		bool operator!=(Individual& other);
-
 		Individual& operator=(const Individual& other);
+
+	private:
+		void addNeighbours(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addRight(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addTop(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+
+		void removeLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void removeRight(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void removeTop(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void removeBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax);
 		
 		
 	};

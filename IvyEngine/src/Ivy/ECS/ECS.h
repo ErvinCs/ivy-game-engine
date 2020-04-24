@@ -86,11 +86,11 @@ namespace Ivy {
 
 		void clearECS()
 		{
-			this->entities.clearEntities();
 			for (auto& componentContainer : componentContainers)
 			{
 				componentContainer.second->clearComponents();
 			}
+			this->entities.clearEntities();
 		}
 
 		int getSizeEntities() {

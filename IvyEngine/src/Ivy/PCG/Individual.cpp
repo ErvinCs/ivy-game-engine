@@ -9,6 +9,7 @@ namespace Ivy {
 	Individual::Individual()
 	{
 		this->fitness = 0;
+		this->diversity = 0;
 		this->alive = true;
 		this->graph = Graph();
 	}
@@ -18,6 +19,7 @@ namespace Ivy {
 		this->designElements.clear();
 		std::copy(other.designElements.begin(), other.designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = other.getFitness();
+		this->diversity = other.getDiversity();
 		this->alive = other.alive;
 		this->graph = other.graph;
 	}
@@ -27,6 +29,7 @@ namespace Ivy {
 		this->designElements.clear();
 		std::copy(designElements.begin(), designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = 0;
+		this->diversity = 0;
 		this->alive = true;
 		this->graph = Graph();
 	}
@@ -61,6 +64,7 @@ namespace Ivy {
 		this->designElements.clear();
 		std::copy(other.designElements.begin(), other.designElements.end(), std::back_inserter(this->designElements));
 		this->fitness = other.getFitness();
+		this->diversity = other.getDiversity();
 		this->alive = other.alive;
 		this->graph = other.graph;
 		return *this;
@@ -80,11 +84,11 @@ namespace Ivy {
 			// Check tile type
 			if (designElements[i].getElementType() != other.designElements[i].getElementType())
 			{
-				difersityFactor += 1;
+				difersityFactor += 2;
 			}
 		}
 		// Normalize the diversity factor of the 2 individuals and return it
-		return (difersityFactor / designElements.size() / 2.0f);
+		return ((difersityFactor / ((float)designElements.size() * 3.0f)));
 	}
 
 	float Individual::computeFitness()
@@ -105,6 +109,7 @@ namespace Ivy {
 		}
 	}
 
+	// Add children
 	void Individual::addLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
 		if (x != 0)
@@ -124,6 +129,24 @@ namespace Ivy {
 	{
 		if (y != 0)
 			node->addChild(graph.getNode(nodeId - 1));
+	}
+
+	// Remove impossible children
+	void Individual::removeLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax)
+	{
+		node->removeChild(nodeId - yMax);
+	}
+	void Individual::removeRight(Node* node, int nodeId, int x, int y, int xMax, int yMax)
+	{
+		node->removeChild(nodeId + yMax);
+	}
+	void Individual::removeTop(Node* node, int nodeId, int x, int y, int xMax, int yMax)
+	{
+		node->removeChild(nodeId + 1);
+	}
+	void Individual::removeBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax)
+	{
+		node->removeChild(nodeId - 1);
 	}
 
 	/*
@@ -156,10 +179,13 @@ namespace Ivy {
 			graph.addNode(Node(nodeId));
 			nodeId++;
 		}
-		nodeId = 0;
+		
 		int designElementCount = designElements.size();
 		int xMax = (int)std::sqrtf(designElementCount);
 		int yMax = (int)(designElementCount / xMax);
+
+		// Add possible children
+		nodeId = 0;
 		auto& it = designElements.begin();
 		for (int x = 0; x < (int)xMax; x++)
 		{
@@ -180,7 +206,7 @@ namespace Ivy {
 							addTop(node, nodeId, x, y, xMax, yMax);
 							addBottom(node, nodeId, x, y, xMax, yMax);
 						}
-						else if (rotation == float(M_PI) || rotation == 0)
+						else if (rotation == (float)M_PI || rotation == 0)
 						{
 							addLeft(node, nodeId, x, y, xMax, yMax);
 							addRight(node, nodeId, x, y, xMax, yMax);
@@ -337,6 +363,223 @@ namespace Ivy {
 						break;
 					default:
 						IVY_CORE_WARN("Individual: Default Generation Case! Type={0}", std::to_string(type));
+						break;
+					}
+					nodeId++;
+					it++;
+				}
+			}
+		}
+
+		// Remove impossible children
+		nodeId = 0;
+		it = designElements.begin();
+		for (int x = 0; x < (int)xMax; x++)
+		{
+			for (int y = 0; y < (int)yMax; y++)
+			{
+				if (it != designElements.end())
+				{
+					Node* node = &graph.getNode(nodeId);
+					DesignElement& levelElement = *it;
+					ElementType type = levelElement.getElementType();
+					float rotation = levelElement.transform.rotation;
+
+					switch (type)
+					{
+					case ElementType::Hallway:
+						if (rotation == (float)M_PI_2 || rotation == 3.0f * (float)M_PI_2)
+						{
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == (float)M_PI || rotation == 0)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for VerticalWall!");
+						}
+						break;
+					case ElementType::VerticalWall:
+						if (rotation == (float)M_PI_2)
+						{
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == (float)M_PI)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 3.0f * (float)M_PI_2)
+						{
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for VerticalWall!");
+						}
+						break;
+					case ElementType::Pillar:
+						if (rotation == (float)M_PI_2)
+						{
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == (float)M_PI)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 3.0f * (float)M_PI_2)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remve Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+						}
+						else
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for Pillar!");
+						}
+						break;
+					case ElementType::TShaped:
+						if (rotation == (float)M_PI_2)
+						{
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == (float)M_PI)
+						{
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 3.0f * (float)M_PI_2)
+						{
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+						}
+						else
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for T-Shaped!");
+						}
+						break;
+					case ElementType::ClosedRoom:
+						if (rotation == (float)M_PI_2)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == (float)M_PI)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 3.0f * (float)M_PI_2)
+						{
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for Closed Room!");
+						}
+						break;
+					case ElementType::MeleeEnemy:
+						if (rotation == (float)M_PI_2)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == (float)M_PI)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 3.0f * (float)M_PI_2)
+						{
+							//Remove Left
+							removeLeft(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							//Remove Top
+							removeTop(node, nodeId, x, y, xMax, yMax);
+							//Remove Right
+							removeRight(node, nodeId, x, y, xMax, yMax);
+							//Remove Bot
+							removeBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for Closed Room!");
+						}
+						break;
+					default:
+						//IVY_CORE_TRACE("Individual: No Edges to remove", std::to_string(type));
+						break;
 					}
 					nodeId++;
 					it++;

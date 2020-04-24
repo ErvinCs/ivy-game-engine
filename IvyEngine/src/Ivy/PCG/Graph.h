@@ -12,7 +12,6 @@ namespace Ivy
 	{
 	private:
 		std::vector<Node> nodes{};
-		const int maximumPath = 11;;
 	public:
 		Graph() = default;
 		Graph(const std::vector<Node>& other);
@@ -31,7 +30,7 @@ namespace Ivy
 			return *this;
 		}
 	private:
-		void depthFirstSearch(int vertex, bool* visited);	// , int* currPath);
+		void depthFirstSearch(int vertex, bool* visited);
 		Graph(int numberOfNodes);
 		
 

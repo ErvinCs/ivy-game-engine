@@ -19,7 +19,7 @@ namespace Ivy {
 	Individual Population::getMostFitAndDiverseIndividual()
 	{
 		Individual best = individuals[0];
-		for (int i = 0; i < individuals.size(); i++)
+		for (int i = 1; i < individuals.size(); i++)
 		{
 			if (individuals[i].getFitness() > best.getFitness())
 			{

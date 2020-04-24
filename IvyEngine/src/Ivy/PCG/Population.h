@@ -27,9 +27,7 @@ namespace Ivy {
 		void sortIndividuals();
 		void addIndividual(const Individual& individual);
 		void removeIndividualAtIndex(int index);
-	//	void removeDeadIndividuals();
 
 		Population& Population::operator=(const Population& other);
-
 	};
 }
