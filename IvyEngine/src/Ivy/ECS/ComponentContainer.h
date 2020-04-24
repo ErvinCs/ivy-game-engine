@@ -12,6 +12,7 @@ namespace Ivy {
 	public:
 		virtual ~BaseComponentContainer() = default;
 		virtual void onEntityDestroyed(Entity& entity) = 0;
+		virtual void clearComponents() = 0;
 	};
 
 	template<typename T>
@@ -25,7 +26,6 @@ namespace Ivy {
 		{
 			this->size = 0;
 			// Log produces error
-
 			//IVY_CORE_INFO("ComponentContainer: Constructing ComponentContainer: type={0}", typeid(T).name());
 		}
 		
@@ -82,6 +82,11 @@ namespace Ivy {
 		{
 			IVY_CORE_INFO("ComponentContainer: Trigerring onEntityDestroyed: entity={0}", entity);
 			removeComponent(entity);
+		}
+
+		void clearComponents() override
+		{
+			this->size = 0;
 		}
 	};
 }

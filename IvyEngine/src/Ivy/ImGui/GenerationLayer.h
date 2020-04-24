@@ -1,13 +1,17 @@
 #pragma once
 
+#include "../Core/SortingLayer.h"
+
 namespace Ivy
 {
 
-	class GenerationLayer
+	class GenerationLayer : public SortingLayer
 	{
 	public:
-		GenerationLayer();
-		~GenerationLayer();
+		GenerationLayer() = default;
+		~GenerationLayer() = default;
+
+		virtual void imGuiRender() override;
 	};
 
 }

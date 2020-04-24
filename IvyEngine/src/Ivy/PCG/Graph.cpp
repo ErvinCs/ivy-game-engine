@@ -21,12 +21,6 @@ namespace Ivy
 	Node& Graph::getNode(int nodeId)
 	{
 		return this->nodes[nodeId];
-		/*for (auto& it = nodes.begin(); it != nodes.end(); it++)
-		{
-			Node& node = *it;
-			if (node.getNodeId() == nodeId)
-				return *it;
-		}*/
 	}
 
 	void Graph::addNode(Node node)
@@ -61,7 +55,6 @@ namespace Ivy
 
 	// Using Kosaraju Algorithm
 	// Returns the number of strongly connected components - should be 1 for a feasible graph
-	// FIX THIS
 	int Graph::getStrongConnectivity()
 	{
 		int strongConnectedComponents = 0;

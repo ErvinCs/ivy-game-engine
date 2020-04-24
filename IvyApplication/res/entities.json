@@ -2,8 +2,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": 5.0,
-        "centerPositionY": -3.4745495319366455,
+        "centerPositionX": -12,
+        "centerPositionY": -15.74,
         "halfScaleX": 0.5,
         "halfScaleY": 0.5,
         "is_trigger": false,
@@ -13,8 +13,8 @@
       "script": "player.as",
       "tag": "Player",
       "transform": {
-        "positionX": 5.0,
-        "positionY": -3.4745495319366455,
+        "positionX": -12,
+        "positionY": -15.74,
         "rotation": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0

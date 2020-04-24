@@ -23,18 +23,19 @@ namespace Ivy
 		float fittestFeasibleFitness;
 		float fittestInfeasibleFitness;
 		bool initialisedFeasible;
-
-		float mutationRate;
-		float uniformRate;	
-		int singlePointCrossoverFrequency;	
-		int eliteCount;
-		int populationSize;
-		int tournamentSize;
-		int currGeneration;
-		int genotypeSize;
 		int currentFeasibleSize;
+		int currGeneration;
+		
 	public:
-		int maxGeneration;
+		static float mutationRate;
+		static float uniformRate;
+		static int singlePointCrossoverFrequency;
+		static int eliteCount;
+		static int populationSize;
+		static int tournamentSize;
+		static int genotypeSize;
+		static int maxGeneration;
+
 		FI2Pop();
 
 		void init();
@@ -57,11 +58,10 @@ namespace Ivy
 		Individual tournamentSelection(Population& pop);
 		void mutate(Individual& ind);
 
-
+		Individual& getRandomFeasibleIndividual();
 	private:
 		void mutateRotation(DesignElement& designElement);
 		void mutateLevelElement(DesignElement& designElement, int geneIndex);
-		//void mutateNumberOfEnemies(DesignElement& designElement);
 	};
 
 }

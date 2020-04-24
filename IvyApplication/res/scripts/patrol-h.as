@@ -9,9 +9,8 @@ class Patrol : IController
 	weakref<ScriptableObject> playerRef;
 
 	float moveSpeed = 5;
-	float leftMargin = -4;
-	float rightMargin = 4;
-	float patrolPosition = 0;
+	float patrolTime = 3;
+	float currTime = 0;
 	bool direction = true;
 
 	Patrol(ScriptableObject@ object)
@@ -31,19 +30,18 @@ class Patrol : IController
 		@collidable = FindCollidable(self.getOwner());
 		@playerCollidable = FindCollidable(player.getOwner());
 
+		currTime += deltatime;
+
 		if(direction) {
 			transform.position.x += moveSpeed * deltatime;
-			patrolPosition += moveSpeed * deltatime;
 		} else {
 			transform.position.x -= moveSpeed * deltatime;
-			patrolPosition -= moveSpeed * deltatime;
 		}
 
-		if(patrolPosition <= leftMargin) {
-			direction = true;
-		} else if(patrolPosition >= rightMargin) {
-			direction = false;
-		}
+		if(currTime >= patrolTime) {
+			currTime = 0;
+			direction = not direction;
+		} 
 
 		
 		if (AreColliding(collidable, playerCollidable))

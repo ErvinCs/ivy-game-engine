@@ -90,72 +90,61 @@ namespace Ivy {
 	float Individual::computeFitness()
 	{
 		// Returns 1.0f if there is a single longest path that connects all vertices
-		// Penalizez by 1.0f / Number_Of_Vertices for each vertex that is not part of the longest path
 		this->generateGraph();
+		float numberOfVerteices = this->getDesignElementsSize();
 		float vertexConnectivity = graph.getStrongConnectivity();
-		this->fitness = 1.0f / vertexConnectivity;
-		return fitness;
-		/*if (vertexConnectivity != 1)
+		if (vertexConnectivity == 1)
 		{
-			this->fitness = 1.0f / (vertexConnectivity - 1)
+			this->fitness = 1.0f;
 			return fitness;
 		}
 		else
 		{
-			this->fitness = 1.0f;
+			fitness = (((numberOfVerteices - vertexConnectivity) / numberOfVerteices) + (1.0f / numberOfVerteices));
 			return fitness;
-		}*/
+		}
 	}
 
 	void Individual::addLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
-		if (y != 0)
-			node->addChild(graph.getNode(nodeId - 1));
+		if (x != 0)
+			node->addChild(graph.getNode(nodeId - yMax));
 	}
 	void Individual::addRight(Node* node, int nodeId, int x, int y, int xMax, int yMax)
+	{
+		if (x != xMax - 1)
+			node->addChild(graph.getNode(nodeId + yMax));
+	}
+	void Individual::addTop(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
 		if (y != yMax - 1)
 			node->addChild(graph.getNode(nodeId + 1));
 	}
-	void Individual::addTop(Node* node, int nodeId, int x, int y, int xMax, int yMax)
-	{
-		if (x != 0)
-			node->addChild(graph.getNode(nodeId - xMax));
-	}
 	void Individual::addBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
-		if (x != xMax)
-			node->addChild(graph.getNode(nodeId + xMax));
+		if (y != 0)
+			node->addChild(graph.getNode(nodeId - 1));
 	}
 
+	/*
+	 *   3       7     11
+	 * (x0y3) (x1y3) (x2y3)
+	 *   2       6	   10
+	 * (x0y2) (x1y2) (x2y2)
+	 *   1       5	    9
+	 * (x0y1) (x1y1) (x2y1)
+	 *   0       4	    8
+	 * (x0y0) (x1y0) (x2y0)
+	 *
+	 * yMax = 4
+	 * xMax = 3
+	 */
 	void Individual::addNeighbours(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
-		if (x == 0)
-		{
-			node->addChild(graph.getNode(nodeId + xMax));	//Bellow
-		}
-		else if (x == xMax - 1)
-		{
-			node->addChild(graph.getNode(nodeId - xMax));	//Above
-		}
-		else
-		{
-			node->addChild(graph.getNode(nodeId + xMax));	//Bellow
-			node->addChild(graph.getNode(nodeId - xMax));	//Above
-		}
-		if (y == 0)
-		{
-			node->addChild(graph.getNode(nodeId + 1));	//Right
-		}
-		else if (y == yMax - 1)
-		{
-			node->addChild(graph.getNode(nodeId - 1));	//Left
-		}
-		else
-		{
-			node->addChild(graph.getNode(nodeId + 1));	//Right
-			node->addChild(graph.getNode(nodeId - 1));	//Left
-		}
+		addLeft(node, nodeId, x, y, xMax, yMax);
+		addTop(node, nodeId, x, y, xMax, yMax);
+		addBottom(node, nodeId, x, y, xMax, yMax);
+		addRight(node, nodeId, x, y, xMax, yMax);
 	}
 
 	void Individual::generateGraph()
@@ -186,115 +175,49 @@ namespace Ivy {
 					switch (type)
 					{
 					case ElementType::Hallway:
-						if (rotation == (float)M_PI_2 || rotation == 3 * (float)M_PI_2)
+						if (rotation == (float)M_PI_2 || rotation == 3.0f * (float)M_PI_2)
 						{
-							/*if (x == 0)
-								node->addChild(graph.getNode(nodeId + xMax));
-							else if (x == xMax - 1)
-								node->addChild(graph.getNode(nodeId - xMax));
-							else
-							{
-								node->addChild(graph.getNode(nodeId + xMax));
-								node->addChild(graph.getNode(nodeId - xMax));
-							}*/
 							addTop(node, nodeId, x, y, xMax, yMax);
 							addBottom(node, nodeId, x, y, xMax, yMax);
 						}
-						else
+						else if (rotation == float(M_PI) || rotation == 0)
 						{
-							/*if (y == 0)
-								node->addChild(graph.getNode(nodeId + 1));
-							else if (y == yMax - 1)
-								node->addChild(graph.getNode(nodeId - 1));
-							else
-							{
-								node->addChild(graph.getNode(nodeId + 1));
-								node->addChild(graph.getNode(nodeId - 1));
-							}*/
 							addLeft(node, nodeId, x, y, xMax, yMax);
 							addRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for VerticalWall!");
 						}
 						break;
 					case ElementType::VerticalWall:
 						if (rotation == (float)M_PI_2)
 						{
-							if (x == 0)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-							}
-							else if (x == xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							else
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							if (y != 0)
-							{
-								node->addChild(graph.getNode(nodeId - 1));	//Left
-							}
+							addLeft(node, nodeId, x, y, xMax, yMax);
+							addTop(node, nodeId, x, y, xMax, yMax);
+							addBottom(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == (float)M_PI)
 						{
-							if (x != xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-							}
-							if (y == 0)
-							{
-								node->addChild(graph.getNode(nodeId + 1));		//Right
-							}
-							else if (y == yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - 1));		//Left
-							}
-							else
-							{
-								node->addChild(graph.getNode(nodeId + 1));		//Right
-								node->addChild(graph.getNode(nodeId - 1));		//Left
-							}
+							addBottom(node, nodeId, x, y, xMax, yMax);
+							addLeft(node, nodeId, x, y, xMax, yMax);
+							addRight(node, nodeId, x, y, xMax, yMax);
 						}
-						else if (rotation == 3 * (float)M_PI_2)
+						else if (rotation == 3.0f * (float)M_PI_2)
 						{
-							if (x == 0)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-							}
-							else if (x == xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							else
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							if (y != yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId + 1));	//Right
-							}
+							addTop(node, nodeId, x, y, xMax, yMax);
+							addBottom(node, nodeId, x, y, xMax, yMax);
+							addRight(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							addTop(node, nodeId, x, y, xMax, yMax);
+							addLeft(node, nodeId, x, y, xMax, yMax);
+							addRight(node, nodeId, x, y, xMax, yMax);
 						}
 						else
 						{
-							if (x != 0)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							if (y == 0)
-							{
-								node->addChild(graph.getNode(nodeId + 1));	// Right
-							}
-							else if (y == yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - 1));	//Left
-							}
-							else
-							{
-								node->addChild(graph.getNode(nodeId + 1));	//Right
-								node->addChild(graph.getNode(nodeId - 1));	//Left
-							}	
+							IVY_CORE_WARN("Individual: No rotation case reached for VerticalWall!");
 						}
 						break;
 					case ElementType::HorizontalWall:
@@ -303,47 +226,27 @@ namespace Ivy {
 					case ElementType::Pillar:
 						if (rotation == (float)M_PI_2)
 						{
-							if (x != 0)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));
-							}
-							if (y != 0)
-							{
-								node->addChild(graph.getNode(nodeId - 1));
-							}
+							addTop(node, nodeId, x, y, xMax, yMax);
+							addLeft(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == (float)M_PI)
 						{
-							if (x != xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));
-							}
-							if (y != 0)
-							{
-								node->addChild(graph.getNode(nodeId - 1));
-							}
+							addLeft(node, nodeId, x, y, xMax, yMax);
+							addBottom(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == 3.0f * (float)M_PI_2)
 						{
-							if (x != xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));
-							}
-							if (y != yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId + 1));
-							}
+							addRight(node, nodeId, x, y, xMax, yMax);
+							addBottom(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							addRight(node, nodeId, x, y, xMax, yMax);
+							addTop(node, nodeId, x, y, xMax, yMax);
 						}
 						else
 						{
-							if (x != 0)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));
-							}
-							if (y != yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId + 1));
-							}
+							IVY_CORE_WARN("Individual: No rotation case reached for Pillar!");
 						}
 						break;
 					case ElementType::Hole:
@@ -361,122 +264,75 @@ namespace Ivy {
 					case ElementType::TShaped:
 						if (rotation == (float)M_PI_2)
 						{
-							if (x == 0)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-							}
-							else if (x == xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							if (y != yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - 1));	//To-Left
-							}
+							addTop(node, nodeId, x, y, xMax, yMax);
+							addBottom(node, nodeId, x, y, xMax, yMax);
+							addRight(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == (float)M_PI)
 						{
-							if (x != 0)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							if (y == 0)
-							{
-								node->addChild(graph.getNode(nodeId + 1));	//To-Right
-							}
-							else if (y == yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - 1));	//To-Left
-							}
-							else
-							{
-								node->addChild(graph.getNode(nodeId + 1));	//To-Right
-								node->addChild(graph.getNode(nodeId - 1));	//To-Left
-							}
+							addTop(node, nodeId, x, y, xMax, yMax);
+							addRight(node, nodeId, x, y, xMax, yMax);
+							addLeft(node, nodeId, x, y, xMax, yMax);
 						}
-						else if (rotation == 3 * (float)M_PI_2)
+						else if (rotation == 3.0f * (float)M_PI_2)
 						{
-							if (y != 0)
-							{
-								node->addChild(graph.getNode(nodeId - 1));	//To-Left
-							}
-							if (x == 0)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-							}
-							else if (x == xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-							}
-							else
-							{
-								node->addChild(graph.getNode(nodeId - xMax));	//Above
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-							}
+							addTop(node, nodeId, x, y, xMax, yMax);
+							addBottom(node, nodeId, x, y, xMax, yMax);
+							addLeft(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{  
+							addBottom(node, nodeId, x, y, xMax, yMax);
+							addRight(node, nodeId, x, y, xMax, yMax);
+							addLeft(node, nodeId, x, y, xMax, yMax);
 						}
 						else
-						{  
-							if (x != xMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId + xMax));	//Below
-							}
-							if (y == yMax - 1)
-							{
-								node->addChild(graph.getNode(nodeId - 1));	//To-Left
-							}
-							else if (y == 0)
-							{
-								node->addChild(graph.getNode(nodeId + 1));	//To-Right
-							}
-							else
-							{
-								node->addChild(graph.getNode(nodeId - 1));
-								node->addChild(graph.getNode(nodeId + 1));
-							}
+						{
+							IVY_CORE_WARN("Individual: No rotation case reached for T-Shaped!");
 						}
 						break;
 					case ElementType::ClosedRoom:
-						if (rotation == 3 * (float)M_PI_2)
+						if (rotation == (float)M_PI_2)
 						{
-							if (x != 0)
-								node->addChild(graph.getNode(nodeId - xMax));
+							addBottom(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == (float)M_PI)
 						{
-							if (y != yMax)
-								node->addChild(graph.getNode(nodeId + 1));
+							addRight(node, nodeId, x, y, xMax, yMax);
 						}
-						else if (rotation == (float)M_PI_2)
+						else if (rotation == 3.0f * (float)M_PI_2)
 						{
-							if (x != xMax)
-								node->addChild(graph.getNode(nodeId + xMax));
+							addTop(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							addLeft(node, nodeId, x, y, xMax, yMax);
 						}
 						else
 						{
-							if (y != 0)
-								node->addChild(graph.getNode(nodeId - 1));
+							IVY_CORE_WARN("Individual: No rotation case reached for Closed Room!");
 						}
 						break;
 					case ElementType::MeleeEnemy:
-						if (rotation == 3 * (float)M_PI_2)
+						if (rotation == (float)M_PI_2)
 						{
-							if (x != 0)
-								node->addChild(graph.getNode(nodeId - xMax));
+							addBottom(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == (float)M_PI)
 						{
-							if (y != yMax)
-								node->addChild(graph.getNode(nodeId + 1));
+							addRight(node, nodeId, x, y, xMax, yMax);
 						}
-						else if (rotation == (float)M_PI_2)
+						else if (rotation == 3.0f * (float)M_PI_2)
 						{
-							if (x != xMax)
-								node->addChild(graph.getNode(nodeId + xMax));
+							addTop(node, nodeId, x, y, xMax, yMax);
+						}
+						else if (rotation == 0)
+						{
+							addLeft(node, nodeId, x, y, xMax, yMax);
 						}
 						else
 						{
-							if (y != 0)
-								node->addChild(graph.getNode(nodeId - 1));
+							IVY_CORE_WARN("Individual: No rotation case reached for MeleeEnemy!");
 						}
 						break;
 					default:

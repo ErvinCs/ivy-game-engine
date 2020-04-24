@@ -40,6 +40,10 @@ namespace Ivy {
 
 		void generateGraph();
 		void addNeighbours(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addRight(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addTop(Node* node, int nodeId, int x, int y, int xMax, int yMax);
+		void addBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax);
 
 		/*
 		 * Two individuals are equal if all their design elements are equal.

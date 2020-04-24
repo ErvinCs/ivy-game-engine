@@ -69,6 +69,7 @@ namespace Ivy {
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		//io.ConfigFlags |= ImGuiWindowFlags_Popup;
 
 		ImGui::StyleColorsDark();
 

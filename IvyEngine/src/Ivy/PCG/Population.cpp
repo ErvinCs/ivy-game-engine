@@ -93,23 +93,6 @@ namespace Ivy {
 		this->individuals.erase(individuals.begin() + index);
 	}
 
-	//void Population::removeDeadIndividuals()
-	//{
-	//	auto& it = individuals.begin();
-	//	while (it != individuals.end())
-	//	{
-	//		Individual& ind = *it;
-	//		if (!ind.isAlive())
-	//		{
-	//			individuals.erase(it);
-	//		}
-	//		else
-	//		{
-	//			it++;
-	//		}
-	//	}
-	//}
-
 	Individual& Population::getIndividualAt(int index)
 	{
 		return this->individuals[index];

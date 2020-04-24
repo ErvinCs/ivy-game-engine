@@ -12,6 +12,7 @@
 
 #include "../ImGui/ImGuiLayer.h"
 #include "../ImGui/InspectorLayer.h"
+#include "../ImGui/GenerationLayer.h"
 #include "../Scripting/ScriptManager.h"
 
 #include "../Renderer/OrthoCamera.h"
@@ -28,9 +29,10 @@ namespace Ivy {
 		std::unique_ptr<Window> window;
 		ImGuiLayer* imGuiLayer;
 		InspectorLayer* inspectorLayer;
+		GenerationLayer* generationLayer;
 		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
-		LevelGenerator generator{};
+		static LevelGenerator levelGenerator;
 
 	public:
 		bool isRunning = true;
@@ -55,6 +57,7 @@ namespace Ivy {
 
 		inline static Application& GetApplication() { return *instance; }
 		inline static OrthoCamera& GetCamera() { return camera; }
+		inline static LevelGenerator& GetLevelGenerator() { return levelGenerator; }
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 

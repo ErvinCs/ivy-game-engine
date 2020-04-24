@@ -12,9 +12,9 @@
 namespace Ivy {
 	enum ElementType
 	{
-		StandardRoom1 = 0,
-		StandardRoom2,
-		Hallway,
+		StandardRoom1 = 0,	//NO ENEMIES
+		StandardRoom2,		//NO ENEMIES
+		Hallway,			//NO ENEMIES
 		ClosedRoom,
 		TShaped,
 		VerticalWall,
