@@ -43,7 +43,7 @@ namespace Ivy {
 
 		for (int i = 0; i < this->designElements.size(); i++)
 		{
-			if (this->designElements[i] != other.getDesignElements()[i])
+			if (this->designElements[i] != other.getDesignElementAt(i))
 			{
 				return false;
 			}

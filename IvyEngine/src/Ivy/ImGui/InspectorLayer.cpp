@@ -311,7 +311,6 @@ namespace Ivy {
 		{
 			getECS().loadEntities();
 		}
-
 		if (ImGui::Button("Clear Entities"))
 		{
 			getECS().clearECS();

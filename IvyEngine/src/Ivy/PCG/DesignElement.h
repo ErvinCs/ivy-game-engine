@@ -117,12 +117,10 @@ namespace Ivy {
 
 		inline const ElementType& getElementType()
 		{ 
-			//IVY_CORE_INFO("Returning Element type : {0}", elementType);
 			return this->elementType; 
 		}
 		inline void setElementType(const ElementType& elementType) 
 		{ 
-			//IVY_CORE_INFO("Setting Element type to {0}", elementType);
 			this->elementType = elementType; 
 		}
 	};

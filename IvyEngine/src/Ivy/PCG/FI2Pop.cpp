@@ -5,7 +5,7 @@
 
 namespace Ivy 
 {
-	float FI2Pop::mutationRate = 0.1f;
+	float FI2Pop::mutationRate = 0.2f;
 	float FI2Pop::uniformRate = 0.5f;
 	int FI2Pop::singlePointCrossoverFrequency = 3;
 	int FI2Pop::eliteCount = 2;
@@ -16,16 +16,6 @@ namespace Ivy
 
 	FI2Pop::FI2Pop()
 	{
-		/*mutationRate = 0.10f;
-		uniformRate = 0.5f;
-		singlePointCrossoverFrequency = 3;
-		eliteCount = 2;
-		populationSize = 26;
-		tournamentSize = 6;	    
-		maxGeneration = 5;		
-		genotypeSize = 12;
-		currGeneration = 1;*/
-
 		init();
 	}
 
@@ -438,7 +428,7 @@ namespace Ivy
 			this->feasiblePop.sortIndividuals();
 			return this->feasiblePop.getIndividualAt(index);
 		}
-		if (feasiblePop.getPopulationSize() > 20)
+		else if (feasiblePop.getPopulationSize() > 20)
 		{
 			int index = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / 20));
 			this->feasiblePop.sortIndividuals();

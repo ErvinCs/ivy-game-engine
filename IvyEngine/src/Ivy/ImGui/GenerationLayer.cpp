@@ -13,7 +13,7 @@ namespace Ivy
 	void GenerationLayer::imGuiRender()
 	{	
 		ImGui::Begin("Generator");
-
+		ImGui::PushID("GenerationLayer");
 		if (ImGui::CollapsingHeader("Parameters"))
 		{
 			ImGui::InputFloat("Mutation Rate", &FI2Pop::mutationRate, 0.05f);
@@ -31,45 +31,55 @@ namespace Ivy
 			if (ImGui::TreeNode("Rooms"))
 			{
 				ImGui::InputText("Safe Room 1", &LevelGenerator::stdRoom1Path);
+				
+				
 				ImGui::InputText("Safe Room 2", &LevelGenerator::stdRoom2Path);
+
 				ImGui::InputText("Dead End 1", &LevelGenerator::closedRoomPath);
+
 				ImGui::InputText("Dead End 2", &LevelGenerator::meleeEnemyPath);
+
 				ImGui::InputText("Hallway", &LevelGenerator::hallwayPath);
+
 				ImGui::InputText("T-Shaped Hallway", &LevelGenerator::tShapePath);
+
 				ImGui::InputText("Middle Obstacle", &LevelGenerator::holePath);
+
 				ImGui::InputText("Half-Enclosed Middle Obstacle", &LevelGenerator::pillarPath);
+
 				ImGui::InputText("Walls x4", &LevelGenerator::horizontalWallPath);
+
 				ImGui::InputText("Walls x3", &LevelGenerator::verticalWallPath);
+
 				ImGui::InputText("Walls x2", &LevelGenerator::rangedEnemyPath);	
+
 
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Enemies"))
 			{
 				ImGui::InputText("Flying Enemy", &LevelGenerator::enemyFlyPath);
+
 				ImGui::InputText("Ground Enemy", &LevelGenerator::enemyGroundPath);
+
 
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Borders"))
 			{
 				ImGui::InputText("Horizontal Border", &LevelGenerator::horizontalBorderPath);
+
 				ImGui::InputText("Vertical Border", &LevelGenerator::verticalBorderPath);
+
 
 				ImGui::TreePop();
 			}		
 		}
 		if (ImGui::Button("Run"))
 		{
-			ImGui::BeginChild("Generation PopUp", ImVec2(100, 100));
-			if (ImGui::BeginPopupContextWindow())
-			{
-				ImGui::Text("Generating...");
-				ImGui::EndPopup();
-			}
-			ImGui::EndChild();
 			Application::getInstance().GetLevelGenerator().run();
 		}
+		ImGui::PopID();
 		ImGui::End();
 	}
 }

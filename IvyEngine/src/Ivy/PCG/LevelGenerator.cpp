@@ -31,6 +31,7 @@ namespace Ivy
 
 	void LevelGenerator::run()
 	{
+		generator.init();
 		LevelGenerator::isGenerating = true;
 		generator.run();
 		if (!generator.getInitialisedFeasible())
