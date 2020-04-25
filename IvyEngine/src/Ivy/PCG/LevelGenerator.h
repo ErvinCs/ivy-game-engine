@@ -31,6 +31,8 @@ namespace Ivy
 		static std::string stdRoom1Path;
 		static std::string stdRoom2Path;
 		static std::string tShapePath;
+		static std::string scriptPatrolV;
+		static std::string scriptPatrolH;	
 		static bool isGenerating;
 		LevelGenerator();
 		

@@ -411,7 +411,7 @@ namespace Ivy {
 						if (rotation == (float)M_PI_2)
 						{
 							//Remove Left
-							removeLeft(node, nodeId, x, y, xMax, yMax);
+							removeRight(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == (float)M_PI)
 						{
@@ -421,7 +421,7 @@ namespace Ivy {
 						else if (rotation == 3.0f * (float)M_PI_2)
 						{
 							//Remove Right
-							removeRight(node, nodeId, x, y, xMax, yMax);
+							removeLeft(node, nodeId, x, y, xMax, yMax);
 						}
 						else if (rotation == 0)
 						{

@@ -8,14 +8,17 @@ class Patrol : IController
 	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
 
-	float moveSpeed = 5;
-	float patrolTime = 3;
+	float moveSpeed = 0;
+	float patrolTime = 0;
 	float currTime = 0;
-	bool direction = true;
+	bool direction;
 
 	Patrol(ScriptableObject@ object)
 	{
 		@self = object;
+		direction = true;
+		moveSpeed = 5;
+		patrolTime = 3;
 	}
 
 	void onUpdate()

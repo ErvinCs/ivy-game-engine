@@ -30,48 +30,35 @@ namespace Ivy
 		{
 			if (ImGui::TreeNode("Rooms"))
 			{
-				ImGui::InputText("Safe Room 1", &LevelGenerator::stdRoom1Path);
-				
-				
+				ImGui::InputText("Safe Room 1", &LevelGenerator::stdRoom1Path);	
 				ImGui::InputText("Safe Room 2", &LevelGenerator::stdRoom2Path);
-
 				ImGui::InputText("Dead End 1", &LevelGenerator::closedRoomPath);
-
 				ImGui::InputText("Dead End 2", &LevelGenerator::meleeEnemyPath);
-
 				ImGui::InputText("Hallway", &LevelGenerator::hallwayPath);
-
 				ImGui::InputText("T-Shaped Hallway", &LevelGenerator::tShapePath);
-
 				ImGui::InputText("Middle Obstacle", &LevelGenerator::holePath);
-
 				ImGui::InputText("Half-Enclosed Middle Obstacle", &LevelGenerator::pillarPath);
-
 				ImGui::InputText("Walls x4", &LevelGenerator::horizontalWallPath);
-
 				ImGui::InputText("Walls x3", &LevelGenerator::verticalWallPath);
-
 				ImGui::InputText("Walls x2", &LevelGenerator::rangedEnemyPath);	
-
-
 				ImGui::TreePop();
 			}
-			if (ImGui::TreeNode("Enemies"))
+			if (ImGui::TreeNode("Enemy Sprites"))
 			{
 				ImGui::InputText("Flying Enemy", &LevelGenerator::enemyFlyPath);
-
 				ImGui::InputText("Ground Enemy", &LevelGenerator::enemyGroundPath);
-
-
+				ImGui::TreePop();
+			}
+			if (ImGui::TreeNode("Enemy Scripts"))
+			{
+				ImGui::InputText("Enemy Script 1", &LevelGenerator::scriptPatrolH);
+				ImGui::InputText("Enemy Script 2", &LevelGenerator::scriptPatrolV);
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Borders"))
 			{
 				ImGui::InputText("Horizontal Border", &LevelGenerator::horizontalBorderPath);
-
 				ImGui::InputText("Vertical Border", &LevelGenerator::verticalBorderPath);
-
-
 				ImGui::TreePop();
 			}		
 		}
