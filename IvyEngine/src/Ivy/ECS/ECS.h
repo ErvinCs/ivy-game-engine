@@ -84,7 +84,14 @@ namespace Ivy {
 			JSONManager::SaveCamera(Paths::cameraRepoPath.string());
 		}
 
-
+		void clearECS()
+		{
+			for (auto& componentContainer : componentContainers)
+			{
+				componentContainer.second->clearComponents();
+			}
+			this->entities.clearEntities();
+		}
 
 		int getSizeEntities() {
 			return this->entities.size();

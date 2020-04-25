@@ -15,6 +15,9 @@ namespace Ivy
 		Transform() : Component() {}
 		Transform(glm::vec2 position, float rotation, glm::vec2 scale);
 		
+		bool operator==(const Transform& other);
+		bool operator!=(const Transform& other);
+
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
 	};

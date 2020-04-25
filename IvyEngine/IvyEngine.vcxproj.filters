@@ -1488,6 +1488,14 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\Population.h" />
+    <ClInclude Include="src\Ivy\PCG\Individual.h" />
+    <ClInclude Include="src\Ivy\PCG\FI2Pop.h" />
+    <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
+    <ClInclude Include="src\Ivy\PCG\DesignElement.h" />
+    <ClInclude Include="src\Ivy\PCG\Graph.h" />
+    <ClInclude Include="src\Ivy\PCG\Node.h" />
+    <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1619,5 +1627,15 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\PCG\Individual.cpp" />
+    <ClCompile Include="src\Ivy\PCG\Population.cpp" />
+    <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp" />
+    <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
+    <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
+    <ClCompile Include="src\Ivy\PCG\DesignElement.cpp" />
+    <ClCompile Include="src\Ivy\ImGui\GenerationLayer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

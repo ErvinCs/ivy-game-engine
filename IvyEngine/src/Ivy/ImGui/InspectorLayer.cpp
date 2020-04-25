@@ -35,9 +35,13 @@ namespace Ivy {
 		{
 			if (ImGui::BeginMenu("Project"))
 			{
-				if (ImGui::MenuItem("Save"))
+				if (ImGui::MenuItem("Save Entities"))
 				{
 					getECS().saveEntities();
+				}
+				if (ImGui::MenuItem("Load Entities"))
+				{
+					getECS().loadEntities();
 				}
 				if (ImGui::MenuItem("Exit"))
 				{
@@ -185,6 +189,8 @@ namespace Ivy {
 				// -------------------- Script --------------------
 				if (ImGui::TreeNode("Script")) 
 				{
+					const char* currentPath = nullptr;
+					std::string* buffer = nullptr;
 					if (getECS().getComponent<ScriptComponent>(entity).getComponentId() == ScriptComponentID)
 					{
 						const char* currentPath = getECS().getComponent<ScriptComponent>(entity).scriptName.c_str();
@@ -192,8 +198,10 @@ namespace Ivy {
 						ImGui::InputTextWithHint("Script Path", currentPath, buffer);
 						if (ImGui::Button("Import Script"))
 						{
-							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
+							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);				
 							getECS().removeComponent<ScriptComponent>(entity);
+							//script->scriptableObject.destoryAndRelease(); (?)
+
 							ScriptComponent newScript = ScriptComponent(*buffer);
 							newScript.setComponentId(ScriptComponentID);
 							getECS().addComponent<ScriptComponent>(entity, newScript);
@@ -206,6 +214,7 @@ namespace Ivy {
 						{
 							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
 							getECS().removeComponent<ScriptComponent>(entity);
+							//script->scriptableObject.destoryAndRelease(); (?)
 							IVY_INFO("Destroyed Script on Entity: {0}", entity);
 						}
 					}
@@ -297,9 +306,17 @@ namespace Ivy {
 			IVY_INFO("Created Entity={0}", entity);
 		}
 		ImGui::Checkbox("Show Gizmos", &CollidableGizmoSystem::showGizmos);
-		if (ImGui::Button("Save"))
+		if (ImGui::Button("Save Entities"))
 		{
 			getECS().saveEntities();
+		}
+		if (ImGui::Button("Load Entities"))
+		{
+			getECS().loadEntities();
+		}
+		if (ImGui::Button("Clear Entities"))
+		{
+			getECS().clearECS();
 		}
 		ImGui::End();
 	}

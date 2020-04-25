@@ -92,7 +92,7 @@ namespace Ivy {
 			scriptObject = 0;
 		}
 		// Then release this object
-		release();
+		//release(); //(?)
 	}
 
 	void ScriptableObject::onUpdate()

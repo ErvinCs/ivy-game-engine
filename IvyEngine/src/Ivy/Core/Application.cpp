@@ -14,15 +14,19 @@
 #include "../Renderer/BaseRenderer.h"
 #include "../ECS/ECS.h"
 
+
 namespace Ivy {
 
 	Application* Application::instance = nullptr;
 
 	OrthoCamera Application::camera = OrthoCamera(-12.8f, 12.8f, -6.4f, 6.4f);
+	LevelGenerator Application::levelGenerator = LevelGenerator();
 
 	Application::Application()
 	{
 		globalTime = 0;
+		currTime = 0;
+		lastFrameTime = 0;
 
 		int success;
 		instance = this;
@@ -47,8 +51,10 @@ namespace Ivy {
 
 		imGuiLayer = new ImGuiLayer();
 		inspectorLayer = new InspectorLayer();
+		generationLayer = new GenerationLayer();
 		pushLayer(imGuiLayer);
 		pushLayer(inspectorLayer);
+		pushLayer(generationLayer);
 	}
 
 
@@ -56,6 +62,7 @@ namespace Ivy {
 	{
 		delete imGuiLayer;
 		delete inspectorLayer;
+		delete generationLayer;
 		BaseRenderer::Shutdown();
 		if (scriptManager)
 		{
@@ -72,13 +79,15 @@ namespace Ivy {
 
 	void Application::run()
 	{
-
+		//TODO - Generation should happen in IvyApplication. ImGui is only for tweaking
+		//IVY_CORE_INFO("Starting generation");
+		//levelGenerator.run();
+		//IVY_CORE_INFO("Ending generation");
 		while (isRunning)
 		{
-
-			float time = (float)glfwGetTime();
-			globalTime = time - lastFrameTime;
-			lastFrameTime = time;
+			currTime = (float)glfwGetTime();
+			globalTime = currTime - lastFrameTime;
+			lastFrameTime = currTime;
 
 			ECS::getInstance().updateSystems(globalTime);
 

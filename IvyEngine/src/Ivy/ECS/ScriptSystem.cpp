@@ -38,6 +38,7 @@ namespace Ivy {
 
 			if (!scriptComponent.scriptableObject.isAlive())
 			{
+				//scriptComponent.scriptableObject.destoryAndRelease(); (?)
 				ECS::getInstance().destroyEntity(object);
 				it--;
 				continue;

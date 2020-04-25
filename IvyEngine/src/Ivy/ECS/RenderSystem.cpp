@@ -25,6 +25,7 @@ namespace Ivy {
 	{
 		RenderCommand::clear();
 		Renderer::Begin(Application::GetCamera());
+		if (!CollidableGizmoSystem::showGizmos)
 		for (auto& it = entities->begin(); it != entities->end(); it++)
 		{
 			auto& object = *it;

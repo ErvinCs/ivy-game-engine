@@ -11,4 +11,13 @@ namespace Ivy
 		this->scale = scale;
 		this->setComponentId(ECS::getInstance().getComponentTypes().find(typeid(Transform).name())->second);
 	}
+
+	bool Transform::operator==(const Transform& other)
+	{
+		return this->position == other.position;
+	}
+	bool Transform::operator!=(const Transform& other)
+	{
+		return !(*this == other);
+	}
 }

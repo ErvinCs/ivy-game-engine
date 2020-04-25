@@ -130,6 +130,17 @@ namespace Ivy {
 		return c1.isCollidingWith.find(c2.getEntityId()) != c1.isCollidingWith.end();
 	}
 
+	bool IsEntityColliding(Entity e)
+	{
+		CollidableBox c = ECS::getInstance().getComponent<CollidableBox>(e);
+		return c.isCollidingWith.empty();
+	}
+
+	bool IsCollidableColliding(CollidableBox& c)
+	{
+		return c.isCollidingWith.empty();
+	}
+
 	void FlipX(Renderable& renderable)
 	{
 		renderable.texture->flipX();

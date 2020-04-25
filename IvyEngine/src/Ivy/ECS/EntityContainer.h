@@ -116,5 +116,14 @@ public:
 	{
 		return this->freeEntities;
 	}
+
+	inline void clearEntities()
+	{
+		while (entitiesSize > 0)
+		{
+			addToFreeEntities(entities[entitiesSize]);
+			entitiesSize--;
+		}
+	}
 };
 

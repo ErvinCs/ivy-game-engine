@@ -222,6 +222,8 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("bool AreColliding(uint16, uint16)", asFUNCTION(AreEntitiesColliding), asCALL_CDECL);
 		r = scriptEngine->RegisterGlobalFunction("bool AreColliding(Collidable &in, Collidable &in)", asFUNCTION(AreCollidablesColliding), asCALL_CDECL);
 		r = scriptEngine->RegisterGlobalFunction("bool AreColliding(uint16, Collidable &in)", asFUNCTION(IsEntityCollidingCollidable), asCALL_CDECL);
+		r = scriptEngine->RegisterGlobalFunction("bool IsColliding(uint16)", asFUNCTION(IsEntityColliding), asCALL_CDECL);
+		r = scriptEngine->RegisterGlobalFunction("bool IsColliding(Collidable &in)", asFUNCTION(IsCollidableColliding), asCALL_CDECL);
 		// Flip the Transform of a scriptable object by 90/180/270 degrees
 		r = scriptEngine->RegisterGlobalFunction("void Rotate90(Collidable &)", asFUNCTION(Rotate90Collidable), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("void Rotate180(Collidable &)", asFUNCTION(Rotate180Collidable), asCALL_CDECL); assert(r >= 0);

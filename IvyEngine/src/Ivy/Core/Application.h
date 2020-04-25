@@ -12,15 +12,14 @@
 
 #include "../ImGui/ImGuiLayer.h"
 #include "../ImGui/InspectorLayer.h"
+#include "../ImGui/GenerationLayer.h"
 #include "../Scripting/ScriptManager.h"
 
 #include "../Renderer/OrthoCamera.h"
 #include "../ECS/JSONManager.h"
+#include "../PCG/LevelGenerator.h"
 
 namespace Ivy {
-
-	
-
 	class Application 
 	{
 	private:
@@ -30,12 +29,15 @@ namespace Ivy {
 		std::unique_ptr<Window> window;
 		ImGuiLayer* imGuiLayer;
 		InspectorLayer* inspectorLayer;
-		float lastFrameTime = 0.0f;
+		GenerationLayer* generationLayer;
 		ScriptManager* scriptManager;
+		static LevelGenerator levelGenerator;
 
 	public:
 		bool isRunning = true;
 		float globalTime;
+		float currTime;
+		float lastFrameTime;
 
 		inline static Application& getInstance()
 		{
@@ -56,6 +58,7 @@ namespace Ivy {
 
 		inline static Application& GetApplication() { return *instance; }
 		inline static OrthoCamera& GetCamera() { return camera; }
+		inline static LevelGenerator& GetLevelGenerator() { return levelGenerator; }
 	private:
 		bool onWindowClose(WindowCloseEvent& event);
 

@@ -1,10 +1,9 @@
 #pragma once
 
-#include "../Core/SortingLayer.h""
+#include "../Core/SortingLayer.h"
 #include "../Events/KeyEvent.h"
 #include "../Events/MouseEvent.h"
 #include "../Events/WindowEvent.h"
-
 
 namespace Ivy {
 
