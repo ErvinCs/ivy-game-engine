@@ -25,6 +25,8 @@ namespace Ivy {
 	Application::Application()
 	{
 		globalTime = 0;
+		currTime = 0;
+		lastFrameTime = 0;
 
 		int success;
 		instance = this;
@@ -83,10 +85,9 @@ namespace Ivy {
 		//IVY_CORE_INFO("Ending generation");
 		while (isRunning)
 		{
-
-			float time = (float)glfwGetTime();
-			globalTime = time - lastFrameTime;
-			lastFrameTime = time;
+			currTime = (float)glfwGetTime();
+			globalTime = currTime - lastFrameTime;
+			lastFrameTime = currTime;
 
 			ECS::getInstance().updateSystems(globalTime);
 

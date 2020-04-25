@@ -30,13 +30,14 @@ namespace Ivy {
 		ImGuiLayer* imGuiLayer;
 		InspectorLayer* inspectorLayer;
 		GenerationLayer* generationLayer;
-		float lastFrameTime = 0.0f;
 		ScriptManager* scriptManager;
 		static LevelGenerator levelGenerator;
 
 	public:
 		bool isRunning = true;
 		float globalTime;
+		float currTime;
+		float lastFrameTime;
 
 		inline static Application& getInstance()
 		{

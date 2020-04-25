@@ -8,17 +8,14 @@ class Patrol : IController
 	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
 
-	float moveSpeed = 0;
-	float patrolTime = 0;
+	float moveSpeed = 5;
+	float patrolTime = 3;
 	float currTime = 0;
-	bool direction;
+	bool direction = true;
 
 	Patrol(ScriptableObject@ object)
 	{
 		@self = object;
-		direction = true;
-		moveSpeed = 5;
-		patrolTime = 3;
 	}
 
 	void onUpdate()
@@ -36,20 +33,24 @@ class Patrol : IController
 		currTime += deltatime;
 
 		if(direction) {
-			transform.position.x += moveSpeed * deltatime;
+			transform.position.x += (moveSpeed * deltatime);
 		} else {
-			transform.position.x -= moveSpeed * deltatime;
+		 	transform.position.x -= (moveSpeed * deltatime);
 		}
 
 		if(currTime >= patrolTime) {
 			currTime = 0;
-			direction = not direction;
+			//direction = not direction;
 		} 
-
 		
 		if (AreColliding(collidable, playerCollidable))
 		{
 			self.sendMessage(CMessage('ATK'), player);
 		}
+
+		//if (IsColliding(collidable))
+		//{
+		//	direction = not direction;
+		//}
 	}
 }

@@ -8,17 +8,14 @@ class Patrol : IController
 	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
 
-	float moveSpeed = 0;
-	float patrolTime = 0;
+	float moveSpeed = 5;
+	float patrolTime = 3;
 	float currTime = 0;
-	bool direction;
+	bool direction = true;
 
 	Patrol(ScriptableObject@ object)
 	{
 		@self = object;
-		direction = true;
-		moveSpeed = 5;
-		patrolTime = 3;
 	}
 
 	void onUpdate()
@@ -51,5 +48,10 @@ class Patrol : IController
 		{
 			self.sendMessage(CMessage('ATK'), player);
 		}
+
+		//if (IsColliding(collidable))
+		//{
+		//	direction = not direction;
+		//}
 	}
 }

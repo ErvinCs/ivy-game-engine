@@ -25,6 +25,8 @@ namespace Ivy
 	std::string LevelGenerator::tShapePath = "tshape.png";
 	std::string LevelGenerator::scriptPatrolV = "patrol-v.as";
 	std::string LevelGenerator::scriptPatrolH = "patrol-h.as";
+	std::string LevelGenerator::playerScript = "player.as";
+	std::string LevelGenerator::playerPath = "ninja.png";
 
 	bool LevelGenerator::isGenerating = false;
 
@@ -63,6 +65,22 @@ namespace Ivy
 		IVY_CORE_INFO("LevelGenerator: xMax={0}, yMax={1}", xMax, yMax);
 		Entity wall1 = -1, wall2 = -1, wall3 = -1, wall4 = -1, hole = -1, enemy1 = -1, enemy2 = -1, enemy3 = -1;
 		uint16_t enemyTagCounter = 0;
+
+		// Spawn the player
+		Entity player = ECS::getInstance().createEntity();
+		ECS::getInstance().addComponent<Tag>(player, Tag("Player"));
+		Transform playerTransform = Transform(
+			glm::vec2(-(xMax * positionOffset) / 2, -(yMax * positionOffset) / 2), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+		);
+		CollidableBox playerBox = CollidableBox(playerTransform.position, playerTransform.rotation, playerTransform.scale);
+		playerBox.isTrigger = false;
+		ECS::getInstance().addComponent<Transform>(player, playerTransform);
+		ECS::getInstance().addComponent<Renderable>(player, Renderable(LevelGenerator::playerPath));
+		ECS::getInstance().addComponent<CollidableBox>(player, playerBox);
+		ECS::getInstance().addComponent<ScriptComponent>(player, ScriptComponent(LevelGenerator::playerScript));
+		ScriptManager::GetInstance().createScriptController(
+			(Paths::scriptsPath / LevelGenerator::playerScript).string(), &ECS::getInstance().getComponent<ScriptComponent>(player).scriptableObject, player
+		);
 
 		// Spawn Enemies
 		auto& it = fittest.getDesignElements().begin();
@@ -757,7 +775,6 @@ namespace Ivy
 				it++;
 			}
 		}
-		
 		LevelGenerator::isGenerating = false;
 	}
 

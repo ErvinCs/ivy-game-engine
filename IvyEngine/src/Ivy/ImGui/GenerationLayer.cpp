@@ -43,6 +43,12 @@ namespace Ivy
 				ImGui::InputText("Walls x2", &LevelGenerator::rangedEnemyPath);	
 				ImGui::TreePop();
 			}
+			if (ImGui::TreeNode("Player"))
+			{
+				ImGui::InputText("Player Sprite", &LevelGenerator::playerPath);
+				ImGui::InputText("Player Script", &LevelGenerator::playerScript);
+				ImGui::TreePop();
+			}
 			if (ImGui::TreeNode("Enemy Sprites"))
 			{
 				ImGui::InputText("Flying Enemy", &LevelGenerator::enemyFlyPath);
@@ -64,7 +70,9 @@ namespace Ivy
 		}
 		if (ImGui::Button("Run"))
 		{
+			Application::getInstance().globalTime = 0.0f;
 			Application::getInstance().GetLevelGenerator().run();
+			Application::getInstance().lastFrameTime = (float)glfwGetTime();
 		}
 		ImGui::PopID();
 		ImGui::End();
