@@ -2,11 +2,14 @@
 #include "OpenGLRenderAPI.h"
 
 #include <iostream>
-
+#include "../../Core/Logger.h"
 void GLClearError()
 {
 	// Get the errors until all the flags are cleared
-	while (glGetError() != GL_NO_ERROR);
+	while (glGetError() != GL_NO_ERROR)
+	{
+		IVY_CORE_ERROR("[OpenGL Error]: " + glGetError());
+	}
 }
 
 bool GLLogCall(const char* function, const char* file, int line)
@@ -34,9 +37,10 @@ namespace Ivy {
 		GLCall(glEnable(GL_DEPTH_TEST));
 		//GLCall(glEnable(GL_TEXTURE_2D));
 	}
-	void OpenGLRenderAPI::draw(const std::shared_ptr<VertexArray>& va)
+	void OpenGLRenderAPI::draw(const std::shared_ptr<VertexArray>& va, uint32_t indexCount)
 	{
-		GLCall(glDrawElements(GL_TRIANGLES, va->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr));
+		uint32_t count = indexCount ? indexCount : va->getIndexBuffer()->getCount();
+		GLCall(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr));
 		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 

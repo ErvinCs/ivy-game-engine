@@ -14,21 +14,26 @@ namespace Ivy {
 		GLenum rendererId;
 		std::string filepath;
 		bool isBaseTexture;
-		int width, height;
-		int bitsPerPixel;
-		unsigned char* localBuffer;
+		uint32_t texWidth, texHeight;
+		GLenum texInternalFormat, texDataFormat;
 
 	public:
 		OpenGLTexture(const std::string& path, bool isBaseTexture);
 		~OpenGLTexture();
 
 		virtual void bind(uint32_t slot = 0) const override;
+		virtual void setData(void* data, uint32_t size) override;
 
-		inline int getWidth() const override { return width; }
-		inline int getHeight() const override { return height; }
+		inline int getWidth() const override { return texWidth; }
+		inline int getHeight() const override { return texHeight; }
 
 		virtual void flipX() override;
 		virtual void flipY() override;
+
+		virtual bool operator==(const Texture& other) const override
+		{
+			return rendererId == ((OpenGLTexture&)other).rendererId;
+		}
 	};
 
 }

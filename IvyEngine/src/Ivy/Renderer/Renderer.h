@@ -12,6 +12,8 @@ namespace Ivy {
 
 	class Renderer
 	{
+	private:
+		static std::shared_ptr<Texture> textureBlank;
 	public:
 		static void Init();
 		static void Begin(OrthoCamera& camera);

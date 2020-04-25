@@ -14,31 +14,50 @@ namespace Ivy {
 		else
 			filepath = (Paths::texturesPath / path).string();
 
-		/*int width, height, channels;
-		//stbi_set_flip_vertically_on_load(1);
-		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
-		IVY_CORE_ASSERT(data, "Failed to load image!");
-		this->width = width;
-		this->height = height;
+		/*
+
+		IVY_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &rendererId);
-		glTextureStorage2D(rendererId, 1, GL_RGB8, width, height);
+		glTextureStorage2D(rendererId, 1, texInternalFormat, texWidth, texHeight);
 
 		glTextureParameteri(rendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(rendererId, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(rendererId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glTextureSubImage2D(rendererId, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTextureParameteri(rendererId, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(rendererId, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTextureSubImage2D(rendererId, 0, 0, 0, texWidth, texHeight, texDataFormat, GL_UNSIGNED_BYTE, data);
 
 		stbi_image_free(data);*/
-		//rendererId = 0;
-		localBuffer = nullptr;
-		width = 0;
-		height = 0;
-		bitsPerPixel = 0;
 
 		// Flip the texture vertically because OpenGL's (0,0) is the bottom left - depends on the texture format
+		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
-		localBuffer = stbi_load(filepath.c_str(), &width, &height, &bitsPerPixel, 4);
+		stbi_uc* data = nullptr;
+		{
+			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		}
+
+		this->texWidth = width;
+		this->texHeight = height;
+
+		GLenum internalFormat = 0, dataFormat = 0;
+		if (channels == 4)
+		{
+			internalFormat = GL_RGBA8;
+			dataFormat = GL_RGBA;
+		}
+		else if (channels == 3)
+		{
+			internalFormat = GL_RGB8;
+			dataFormat = GL_RGB;
+		}
+
+		this->texInternalFormat = internalFormat;
+		this->texDataFormat = dataFormat;
+
+		IVY_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
 
 		GLCall(glGenTextures(1, &rendererId));
 		GLCall(glBindTexture(GL_TEXTURE_2D, rendererId));
@@ -48,23 +67,26 @@ namespace Ivy {
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer));
-		//GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+		GLCall(glTexImage2D(GL_TEXTURE_2D, 1, texInternalFormat, texWidth, texHeight, 0, dataFormat, GL_UNSIGNED_BYTE, data));
 
-		// Free the copy of the data in the buffer 
-		// (TODO: should be stored)
-		if (localBuffer)
-			stbi_image_free(localBuffer);
+		stbi_image_free(data);
+	}
+
+	void OpenGLTexture::setData(void* data, uint32_t size)
+	{
+		uint32_t bpp = texDataFormat == GL_RGBA ? 4 : 3;
+		IVY_CORE_ASSERT(size == width * height * bpp, "Data must be entire texture!");
+		glTextureSubImage2D(rendererId, 0, 0, 0, texWidth, texHeight, texDataFormat, GL_UNSIGNED_BYTE, data);
 	}
 
 	void OpenGLTexture::flipX()
 	{
-
+		//TODO
 	}
 
 	void OpenGLTexture::flipY()
 	{
-
+		//TODO
 	}
 
 	OpenGLTexture::~OpenGLTexture()
@@ -76,10 +98,10 @@ namespace Ivy {
 	{
 		// Specify the texture slot
 		// OpenGL allows 32, but it depends on the platform
-		//GLCall(glBindTextureUnit(slot, rendererId));
-		GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+		GLCall(glBindTextureUnit(slot, rendererId));
 
-		GLCall(glBindTexture(GL_TEXTURE_2D, rendererId));
+		//GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+		//GLCall(glBindTexture(GL_TEXTURE_2D, rendererId));
 	}
 
 }

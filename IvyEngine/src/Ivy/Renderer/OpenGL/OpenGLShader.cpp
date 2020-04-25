@@ -2,9 +2,9 @@
 #include "OpenGLShader.h"
 #include "OpenGLRenderAPI.h"
 
-
 #include "GLFW/glfw3.h"
 #include <glm/gtc/type_ptr.hpp>
+#include "../../Core/Logger.h"
 
 namespace Ivy {
 
@@ -99,7 +99,7 @@ namespace Ivy {
 
 	unsigned int OpenGLShader::compileShader(unsigned int type, const std::string& source)
 	{
-		GLCall(unsigned int id = glCreateShader(type));
+		GLCall(GLuint id = glCreateShader(type));
 		const char* src = source.c_str();
 		GLCall(glShaderSource(id, 1, &src, nullptr));
 		GLCall(glCompileShader(id));
@@ -133,7 +133,7 @@ namespace Ivy {
 	unsigned int OpenGLShader::createShader(const std::string& vertexShader, const std::string& fragmentShader)
 	{
 		// OpenGL provides it's own wrappers for data types (but it still understands raw C data types)
-		GLCall(unsigned int program = glCreateProgram());
+		GLCall(GLuint program = glCreateProgram());
 
 		// Create 2 shader objects
 		unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
@@ -185,6 +185,7 @@ namespace Ivy {
 			}
 			else
 			{
+				IVY_CORE_WARN("Reading {0} Shader: \n {1}", type, line);
 				ss[(int)type] << line << '\n';
 			}
 		}

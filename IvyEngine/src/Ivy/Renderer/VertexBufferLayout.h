@@ -1,7 +1,6 @@
 #pragma once
 
-// TEMPORARY - Only needed by the VertexArray (& OpenGLVertexArray)
-// TODO - Refactor
+// Needed by the VertexArray & its children
 
 namespace Ivy {
 
@@ -27,7 +26,7 @@ namespace Ivy {
 		case ShaderDataType::Bool:     return 1;
 		}
 
-		return 0;	//Unknown
+		return 0;	//Unknown ShaderDataType
 	}
 
 	struct BufferElement
@@ -62,7 +61,7 @@ namespace Ivy {
 			case ShaderDataType::Bool:    return 1;
 			}
 
-			return 0;	//Unknown
+			return 0;	//Unknown ShaderDataType
 		}
 	};
 

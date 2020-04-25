@@ -5,14 +5,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "../Core/ResourcePaths.h"
-namespace Ivy {
+namespace Ivy 
+{
+	std::shared_ptr<Texture> Renderer::textureBlank;
 
 	struct Renderable
 	{
 		std::shared_ptr<VertexArray> vertexArray;
 		std::shared_ptr<Shader> shaderTex;
-		std::shared_ptr<Texture> textureBlank;
 	};
+	
 
 	static Renderable* data;
 
@@ -41,12 +43,8 @@ namespace Ivy {
 		std::shared_ptr<IndexBuffer> ib = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		data->vertexArray->setIndexBuffer(ib);
 
-		//TODO - FIX THIS
-		IVY_CORE_INFO("Loading blank texture from location: {0}", Paths::baseTexturePath);
-		std::shared_ptr<Texture> textureBlank = Texture::Create(Paths::baseTexturePath.string(), true);
-		//data->textureBlank = Texture::Create("baseTexturePath.string()");
-		//data->textureBlank->bind();
-		textureBlank->bind();
+		//
+		textureBlank = Texture::Create(Paths::baseTexturePath.string(), true);
 
 		IVY_CORE_INFO("Loading shader from location: {0}", Paths::shaderPath);
 		data->shaderTex = Shader::Create(Paths::shaderPath.string());
@@ -72,7 +70,7 @@ namespace Ivy {
 	void Renderer::DrawRect(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		data->shaderTex->setUniform4f("u_color", color);
-		data->textureBlank->bind();
+		textureBlank->bind();
 
 		glm::vec3 position3 = glm::vec3(position.x, position.y, 0.0f);
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position3) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
@@ -84,7 +82,7 @@ namespace Ivy {
 	void Renderer::DrawRect(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		data->shaderTex->setUniform4f("u_color", color);
-		//data->textureBlank->bind();
+		textureBlank->bind();
 
 		glm::vec3 position3 = glm::vec3(position.x, position.y, 0.0f);
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position3) 
