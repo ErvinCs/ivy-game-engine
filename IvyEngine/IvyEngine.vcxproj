@@ -90,6 +90,10 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -114,6 +118,10 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
@@ -138,13 +146,12 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h" />
-    <ClInclude Include="src\Ivy\PCG\Node.h" />
-    <ClInclude Include="src\Ivy\PCG\Graph.h" />
-    <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
-    <ClInclude Include="src\Ivy\PCG\FI2Pop.h" />
     <ClInclude Include="src\Ivy.h" />
     <ClInclude Include="src\Ivy\Core\Application.h" />
     <ClInclude Include="src\Ivy\Core\Core.h" />
@@ -180,11 +187,16 @@
     <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
     <ClInclude Include="src\Ivy\Exceptions\EventException.h" />
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
+    <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h" />
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Ivy\ImGui\InspectorLayer.h" />
-    <ClInclude Include="src\Ivy\PCG\Individual.h" />
-    <ClInclude Include="src\Ivy\PCG\Population.h" />
     <ClInclude Include="src\Ivy\PCG\DesignElement.h" />
+    <ClInclude Include="src\Ivy\PCG\FI2Pop.h" />
+    <ClInclude Include="src\Ivy\PCG\Graph.h" />
+    <ClInclude Include="src\Ivy\PCG\Individual.h" />
+    <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
+    <ClInclude Include="src\Ivy\PCG\Node.h" />
+    <ClInclude Include="src\Ivy\PCG\Population.h" />
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h" />
     <ClInclude Include="src\Ivy\Renderer\Context.h" />
     <ClInclude Include="src\Ivy\Renderer\IndexBuffer.h" />
@@ -624,11 +636,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Ivy\ImGui\GenerationLayer.cpp" />
-    <ClCompile Include="src\Ivy\PCG\DesignElement.cpp" />
-    <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
-    <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
-    <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp" />
     <ClCompile Include="src\Ivy\Core\Application.cpp" />
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
@@ -645,10 +652,15 @@
     <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\ScriptSystem.cpp" />
     <ClCompile Include="src\Ivy\Events\Event.cpp" />
+    <ClCompile Include="src\Ivy\ImGui\GenerationLayer.cpp" />
     <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp" />
     <ClCompile Include="src\Ivy\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Ivy\ImGui\InspectorLayer.cpp" />
+    <ClCompile Include="src\Ivy\PCG\DesignElement.cpp" />
+    <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp" />
+    <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
     <ClCompile Include="src\Ivy\PCG\Individual.cpp" />
+    <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
     <ClCompile Include="src\Ivy\PCG\Population.cpp" />
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp" />
     <ClCompile Include="src\Ivy\Renderer\Context.cpp" />
@@ -690,9 +702,6 @@
     <ProjectReference Include="vendor\angelscript\AngelScript.vcxproj">
       <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

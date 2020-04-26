@@ -23,9 +23,15 @@ namespace Ivy {
 
 	void RenderSystem::update(float deltatime)
 	{
-		RenderCommand::clear();
-		Renderer::Begin(Application::GetCamera());
+#ifdef _DEBUG
 		if (!CollidableGizmoSystem::showGizmos)
+		{
+			RenderCommand::clear();
+			Renderer::Begin(Application::GetCamera());
+		}
+#else
+		Renderer::Begin(Application::GetCamera());
+#endif
 		for (auto& it = entities->begin(); it != entities->end(); it++)
 		{
 			auto& object = *it;
@@ -40,8 +46,8 @@ namespace Ivy {
 			
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
 		}
-		if (!CollidableGizmoSystem::showGizmos)
-			Renderer::End();
+		Renderer::End();
+
 	}
 
 }

@@ -48,7 +48,6 @@ project "IvyEngine"
         "%{prj.name}/vendor/stb_image/**.h",
         "%{prj.name}/vendor/stb_image/**.cpp",
         "%{prj.name}/vendor/json_nlohmann/**.hpp"
-        --"%{prj.name}/vendor/eastl/include/EASTL/**.h"
     }
 
     defines
@@ -98,16 +97,28 @@ project "IvyEngine"
         defines "IVY_DEBUG"
         runtime "Debug"
         symbols "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures"
+        }
 
     filter "configurations:Release"
         defines "IVY_RELEASE"
         runtime "Release"
         optimize "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures"
+        }
 
     filter "configurations:Dist"
         defines "IVY_DIST"
         runtime "Release"
         optimize "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures"
+        }
 
 -- Application
 
@@ -135,7 +146,6 @@ project "IvyApplication"
         "%{IncludeDir.glm}",
         "%{IncludeDir.angelscript}",
         "%{IncludeDir.json}"
-        --"%{prj.name}/vendor/eastl"
     }
 
     links
@@ -155,13 +165,28 @@ project "IvyApplication"
         defines "IVY_DEBUG"
         runtime "Debug"
         symbols "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res"
+        }
 
     filter "configurations:Release"
         defines "IVY_RELEASE"
         runtime "Release"
         optimize "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res"
+        }
 
     filter "configurations:Dist"
         defines "IVY_DIST"
         runtime "Release"
         optimize "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res"
+        }

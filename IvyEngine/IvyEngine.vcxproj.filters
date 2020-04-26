@@ -25,6 +25,9 @@
     <Filter Include="src\Ivy\ImGui">
       <UniqueIdentifier>{DE71FA24-4A32-765B-136D-BFD87FECBA37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ivy\PCG">
+      <UniqueIdentifier>{BD623E1C-2918-B711-B20C-B1E81EC1AD15}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Ivy\Renderer">
       <UniqueIdentifier>{DA736E39-C66C-8D8B-EF9E-7210DBF66C97}</UniqueIdentifier>
     </Filter>
@@ -171,11 +174,35 @@
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h">
       <Filter>src\Ivy\Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h">
+      <Filter>src\Ivy\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\ImGui\ImGuiLayer.h">
       <Filter>src\Ivy\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ImGui\InspectorLayer.h">
       <Filter>src\Ivy\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\DesignElement.h">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\FI2Pop.h">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\Graph.h">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\Individual.h">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\LevelGenerator.h">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\Node.h">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\PCG\Population.h">
+      <Filter>src\Ivy\PCG</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Renderer\BaseRenderer.h">
       <Filter>src\Ivy\Renderer</Filter>
@@ -1488,14 +1515,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\PCG\Population.h" />
-    <ClInclude Include="src\Ivy\PCG\Individual.h" />
-    <ClInclude Include="src\Ivy\PCG\FI2Pop.h" />
-    <ClInclude Include="src\Ivy\PCG\LevelGenerator.h" />
-    <ClInclude Include="src\Ivy\PCG\DesignElement.h" />
-    <ClInclude Include="src\Ivy\PCG\Graph.h" />
-    <ClInclude Include="src\Ivy\PCG\Node.h" />
-    <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1546,6 +1565,9 @@
     <ClCompile Include="src\Ivy\Events\Event.cpp">
       <Filter>src\Ivy\Events</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ivy\ImGui\GenerationLayer.cpp">
+      <Filter>src\Ivy\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ivy\ImGui\ImGuiInit.cpp">
       <Filter>src\Ivy\ImGui</Filter>
     </ClCompile>
@@ -1554,6 +1576,24 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\ImGui\InspectorLayer.cpp">
       <Filter>src\Ivy\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\PCG\DesignElement.cpp">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\PCG\Graph.cpp">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\PCG\Individual.cpp">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp">
+      <Filter>src\Ivy\PCG</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\PCG\Population.cpp">
+      <Filter>src\Ivy\PCG</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Renderer\BaseRenderer.cpp">
       <Filter>src\Ivy\Renderer</Filter>
@@ -1627,15 +1667,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\PCG\Individual.cpp" />
-    <ClCompile Include="src\Ivy\PCG\Population.cpp" />
-    <ClCompile Include="src\Ivy\PCG\FI2Pop.cpp" />
-    <ClCompile Include="src\Ivy\PCG\LevelGenerator.cpp" />
-    <ClCompile Include="src\Ivy\PCG\Graph.cpp" />
-    <ClCompile Include="src\Ivy\PCG\DesignElement.cpp" />
-    <ClCompile Include="src\Ivy\ImGui\GenerationLayer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,6 @@ namespace Ivy {
 		virtual ~Texture() = default;
 
 		virtual void bind(uint32_t slot = 0) const = 0;
-		virtual void setData(void* data, uint32_t size) = 0;
 
 		virtual int getWidth() const = 0;
 		virtual int getHeight() const = 0;

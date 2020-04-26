@@ -48,25 +48,31 @@ namespace Ivy {
 		}
 
 		JSONManager::InitFunctions();
-
+#ifdef _DEBUG
 		imGuiLayer = new ImGuiLayer();
 		inspectorLayer = new InspectorLayer();
 		generationLayer = new GenerationLayer();
+
 		pushLayer(imGuiLayer);
 		pushLayer(inspectorLayer);
 		pushLayer(generationLayer);
+#endif
 	}
 
 
 	Application::~Application()
 	{
-		delete imGuiLayer;
-		delete inspectorLayer;
-		delete generationLayer;
+#ifdef _DEBUG
+		layerStack.pop(imGuiLayer);
+		imGuiLayer = 0;
+		layerStack.pop(inspectorLayer);
+		inspectorLayer = 0;
+		layerStack.pop(generationLayer);
+		generationLayer = 0;
+#endif
 		BaseRenderer::Shutdown();
 		if (scriptManager)
 		{
-			delete scriptManager;
 			scriptManager = 0;
 		}
 	}
@@ -79,10 +85,6 @@ namespace Ivy {
 
 	void Application::run()
 	{
-		//TODO - Generation should happen in IvyApplication. ImGui is only for tweaking
-		//IVY_CORE_INFO("Starting generation");
-		//levelGenerator.run();
-		//IVY_CORE_INFO("Ending generation");
 		while (isRunning)
 		{
 			currTime = (float)glfwGetTime();
@@ -93,12 +95,12 @@ namespace Ivy {
 
 			for (SortingLayer* layer : layerStack)
 				layer->update(globalTime);
-
+#ifdef _DEBUG
 			imGuiLayer->begin();
 			for (SortingLayer* layer : layerStack)
 				layer->imGuiRender();
 			imGuiLayer->end();
-
+#endif
 			window->update();
 		}
 	}

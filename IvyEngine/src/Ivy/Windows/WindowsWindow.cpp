@@ -14,7 +14,6 @@ namespace Ivy {
 
 	std::unique_ptr<Window> Window::Create(const WindowProperties& properties)
 	{
-		IVY_CORE_INFO("Window: Creating WindowsWindow: properties{name={0}, height={1}, width={2}}", properties.name, properties.height, properties.width);
 		return std::make_unique<WindowsWindow>(properties);
 	}
 

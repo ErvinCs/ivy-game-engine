@@ -8,7 +8,8 @@
 
 #include <glm/glm.hpp>
 
-namespace Ivy {
+namespace Ivy 
+{
 
 	class Renderer
 	{
