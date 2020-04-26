@@ -4,6 +4,7 @@
 
 #include "../ECS/ECS.h"
 #include "../Scripting/ScriptManager.h"
+#include "../Core/Application.h"
 
 namespace Ivy 
 {
@@ -92,6 +93,7 @@ namespace Ivy
 		ScriptManager::GetInstance().createScriptController(
 			(Paths::scriptsPath / LevelGenerator::playerScript).string(), &ECS::getInstance().getComponent<ScriptComponent>(player).scriptableObject, player
 		);
+		Application::GetCamera().setOwner(player);
 
 		// Spawn Enemies
 		auto& it = fittest.getDesignElements().begin();

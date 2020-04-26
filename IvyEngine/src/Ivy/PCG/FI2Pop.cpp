@@ -44,10 +44,13 @@ namespace Ivy
 		{
 			IVY_CORE_TRACE("FI2POP: Generation {0}", currGeneration);
 
-			while (infeasiblePop.getPopulationSize() > populationSize)
+			if (infeasiblePop.getPopulationSize() > populationSize)
 			{
-				IVY_CORE_TRACE("FI2POP: Removing extra individual at index {0}. Size of Infeasible: {1}", infeasiblePop.getLeastFitIndividualIndex(), infeasiblePop.getPopulationSize());
-				infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
+				while (infeasiblePop.getPopulationSize() > populationSize)
+				{
+					IVY_CORE_TRACE("FI2POP: Removing extra individual at index {0}. Size of Infeasible: {1}", infeasiblePop.getLeastFitIndividualIndex(), infeasiblePop.getPopulationSize());
+					infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
+				}
 			}
 
 			IVY_CORE_TRACE("FI2POP: Evolving Infeasible");
@@ -106,6 +109,7 @@ namespace Ivy
 					float fitness = ind.computeFitness();
 					if (fitness < 1.0f)
 					{
+						infeasiblePop.addIndividual(ind);
 						feasiblePop.removeIndividualAtIndex(i);
 						popSize--;
 						i--;
@@ -141,6 +145,16 @@ namespace Ivy
 			}
 			currGeneration += 1;
 		}
+		// Has issues
+		/*IVY_CORE_TRACE("FI2POP: Removing duplicates");
+		if (initialisedFeasible)
+		{
+			feasiblePop.removeDuplicates();
+		}
+		else
+		{
+			infeasiblePop.removeDuplicates();
+		}*/
 		currGeneration = 1;
 	}
 
