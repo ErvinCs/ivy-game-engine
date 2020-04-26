@@ -11,7 +11,7 @@
 namespace Ivy
 {
 	void GenerationLayer::imGuiRender()
-	{	
+	{
 		ImGui::Begin("Generator");
 		ImGui::PushID("GenerationLayer");
 		if (ImGui::CollapsingHeader("Parameters"))
@@ -23,8 +23,9 @@ namespace Ivy
 			ImGui::InputInt("Tournament Size", &FI2Pop::tournamentSize, 1);
 			ImGui::InputInt("Genotype Size", &FI2Pop::genotypeSize, 1);
 			ImGui::InputInt("Max Generation", &FI2Pop::maxGeneration, 1);
-			ImGui::Checkbox("Always Load Fittest", &LevelGenerator::alwaysLoadFittest);
-
+			ImGui::Checkbox("Always Load", &LevelGenerator::alwaysLoad);
+			ImGui::RadioButton("Fittest", &LevelGenerator::alwaysLoadFittest, 1);
+			ImGui::RadioButton("Least Fit", &LevelGenerator::alwaysLoadFittest, 0);
 		}
 		if (ImGui::CollapsingHeader("Resources"))
 		{

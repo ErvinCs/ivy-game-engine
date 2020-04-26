@@ -5,7 +5,7 @@
 
 namespace Ivy 
 {
-	float FI2Pop::mutationRate = 0.2f;
+	float FI2Pop::mutationRate = 0.1f;
 	float FI2Pop::uniformRate = 0.5f;
 	int FI2Pop::singlePointCrossoverFrequency = 3;
 	int FI2Pop::eliteCount = 2;
@@ -23,9 +23,11 @@ namespace Ivy
 	{
 		fittestFeasibleIndividual = Individual();
 		fittestInfeasibleIndividual = Individual();
+		leastFitFeasibleIndividual = Individual();
 
 		fittestFeasibleFitness = 0.0f;
 		fittestInfeasibleFitness = 0.0f;
+		leastFitFeasibleFitness = 1.0f;
 
 		initialisedFeasible = false;
 		currGeneration = 1;
@@ -128,6 +130,12 @@ namespace Ivy
 						fittestFeasibleFitness = diversity;
 						this->setFittestFeasibleIndividual(feasiblePop.getIndividualAt(i));
 						IVY_CORE_TRACE("FI2POP: Top Feasible Individual. Has Diversity = {0}", diversity);
+					}
+					if (diversity < leastFitFeasibleFitness)
+					{
+						leastFitFeasibleFitness = diversity;
+						this->setLeastFitFeasibleIndividual(feasiblePop.getIndividualAt(i));
+						IVY_CORE_TRACE("FI2POP: Worst Feasible Individual. Has Diversity = {0}", diversity);
 					}
 				}
 			}

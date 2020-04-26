@@ -134,19 +134,27 @@ namespace Ivy {
 	// Remove impossible children
 	void Individual::removeLeft(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
-		node->removeChild(nodeId - yMax);
+		if (x != 0)
+		graph.getNode(nodeId - yMax).removeChild(*node);
+		//node->removeChild(nodeId - yMax);
 	}
 	void Individual::removeRight(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
-		node->removeChild(nodeId + yMax);
+		if (x != xMax - 1)
+		graph.getNode(nodeId + yMax).removeChild(*node);
+		//node->removeChild(nodeId + yMax);
 	}
 	void Individual::removeTop(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
-		node->removeChild(nodeId + 1);
+		if (y != yMax - 1)
+		graph.getNode(nodeId + 1).removeChild(*node);
+		//node->removeChild(nodeId + 1);
 	}
 	void Individual::removeBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax)
 	{
-		node->removeChild(nodeId - 1);
+		if (y != 0)
+		graph.getNode(nodeId - 1).removeChild(*node);
+		//node->removeChild(nodeId - 1);
 	}
 
 	/*

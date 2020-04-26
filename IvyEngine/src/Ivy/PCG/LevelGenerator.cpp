@@ -7,7 +7,10 @@
 
 namespace Ivy 
 {
-	bool LevelGenerator::alwaysLoadFittest = false;
+	int LevelGenerator::alwaysLoadFittest = 0;
+	bool LevelGenerator::alwaysLoad = false;
+	bool LevelGenerator::isGenerating = false;
+
 	std::string LevelGenerator::horizontalBorderPath = "horizontalBorder.png";
 	std::string LevelGenerator::verticalBorderPath = "verticalBorder.png";
 	std::string LevelGenerator::closedRoomPath = "closedRoom.png";
@@ -28,7 +31,7 @@ namespace Ivy
 	std::string LevelGenerator::playerScript = "player.as";
 	std::string LevelGenerator::playerPath = "ninja.png";
 
-	bool LevelGenerator::isGenerating = false;
+	
 
 	LevelGenerator::LevelGenerator()
 	{
@@ -48,10 +51,18 @@ namespace Ivy
 		}
 		else
 		{
-			if (alwaysLoadFittest)
+			if (alwaysLoad)
 			{
-				IVY_CORE_INFO("LevelGenerator: Loading Fittest Feasible");
-				fittest = generator.getFittestFeasibleIndividual();
+				if (alwaysLoadFittest == 1)
+				{
+					IVY_CORE_INFO("LevelGenerator: Loading Fittest Feasible");
+					fittest = generator.getFittestFeasibleIndividual();
+				}
+				else
+				{
+					IVY_CORE_INFO("LevelGenerator: Loading Least fit Feasible");
+					fittest = generator.getLeastFitFeasibleIndividual();
+				}				
 			}
 			else
 			{
