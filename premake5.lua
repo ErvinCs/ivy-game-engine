@@ -67,7 +67,6 @@ project "IvyEngine"
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.angelscript}",
         "%{IncludeDir.json}"
-        --"%{prj.name}/vendor/eastl"
     }
 
     links 

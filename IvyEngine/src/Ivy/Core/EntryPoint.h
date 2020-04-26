@@ -44,7 +44,7 @@ int main(int argc, char** argv)
 	delete application;
 
 #ifdef _DEBUG
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
 #endif
 
 	return 0;

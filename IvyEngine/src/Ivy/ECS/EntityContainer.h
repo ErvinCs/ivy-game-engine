@@ -28,9 +28,11 @@ public:
 	Entity& operator[](std::size_t idx) { return entities[idx]; }
 	const Entity& operator[](std::size_t idx) const { return entities[idx]; }
 
+	Entity* at(int index) { return &entities[index]; }
+
 	inline void destroyEntity(Entity& entity)
 	{
-		IVY_CORE_INFO("EntityContainer: Removing Entity {1}", entity);
+		IVY_CORE_INFO("EntityContainer: Removing Entity {0}", entity);
 		// Efficient Way
 		/*for (int i = 0; i < this->entitiesSize; i++)
 		{

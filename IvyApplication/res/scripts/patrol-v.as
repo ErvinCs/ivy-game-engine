@@ -28,7 +28,10 @@ class Patrol : IController
 			@playerRef = player;
 		}
 		@collidable = FindCollidable(self.getOwner());
-		@playerCollidable = FindCollidable(player.getOwner());
+		if (not(player is null))
+		{
+			@playerCollidable = FindCollidable(player.getOwner());
+		}
 
 		currTime += deltatime;
 
@@ -43,10 +46,12 @@ class Patrol : IController
 			direction = not direction;
 		} 
 
-		
-		if (AreColliding(collidable, playerCollidable))
+		if (not(player is null))
 		{
-			self.sendMessage(CMessage('ATK'), player);
+			if (AreColliding(collidable, playerCollidable))
+			{
+				self.sendMessage(CMessage('ATK'), player);
+			}
 		}
 
 		//if (IsColliding(collidable))

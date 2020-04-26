@@ -25,27 +25,31 @@ namespace Ivy {
 	public:
 		ScriptableObject();
 		ScriptableObject(const std::string& name);
+		ScriptableObject(const ScriptableObject& other);
 		~ScriptableObject();
 
 		int addReference();
 		int release();
+
 		asILockableSharedBool* getWeakRefereneFlag();
 		void destoryAndRelease();
-		void sendMessage(CScriptHandle message, ScriptableObject* target);
+		void kill();
 
+		void sendMessage(CScriptHandle message, ScriptableObject* target);
 		void onUpdate();
 
 		void setOwner(Entity ownerEntity);
-		Entity getOwner();
+		Entity getOwner();	
 
-		void kill();
-
+		inline void setAlive(bool live) { this->alive = live; }
 		inline bool isAlive() { return alive; }
 		inline const std::string& getName() { return this->name; }
 		inline const void setName(const std::string& name) { this->name = (Paths::scriptsPath / name).string(); }
 		inline const void setFullPath(const std::string& fullPath) { this->name = fullPath; }
 		inline asIScriptObject* getScriptObject() { return this->scriptObject; }
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }
+
+		ScriptableObject& operator=(const ScriptableObject& other);
 	};
 
 }

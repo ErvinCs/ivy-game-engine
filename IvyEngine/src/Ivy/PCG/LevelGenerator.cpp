@@ -91,7 +91,7 @@ namespace Ivy
 		ECS::getInstance().addComponent<CollidableBox>(player, playerBox);
 		ECS::getInstance().addComponent<ScriptComponent>(player, ScriptComponent(LevelGenerator::playerScript));
 		ScriptManager::GetInstance().createScriptController(
-			(Paths::scriptsPath / LevelGenerator::playerScript).string(), &ECS::getInstance().getComponent<ScriptComponent>(player).scriptableObject, player
+			(Paths::scriptsPath / LevelGenerator::playerScript).string(), ECS::getInstance().getComponent<ScriptComponent>(player).scriptableObject, player
 		);
 		Application::GetCamera().setOwner(player);
 
@@ -125,7 +125,7 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(enemy1, fly1box);
 							ECS::getInstance().addComponent<ScriptComponent>(enemy1, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), &ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy1,
 								ECS::getInstance().getComponent<Tag>(enemy1).tag,
@@ -160,7 +160,7 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(enemy1, fly2Box);
 							ECS::getInstance().addComponent<ScriptComponent>(enemy1, ScriptComponent(LevelGenerator::scriptPatrolV));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), &ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy1,
 								ECS::getInstance().getComponent<Tag>(enemy1).tag,
@@ -178,7 +178,7 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(enemy2, CollidableBox(fly3Transform.position, fly3Transform.rotation, fly3Transform.scale));
 							ECS::getInstance().addComponent<ScriptComponent>(enemy2, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), &ECS::getInstance().getComponent<ScriptComponent>(enemy2).scriptableObject, enemy2
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy2).scriptableObject, enemy2
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy2,
 								ECS::getInstance().getComponent<Tag>(enemy2).tag,
@@ -201,7 +201,7 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(enemy1, ground1box);
 							ECS::getInstance().addComponent<ScriptComponent>(enemy1, ScriptComponent(LevelGenerator::scriptPatrolV));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), &ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy1,
 								ECS::getInstance().getComponent<Tag>(enemy1).tag,
@@ -219,7 +219,7 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(enemy2, fly4box);
 							ECS::getInstance().addComponent<ScriptComponent>(enemy2, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), &ECS::getInstance().getComponent<ScriptComponent>(enemy2).scriptableObject, enemy2
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy2).scriptableObject, enemy2
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy2,
 								ECS::getInstance().getComponent<Tag>(enemy2).tag,
@@ -237,7 +237,7 @@ namespace Ivy
 							ECS::getInstance().addComponent<CollidableBox>(enemy3, fly5box);
 							ECS::getInstance().addComponent<ScriptComponent>(enemy3, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), &ECS::getInstance().getComponent<ScriptComponent>(enemy3).scriptableObject, enemy3
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy3).scriptableObject, enemy3
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy3,
 								ECS::getInstance().getComponent<Tag>(enemy3).tag,

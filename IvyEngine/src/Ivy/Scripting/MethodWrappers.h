@@ -43,8 +43,12 @@ namespace Ivy {
 
 
 	// ---------- Components ----------
-	Transform& FindTransform(Entity entity) {
-		return ECS::getInstance().getComponent<Transform>(entity);
+	Transform* FindTransform(Entity entity) {
+		Transform* t = &ECS::getInstance().getComponent<Transform>(entity);
+		if (t->getComponentId() == 0)
+			return NULL;
+		else
+			return t;
 	}
 
 	Transform* Transform_Factory1()
@@ -52,9 +56,13 @@ namespace Ivy {
 		return new Transform(glm::vec2(0), 0, glm::vec2(0));
 	}
 
-	Renderable& FindRenderable(Entity entity)
+	Renderable* FindRenderable(Entity entity)
 	{
-		return ECS::getInstance().getComponent<Renderable>(entity);
+		Renderable* r = &ECS::getInstance().getComponent<Renderable>(entity);
+		if (r->getComponentId() == 0)
+			return NULL;
+		else
+			return r;
 	}
 
 	Renderable* Renderable_Factory1()
@@ -62,9 +70,13 @@ namespace Ivy {
 		return new Renderable(Paths::baseTexturePath.string());
 	}
 
-	CollidableBox& FindCollidable(Entity entity)
+	CollidableBox* FindCollidable(Entity entity)
 	{
-		return ECS::getInstance().getComponent<CollidableBox>(entity);
+		CollidableBox* c = &ECS::getInstance().getComponent<CollidableBox>(entity);
+		if (c->getComponentId() == 0)
+			return NULL;
+		else
+			return c;
 	}
 
 	CollidableBox* Collidable_Factory1()
@@ -77,7 +89,7 @@ namespace Ivy {
 		for (Entity entity : ECS::getInstance().getEntities())
 		{
 			if (ECS::getInstance().getComponent<Tag>(entity).tag == tag)
-				return &ECS::getInstance().getComponent<ScriptComponent>(entity).scriptableObject;
+				return ECS::getInstance().getComponent<ScriptComponent>(entity).scriptableObject;
 		}
 	}
 

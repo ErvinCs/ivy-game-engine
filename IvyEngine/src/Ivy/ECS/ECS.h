@@ -39,10 +39,10 @@ namespace Ivy {
 
 		~ECS()
 		{
-			for (auto& it = entities.begin(); it != entities.end(); it++)
-			{
-				destroyEntity(*it);
-			}
+			//for (auto& it = entities.begin(); it != entities.end(); it++)
+			//{
+			//	destroyEntity(*it);
+			//}
 			
 			componentTypes.clear();
 			componentContainers.clear();

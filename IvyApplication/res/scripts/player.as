@@ -30,6 +30,7 @@ class CPlayer : IController
 	{
 		@transform = FindTransform(self.getOwner());
 		
+		
 		if (IsKeyDown(RIGHT))
 		{
 			transform.position.x += playerMoveSpeed * deltatime;			
@@ -54,7 +55,7 @@ class CPlayer : IController
 		
 		if( msg !is null && msg.txt == 'ATK' && rageCount > 0)
 		{
-			LoadSprite(self.getOwner(), 'rage.png');
+			self.kill();
 		}
 	}
 }

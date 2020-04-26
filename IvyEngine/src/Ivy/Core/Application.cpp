@@ -71,10 +71,6 @@ namespace Ivy {
 		generationLayer = 0;
 #endif
 		BaseRenderer::Shutdown();
-		if (scriptManager)
-		{
-			scriptManager = 0;
-		}
 	}
 
 	void Application::init()

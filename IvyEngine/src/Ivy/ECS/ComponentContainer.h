@@ -48,7 +48,7 @@ namespace Ivy {
 
 		void removeComponent(Entity& entity)
 		{
-			IVY_CORE_INFO("ComponentContainer: Removing Component {0} from Entity {1}", typeid(T).name(), entity);
+			//IVY_CORE_INFO("ComponentContainer: Removing Component {0} from Entity {1}", typeid(T).name(), entity);
 			for (int i = 0; i < size; i++)
 			{
 				if (componentArray[i].getEntityId() == entity)
