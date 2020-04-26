@@ -8,10 +8,8 @@ class Patrol : IController
 	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
 
-	float moveSpeed = 5;
-	float patrolTime = 3;
-	float currTime = 0;
-	bool direction = true;
+	float moveSpeed = 3;
+	int direction = 0;
 
 	Patrol(ScriptableObject@ object)
 	{
@@ -21,30 +19,27 @@ class Patrol : IController
 	void onUpdate()
 	{
 		@transform = FindTransform(self.getOwner());
+		@collidable = FindCollidable(self.getOwner());
 		ScriptableObject @player = playerRef;
 		if(player is null)
 		{
 			@player = FindObjectByTag('Player');
 			@playerRef = player;
 		}
-		@collidable = FindCollidable(self.getOwner());
 		if (not(player is null))
 		{
 			@playerCollidable = FindCollidable(player.getOwner());
 		}
 
-		currTime += deltatime;
-
-		if(direction) {
+		if(direction == 0) {
+			transform.position.x += moveSpeed * deltatime;
+		} else if (direction == 1) {
 			transform.position.y += moveSpeed * deltatime;
-		} else {
+		} else if (direction == 2) {
+			transform.position.x -= moveSpeed * deltatime;
+		} else if (direction == 3) {
 			transform.position.y -= moveSpeed * deltatime;
 		}
-
-		if(currTime >= patrolTime) {
-			currTime = 0;
-			direction = not direction;
-		} 
 
 		if (not(player is null))
 		{
@@ -54,9 +49,9 @@ class Patrol : IController
 			}
 		}
 
-		//if (IsColliding(collidable))
-		//{
-		//	direction = not direction;
-		//}
+		if (IsColliding(self.getOwner()))
+		{
+			direction = (direction + 1) % 4;
+		}
 	}
 }
