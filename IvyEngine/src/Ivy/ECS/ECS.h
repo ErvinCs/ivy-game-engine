@@ -190,9 +190,10 @@ namespace Ivy {
 			std::shared_ptr<System> renderSystem    = std::make_shared<RenderSystem>(entities);
 			std::shared_ptr<System> scriptSystem    = std::make_shared<ScriptSystem>(entities);
 			std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>(entities);
-			std::shared_ptr<System> collisionGizmos = std::make_shared<CollidableGizmoSystem>(entities);
-			std::shared_ptr<System> cameraSystem    = std::make_shared<CameraSystem>(entities);
+			std::shared_ptr<System> cameraSystem = std::make_shared<CameraSystem>(entities);
+
 #ifdef _DEBUG
+			std::shared_ptr<System> collisionGizmos = std::make_shared<CollidableGizmoSystem>(entities);
 			collisionGizmos->init();
 			addSystem(collisionGizmos);
 #endif

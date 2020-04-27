@@ -119,7 +119,7 @@ namespace Ivy
 								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox fly1box = CollidableBox(fly1Transform.position, fly1Transform.rotation, fly1Transform.scale);
-							//fly1box.isTrigger = true;
+							fly1box.isTrigger = true;
 							ECS::getInstance().addComponent<Transform>(enemy1, fly1Transform);
 							ECS::getInstance().addComponent<Renderable>(enemy1, Renderable(LevelGenerator::enemyFlyPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy1, fly1box);
@@ -154,7 +154,7 @@ namespace Ivy
 								glm::vec2(levelElement.transform.position.x + halfTilePos * 2, levelElement.transform.position.y + halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox fly2Box = CollidableBox(fly2Transform.position, fly2Transform.rotation, fly2Transform.scale);
-							//fly2Box.isTrigger = true;
+							fly2Box.isTrigger = true;
 							ECS::getInstance().addComponent<Transform>(enemy1, fly2Transform);
 							ECS::getInstance().addComponent<Renderable>(enemy1, Renderable(LevelGenerator::enemyFlyPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy1, fly2Box);
@@ -166,13 +166,13 @@ namespace Ivy
 								ECS::getInstance().getComponent<Tag>(enemy1).tag,
 								fly2Transform.position.x + halfTilePos, fly2Transform.position.y + halfTilePos, fly2Transform.rotation, fly2Transform.scale.x, fly2Transform.scale.y);
 
-							enemy2 = ECS::getInstance().createEntity();
+							/*enemy2 = ECS::getInstance().createEntity();
 							ECS::getInstance().addComponent<Tag>(enemy2, Tag(std::string("Enemy-Fly-" + std::to_string(enemyTagCounter++))));
 							Transform fly3Transform = Transform(
 								glm::vec2(levelElement.transform.position.x - halfTilePos * 2, levelElement.transform.position.y - halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox fly3Box = CollidableBox(fly3Transform.position, fly3Transform.rotation, fly3Transform.scale);
-							//fly3Box.isTrigger = true;
+							fly3Box.isTrigger = true;
 							ECS::getInstance().addComponent<Transform>(enemy2, fly3Transform);
 							ECS::getInstance().addComponent<Renderable>(enemy2, Renderable(LevelGenerator::enemyFlyPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy2, CollidableBox(fly3Transform.position, fly3Transform.rotation, fly3Transform.scale));
@@ -182,7 +182,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy2,
 								ECS::getInstance().getComponent<Tag>(enemy2).tag,
-								fly2Transform.position.x - halfTilePos * 2, fly2Transform.position.y - halfTilePos * 2, fly2Transform.rotation, fly2Transform.scale.x, fly2Transform.scale.y);
+								fly2Transform.position.x - halfTilePos * 2, fly2Transform.position.y - halfTilePos * 2, fly2Transform.rotation, fly2Transform.scale.x, fly2Transform.scale.y);*/
 						}
 						break;
 					case ElementType::TShaped:
@@ -195,7 +195,7 @@ namespace Ivy
 								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 2), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox ground1box = CollidableBox(ground1Transform.position, ground1Transform.rotation, ground1Transform.scale);
-							//ground1box.isTrigger = false;
+							ground1box.isTrigger = true;
 							ECS::getInstance().addComponent<Transform>(enemy1, ground1Transform);
 							ECS::getInstance().addComponent<Renderable>(enemy1, Renderable(LevelGenerator::enemyGroundPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy1, ground1box);
@@ -207,13 +207,13 @@ namespace Ivy
 								ECS::getInstance().getComponent<Tag>(enemy1).tag,
 								ground1Transform.position.x, ground1Transform.position.y - halfTilePos * 2, ground1Transform.rotation, ground1Transform.scale.x, ground1Transform.scale.y);
 
-							enemy2 = ECS::getInstance().createEntity();
+							/*enemy2 = ECS::getInstance().createEntity();
 							ECS::getInstance().addComponent<Tag>(enemy2, Tag(std::string("Enemy-Fly-" + std::to_string(enemyTagCounter++))));
 							Transform fly4Transform = Transform(
 								glm::vec2(levelElement.transform.position.x - halfTilePos * 2, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox fly4box = CollidableBox(fly4Transform.position, fly4Transform.rotation, fly4Transform.scale);
-							//fly4box.isTrigger = true;
+							fly4box.isTrigger = true;
 							ECS::getInstance().addComponent<Transform>(enemy2, fly4Transform);
 							ECS::getInstance().addComponent<Renderable>(enemy2, Renderable(LevelGenerator::enemyFlyPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy2, fly4box);
@@ -231,7 +231,7 @@ namespace Ivy
 								glm::vec2(levelElement.transform.position.x + halfTilePos * 2, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox fly5box = CollidableBox(fly5Transform.position, fly5Transform.rotation, fly5Transform.scale);
-							//fly5box.isTrigger = true;
+							fly5box.isTrigger = true;
 							ECS::getInstance().addComponent<Transform>(enemy3, fly5Transform);
 							ECS::getInstance().addComponent<Renderable>(enemy3, Renderable(LevelGenerator::enemyFlyPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy3, fly5box);
@@ -241,7 +241,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy3,
 								ECS::getInstance().getComponent<Tag>(enemy3).tag,
-								fly5Transform.position.x + halfTilePos * 2, fly5Transform.position.y + halfTilePos, fly5Transform.rotation, fly5Transform.scale.x, fly5Transform.scale.y);
+								fly5Transform.position.x + halfTilePos * 2, fly5Transform.position.y + halfTilePos, fly5Transform.rotation, fly5Transform.scale.x, fly5Transform.scale.y);*/
 						}
 						break;
 					case ElementType::ClosedRoom:

@@ -8,8 +8,10 @@ class Patrol : IController
 	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
 
-	float moveSpeed = 3;
+	float moveSpeed = 4;
 	int direction = 0;
+	float waitTime = 0;
+	float constWaitTime = 0.5;
 
 	Patrol(ScriptableObject@ object)
 	{
@@ -33,12 +35,36 @@ class Patrol : IController
 
 		if(direction == 0) {
 			transform.position.x += moveSpeed * deltatime;
+			if (waitTime <= 0)
+				if (IsColliding(self.getOwner()))
+				{
+					waitTime = constWaitTime;
+					direction = 2;
+				}
 		} else if (direction == 1) {
 			transform.position.y += moveSpeed * deltatime;
+			if (waitTime <= 0)
+				if (IsColliding(self.getOwner()))
+				{
+					waitTime = constWaitTime;
+					direction = 3;
+				}
 		} else if (direction == 2) {
 			transform.position.x -= moveSpeed * deltatime;
+			if (waitTime <= 0)	
+				if (IsColliding(self.getOwner()))
+				{
+					waitTime = constWaitTime;
+					direction = 1;
+				}
 		} else if (direction == 3) {
 			transform.position.y -= moveSpeed * deltatime;
+			if (waitTime <= 0)
+				if (IsColliding(self.getOwner()))
+				{
+					waitTime = constWaitTime;
+					direction =  0;
+				}
 		}
 
 		if (not(player is null))
@@ -49,9 +75,5 @@ class Patrol : IController
 			}
 		}
 
-		if (IsColliding(self.getOwner()))
-		{
-			direction = (direction + 1) % 4;
-		}
 	}
 }

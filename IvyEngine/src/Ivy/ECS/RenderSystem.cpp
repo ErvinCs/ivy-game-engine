@@ -30,6 +30,7 @@ namespace Ivy {
 			Renderer::Begin(Application::GetCamera());
 		}
 #else
+		RenderCommand::clear();
 		Renderer::Begin(Application::GetCamera());
 #endif
 		for (auto& it = entities->begin(); it != entities->end(); it++)
