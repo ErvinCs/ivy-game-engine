@@ -16,36 +16,52 @@ namespace Ivy {
 		{
 			auto& object = *it;
 			
-			auto& scriptComponent = ECS::getInstance().getComponent<ScriptComponent>(object);
-			if (scriptComponent.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
+			ScriptComponent* scriptComponent = &ECS::getInstance().getComponent<ScriptComponent>(object);
+			if (scriptComponent->getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
 				continue;
-			scriptComponent.setEntityId(object);
+			scriptComponent->setEntityId(object);
 
-			ScriptManager::GetInstance().createScriptController((Paths::scriptsPath / scriptComponent.scriptName).string(), &scriptComponent.scriptableObject, object);
-			IVY_CORE_INFO("ScriptSystem: Creating ScriptController: scriptName={0}, path={1}", scriptComponent.scriptName, scriptComponent.scriptableObject.getName());
+			ScriptManager::GetInstance().createScriptController((Paths::scriptsPath / scriptComponent->scriptName).string(), scriptComponent->scriptableObject, object);
+			IVY_CORE_INFO("ScriptSystem: Creating ScriptController: scriptName={0}, path={1}", scriptComponent->scriptName, scriptComponent->scriptableObject->getName());
 		}
 	}
 
 	void ScriptSystem::update(float deltatime)
 	{
-		for (auto& it = entities->begin(); it != entities->end(); it++)
+		for (int i = 0; i < entities->size(); i++)
 		{
-			auto& object = *it;
-
-			auto& scriptComponent = ECS::getInstance().getComponent<ScriptComponent>(object);
-			if (scriptComponent.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
+			ScriptComponent* scriptComponent = &ECS::getInstance().getComponent<ScriptComponent>(*entities->at(i));
+			if (scriptComponent->getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
 				continue;
 
-			if (!scriptComponent.scriptableObject.isAlive())
+			if (!scriptComponent->scriptableObject->isAlive())
 			{
-				//scriptComponent.scriptableObject.destoryAndRelease(); (?)
-				ECS::getInstance().destroyEntity(object);
-				it--;
+				scriptComponent->scriptableObject->destoryAndRelease();
+				ECS::getInstance().destroyEntity(*entities->at(i));
+				i--;
 				continue;
 			}
 
-			scriptComponent.scriptableObject.onUpdate();
+			scriptComponent->scriptableObject->onUpdate();
 		}
+		/*for (auto& it = entities->begin(); it != entities->end(); it++)
+		{
+			auto& object = *it;
+
+			ScriptComponent* scriptComponent = &ECS::getInstance().getComponent<ScriptComponent>(object);
+			if (scriptComponent->getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
+				continue;
+
+			if (!scriptComponent->scriptableObject->isAlive())
+			{
+				scriptComponent->scriptableObject->destoryAndRelease();
+				ECS::getInstance().destroyEntity(object);
+				std::prev(it, 1);
+				continue;
+			}
+
+			scriptComponent->scriptableObject->onUpdate();
+		}*/
 	}
 
 }

@@ -29,6 +29,11 @@ namespace Ivy {
 
 		virtual void flipX() override;
 		virtual void flipY() override;
+
+		virtual bool operator==(const Texture& other) const override
+		{
+			return rendererId == ((OpenGLTexture&)other).rendererId;
+		}
 	};
 
 }

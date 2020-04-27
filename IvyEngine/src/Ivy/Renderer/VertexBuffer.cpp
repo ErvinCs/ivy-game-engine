@@ -23,4 +23,20 @@ namespace Ivy {
 		IVY_CORE_ERROR("Unknown RendererAPI!");
 		return nullptr;
 	}
+
+	std::shared_ptr<VertexBuffer> VertexBuffer::Create(uint32_t size)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RenderAPI::API::None:
+			IVY_CORE_ERROR("RenderAPI::None is not supported!");
+			return nullptr;
+		case RenderAPI::API::OpenGL:
+			return std::make_shared<OpenGLVertexBuffer>(size);
+		}
+
+		IVY_CORE_ERROR("Unknown RendererAPI!");
+		return nullptr;
+	}
+
 }

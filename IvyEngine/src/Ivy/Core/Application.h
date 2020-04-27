@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Windows.h>
+
 #include "Core.h"
 #include "SortingLayerStack.h"
 #include "../Windows/WindowsWindow.h"
@@ -27,9 +29,11 @@ namespace Ivy {
 		static OrthoCamera camera;
 		SortingLayerStack layerStack;
 		std::unique_ptr<Window> window;
+#ifdef _DEBUG
 		ImGuiLayer* imGuiLayer;
 		InspectorLayer* inspectorLayer;
 		GenerationLayer* generationLayer;
+#endif
 		ScriptManager* scriptManager;
 		static LevelGenerator levelGenerator;
 

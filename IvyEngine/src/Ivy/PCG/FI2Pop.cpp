@@ -5,7 +5,7 @@
 
 namespace Ivy 
 {
-	float FI2Pop::mutationRate = 0.2f;
+	float FI2Pop::mutationRate = 0.1f;
 	float FI2Pop::uniformRate = 0.5f;
 	int FI2Pop::singlePointCrossoverFrequency = 3;
 	int FI2Pop::eliteCount = 2;
@@ -23,9 +23,11 @@ namespace Ivy
 	{
 		fittestFeasibleIndividual = Individual();
 		fittestInfeasibleIndividual = Individual();
+		leastFitFeasibleIndividual = Individual();
 
 		fittestFeasibleFitness = 0.0f;
 		fittestInfeasibleFitness = 0.0f;
+		leastFitFeasibleFitness = 1.0f;
 
 		initialisedFeasible = false;
 		currGeneration = 1;
@@ -42,10 +44,13 @@ namespace Ivy
 		{
 			IVY_CORE_TRACE("FI2POP: Generation {0}", currGeneration);
 
-			while (infeasiblePop.getPopulationSize() > populationSize)
+			if (infeasiblePop.getPopulationSize() > populationSize)
 			{
-				IVY_CORE_TRACE("FI2POP: Removing extra individual at index {0}. Size of Infeasible: {1}", infeasiblePop.getLeastFitIndividualIndex(), infeasiblePop.getPopulationSize());
-				infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
+				while (infeasiblePop.getPopulationSize() > populationSize)
+				{
+					IVY_CORE_TRACE("FI2POP: Removing extra individual at index {0}. Size of Infeasible: {1}", infeasiblePop.getLeastFitIndividualIndex(), infeasiblePop.getPopulationSize());
+					infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
+				}
 			}
 
 			IVY_CORE_TRACE("FI2POP: Evolving Infeasible");
@@ -104,6 +109,7 @@ namespace Ivy
 					float fitness = ind.computeFitness();
 					if (fitness < 1.0f)
 					{
+						infeasiblePop.addIndividual(ind);
 						feasiblePop.removeIndividualAtIndex(i);
 						popSize--;
 						i--;
@@ -129,10 +135,26 @@ namespace Ivy
 						this->setFittestFeasibleIndividual(feasiblePop.getIndividualAt(i));
 						IVY_CORE_TRACE("FI2POP: Top Feasible Individual. Has Diversity = {0}", diversity);
 					}
+					if (diversity < leastFitFeasibleFitness)
+					{
+						leastFitFeasibleFitness = diversity;
+						this->setLeastFitFeasibleIndividual(feasiblePop.getIndividualAt(i));
+						IVY_CORE_TRACE("FI2POP: Worst Feasible Individual. Has Diversity = {0}", diversity);
+					}
 				}
 			}
 			currGeneration += 1;
 		}
+		// Has issues
+		/*IVY_CORE_TRACE("FI2POP: Removing duplicates");
+		if (initialisedFeasible)
+		{
+			feasiblePop.removeDuplicates();
+		}
+		else
+		{
+			infeasiblePop.removeDuplicates();
+		}*/
 		currGeneration = 1;
 	}
 

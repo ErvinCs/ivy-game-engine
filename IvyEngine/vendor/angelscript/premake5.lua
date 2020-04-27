@@ -21,18 +21,17 @@ project "AngelScript"
         "include"
     }
 
-    postbuildcommands {
-      "{DELETE} %{prj.location}/AngelScript.vcxproj",
-      "{DELETE} %{prj.location}/AngelScript.vcxproj.filters",
-      "{COPY} %{prj.location}/projects/msvc2017/AngelScript.vcxproj %{prj.location}",
-      "{COPY} %{prj.location}/projects/msvc2017/AngelScript.vcxproj.filters %{prj.location}",
-      "{ECHO} %{prj.location}"
-    }
-
     filter "system:windows"
         systemversion "latest"
 
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
 
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "on"
+     
     --[[
     If the project does not build properly add the following to AngelScript.vcxproj
     <ItemGroup>
@@ -61,15 +60,3 @@ project "AngelScript"
     <None Include="source\as_callfunc_arm_xcode.S" />
   </ItemGroup>
     --]]
-
-    filter "configurations:Debug"
-        runtime "Debug"
-        symbols "on"
-
-    filter "configurations:Release"
-        runtime "Release"
-        optimize "on"
-
-
-
-

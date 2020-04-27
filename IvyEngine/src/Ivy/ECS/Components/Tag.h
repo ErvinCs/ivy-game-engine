@@ -7,7 +7,7 @@
 namespace Ivy 
 {
 
-	class Tag : public Component
+	struct Tag : public Component
 	{
 	public:
 		std::string tag = "";

@@ -19,9 +19,11 @@ namespace Ivy
 		Population feasiblePop;
 		Population infeasiblePop;
 		Individual fittestFeasibleIndividual;
+		Individual leastFitFeasibleIndividual;
 		Individual fittestInfeasibleIndividual;
 		float fittestFeasibleFitness;
 		float fittestInfeasibleFitness;
+		float leastFitFeasibleFitness;
 		bool initialisedFeasible;
 		int currentFeasibleSize;
 		int currGeneration;
@@ -43,10 +45,12 @@ namespace Ivy
 
 		inline const Population& getFeasiblePopulation() { return feasiblePop; }
 		inline const Population& getInfeasiblePopulation() { return infeasiblePop; }
-		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasibleIndividual; }
 		inline void setFittestFeasibleIndividual(const Individual& other) { this->fittestFeasibleIndividual = other; }
 		inline void setFittestInfeasibleFeasibleIndividual(const Individual& other) { this->fittestInfeasibleIndividual = other; }
+		inline void setLeastFitFeasibleIndividual(const Individual& other) { this->leastFitFeasibleIndividual = other; }
+		inline const Individual& getFittestFeasibleIndividual() { return fittestFeasibleIndividual; }
 		inline const Individual& getFittestInfeasibleIndividual() { return fittestInfeasibleIndividual; }
+		inline const Individual& getLeastFitFeasibleIndividual() { return leastFitFeasibleIndividual; }
 		inline const bool getInitialisedFeasible() { return this->initialisedFeasible; }
 
 		Population evolvePopulation(Population& pop);

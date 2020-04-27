@@ -14,23 +14,6 @@ namespace Ivy {
 		else
 			filepath = (Paths::texturesPath / path).string();
 
-		/*int width, height, channels;
-		//stbi_set_flip_vertically_on_load(1);
-		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
-		IVY_CORE_ASSERT(data, "Failed to load image!");
-		this->width = width;
-		this->height = height;
-
-		glCreateTextures(GL_TEXTURE_2D, 1, &rendererId);
-		glTextureStorage2D(rendererId, 1, GL_RGB8, width, height);
-
-		glTextureParameteri(rendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(rendererId, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTextureSubImage2D(rendererId, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
-
-		stbi_image_free(data);*/
-		//rendererId = 0;
 		localBuffer = nullptr;
 		width = 0;
 		height = 0;
@@ -49,22 +32,19 @@ namespace Ivy {
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer));
-		//GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
-		// Free the copy of the data in the buffer 
-		// (TODO: should be stored)
 		if (localBuffer)
 			stbi_image_free(localBuffer);
 	}
 
 	void OpenGLTexture::flipX()
 	{
-
+		//TODO
 	}
 
 	void OpenGLTexture::flipY()
 	{
-
+		//TODO
 	}
 
 	OpenGLTexture::~OpenGLTexture()
@@ -76,9 +56,7 @@ namespace Ivy {
 	{
 		// Specify the texture slot
 		// OpenGL allows 32, but it depends on the platform
-		//GLCall(glBindTextureUnit(slot, rendererId));
 		GLCall(glActiveTexture(GL_TEXTURE0 + slot));
-
 		GLCall(glBindTexture(GL_TEXTURE_2D, rendererId));
 	}
 

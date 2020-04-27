@@ -17,6 +17,8 @@ namespace Ivy {
 		virtual void flipX() = 0;
 		virtual void flipY() = 0;
 
+		virtual bool operator==(const Texture& other) const = 0;
+
 		static std::shared_ptr<Texture> Create(const std::string& filepath, bool isBaseTexture = false);
 	};
 

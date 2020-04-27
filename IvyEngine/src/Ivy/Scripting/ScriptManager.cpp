@@ -18,8 +18,12 @@ namespace Ivy {
 		for (unsigned int n = 0; n < contextList.size(); n++)
 			contextList[n]->Release();
 
+		scriptEngine->GarbageCollect(asGC_FULL_CYCLE);
+
 		if (scriptEngine)
 			scriptEngine->ShutDownAndRelease();
+
+		scriptEngine = 0;
 	}
 
 	int ScriptManager::init()
@@ -116,7 +120,6 @@ namespace Ivy {
 		// Call the method using the shared context
 		if (controller->onUpdateMethod != 0)
 		{
-			//IVY_CORE_INFO("ScriptManager::callOnUpdate. scriptObject");
 			asIScriptContext *context = getScriptContextFromPool(controller->onUpdateMethod);
 			context->SetObject(scriptObject);
 			callScript(context);

@@ -34,7 +34,7 @@ namespace Ivy
 
 			auto& ATransform = ECS::getInstance().getComponent<Transform>(object);
 			if (ATransform.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Transform).name())->second)
-				continue;	
+				continue;
 
 			auto& A = ECS::getInstance().getComponent<CollidableBox>(object);
 			if (A.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second)
@@ -42,19 +42,19 @@ namespace Ivy
 
 			// Cache the old position of the transform in case it needs to be set back on collision
 			glm::vec2 oldPosition = (A.centerPosition);
-			A.centerPosition      = ATransform.position;
+			A.centerPosition = ATransform.position;
 
 			// For now I've decided to also update the rotation and scale of a Collidable when changing the transform
 			// If support for gizmos will be added in the feature, then I'll consider removing it
 			// For now there isn't really a use-case for a collidable with different properties than the transform
 			A.halfScale = ATransform.scale / 2.0f;
-			A.rotation  = ATransform.rotation;
+			A.rotation = ATransform.rotation;
 
 			for (auto& itOther = entities->begin(); itOther != entities->end(); itOther++)
 			{
 				if (*it == *itOther)
 					continue;
-				
+
 				auto& otherObject = *itOther;
 
 				auto& B = ECS::getInstance().getComponent<CollidableBox>(otherObject);
@@ -78,7 +78,7 @@ namespace Ivy
 					}
 					continue;
 				}
-						
+
 				// Rectangles A and B collide iff and only if the 4 cases bellow are all false
 				if (glm::abs(glm::dot(T, A.unitX)) > A.halfScale.x + glm::abs(glm::dot(B.halfScale.x * B.unitX, A.unitX)) +
 					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitX)) ||
@@ -104,7 +104,7 @@ namespace Ivy
 				if (A.isTrigger || B.isTrigger)
 				{
 					//IVY_CORE_TRACE("CollisionSystem: Trigger: Entity {0} with Entity {1}", object, otherObject);
-				} 
+				}
 				else
 				{
 					//IVY_CORE_TRACE("CollisionSystem: Collider: Entity {0} with Entity {1}", object, otherObject);

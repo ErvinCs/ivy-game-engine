@@ -6,6 +6,7 @@
 #include "Components/Collidable.h"
 #include "../Core/ResourcePaths.h"
 
+#include "../Core/Application.h"
 namespace Ivy
 {
 	bool CollidableGizmoSystem::showGizmos = false;
@@ -19,8 +20,11 @@ namespace Ivy
 
 	void CollidableGizmoSystem::update(float deltatime)
 	{
+		
 		if (showGizmos)
 		{
+			RenderCommand::clear();
+			Renderer::Begin(Application::GetCamera());
 			// If you choose to remove the render system from the ECS then
 			//     make sure rendering has begun before entering this method
 			for (auto& it = entities->begin(); it != entities->end(); it++)
@@ -32,7 +36,6 @@ namespace Ivy
 					continue;
 				Renderer::DrawRect(collidable.centerPosition, collidable.halfScale * 2.0f + 0.05f, collidable.rotation, gizmo);
 			}
-			Renderer::End();
 		}
 	}
 }

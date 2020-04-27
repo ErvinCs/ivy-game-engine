@@ -29,5 +29,7 @@ namespace Ivy {
 		void removeIndividualAtIndex(int index);
 
 		Population& Population::operator=(const Population& other);
+		// Has Issues
+		//void removeDuplicates();
 	};
 }

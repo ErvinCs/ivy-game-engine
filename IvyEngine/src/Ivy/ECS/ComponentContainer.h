@@ -25,8 +25,6 @@ namespace Ivy {
 		ComponentContainer()
 		{
 			this->size = 0;
-			// Log produces error
-			//IVY_CORE_INFO("ComponentContainer: Constructing ComponentContainer: type={0}", typeid(T).name());
 		}
 		
 		std::array<T, MAX_Entities>& getComponentArray()
@@ -50,7 +48,7 @@ namespace Ivy {
 
 		void removeComponent(Entity& entity)
 		{
-			IVY_CORE_INFO("ComponentContainer: Removing Component {0} from Entity {1}", typeid(T).name(), entity);
+			//IVY_CORE_INFO("ComponentContainer: Removing Component {0} from Entity {1}", typeid(T).name(), entity);
 			for (int i = 0; i < size; i++)
 			{
 				if (componentArray[i].getEntityId() == entity)
@@ -70,17 +68,14 @@ namespace Ivy {
 			{
 				if(componentArray[i].getEntityId() == entity)
 				{
-					//IVY_CORE_INFO("ComponentContainer: Accessing Component {0} of Entity {1}", typeid(T).name(), entity);
 					return componentArray[i];
 				}
 			}
-			//IVY_CORE_WARN("ComponentContainer: Entity {1} does not have a Component of type {0}. Returning default component.", typeid(T).name(), entity);
 			return T();
 		}
 
 		void onEntityDestroyed(Entity& entity) override
 		{
-			IVY_CORE_INFO("ComponentContainer: Trigerring onEntityDestroyed: entity={0}", entity);
 			removeComponent(entity);
 		}
 

@@ -33,7 +33,7 @@ namespace Ivy {
 	Individual Population::getFittestIndividual()
 	{
 		Individual fittest = individuals[0];
-		for (int i = 0; i < individuals.size(); i++)
+		for (int i = 1; i < individuals.size(); i++)
 		{
 			if (individuals[i].getFitness() > fittest.getFitness())
 				fittest = individuals[i];
@@ -44,7 +44,7 @@ namespace Ivy {
 	Individual Population::getLeastFitIndividual()
 	{
 		Individual leastFit = individuals[0];
-		for (int i = 0; i < individuals.size(); i++)
+		for (int i = 1; i < individuals.size(); i++)
 		{
 			if (individuals[i].getFitness() < leastFit.getFitness())
 				leastFit = individuals[i];
@@ -78,7 +78,7 @@ namespace Ivy {
 		{
 			individuals[i].sortDesignElements();
 		}
-		std::sort(individuals.begin(), individuals.end(), [](Individual ind1, Individual ind2) {
+		std::sort(individuals.begin(), individuals.end(), [](Individual& ind1, Individual& ind2) {
 			return ind1.getFitness() > ind2.getFitness();
 		});
 	}
@@ -104,4 +104,26 @@ namespace Ivy {
 		std::copy(other.getIndividualsConst().begin(), other.getIndividualsConst().end(), std::back_inserter(this->individuals));
 		return *this;
 	}
+
+	// Has Issues
+	/*void Population::removeDuplicates()
+	{
+		int indSize = individuals.size();
+		for (int i = 0; i < indSize -1; i++)
+		{
+			auto& it = individuals.begin();
+			std::next(it, i + 1);
+			while( it != individuals.end() )
+			{				
+				if (individuals[i] == *it)
+				{
+					individuals.erase(it);
+					indSize--;
+					it++;
+				}
+				
+			}
+		}
+	}*/
+
 }

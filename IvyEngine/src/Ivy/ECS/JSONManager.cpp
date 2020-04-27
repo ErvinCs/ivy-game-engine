@@ -277,6 +277,7 @@ namespace Ivy {
 
 			if (!current["free"].is_null())
 			{
+				IVY_CORE_INFO("JSONManager: Loading Free Entities");
 				std::vector<Entity> freeEntities{};
 				current["free"].get_to(freeEntities);
 				for (auto it = freeEntities.begin(); it != freeEntities.end(); it++)
@@ -284,7 +285,7 @@ namespace Ivy {
 					ECS::getInstance().addToFreeEntities(*it);
 				}
 			}
-			else
+			else if (!current["entity_id"].is_null())
 			{
 				uint16_t entityId;
 				current["entity_id"].get_to(entityId);

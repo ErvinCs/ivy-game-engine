@@ -15,7 +15,8 @@ namespace Ivy
 		const float halfTileSize = 0.49f;
 		const float halfTilePos = 0.5f;
 	public:
-		static bool alwaysLoadFittest;
+		static bool alwaysLoad;
+		static int alwaysLoadFittest;
 		static std::string horizontalBorderPath;
 		static std::string verticalBorderPath;
 		static std::string closedRoomPath;

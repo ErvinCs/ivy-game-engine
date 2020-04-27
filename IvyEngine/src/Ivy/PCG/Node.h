@@ -31,7 +31,13 @@ namespace Ivy
 		inline void setNodeId(int nodeId) { this->nodeId = nodeId; }
 		inline std::vector<Node>& getChildren() { return this->children; }
 		inline void addChild(Node node) { this->children.push_back(node); }
-		inline void removeChild(int nodeId) 
+		inline void removeChild(Node& node) 
+		{
+			auto& it = std::find(children.begin(), children.end(), node);
+			if (it != children.end())
+				this->children.erase(it);
+		}
+		/*inline void removeChild(int nodeId) 
 		{
 			for (auto& it = children.begin(); it != children.end(); it++)
 			{
@@ -39,6 +45,16 @@ namespace Ivy
 				if (node.getNodeId() == this->nodeId)
 					children.erase(it);
 			}
+		}*/
+
+		inline bool operator==(const Node& other)
+		{
+			return this->nodeId == other.nodeId;
+		}
+
+		inline bool operator!=(const Node& other)
+		{
+			return (!(*this == other));
 		}
 	};
 

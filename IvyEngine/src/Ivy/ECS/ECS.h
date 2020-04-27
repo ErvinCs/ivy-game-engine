@@ -15,6 +15,7 @@
 #include "Components/ScriptComponent.h"
 #include "Components/Tag.h"
 #include "Components/Collidable.h"
+#include "Components/TileLocation.h"
 
 #include "../Core/ResourcePaths.h"
 #include "../Core/Logger.h"
@@ -38,13 +39,7 @@ namespace Ivy {
 	public:
 
 		~ECS()
-		{
-			IVY_CORE_INFO("ECS: Clearing entities. Clearing components. Clearing systems.");
-			for (auto& it = entities.begin(); it != entities.end(); it++)
-			{
-				destroyEntity(*it);
-			}
-			
+		{	
 			componentTypes.clear();
 			componentContainers.clear();
 			systems.clear();
@@ -197,17 +192,20 @@ namespace Ivy {
 			std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>(entities);
 			std::shared_ptr<System> collisionGizmos = std::make_shared<CollidableGizmoSystem>(entities);
 			std::shared_ptr<System> cameraSystem    = std::make_shared<CameraSystem>(entities);
-			
-			renderSystem->init();
-			collisionSystem->init();
+#ifdef _DEBUG
 			collisionGizmos->init();
-			scriptSystem->init();
-			cameraSystem->init();
-
-			addSystem(renderSystem);
-			addSystem(collisionSystem);
 			addSystem(collisionGizmos);
+#endif
+			renderSystem->init();
+			addSystem(renderSystem);
+
+			collisionSystem->init();
+			addSystem(collisionSystem);
+
+			scriptSystem->init();
 			addSystem(scriptSystem);
+
+			cameraSystem->init();	
 			addSystem(cameraSystem);
 		}
 
@@ -231,12 +229,12 @@ namespace Ivy {
 		}
 
 		void registerComponentTypes() {
-			//IVY_CORE_INFO("ECS: Registering Ivy Component Types");
 			this->addComponentType<Transform>();		
 			this->addComponentType<Renderable>();		
 			this->addComponentType<ScriptComponent>();	
 			this->addComponentType<Tag>();	
 			this->addComponentType<CollidableBox>();
+			//this->addComponentType<TileLocation>();
 		}
 
 		ECS(const ECS&) = delete;

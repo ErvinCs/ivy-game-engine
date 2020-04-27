@@ -36,42 +36,38 @@ namespace Ivy {
 
 	}
 
+	ScriptableObject::ScriptableObject(const ScriptableObject& other)
+	{
+		this->name = other.name;
+		this->referenceCount = other.referenceCount;
+		this->scriptObject = other.scriptObject;
+		this->weakReferenceFlag = other.weakReferenceFlag;
+		this->alive = other.alive;
+	}
+
+	ScriptableObject& ScriptableObject::operator=(const ScriptableObject& other)
+	{
+		this->name = other.name;
+		this->referenceCount = other.referenceCount;
+		this->scriptObject = other.scriptObject;
+		this->weakReferenceFlag = other.weakReferenceFlag;
+		this->alive = other.alive;
+
+		return *this;
+	}
 	ScriptableObject::~ScriptableObject()
 	{
-		//IVY_CORE_INFO("ScriptableObject: Destroying ScriptableObject: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
 		// Notify objects that hold weak references to this object that it has been destroyed
-		if (weakReferenceFlag)
+		if (weakReferenceFlag != NULL)
 		{
 			weakReferenceFlag->Set(true);
 			weakReferenceFlag->Release();
 		}
 		// Release the script controller
-		if (scriptObject)
+		if (scriptObject != NULL)
 		{
 			scriptObject->Release();
 		}
-	}
-
-	void ScriptableObject::kill()
-	{
-		this->alive = false;		
-	}
-
-	int ScriptableObject::addReference()
-	{
-		//IVY_CORE_INFO("ScriptableObject: Adding reference: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
-		return ++referenceCount;
-	}
-
-	int ScriptableObject::release()
-	{
-		//IVY_CORE_INFO("ScriptableObject: Releasing: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
-		if (--referenceCount <= 0)
-		{
-			delete this;
-			return 0;
-		}
-		return referenceCount;
 	}
 
 	asILockableSharedBool* ScriptableObject::getWeakRefereneFlag()
@@ -82,6 +78,21 @@ namespace Ivy {
 		return weakReferenceFlag;
 	}
 
+	int ScriptableObject::addReference()
+	{
+		return ++referenceCount;
+	}
+
+	int ScriptableObject::release()
+	{
+		if (--referenceCount <= 0)
+		{
+			delete this;
+			return 0;
+		}
+		return referenceCount;
+	}
+
 	void ScriptableObject::destoryAndRelease()
 	{
 		IVY_CORE_INFO("ScriptableObject: Destroy and Release: name={0}, ownerEntity={2}, referenceCount={1}", name, referenceCount, ownerEntity);
@@ -90,10 +101,22 @@ namespace Ivy {
 		{
 			scriptObject->Release();
 			scriptObject = 0;
+			weakReferenceFlag = 0;
+			name = "";
+			ownerEntity = 0;
+			alive = false;
+			referenceCount = 0;
+
 		}
 		// Then release this object
-		//release(); //(?)
+		release();
 	}
+
+	void ScriptableObject::kill()
+	{
+		this->alive = false;		
+	}
+
 
 	void ScriptableObject::onUpdate()
 	{

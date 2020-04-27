@@ -62,6 +62,7 @@ namespace Ivy {
 		}
 
 		// Entities
+		int auxEntityTracker = 1;
 		for (Entity& entity : getECS().getEntities()) 
 		{
 			ImGui::PushID("Ivy: Entity#" + entity);
@@ -198,23 +199,25 @@ namespace Ivy {
 						ImGui::InputTextWithHint("Script Path", currentPath, buffer);
 						if (ImGui::Button("Import Script"))
 						{
-							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);				
-							getECS().removeComponent<ScriptComponent>(entity);
-							//script->scriptableObject.destoryAndRelease(); (?)
+							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);	
+							//script->scriptableObject->destoryAndRelease();
+							getECS().removeComponent<ScriptComponent>(entity);	
 
 							ScriptComponent newScript = ScriptComponent(*buffer);
 							newScript.setComponentId(ScriptComponentID);
 							getECS().addComponent<ScriptComponent>(entity, newScript);
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / *buffer).string(),
-								&getECS().getComponent<ScriptComponent>(entity).scriptableObject,
+								getECS().getComponent<ScriptComponent>(entity).scriptableObject,
 								entity);
 						}
 						if (ImGui::Button("Remove Script"))
 						{
 							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
+							//script->scriptableObject->destoryAndRelease();
 							getECS().removeComponent<ScriptComponent>(entity);
-							//script->scriptableObject.destoryAndRelease(); (?)
+
+							
 							IVY_INFO("Destroyed Script on Entity: {0}", entity);
 						}
 					}
@@ -229,12 +232,12 @@ namespace Ivy {
 								getECS().addComponent<ScriptComponent>(entity, newScript);
 								ScriptManager::GetInstance().createScriptController(
 									(Paths::scriptsPath / scriptPathTemp).string(),
-									&getECS().getComponent<ScriptComponent>(entity).scriptableObject,
+									getECS().getComponent<ScriptComponent>(entity).scriptableObject,
 									entity);
 								scriptPathTemp = "";
 								IVY_INFO("Added: Script Name={0}, Path={1}", 
 									newScript.scriptName,
-									newScript.scriptableObject.getName());
+									newScript.scriptableObject->getName());
 							}
 						}
 					}					
@@ -299,6 +302,7 @@ namespace Ivy {
 				}
 			}
 			ImGui::PopID();
+			auxEntityTracker++;
 		}
 		if (ImGui::Button("New Entity"))
 		{

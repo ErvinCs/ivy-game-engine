@@ -2,9 +2,9 @@
 #include "OpenGLShader.h"
 #include "OpenGLRenderAPI.h"
 
-
 #include "GLFW/glfw3.h"
 #include <glm/gtc/type_ptr.hpp>
+#include "../../Core/Logger.h"
 
 namespace Ivy {
 
@@ -99,8 +99,8 @@ namespace Ivy {
 
 	unsigned int OpenGLShader::compileShader(unsigned int type, const std::string& source)
 	{
-		GLCall(unsigned int id = glCreateShader(type));
-		const char* src = source.c_str();
+		GLCall(GLuint id = glCreateShader(type));
+		const GLchar* src = source.c_str();
 		GLCall(glShaderSource(id, 1, &src, nullptr));
 		GLCall(glCompileShader(id));
 
@@ -133,7 +133,8 @@ namespace Ivy {
 	unsigned int OpenGLShader::createShader(const std::string& vertexShader, const std::string& fragmentShader)
 	{
 		// OpenGL provides it's own wrappers for data types (but it still understands raw C data types)
-		GLCall(unsigned int program = glCreateProgram());
+		createProgram:
+		GLCall(GLuint program = glCreateProgram());
 
 		// Create 2 shader objects
 		unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
@@ -143,9 +144,29 @@ namespace Ivy {
 		GLCall(glAttachShader(program, vs));
 		GLCall(glAttachShader(program, fs));
 		GLCall(glLinkProgram(program));
+		GLint isLinked = 0;
+		glGetProgramiv(program, GL_LINK_STATUS, (int*)&isLinked);
+		if (isLinked == GL_FALSE)
+		{
+			GLint maxLength = 0;
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+
+			std::vector<GLchar> infoLog(maxLength);
+			glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
+
+			glDeleteProgram(program);
+
+			glDeleteShader(vs);
+			glDeleteShader(fs);
+
+			IVY_CORE_ERROR("{0}", infoLog.data());
+			goto createProgram;
+		}
 		GLCall(glValidateProgram(program));
 
 		// Shaders already linked into a program, so we can free memory
+		GLCall(glDetachShader(program, vs));
+		GLCall(glDetachShader(program, fs));
 		GLCall(glDeleteShader(vs));
 		GLCall(glDeleteShader(fs));
 
