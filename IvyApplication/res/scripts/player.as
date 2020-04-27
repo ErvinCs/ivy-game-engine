@@ -14,22 +14,19 @@ class CPlayer : IController
 	ScriptableObject@ self;
 	Transform@ transform;
 
-	// 1-right, 2-left, 3-up, 4-down
 	int isFacing = 1;
 	int rageCount = 1;
-	float playerMoveSpeed = 7;
-
+	float playerMoveSpeed = 6;
+	int score = 0;
 
 	CPlayer(ScriptableObject@ object)
 	{
 		@self = object;
-		
 	}
 
 	void onUpdate()
 	{
 		@transform = FindTransform(self.getOwner());
-		
 		
 		if (IsKeyDown(RIGHT))
 		{
@@ -48,20 +45,18 @@ class CPlayer : IController
 			transform.position.y -= playerMoveSpeed * deltatime;
 		}
 
-		//if (Colliding with star)
-		//{
-		//	send message
-		//  collect = collect + 1;
-		//}
 	}
 
 	void onMessage(ref @message, const ScriptableObject @sender)
 	{
 		CMessage@ msg = cast<CMessage>(message);
 		
-		if( msg !is null && msg.txt == 'ATK' && rageCount > 0)
+		if( msg !is null)
 		{
-			self.kill();
-		}
+			if(msg.txt == 'ATK')
+				self.kill();
+			if(msg.txt == 'COLLECT')
+				score = score + 1;
+		} 
 	}
 }

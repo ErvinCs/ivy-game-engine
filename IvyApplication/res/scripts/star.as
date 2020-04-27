@@ -3,7 +3,9 @@
 class Star : IController
 {
 	ScriptableObject@ self;
-	Transform@ transform;
+	Collidable@ collidable;
+	Collidable@ playerCollidable;
+	weakref<ScriptableObject> playerRef;
 
 	Star(ScriptableObject@ object)
 	{
@@ -12,15 +14,21 @@ class Star : IController
 
 	void onUpdate()
 	{
-		@transform = FindTransform(self.getOwner());
-	}
-
-	void onMessage(ref @message, const ScriptableObject @sender)
-	{
-		CMessage@ msg = cast<CMessage>(message);
-		
-		if(msg !is null && msg.txt == 'COLLECT')
+		@collidable = FindCollidable(self.getOwner());
+		ScriptableObject @player = playerRef;
+		if(player is null)
 		{
+			@player = FindObjectByTag('Player');
+			@playerRef = player;
+		}
+		if (not(player is null))
+		{
+			@playerCollidable = FindCollidable(player.getOwner());
+		}
+
+		if (AreColliding(collidable, playerCollidable))
+		{
+			self.sendMessage(CMessage('COLLECT'), player);
 			self.kill();
 		}
 	}

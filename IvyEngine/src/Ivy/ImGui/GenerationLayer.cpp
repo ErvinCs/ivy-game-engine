@@ -73,7 +73,6 @@ namespace Ivy
 		{
 			Application::getInstance().globalTime = 0.0f;
 			Application::getInstance().GetLevelGenerator().run();
-			CollisionSystem::ConstructArray();
 			Application::getInstance().lastFrameTime = (float)glfwGetTime();
 		}
 		ImGui::PopID();

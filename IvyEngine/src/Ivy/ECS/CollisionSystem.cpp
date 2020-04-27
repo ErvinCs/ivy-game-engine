@@ -6,138 +6,31 @@
 #include "ECS.h"
 #include "Component.h"
 #include "Components/Collidable.h"
-#include "Components/TileLocation.h"
 
+#include <glm/glm.hpp>
 #include <glm/gtx/projection.hpp>
 
 namespace Ivy
 {
-	int CollisionSystem::mapSizeX = 6;
-	int CollisionSystem::mapSizeY = 8;
-	int CollisionSystem::tileSize = 4;
-	int CollisionSystem::tileInitialCapacity = 10;
-	std::vector<std::vector<std::vector<Entity>>> CollisionSystem::tileArray(mapSizeX);
-
-	void CollisionSystem::ConstructArray()
-	{
-		bool positionSet;
-		for (auto& it = ECS::getInstance().getEntities().begin(); it != ECS::getInstance().getEntities().end(); it++)
-		{
-			Entity entity = *it;
-			auto* transform = &ECS::getInstance().getComponent<Transform>(entity);
-			positionSet = false;
-			for (size_t i = 0; i < mapSizeX && !positionSet; i++)
-			{
-				if (transform->position.x < (-12 + (tileSize * i)))
-				{
-					for (size_t j = 0; j < mapSizeY && !positionSet; j++)
-					{
-						if (transform->position.y < (-16 + (tileSize * j)))
-						{
-							tileArray[i][j].push_back(entity);
-							ECS::getInstance().addComponent<TileLocation>(entity, TileLocation(i, j, transform->position, entity));
-							positionSet = true;
-						}
-					}
-				} 
-			}
-		}
-	}
-
 	void CollisionSystem::init()
 	{
-		for (size_t i = 0; i < mapSizeX; i++) {
-			tileArray[i].resize(mapSizeY);
-			for (size_t j = 0; j < mapSizeY; j++)
-			{
-				tileArray[i][j].resize(tileInitialCapacity);
-			}
-		}
+
 	}
 
-	void CollisionSystem::parseTile(int i, int j, Entity it, CollidableBox* A, Transform* ATransform, glm::vec2* oldPosition)
+	void CollisionSystem::update(float deltatime)
 	{
-		std::vector<Entity>* tileVector = &tileArray[i][j];
-		for (auto& itOther = tileVector->begin(); itOther != tileVector->end(); itOther++)
-		{
-			if (it == *itOther)
-				continue;
-
-			Entity& otherObject = *itOther;
-
-			auto& B = ECS::getInstance().getComponent<CollidableBox>(otherObject);
-			if (B.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second)
-				continue;
-
-			// Distance between the object centers
-			glm::vec2 T = A->centerPosition - B.centerPosition;
-
-			// Check if the objects are close to eachother and ignore other computations otherwise
-			maxDistA = A->halfScale.x > A->halfScale.y ? A->halfScale.x + 0.5f : A->halfScale.y + 0.5f;
-			maxDistB = B.halfScale.x > B.halfScale.y ? B.halfScale.x + 0.5f : B.halfScale.y + 0.5f;
-
-			if (glm::length(T) > maxDistA + maxDistB)
-			{
-				const bool areColliding = A->isCollidingWith.find(otherObject) != A->isCollidingWith.end();
-				if (areColliding)
-				{
-					A->isCollidingWith.erase(otherObject);
-					B.isCollidingWith.erase(it);
-				}
-				continue;
-			}
-
-			// Rectangles A and B collide iff and only if the 4 cases bellow are all false
-			if (glm::abs(glm::dot(T, A->unitX)) > A->halfScale.x + glm::abs(glm::dot(B.halfScale.x * B.unitX, A->unitX)) +
-				glm::abs(glm::dot(B.halfScale.y * B.unitY, A->unitX)) ||
-				glm::abs(glm::dot(T, A->unitY)) > A->halfScale.y + glm::abs(glm::dot(B.halfScale.x * B.unitX, A->unitY)) +
-				glm::abs(glm::dot(B.halfScale.y * B.unitY, A->unitY)) ||
-				glm::abs(glm::dot(T, B.unitX)) > B.halfScale.x + glm::abs(glm::dot(A->halfScale.x * A->unitX, B.unitX)) +
-				glm::abs(glm::dot(A->halfScale.y * A->unitY, B.unitX)) ||
-				glm::abs(glm::dot(T, B.unitY)) > B.halfScale.y + glm::abs(glm::dot(A->halfScale.x * A->unitX, B.unitY)) +
-				glm::abs(glm::dot(A->halfScale.y * A->unitY, B.unitY)))
-			{
-				const bool areColliding = A->isCollidingWith.find(otherObject) != A->isCollidingWith.end();
-				if (areColliding)
-				{
-					A->isCollidingWith.erase(otherObject);
-					B.isCollidingWith.erase(it);
-				}
-				continue;
-			}
-
-			A->isCollidingWith.insert(otherObject);
-			B.isCollidingWith.insert(it);
-
-			if (A->isTrigger || B.isTrigger)
-			{
-				//IVY_CORE_TRACE("CollisionSystem: Trigger: Entity {0} with Entity {1}", object, otherObject);
-			}
-			else
-			{
-				IVY_CORE_TRACE("CollisionSystem: Collider: Entity {0} with Entity {1}", it, otherObject);
-				A->centerPosition = *oldPosition;
-				ATransform->position = *oldPosition;
-			}
-		}
-	}
-
-	/*
+		/*
 		J. Huynh - Separating Axis Theorem for Oriented Bounding Boxes
 		PA = coordinate position of the center of rectangle A		   - centerPosition
 		Ax = unit vector representing the local x-axis of A		       - unitX
 		Ay = unit vector representing the local y-axis of A            - unitY
 		WA = half width of A (corresponds with the local x-axis of A)  - halfScale.x
 		HA = half height of A (corresponds with the local y-axis of A) - halfScale.y
-	*/
-	void CollisionSystem::update(float deltatime)
-	{
+		*/
 
 		for (auto& it = entities->begin(); it != entities->end(); it++)
 		{
-			Entity& object = *it;
-			auto& tile = ECS::getInstance().getComponent<TileLocation>(object);
-			int i = tile.tileIndexX, j = tile.tileIndexY;
+			auto& object = *it;
 
 			auto& ATransform = ECS::getInstance().getComponent<Transform>(object);
 			if (ATransform.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(Transform).name())->second)
@@ -147,36 +40,6 @@ namespace Ivy
 			if (A.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second)
 				continue;
 
-			if (ATransform.position != tile.previousPosition)
-			{
-				for (size_t search = 0; search < tileArray[i][j].size(); search++)
-				{
-					if (search == tile.owner)
-					{
-						tileArray[i][j].erase(tileArray[i][j].begin() + search);
-						break;
-					}
-				}
-
-				tile.previousPosition = ATransform.position;
-				bool positionSet = false;
-				for (int i = 0; i < mapSizeX && !positionSet; i++)
-				{
-					if (ATransform.position.x < (-12 + (tileSize * i)))
-					{
-						for (int j = 0; j < mapSizeY && !positionSet; j++)
-						{
-							if (ATransform.position.y < (-16 + (tileSize * j)))
-							{
-								tileArray[i][j].push_back(object);
-								ECS::getInstance().addComponent<TileLocation>(object, TileLocation(i, j, ATransform.position, object));
-								positionSet = true;
-							}
-						}
-					}
-				}
-			}
-
 			// Cache the old position of the transform in case it needs to be set back on collision
 			glm::vec2 oldPosition = (A.centerPosition);
 			A.centerPosition = ATransform.position;
@@ -185,33 +48,71 @@ namespace Ivy
 			// If support for gizmos will be added in the feature, then I'll consider removing it
 			// For now there isn't really a use-case for a collidable with different properties than the transform
 			A.halfScale = ATransform.scale / 2.0f;
-			A.rotation = ATransform.rotation;	
+			A.rotation = ATransform.rotation;
 
-			if (i != 0)
+			for (auto& itOther = entities->begin(); itOther != entities->end(); itOther++)
 			{
-				parseTile(i - 1, j, object, &A, &ATransform, &oldPosition);
-				if (j != 0)
-					parseTile(i - 1, j - 1, object, &A, &ATransform, &oldPosition);
-				if (j != mapSizeY - 1)
-					parseTile(i - 1, j + 1, object, &A, &ATransform, &oldPosition);
+				if (*it == *itOther)
+					continue;
+
+				auto& otherObject = *itOther;
+
+				auto& B = ECS::getInstance().getComponent<CollidableBox>(otherObject);
+				if (B.getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second)
+					continue;
+
+				// Distance between the object centers
+				glm::vec2 T = A.centerPosition - B.centerPosition;
+
+				// Check if the objects are close to eachother and ignore other computations otherwise
+				maxDistA = A.halfScale.x > A.halfScale.y ? A.halfScale.x + 0.5f : A.halfScale.y + 0.5f;
+				maxDistB = B.halfScale.x > B.halfScale.y ? B.halfScale.x + 0.5f : B.halfScale.y + 0.5f;
+
+				if (glm::length(T) > maxDistA + maxDistB)
+				{
+					const bool areColliding = A.isCollidingWith.find(otherObject) != A.isCollidingWith.end();
+					if (areColliding)
+					{
+						A.isCollidingWith.erase(otherObject);
+						B.isCollidingWith.erase(object);
+					}
+					continue;
+				}
+
+				// Rectangles A and B collide iff and only if the 4 cases bellow are all false
+				if (glm::abs(glm::dot(T, A.unitX)) > A.halfScale.x + glm::abs(glm::dot(B.halfScale.x * B.unitX, A.unitX)) +
+					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitX)) ||
+					glm::abs(glm::dot(T, A.unitY)) > A.halfScale.y + glm::abs(glm::dot(B.halfScale.x * B.unitX, A.unitY)) +
+					glm::abs(glm::dot(B.halfScale.y * B.unitY, A.unitY)) ||
+					glm::abs(glm::dot(T, B.unitX)) > B.halfScale.x + glm::abs(glm::dot(A.halfScale.x * A.unitX, B.unitX)) +
+					glm::abs(glm::dot(A.halfScale.y * A.unitY, B.unitX)) ||
+					glm::abs(glm::dot(T, B.unitY)) > B.halfScale.y + glm::abs(glm::dot(A.halfScale.x * A.unitX, B.unitY)) +
+					glm::abs(glm::dot(A.halfScale.y * A.unitY, B.unitY)))
+				{
+					const bool areColliding = A.isCollidingWith.find(otherObject) != A.isCollidingWith.end();
+					if (areColliding)
+					{
+						A.isCollidingWith.erase(otherObject);
+						B.isCollidingWith.erase(object);
+					}
+					continue;
+				}
+
+				A.isCollidingWith.insert(otherObject);
+				B.isCollidingWith.insert(object);
+
+				if (A.isTrigger || B.isTrigger)
+				{
+					//IVY_CORE_TRACE("CollisionSystem: Trigger: Entity {0} with Entity {1}", object, otherObject);
+				}
+				else
+				{
+					//IVY_CORE_TRACE("CollisionSystem: Collider: Entity {0} with Entity {1}", object, otherObject);
+					A.centerPosition = oldPosition;
+					ATransform.position = oldPosition;
+				}
 			}
-			if (i != mapSizeX - 1)
-			{
-				parseTile(i + 1, j, object, &A, &ATransform, &oldPosition);
-				if (j != 0)
-					parseTile(i + 1, j - 1, object, &A, &ATransform, &oldPosition);
-				if (j != mapSizeY - 1)
-					parseTile(i + 1, j + 1, object, &A, &ATransform, &oldPosition);
-			}
-			if (j != 0)
-			{
-				parseTile(i, j - 1, object, &A, &ATransform, &oldPosition);
-			}
-			if (j != mapSizeY - 1)
-			{
-				parseTile(i, j + 1, object, &A, &ATransform, &oldPosition);
-			}
-			
 		}
+
 	}
 }

@@ -234,7 +234,7 @@ namespace Ivy {
 			this->addComponentType<ScriptComponent>();	
 			this->addComponentType<Tag>();	
 			this->addComponentType<CollidableBox>();
-			this->addComponentType<TileLocation>();
+			//this->addComponentType<TileLocation>();
 		}
 
 		ECS(const ECS&) = delete;

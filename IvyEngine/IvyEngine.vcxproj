@@ -705,6 +705,9 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
       <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Ivy\ECS\SpatialPartitioning.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
