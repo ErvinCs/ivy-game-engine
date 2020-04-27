@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "../Component.h"
 #include "../../Scripting/ScriptableObject.h"
 

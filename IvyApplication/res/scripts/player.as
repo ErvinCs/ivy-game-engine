@@ -47,6 +47,12 @@ class CPlayer : IController
 		{
 			transform.position.y -= playerMoveSpeed * deltatime;
 		}
+
+		//if (Colliding with star)
+		//{
+		//	send message
+		//  collect = collect + 1;
+		//}
 	}
 
 	void onMessage(ref @message, const ScriptableObject @sender)

@@ -15,6 +15,7 @@
 #include "Components/ScriptComponent.h"
 #include "Components/Tag.h"
 #include "Components/Collidable.h"
+#include "Components/TileLocation.h"
 
 #include "../Core/ResourcePaths.h"
 #include "../Core/Logger.h"
@@ -38,12 +39,7 @@ namespace Ivy {
 	public:
 
 		~ECS()
-		{
-			//for (auto& it = entities.begin(); it != entities.end(); it++)
-			//{
-			//	destroyEntity(*it);
-			//}
-			
+		{	
 			componentTypes.clear();
 			componentContainers.clear();
 			systems.clear();
@@ -238,6 +234,7 @@ namespace Ivy {
 			this->addComponentType<ScriptComponent>();	
 			this->addComponentType<Tag>();	
 			this->addComponentType<CollidableBox>();
+			this->addComponentType<TileLocation>();
 		}
 
 		ECS(const ECS&) = delete;

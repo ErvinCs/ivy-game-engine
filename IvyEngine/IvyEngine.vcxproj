@@ -224,6 +224,7 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsWindow.h" />
     <ClInclude Include="src\ivypch.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\TileLocation.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -687,6 +688,7 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClCompile Include="src\ivypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Components\TileLocation.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>

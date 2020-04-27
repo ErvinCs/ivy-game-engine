@@ -1,6 +1,6 @@
 #include "ivypch.h"
-
 #include "Tag.h"
+
 #include "../ECS.h"
 
 namespace Ivy

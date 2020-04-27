@@ -7,7 +7,7 @@
 #include "../PCG/LevelGenerator.h"
 #include "../Core/Application.h"
 #include "../ECS/ECS.h"
-
+#include "../ECS/CollisionSystem.h"
 namespace Ivy
 {
 	void GenerationLayer::imGuiRender()
@@ -73,6 +73,7 @@ namespace Ivy
 		{
 			Application::getInstance().globalTime = 0.0f;
 			Application::getInstance().GetLevelGenerator().run();
+			CollisionSystem::ConstructArray();
 			Application::getInstance().lastFrameTime = (float)glfwGetTime();
 		}
 		ImGui::PopID();
