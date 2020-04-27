@@ -107,6 +107,7 @@ namespace Ivy
 					Individual& ind = feasiblePop.getIndividualAt(i);
 					bool removed = false;
 					float fitness = ind.computeFitness();
+					diversity = 0;
 					if (fitness < 1.0f)
 					{
 						infeasiblePop.addIndividual(ind);

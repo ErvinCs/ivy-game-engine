@@ -43,24 +43,6 @@ namespace Ivy {
 
 			scriptComponent->scriptableObject->onUpdate();
 		}
-		/*for (auto& it = entities->begin(); it != entities->end(); it++)
-		{
-			auto& object = *it;
-
-			ScriptComponent* scriptComponent = &ECS::getInstance().getComponent<ScriptComponent>(object);
-			if (scriptComponent->getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
-				continue;
-
-			if (!scriptComponent->scriptableObject->isAlive())
-			{
-				scriptComponent->scriptableObject->destoryAndRelease();
-				ECS::getInstance().destroyEntity(object);
-				std::prev(it, 1);
-				continue;
-			}
-
-			scriptComponent->scriptableObject->onUpdate();
-		}*/
 	}
 
 }

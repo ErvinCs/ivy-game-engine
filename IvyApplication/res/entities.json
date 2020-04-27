@@ -26,8 +26,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": -10.113037109375,
-        "centerPositionY": 3.886962890625,
+        "centerPositionX": -3.880518913269043,
+        "centerPositionY": 10.11948013305664,
         "halfScaleX": 0.49000000953674316,
         "halfScaleY": 0.49000000953674316,
         "is_trigger": true,
@@ -37,8 +37,8 @@
       "script": "patrol-diag.as",
       "tag": "Enemy-Fly-0",
       "transform": {
-        "positionX": -10.3779296875,
-        "positionY": 3.6220703125,
+        "positionX": -3.679499626159668,
+        "positionY": 10.320499420166016,
         "rotation": 0.0,
         "scaleX": 0.9800000190734863,
         "scaleY": 0.9800000190734863
@@ -50,8 +50,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": -8.936767578125,
-        "centerPositionY": 10.063232421875,
+        "centerPositionX": 383.6628112792969,
+        "centerPositionY": 402.6628112792969,
         "halfScaleX": 0.49000000953674316,
         "halfScaleY": 0.49000000953674316,
         "is_trigger": true,
@@ -61,8 +61,8 @@
       "script": "patrol-diag.as",
       "tag": "Enemy-Ground-1",
       "transform": {
-        "positionX": -9.20166015625,
-        "positionY": 9.79833984375,
+        "positionX": 383.86383056640625,
+        "positionY": 402.86383056640625,
         "rotation": 0.0,
         "scaleX": 0.9800000190734863,
         "scaleY": 0.9800000190734863
@@ -74,8 +74,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": -2.047607421875,
-        "centerPositionY": -15.047607421875,
+        "centerPositionX": 4.45205020904541,
+        "centerPositionY": -8.54794979095459,
         "halfScaleX": 0.49000000953674316,
         "halfScaleY": 0.49000000953674316,
         "is_trigger": true,
@@ -85,8 +85,8 @@
       "script": "patrol-diag.as",
       "tag": "Enemy-Ground-2",
       "transform": {
-        "positionX": -2.3125,
-        "positionY": -15.3125,
+        "positionX": 4.653069496154785,
+        "positionY": -8.346930503845215,
         "rotation": 0.0,
         "scaleX": 0.9800000190734863,
         "scaleY": 0.9800000190734863
@@ -98,8 +98,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": -2.122314453125,
-        "centerPositionY": 0.877685546875,
+        "centerPositionX": -1.0848493576049805,
+        "centerPositionY": 1.9151506423950195,
         "halfScaleX": 0.49000000953674316,
         "halfScaleY": 0.49000000953674316,
         "is_trigger": true,
@@ -109,8 +109,8 @@
       "script": "patrol-diag.as",
       "tag": "Enemy-Ground-3",
       "transform": {
-        "positionX": -2.38720703125,
-        "positionY": 0.61279296875,
+        "positionX": -1.2858686447143555,
+        "positionY": 1.7141313552856445,
         "rotation": 0.0,
         "scaleX": 0.9800000190734863,
         "scaleY": 0.9800000190734863
@@ -122,7 +122,7 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": 5.9326171875,
+        "centerPositionX": -380.2431945800781,
         "centerPositionY": 11.565185546875,
         "halfScaleX": 0.49000000953674316,
         "halfScaleY": 0.49000000953674316,
@@ -133,7 +133,7 @@
       "script": "patrol-plus.as",
       "tag": "Enemy-Fly-4",
       "transform": {
-        "positionX": 6.197509765625,
+        "positionX": -380.4442138671875,
         "positionY": 11.565185546875,
         "rotation": 0.0,
         "scaleX": 0.9800000190734863,
@@ -146,8 +146,8 @@
   {
     "components": {
       "collidable_box": {
-        "centerPositionX": 5.616455078125,
-        "centerPositionY": 11.616455078125,
+        "centerPositionX": 395.0079345703125,
+        "centerPositionY": 401.0080261230469,
         "halfScaleX": 0.49000000953674316,
         "halfScaleY": 0.49000000953674316,
         "is_trigger": true,
@@ -157,8 +157,8 @@
       "script": "patrol-diag.as",
       "tag": "Enemy-Fly-5",
       "transform": {
-        "positionX": 5.88134765625,
-        "positionY": 11.88134765625,
+        "positionX": 395.2089538574219,
+        "positionY": 401.20904541015625,
         "rotation": 0.0,
         "scaleX": 0.9800000190734863,
         "scaleY": 0.9800000190734863
