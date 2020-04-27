@@ -117,14 +117,13 @@ namespace Ivy
 					}
 					if (popSize > 1)
 					{
-						if (i == 0)
+						for (int j = 0; j < popSize; j++)
 						{
-							diversity = ind.computeDiversity(feasiblePop.getIndividualAt(i + 1));	
+							if (i == j)
+								continue;
+							diversity += ind.computeDiversity(feasiblePop.getIndividualAt(j));
 						}
-						else
-						{
-							diversity = (ind.computeDiversity(feasiblePop.getIndividualAt(0)));
-						}
+						diversity /= (popSize - 1);
 					}
 					
 					ind.setDiversity(diversity);
@@ -145,16 +144,6 @@ namespace Ivy
 			}
 			currGeneration += 1;
 		}
-		// Has issues
-		/*IVY_CORE_TRACE("FI2POP: Removing duplicates");
-		if (initialisedFeasible)
-		{
-			feasiblePop.removeDuplicates();
-		}
-		else
-		{
-			infeasiblePop.removeDuplicates();
-		}*/
 		currGeneration = 1;
 	}
 

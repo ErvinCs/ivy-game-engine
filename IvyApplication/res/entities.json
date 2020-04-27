@@ -1,5 +1,1127 @@
 [
   {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -10.8604736328125,
+        "centerPositionY": -6.7403564453125,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "ninja.png",
+      "script": "player.as",
+      "tag": "Player",
+      "transform": {
+        "positionX": -10.8604736328125,
+        "positionY": -6.7403564453125,
+        "rotation": 0.0,
+        "scaleX": 0.9800000190734863,
+        "scaleY": 0.9800000190734863
+      },
+      "user_component": null
+    },
+    "entity_id": 5
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -10.113037109375,
+        "centerPositionY": 3.886962890625,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": true,
+        "rotation": 0.0
+      },
+      "renderable": "enemy-fly.png",
+      "script": "patrol-diag.as",
+      "tag": "Enemy-Fly-0",
+      "transform": {
+        "positionX": -10.3779296875,
+        "positionY": 3.6220703125,
+        "rotation": 0.0,
+        "scaleX": 0.9800000190734863,
+        "scaleY": 0.9800000190734863
+      },
+      "user_component": null
+    },
+    "entity_id": 6
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -8.936767578125,
+        "centerPositionY": 10.063232421875,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": true,
+        "rotation": 0.0
+      },
+      "renderable": "enemy-ground.png",
+      "script": "patrol-diag.as",
+      "tag": "Enemy-Ground-1",
+      "transform": {
+        "positionX": -9.20166015625,
+        "positionY": 9.79833984375,
+        "rotation": 0.0,
+        "scaleX": 0.9800000190734863,
+        "scaleY": 0.9800000190734863
+      },
+      "user_component": null
+    },
+    "entity_id": 7
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -2.047607421875,
+        "centerPositionY": -15.047607421875,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": true,
+        "rotation": 0.0
+      },
+      "renderable": "enemy-ground.png",
+      "script": "patrol-diag.as",
+      "tag": "Enemy-Ground-2",
+      "transform": {
+        "positionX": -2.3125,
+        "positionY": -15.3125,
+        "rotation": 0.0,
+        "scaleX": 0.9800000190734863,
+        "scaleY": 0.9800000190734863
+      },
+      "user_component": null
+    },
+    "entity_id": 8
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -2.122314453125,
+        "centerPositionY": 0.877685546875,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": true,
+        "rotation": 0.0
+      },
+      "renderable": "enemy-ground.png",
+      "script": "patrol-diag.as",
+      "tag": "Enemy-Ground-3",
+      "transform": {
+        "positionX": -2.38720703125,
+        "positionY": 0.61279296875,
+        "rotation": 0.0,
+        "scaleX": 0.9800000190734863,
+        "scaleY": 0.9800000190734863
+      },
+      "user_component": null
+    },
+    "entity_id": 9
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 5.9326171875,
+        "centerPositionY": 11.565185546875,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": true,
+        "rotation": 0.0
+      },
+      "renderable": "enemy-fly.png",
+      "script": "patrol-plus.as",
+      "tag": "Enemy-Fly-4",
+      "transform": {
+        "positionX": 6.197509765625,
+        "positionY": 11.565185546875,
+        "rotation": 0.0,
+        "scaleX": 0.9800000190734863,
+        "scaleY": 0.9800000190734863
+      },
+      "user_component": null
+    },
+    "entity_id": 10
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 5.616455078125,
+        "centerPositionY": 11.616455078125,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": true,
+        "rotation": 0.0
+      },
+      "renderable": "enemy-fly.png",
+      "script": "patrol-diag.as",
+      "tag": "Enemy-Fly-5",
+      "transform": {
+        "positionX": 5.88134765625,
+        "positionY": 11.88134765625,
+        "rotation": 0.0,
+        "scaleX": 0.9800000190734863,
+        "scaleY": 0.9800000190734863
+      },
+      "user_component": null
+    },
+    "entity_id": 11
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -16.5,
+        "centerPositionY": -16.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical12",
+      "transform": {
+        "positionX": -16.5,
+        "positionY": -16.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 12
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -12.0,
+        "centerPositionY": -20.5,
+        "halfScaleX": 4.0,
+        "halfScaleY": 0.5,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "horizontalBorder.png",
+      "script": null,
+      "tag": "Border Horizontal13",
+      "transform": {
+        "positionX": -12.0,
+        "positionY": -20.5,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 1.0
+      },
+      "user_component": null
+    },
+    "entity_id": 13
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "hallway.png",
+      "script": null,
+      "tag": "LevelElement900",
+      "transform": {
+        "positionX": -12.0,
+        "positionY": -16.0,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 14
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -12.0,
+        "centerPositionY": -18.5,
+        "halfScaleX": 3.9200000762939453,
+        "halfScaleY": 1.4700000286102295,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 15
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -12.0,
+        "centerPositionY": -13.5,
+        "halfScaleX": 3.9200000762939453,
+        "halfScaleY": 1.4700000286102295,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 16
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -16.5,
+        "centerPositionY": -8.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical17",
+      "transform": {
+        "positionX": -16.5,
+        "positionY": -8.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 17
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "standardRoom2.png",
+      "script": null,
+      "tag": "LevelElement901",
+      "transform": {
+        "positionX": -12.0,
+        "positionY": -8.0,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 18
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -16.5,
+        "centerPositionY": 0.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical19",
+      "transform": {
+        "positionX": -16.5,
+        "positionY": 0.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 19
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "rangedEnemy.png",
+      "script": null,
+      "tag": "LevelElement902",
+      "transform": {
+        "positionX": -12.0,
+        "positionY": 0.0,
+        "rotation": 3.1415927410125732,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 20
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -10.5,
+        "centerPositionY": 1.5,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 21
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -13.5,
+        "centerPositionY": -1.5,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 22
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -16.5,
+        "centerPositionY": 8.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical23",
+      "transform": {
+        "positionX": -16.5,
+        "positionY": 8.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 23
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -12.0,
+        "centerPositionY": 12.5,
+        "halfScaleX": 4.0,
+        "halfScaleY": 0.5,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "horizontalBorder.png",
+      "script": null,
+      "tag": "Border Horizontal24",
+      "transform": {
+        "positionX": -12.0,
+        "positionY": 12.5,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 1.0
+      },
+      "user_component": null
+    },
+    "entity_id": 24
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "tshape.png",
+      "script": null,
+      "tag": "LevelElement903",
+      "transform": {
+        "positionX": -12.0,
+        "positionY": 8.0,
+        "rotation": 1.5707963705062866,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 25
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -15.0,
+        "centerPositionY": 8.0,
+        "halfScaleX": 0.9800000190734863,
+        "halfScaleY": 3.9200000762939453,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 26
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -9.5,
+        "centerPositionY": 5.0,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.9800000190734863,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 27
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -9.5,
+        "centerPositionY": 11.0,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.9800000190734863,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 28
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -4.0,
+        "centerPositionY": -20.5,
+        "halfScaleX": 4.0,
+        "halfScaleY": 0.5,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "horizontalBorder.png",
+      "script": null,
+      "tag": "Border Horizontal29",
+      "transform": {
+        "positionX": -4.0,
+        "positionY": -20.5,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 1.0
+      },
+      "user_component": null
+    },
+    "entity_id": 29
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "tshape.png",
+      "script": null,
+      "tag": "LevelElement904",
+      "transform": {
+        "positionX": -4.0,
+        "positionY": -16.0,
+        "rotation": 3.1415927410125732,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 30
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -4.0,
+        "centerPositionY": -19.0,
+        "halfScaleX": 3.9200000762939453,
+        "halfScaleY": 0.9800000190734863,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 31
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -1.0,
+        "centerPositionY": -13.5,
+        "halfScaleX": 0.9800000190734863,
+        "halfScaleY": 1.4700000286102295,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 32
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -7.0,
+        "centerPositionY": -13.5,
+        "halfScaleX": 0.9800000190734863,
+        "halfScaleY": 1.4700000286102295,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 33
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "standardRoom2.png",
+      "script": null,
+      "tag": "LevelElement905",
+      "transform": {
+        "positionX": -4.0,
+        "positionY": -8.0,
+        "rotation": 3.1415927410125732,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 34
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "tshape.png",
+      "script": null,
+      "tag": "LevelElement906",
+      "transform": {
+        "positionX": -4.0,
+        "positionY": 0.0,
+        "rotation": 4.71238899230957,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 35
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -1.0,
+        "centerPositionY": 0.0,
+        "halfScaleX": 0.9800000190734863,
+        "halfScaleY": 3.9200000762939453,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 36
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -6.5,
+        "centerPositionY": -3.0,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.9800000190734863,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 37
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -6.5,
+        "centerPositionY": 3.0,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.9800000190734863,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 38
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -4.0,
+        "centerPositionY": 12.5,
+        "halfScaleX": 4.0,
+        "halfScaleY": 0.5,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "horizontalBorder.png",
+      "script": null,
+      "tag": "Border Horizontal39",
+      "transform": {
+        "positionX": -4.0,
+        "positionY": 12.5,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 1.0
+      },
+      "user_component": null
+    },
+    "entity_id": 39
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "pillar.png",
+      "script": null,
+      "tag": "LevelElement823",
+      "transform": {
+        "positionX": -4.0,
+        "positionY": 8.0,
+        "rotation": 1.5707963705062866,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 40
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -4.0,
+        "centerPositionY": 4.5,
+        "halfScaleX": 3.9200000762939453,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 41
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -0.5,
+        "centerPositionY": 8.5,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 3.430000066757202,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 42
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": -4.0,
+        "centerPositionY": 8.0,
+        "halfScaleX": 0.9800000190734863,
+        "halfScaleY": 0.9800000190734863,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 43
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 8.5,
+        "centerPositionY": -16.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical44",
+      "transform": {
+        "positionX": 8.5,
+        "positionY": -16.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 44
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 4.0,
+        "centerPositionY": -20.5,
+        "halfScaleX": 4.0,
+        "halfScaleY": 0.5,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "horizontalBorder.png",
+      "script": null,
+      "tag": "Border Horizontal45",
+      "transform": {
+        "positionX": 4.0,
+        "positionY": -20.5,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 1.0
+      },
+      "user_component": null
+    },
+    "entity_id": 45
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "verticalWall.png",
+      "script": null,
+      "tag": "LevelElement824",
+      "transform": {
+        "positionX": 4.0,
+        "positionY": -16.0,
+        "rotation": 1.5707963705062866,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 46
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 7.5,
+        "centerPositionY": -16.0,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 3.9200000762939453,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 47
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 3.5,
+        "centerPositionY": -17.5,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 48
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 3.5,
+        "centerPositionY": -14.5,
+        "halfScaleX": 1.4700000286102295,
+        "halfScaleY": 0.49000000953674316,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 49
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 8.5,
+        "centerPositionY": -8.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical50",
+      "transform": {
+        "positionX": 8.5,
+        "positionY": -8.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 50
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "hole.png",
+      "script": null,
+      "tag": "LevelElement825",
+      "transform": {
+        "positionX": 4.0,
+        "positionY": -8.0,
+        "rotation": 3.1415927410125732,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 51
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 4.0,
+        "centerPositionY": -8.0,
+        "halfScaleX": 1.9600000381469727,
+        "halfScaleY": 1.9600000381469727,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 52
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 8.5,
+        "centerPositionY": 0.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical53",
+      "transform": {
+        "positionX": 8.5,
+        "positionY": 0.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 53
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "hole.png",
+      "script": null,
+      "tag": "LevelElement826",
+      "transform": {
+        "positionX": 4.0,
+        "positionY": 0.0,
+        "rotation": 4.71238899230957,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 54
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 4.0,
+        "centerPositionY": 0.0,
+        "halfScaleX": 1.9600000381469727,
+        "halfScaleY": 1.9600000381469727,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 55
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 8.5,
+        "centerPositionY": 8.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Border Vertical56",
+      "transform": {
+        "positionX": 8.5,
+        "positionY": 8.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 56
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 4.0,
+        "centerPositionY": 12.5,
+        "halfScaleX": 4.0,
+        "halfScaleY": 0.5,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "horizontalBorder.png",
+      "script": null,
+      "tag": "Border Horizontal57",
+      "transform": {
+        "positionX": 4.0,
+        "positionY": 12.5,
+        "rotation": 0.0,
+        "scaleX": 8.0,
+        "scaleY": 1.0
+      },
+      "user_component": null
+    },
+    "entity_id": 57
+  },
+  {
+    "components": {
+      "collidable_box": null,
+      "renderable": "rangedEnemy.png",
+      "script": null,
+      "tag": "LevelElement827",
+      "transform": {
+        "positionX": 4.0,
+        "positionY": 8.0,
+        "rotation": 1.5707963705062866,
+        "scaleX": 8.0,
+        "scaleY": 8.0
+      },
+      "user_component": null
+    },
+    "entity_id": 0
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 5.5,
+        "centerPositionY": 6.5,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 1.4700000286102295,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 58
+  },
+  {
+    "components": {
+      "collidable_box": {
+        "centerPositionX": 2.5,
+        "centerPositionY": 9.5,
+        "halfScaleX": 0.49000000953674316,
+        "halfScaleY": 1.4700000286102295,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": null,
+      "script": null,
+      "tag": null,
+      "transform": null,
+      "user_component": null
+    },
+    "entity_id": 59
+  },
+  {
     "free": [
       0,
       67,
@@ -478,6 +1600,7 @@
       0,
       4,
       0,
+      0,
       67,
       66,
       66,
@@ -487,64 +1610,7 @@
       0,
       62,
       61,
-      60,
-      59,
-      58,
-      0,
-      57,
-      56,
-      55,
-      54,
-      53,
-      52,
-      51,
-      50,
-      49,
-      48,
-      47,
-      46,
-      45,
-      44,
-      43,
-      42,
-      41,
-      40,
-      39,
-      38,
-      37,
-      36,
-      35,
-      34,
-      33,
-      32,
-      31,
-      30,
-      29,
-      28,
-      27,
-      26,
-      25,
-      24,
-      23,
-      22,
-      21,
-      20,
-      19,
-      18,
-      17,
-      16,
-      15,
-      14,
-      13,
-      12,
-      11,
-      10,
-      9,
-      8,
-      7,
-      6,
-      5,
-      0
+      60
     ]
   }
 ]
