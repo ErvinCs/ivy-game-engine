@@ -54,6 +54,7 @@ class CPlayer : IController
 		{
 			if(msg.txt == 'ATK')
 			{
+				LoadSprite(self.getOwner(), "rage.png");
 				self.kill();
 			}
 			if(msg.txt == 'COLLECT')
