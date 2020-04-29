@@ -26,7 +26,7 @@ namespace Ivy {
 		this->setComponentId(ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second);
 	}
 
-	CollidableBox& CollidableBox::operator=(const CollidableBox& other)
+	/*CollidableBox& CollidableBox::operator=(const CollidableBox& other)
 	{
 		this->centerPosition = other.centerPosition;
 		this->halfScale = other.halfScale;
@@ -44,5 +44,5 @@ namespace Ivy {
 		
 
 		return *this;
-	}
+	}*/
 }

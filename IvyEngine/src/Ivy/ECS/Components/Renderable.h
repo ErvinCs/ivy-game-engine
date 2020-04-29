@@ -13,7 +13,10 @@ namespace Ivy
 		std::string spritePath;
 		std::shared_ptr<Ivy::Texture> texture;
 
-		Renderable() : Component() {}
+		Renderable() : Component() 
+		{
+			spritePath = "blank.png";
+		}
 		Renderable(std::string spritePath);
 
 		inline void addReference() { /* do nothing */ }

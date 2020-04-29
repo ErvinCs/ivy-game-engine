@@ -12,7 +12,12 @@ namespace Ivy
 		float rotation;
 		glm::vec2 scale;
 
-		Transform() : Component() {}
+		Transform() : Component() 
+		{
+			position = glm::vec2(0.0f);
+			rotation = 0.0f;
+			scale = glm::vec2(0.0f);
+		}
 		Transform(glm::vec2 position, float rotation, glm::vec2 scale);
 		
 		inline void addReference() { /* do nothing */ }

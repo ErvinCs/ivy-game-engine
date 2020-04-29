@@ -111,7 +111,7 @@ namespace Ivy
 					ElementType type = levelElement.getElementType();
 					levelElement.transform.position.x = (x * positionOffset) - (xMax * positionOffset) / 2;
 					levelElement.transform.position.y = (y * positionOffset) - (yMax * positionOffset) / 2;
-					/*if (it != fittest.getDesignElements().begin())
+					if (it != fittest.getDesignElements().begin())
 					{
 						collectable = ECS::getInstance().createEntity();
 						ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
@@ -130,7 +130,7 @@ namespace Ivy
 						IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
 							ECS::getInstance().getComponent<Tag>(collectable).tag,
 							collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
-					}*/
+					}
 					switch (type)
 					{
 					case ElementType::VerticalWall:
