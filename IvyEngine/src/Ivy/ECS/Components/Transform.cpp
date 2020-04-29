@@ -20,4 +20,15 @@ namespace Ivy
 	{
 		return !(*this == other);
 	}
+
+	Transform& Transform::operator=(const Transform& other)
+	{
+		this->position = other.position;
+		this->rotation = other.rotation;
+		this->scale = other.scale;
+		this->entityId = other.entityId;
+		this->componentId = other.componentId;
+
+		return *this;
+	}
 }

@@ -14,10 +14,11 @@ namespace Ivy
 
 		Tag() : Component() {}
 		Tag(std::string newTag);
-		
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
+
+		Tag& operator=(const Tag& other);
 	};
 
 }

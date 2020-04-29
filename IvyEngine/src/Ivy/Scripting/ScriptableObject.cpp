@@ -120,7 +120,7 @@ namespace Ivy {
 
 	void ScriptableObject::onUpdate()
 	{
-		if (scriptObject) {
+		if (alive && scriptObject != NULL) {
 			ScriptManager::GetInstance().callOnUpdate(scriptObject);
 		}
 	}

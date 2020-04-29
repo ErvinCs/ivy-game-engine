@@ -51,16 +51,18 @@ namespace Ivy
 				ImGui::InputText("Player Script", &LevelGenerator::playerScript);
 				ImGui::TreePop();
 			}
-			if (ImGui::TreeNode("Enemy Sprites"))
+			if (ImGui::TreeNode("Enemies"))
 			{
-				ImGui::InputText("Flying Enemy", &LevelGenerator::enemyFlyPath);
-				ImGui::InputText("Ground Enemy", &LevelGenerator::enemyGroundPath);
+				ImGui::InputText("Enemy 1", &LevelGenerator::enemyFlyPath);
+				ImGui::InputText("Enemy 2", &LevelGenerator::enemyGroundPath);
+				ImGui::InputText("Enemy 1 Script", &LevelGenerator::scriptPatrolH);
+				ImGui::InputText("Enemy 2 Script", &LevelGenerator::scriptPatrolV);
 				ImGui::TreePop();
 			}
-			if (ImGui::TreeNode("Enemy Scripts"))
+			if (ImGui::TreeNode("Items"))
 			{
-				ImGui::InputText("Enemy Script 1", &LevelGenerator::scriptPatrolH);
-				ImGui::InputText("Enemy Script 2", &LevelGenerator::scriptPatrolV);
+				ImGui::InputText("Item 1", &LevelGenerator::collectablePath);
+				ImGui::InputText("Item 1 Script", &LevelGenerator::collectableScript);
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Borders"))

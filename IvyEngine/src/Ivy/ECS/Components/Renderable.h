@@ -18,5 +18,7 @@ namespace Ivy
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
+
+		Renderable& operator=(const Renderable& other);
 	};
 }

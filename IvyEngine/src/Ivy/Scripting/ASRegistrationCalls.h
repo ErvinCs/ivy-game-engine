@@ -127,10 +127,10 @@ namespace Ivy
 			asMETHODPR(Transform, operator=, (const Transform &), Transform &), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
 
-
+		// Destroy owned Transform
+		r = scriptEngine->RegisterGlobalFunction("void DestroyTransform(uint16)", asFUNCTION(SelfDestroyTransform), asCALL_CDECL);
 		// Register FindTransform(uint16). Provides access to the transform component of an Entity if it exists.
 		r = scriptEngine->RegisterGlobalFunction("Transform@ FindTransform(uint16)", asFUNCTION(FindTransform), asCALL_CDECL); assert(r >= 0);
-
 		// Flip the Transform of a scriptable object by 90/180/270 degrees
 		r = scriptEngine->RegisterGlobalFunction("void Rotate90(Transform &)", asFUNCTION(Rotate90Transform), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("void Rotate180(Transform &)", asFUNCTION(Rotate180Transform), asCALL_CDECL); assert(r >= 0);
@@ -152,7 +152,8 @@ namespace Ivy
 			asMETHODPR(Renderable, operator=, (const Renderable &), Renderable &), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite@ f()", asFUNCTION(Renderable_Factory1), asCALL_CDECL); assert(r >= 0);
 
-
+		// Destroy owned Renderable
+		r = scriptEngine->RegisterGlobalFunction("void DestroySprite(uint16)", asFUNCTION(SelfDestroyRenderable), asCALL_CDECL);
 		// Register FindRenderable(uint16). Provides access to the renderable component of an Entity if it exists.
 		r = scriptEngine->RegisterGlobalFunction("Sprite@ FindSprite(uint16)", asFUNCTION(FindRenderable), asCALL_CDECL); assert(r >= 0);
 		// Register LoadNewTexture(Entity, std::string). Changes the texture a renderable of an entity displays with the texture at the given string location
@@ -210,12 +211,23 @@ namespace Ivy
 		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_ADDREF, "void f()", asMETHOD(CollidableBox, addReference), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_RELEASE, "void f()", asMETHOD(CollidableBox, release), asCALL_THISCALL); assert(r >= 0);
 
+		r = scriptEngine->RegisterObjectProperty("Collidable", "Vec2 centerPosition", asOFFSET(CollidableBox, centerPosition)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Collidable", "float rotation", asOFFSET(CollidableBox, rotation)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Collidable", "Vec2 halfScale", asOFFSET(CollidableBox, halfScale)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Collidable", "bool isTrigger", asOFFSET(CollidableBox, isTrigger)); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectProperty("Collidable", "unordered_set<uint16> rotation", asOFFSET(CollidableBox, isCollidingWith)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Collidable", "Vec2 unitX", asOFFSET(CollidableBox, unitX)); assert(r >= 0);
+		r = scriptEngine->RegisterObjectProperty("Collidable", "Vec2 unitY", asOFFSET(CollidableBox, unitY)); assert(r >= 0);
+
+
 		r = scriptEngine->RegisterGlobalFunction("Collidable@ InitCollidable()", asFUNCTION(Collidable_Factory1), asCALL_CDECL); assert(r >= 0);
 
 		r = scriptEngine->RegisterObjectMethod("Collidable", "Collidable &opAssign(const Collidable &in)",
 			asMETHODPR(CollidableBox, operator=, (const CollidableBox &), CollidableBox &), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_FACTORY, "Collidable@ f()", asFUNCTION(Collidable_Factory1), asCALL_CDECL); assert(r >= 0);
 
+		// Destroy owned Collidable
+		r = scriptEngine->RegisterGlobalFunction("void DestroyCollidable(uint16)", asFUNCTION(SelfDestroyCollidable), asCALL_CDECL);
 		// Register FindRenderable(uint16). Provides access to the renderable component of an Entity if it exists.
 		r = scriptEngine->RegisterGlobalFunction("Collidable@ FindCollidable(uint16)", asFUNCTION(FindCollidable), asCALL_CDECL); assert(r >= 0);
 		// Register AreColliding functions. Checks for entity-entity and collidable-collidable and entity-collidable.

@@ -157,7 +157,7 @@ IF EXIST $(ProjectDir)\res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)\res\**.json
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\scripts\star.as" />
+    <None Include="res\scripts\item.as" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

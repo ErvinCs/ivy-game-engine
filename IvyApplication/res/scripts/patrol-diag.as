@@ -10,7 +10,7 @@ class Patrol : IController
 
 	float moveSpeed = 4;
 	int direction = 0;
-	float constWaitTime = 0.5;
+	float constWaitTime = 0.3;
 	float waitTime = 0;
 
 	Patrol(ScriptableObject@ object)

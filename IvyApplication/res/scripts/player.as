@@ -54,7 +54,7 @@ class CPlayer : IController
 		{
 			if(msg.txt == 'ATK')
 			{
-				LoadSprite(self.getOwner(), "rage.png");
+				LoadSprite(self.getOwner(), "player-dead.png");
 				self.kill();
 			}
 			if(msg.txt == 'COLLECT')

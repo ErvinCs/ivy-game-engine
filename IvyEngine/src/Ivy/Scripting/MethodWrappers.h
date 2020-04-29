@@ -146,7 +146,7 @@ namespace Ivy {
 
 	bool AreEntitiesColliding(Entity e1, Entity e2)
 	{
-		CollidableBox c1 = ECS::getInstance().getComponent<CollidableBox>(e1);
+		CollidableBox& c1 = ECS::getInstance().getComponent<CollidableBox>(e1);
 		bool col = c1.isCollidingWith.find(e2) != c1.isCollidingWith.end();
 		if (col)
 			IVY_CORE_ERROR("MethodWrappers: Colliding: {0} with {1}", e1, e2);
@@ -190,6 +190,33 @@ namespace Ivy {
 	{
 		r.spritePath = newPath;
 		r.texture = Texture::Create(newPath);
+	}
+
+	void SelfDestroyRenderable(Entity entity)
+	{
+		Renderable* r = &ECS::getInstance().getComponent<Renderable>(entity);
+		if (r->getComponentId() == 0)
+			return;
+		else
+			ECS::getInstance().removeComponent<Renderable>(entity);
+	}
+
+	void SelfDestroyCollidable(Entity entity)
+	{
+		CollidableBox* c = &ECS::getInstance().getComponent<CollidableBox>(entity);
+		if (c->getComponentId() == 0)
+			return;
+		else
+			ECS::getInstance().removeComponent<CollidableBox>(entity);
+	}
+
+	void SelfDestroyTransform(Entity entity)
+	{
+		Transform* t = &ECS::getInstance().getComponent<Transform>(entity);
+		if (t->getComponentId() == 0)
+			return;
+		else
+			ECS::getInstance().removeComponent<Transform>(entity);
 	}
 
 	// ---------- Timestep ----------

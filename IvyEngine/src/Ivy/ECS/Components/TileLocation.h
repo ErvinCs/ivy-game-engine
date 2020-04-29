@@ -23,6 +23,8 @@ namespace Ivy
 
 		bool operator==(const TileLocation& other);
 		bool operator!=(const TileLocation& other);
+
+		TileLocation& operator= (const TileLocation& other);
 	};
 
 }

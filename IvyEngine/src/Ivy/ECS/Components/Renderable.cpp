@@ -11,4 +11,14 @@ namespace Ivy
 		texture = Texture::Create(spritePath);
 		this->setComponentId(ECS::getInstance().getComponentTypes().find(typeid(Renderable).name())->second);
 	}
+
+	Renderable& Renderable::operator=(const Renderable& other)
+	{
+		this->spritePath = other.spritePath;
+		this->entityId = other.entityId;
+		this->componentId = other.componentId;
+		texture = Texture::Create(spritePath);
+
+		return *this;
+	}
 }

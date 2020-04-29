@@ -36,6 +36,8 @@ namespace Ivy
 		static std::string scriptPatrolH;	
 		static std::string LevelGenerator::playerScript;
 		static std::string LevelGenerator::playerPath;
+		static std::string collectablePath;
+		static std::string collectableScript;
 		static bool isGenerating;
 		LevelGenerator();
 		

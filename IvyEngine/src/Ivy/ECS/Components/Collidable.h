@@ -24,6 +24,8 @@ namespace Ivy {
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
+
+		CollidableBox& operator=(const CollidableBox& other);
 	};
 
 }

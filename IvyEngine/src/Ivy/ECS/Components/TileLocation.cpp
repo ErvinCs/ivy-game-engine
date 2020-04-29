@@ -22,4 +22,16 @@ namespace Ivy
 	{
 		return (!(*this == other));
 	}
+
+	TileLocation& TileLocation::operator= (const TileLocation& other)
+	{
+		this->tileIndexX = other.tileIndexX;
+		this->tileIndexY = other.tileIndexY;
+		this->previousPosition = other.previousPosition;
+		this->owner = other.owner;
+		this->entityId = other.entityId;
+		this->componentId = other.componentId;
+
+		return *this;
+	}
 }

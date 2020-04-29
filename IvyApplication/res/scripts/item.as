@@ -1,13 +1,14 @@
 #include 'common.as'
 
-class Star : IController
+class Item : IController
 {
 	ScriptableObject@ self;
 	Collidable@ collidable;
 	Collidable@ playerCollidable;
 	weakref<ScriptableObject> playerRef;
+	bool collected = false;
 
-	Star(ScriptableObject@ object)
+	Item(ScriptableObject@ object)
 	{
 		@self = object;
 	}
@@ -26,10 +27,16 @@ class Star : IController
 			@playerCollidable = FindCollidable(player.getOwner());
 		}
 
-		if (AreColliding(collidable, playerCollidable))
-		{
-			self.sendMessage(CMessage('COLLECT'), player);
-			self.kill();
+		if (not(collidable is null)) {
+			if (not(collected) and AreColliding(collidable, playerCollidable))
+			{
+				DestroySprite(self.getOwner());
+				DestroyCollidable(self.getOwner());
+				DestroyTransform(self.getOwner());
+				self.sendMessage(CMessage('COLLECT'), player);
+				self.kill();
+				
+			}
 		}
 	}
 }
