@@ -28,7 +28,8 @@ namespace Ivy {
 
 	void ScriptSystem::update(float deltatime)
 	{
-		for (int i = 0; i < entities->size(); i++)
+		int size = entities->size();
+		for (int i = 0; i < size; i++)
 		{
 			ScriptComponent* scriptComponent = &ECS::getInstance().getComponent<ScriptComponent>(*entities->at(i));
 			if (scriptComponent->getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
@@ -38,6 +39,7 @@ namespace Ivy {
 			{
 				ECS::getInstance().removeComponent<ScriptComponent>(entities->getEntity(*entities->at(i)));
 				i--;
+				size--;
 				continue;
 			}
 

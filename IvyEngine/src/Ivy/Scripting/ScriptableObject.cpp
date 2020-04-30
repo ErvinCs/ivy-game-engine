@@ -128,7 +128,7 @@ namespace Ivy {
 
 	void ScriptableObject::sendMessage(CScriptHandle message, ScriptableObject* target)
 	{
-		if (target && target->scriptObject) {
+		if (alive && scriptObject != NULL && target && target->scriptObject) {
 			ScriptManager::GetInstance().callOnMessage(target->scriptObject, message, this);
 		}
 	}

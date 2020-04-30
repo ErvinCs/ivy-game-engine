@@ -6,81 +6,89 @@
 
 #include "UserComponent.h"
 
-class TestLayer : public Ivy::SortingLayer
+class GameLayer : public Ivy::SortingLayer
 {
 private:
 	//Systems
-	std::shared_ptr<Ivy::System> userSystem      = std::make_shared<UserComponentSystem>(Ivy::ECS::getInstance().getEntities());
+	//std::shared_ptr<Ivy::System> userSystem      = std::make_shared<UserComponentSystem>(Ivy::ECS::getInstance().getEntities());
 
-	Ivy::OrthoCamera camera;
+	bool isStarted = false, isPaused = false, isLoaded = false, loadedMenu = false;
+	Entity mainMenu, pauseMenu;
 public:
-	TestLayer() : SortingLayer("Test")
+	GameLayer() : SortingLayer("Game")
 	{
-		IVY_TRACE("Creating TestLayer");
+		IVY_TRACE("Creating GameLayer");
 
-		camera = Ivy::Application::GetCamera();
+		//Ivy::ECS::getInstance().addSystem(userSystem);
 
-		Ivy::ECS::getInstance().addSystem(userSystem);
+		//userSystem->init();
 
-		userSystem->init();
-
-		Ivy::JSONManager::addLoadFunction(loadUC);
-		Ivy::JSONManager::addSaveFunction(saveUC);
+		mainMenu = Ivy::ECS::getInstance().createEntity();
+		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-complete.png"));
+		pauseMenu = Ivy::ECS::getInstance().createEntity();
+		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-complete.png"));
+		
 	}
 
 	void update(Ivy::Timestep ts) override
 	{
 		// User System
-		userSystem->update(ts);
+		//userSystem->update(ts);
+		if (isLoaded)
+		{
+			if (!isStarted) 
+			{
+				Ivy::Application::getInstance().isPaused = true;
+				if (!loadedMenu)
+				{
+					Ivy::ECS::getInstance().addComponent<Ivy::Transform>(mainMenu, Ivy::Transform(Ivy::Application::GetCamera().position, 0.0f, glm::vec2(4.0f, 4.0f)));
+					loadedMenu = true;
+				}
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_SPACE))
+				{
+					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(pauseMenu);
+					isStarted = true;
+					loadedMenu = false;
+					Ivy::Application::getInstance().isPaused = false;
+				}
+			}
+
+
+			if (Ivy::InputHandler::IsKeyDown(IVY_KEY_P) && isStarted)
+			{
+				isPaused = true;
+				Ivy::Application::getInstance().isPaused = true;
+			}
+			if (isPaused)
+			{
+				if (!loadedMenu)
+				{
+					Ivy::ECS::getInstance().addComponent<Ivy::Transform>(pauseMenu, Ivy::Transform(Ivy::Application::GetCamera().position, 0.0f, glm::vec2(4.0f, 4.0f)));
+					loadedMenu = true;
+				}
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_X))
+				{
+					Ivy::Application::getInstance().isRunning = false;
+				}
+				else if (Ivy::InputHandler::IsKeyDown(IVY_KEY_C))
+				{
+					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(pauseMenu);
+					isPaused = false;
+					Ivy::Application::getInstance().isPaused = false;
+				}
+			}
+		}
+		else
+		{
+			Ivy::Application::getInstance().globalTime = 0.0f;
+			Ivy::Application::GetLevelGenerator().run();
+			Ivy::Application::getInstance().lastFrameTime = (float)glfwGetTime();
+			isLoaded = true;
+		}
 	}
 
 	void imGuiRender() override
 	{
-		static std::string tagTemp;
-		ImGui::Begin("User Components");
-		for (Entity& entity : Ivy::ECS::getInstance().getEntities())
-		{
-			ImGui::PushID(&entity);
-			if (Ivy::ECS::getInstance().getComponent<Ivy::Tag>(entity).getComponentId() == 
-				Ivy::ECS::getInstance().getComponentTypes().find(typeid(Ivy::Tag).name())->second
-				&& tagTemp.size() > 0)
-			{
-				tagTemp = Ivy::ECS::getInstance().getComponent<Ivy::Tag>(entity).tag;
-			}
-			else
-			{
-				tagTemp = "Entity##";
-			}
-
-			if (ImGui::CollapsingHeader(tagTemp.c_str()))
-			{
-				if (ImGui::TreeNode("UserComp"))
-				{
-					if (Ivy::ECS::getInstance().getComponent<UserComponent>(entity).getComponentId() == UserCompID)
-					{
-						ImGui::InputFloat("aField", (float*)&Ivy::ECS::getInstance().getComponent<UserComponent>(entity).aField, 2);
-						if (ImGui::Button("Remove UserComp"))
-						{
-							Ivy::ECS::getInstance().removeComponent<UserComponent>(entity);
-							IVY_INFO("Destroyed UserComponent on Entity: {0}", entity);
-						}
-					}
-					else
-					{
-						if (ImGui::Button("Add UserComp"))
-						{
-							UserComponent newUserComp = UserComponent(0.001f, "Hello World");
-							newUserComp.setComponentId(UserCompID);
-							Ivy::ECS::getInstance().addComponent<UserComponent>(entity, newUserComp);
-							IVY_INFO("Added: User Component");
-						}
-					}
-					ImGui::TreePop();
-				}
-			}
-			ImGui::PopID();
-		}
-		ImGui::End();
 
 	}
 
@@ -89,7 +97,7 @@ public:
 		IVY_INFO("Test Layer: {0}", event.toString());
 	}
 
-	~TestLayer()
+	~GameLayer()
 	{
 	}
 };
@@ -99,7 +107,7 @@ class IvyApp : public Ivy::Application
 public:
 	IvyApp()
 	{
-		pushLayer(new TestLayer());
+		pushLayer(new GameLayer());
 	}
 
 	~IvyApp()

@@ -39,6 +39,7 @@ namespace Ivy {
 
 	public:
 		bool isRunning = true;
+		bool isPaused = false;
 		float globalTime;
 		float currTime;
 		float lastFrameTime;

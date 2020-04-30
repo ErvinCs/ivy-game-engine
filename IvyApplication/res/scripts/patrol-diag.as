@@ -61,9 +61,7 @@ class Patrol : IController
 			{
 				self.sendMessage(CMessage('ATK'), player);
 			}
-		}
-
-		
+		}	
 	}
 }
 

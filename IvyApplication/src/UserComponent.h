@@ -79,3 +79,55 @@ public:
 		}
 	}
 };
+
+/* Construct Code
+		Ivy::JSONManager::addLoadFunction(loadUC);
+		Ivy::JSONManager::addSaveFunction(saveUC);
+*/
+/* imGuiRender Code
+		static std::string tagTemp;
+		ImGui::Begin("User Components");
+		for (Entity& entity : Ivy::ECS::getInstance().getEntities())
+		{
+			ImGui::PushID(&entity);
+			if (Ivy::ECS::getInstance().getComponent<Ivy::Tag>(entity).getComponentId() ==
+				Ivy::ECS::getInstance().getComponentTypes().find(typeid(Ivy::Tag).name())->second
+				&& tagTemp.size() > 0)
+			{
+				tagTemp = Ivy::ECS::getInstance().getComponent<Ivy::Tag>(entity).tag;
+			}
+			else
+			{
+				tagTemp = "Entity##";
+			}
+
+			if (ImGui::CollapsingHeader(tagTemp.c_str()))
+			{
+				if (ImGui::TreeNode("UserComp"))
+				{
+					if (Ivy::ECS::getInstance().getComponent<UserComponent>(entity).getComponentId() == UserCompID)
+					{
+						ImGui::InputFloat("aField", (float*)&Ivy::ECS::getInstance().getComponent<UserComponent>(entity).aField, 2);
+						if (ImGui::Button("Remove UserComp"))
+						{
+							Ivy::ECS::getInstance().removeComponent<UserComponent>(entity);
+							IVY_INFO("Destroyed UserComponent on Entity: {0}", entity);
+						}
+					}
+					else
+					{
+						if (ImGui::Button("Add UserComp"))
+						{
+							UserComponent newUserComp = UserComponent(0.001f, "Hello World");
+							newUserComp.setComponentId(UserCompID);
+							Ivy::ECS::getInstance().addComponent<UserComponent>(entity, newUserComp);
+							IVY_INFO("Added: User Component");
+						}
+					}
+					ImGui::TreePop();
+				}
+			}
+			ImGui::PopID();
+		}
+		ImGui::End();
+*/

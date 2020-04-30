@@ -50,11 +50,13 @@ namespace Ivy
 		if (!generator.getInitialisedFeasible())
 		{
 			fittest = generator.getFittestInfeasibleIndividual();
+			finalPopulation = generator.getInfeasiblePopulation();
 			IVY_CORE_INFO("LevelGenerator: Loading Fittest Infeasible");
 			
 		}
 		else
 		{
+			finalPopulation = generator.getFeasiblePopulation();
 			if (alwaysLoad)
 			{
 				if (alwaysLoadFittest == 1)
@@ -113,23 +115,86 @@ namespace Ivy
 					levelElement.transform.position.y = (y * positionOffset) - (yMax * positionOffset) / 2;
 					if (it != fittest.getDesignElements().begin())
 					{
-						collectable = ECS::getInstance().createEntity();
-						ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
-						Transform collectTransform = Transform(
-							glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
-						);
-						CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
-						collectBox.isTrigger = true;
-						ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
-						ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
-						ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
-						ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
-						ScriptManager::GetInstance().createScriptController(
-							(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
-						);
-						IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
-							ECS::getInstance().getComponent<Tag>(collectable).tag,
-							collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+						if (type == ElementType::TShaped)
+						{
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 2), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+						}
+						else if (type == ElementType::Hole)
+						{
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+						}
+						else if (type == ElementType::Pillar)
+						{
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+						}
+						else {
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+						}
+						
 					}
 					switch (type)
 					{
@@ -140,7 +205,7 @@ namespace Ivy
 							enemy = ECS::getInstance().createEntity();
 							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
 							Transform enemyTransform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
 							enemyBox.isTrigger = true;
@@ -163,7 +228,7 @@ namespace Ivy
 							enemy = ECS::getInstance().createEntity();
 							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
 							Transform enemyTransform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y - halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
 							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
 							enemyBox.isTrigger = true;
@@ -263,9 +328,9 @@ namespace Ivy
 							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
 							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyFlyPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
-							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolV));
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
