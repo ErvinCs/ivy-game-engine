@@ -1,8 +1,8 @@
 #pragma once
 
 #include "System.h"
-#include "Entity.h"
-#include "../Renderer/OrthoCamera.h"
+#include "../Entity.h"
+#include "../../Renderer/OrthoCamera.h"
 
 namespace Ivy{
 

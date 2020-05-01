@@ -1,11 +1,10 @@
 #include "ivypch.h"
 #include "CollisionSystem.h"
 
-#include "../Core/Logger.h"
-
-#include "ECS.h"
-#include "Component.h"
-#include "Components/Collidable.h"
+#include "../../Core/Logger.h"
+#include "../ECS.h"
+#include "../Component.h"
+#include "../Components/Collidable.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtx/projection.hpp>

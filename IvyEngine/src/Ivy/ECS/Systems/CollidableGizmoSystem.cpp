@@ -1,12 +1,12 @@
 #include "ivypch.h"
 #include "CollidableGizmoSystem.h"
 
-#include "ECS.h"
-#include "Component.h"
-#include "Components/Collidable.h"
-#include "../Core/ResourcePaths.h"
+#include "../ECS.h"
+#include "../Component.h"
+#include "../Components/Collidable.h"
+#include "../../Core/ResourcePaths.h"
+#include "../../Core/Application.h"
 
-#include "../Core/Application.h"
 namespace Ivy
 {
 	bool CollidableGizmoSystem::showGizmos = false;

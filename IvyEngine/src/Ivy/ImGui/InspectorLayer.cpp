@@ -6,7 +6,7 @@
 
 #include "../Core/Logger.h"
 #include "../ECS/JSONManager.h"
-#include "../ECS/CollidableGizmoSystem.h"
+#include "../ECS/Systems/CollidableGizmoSystem.h"
 #include "../Scripting/ScriptManager.h"
 #include "../Renderer/OrthoCamera.h"
 #include "../Core/Application.h"

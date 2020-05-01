@@ -7,7 +7,7 @@
 #include "../PCG/LevelGenerator.h"
 #include "../Core/Application.h"
 #include "../ECS/ECS.h"
-#include "../ECS/CollisionSystem.h"
+#include "../ECS/Systems/CollisionSystem.h"
 
 namespace Ivy
 {

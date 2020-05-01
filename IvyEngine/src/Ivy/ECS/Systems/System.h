@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Entity.h"
-#include "EntityContainer.h"
+#include "../Entity.h"
+#include "../EntityContainer.h"
 
 namespace Ivy {
 

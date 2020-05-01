@@ -1,11 +1,11 @@
 #include "ivypch.h"
 #include "ScriptSystem.h"
 
-#include "ECS.h"
-#include "Components/ScriptComponent.h"
+#include "../ECS.h"
+#include "../Components/ScriptComponent.h"
 
-#include "../Scripting/ScriptManager.h"
-#include "../Core/ResourcePaths.h"
+#include "../../Scripting/ScriptManager.h"
+#include "../../Core/ResourcePaths.h"
 
 namespace Ivy {
 

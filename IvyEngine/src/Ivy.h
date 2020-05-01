@@ -26,13 +26,13 @@
 
 //-------------------- ECS --------------------
 #include "Ivy/ECS/Entity.h"
-#include "Ivy/ECS/System.h"
+#include "Ivy/ECS/Systems/System.h"
 #include "Ivy/ECS/Component.h"
 #include "Ivy/ECS/ECS.h"
-#include "Ivy/ECS/RenderSystem.h"
-#include "Ivy/ECS/ScriptSystem.h"
-#include "Ivy/ECS/CollisionSystem.h"
-#include "Ivy/ECS/CollidableGizmoSystem.h"
+#include "Ivy/ECS/Systems/RenderSystem.h"
+#include "Ivy/ECS/Systems/ScriptSystem.h"
+#include "Ivy/ECS/Systems/CollisionSystem.h"
+#include "Ivy/ECS/Systems/CollidableGizmoSystem.h"
 #include "Ivy/ECS/Components/Transform.h"
 #include "Ivy/ECS/Components/Renderable.h"
 #include "Ivy/ECS/Components/ScriptComponent.h"

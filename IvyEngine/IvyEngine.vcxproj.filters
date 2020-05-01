@@ -102,15 +102,6 @@
     <ClInclude Include="src\Ivy\Core\Window.h">
       <Filter>src\Ivy\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\CameraSystem.h">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\CollidableGizmoSystem.h">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\CollisionSystem.h">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Component.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
@@ -145,15 +136,6 @@
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\ECS\JSONManager.h">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\RenderSystem.h">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\ScriptSystem.h">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\System.h">
       <Filter>src\Ivy\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Ivy\Events\Event.h">
@@ -1518,6 +1500,24 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Systems\CameraSystem.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Systems\CollidableGizmoSystem.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Systems\CollisionSystem.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Systems\RenderSystem.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Systems\ScriptSystem.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Systems\System.h">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1531,15 +1531,6 @@
     </ClCompile>
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp">
       <Filter>src\Ivy\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\CameraSystem.cpp">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\CollidableGizmoSystem.cpp">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\CollisionSystem.cpp">
-      <Filter>src\Ivy\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\ECS\Components\Collidable.cpp">
       <Filter>src\Ivy\ECS\Components</Filter>
@@ -1560,12 +1551,6 @@
       <Filter>src\Ivy\ECS\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\ECS\JSONManager.cpp">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp">
-      <Filter>src\Ivy\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\ScriptSystem.cpp">
       <Filter>src\Ivy\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\Events\Event.cpp">
@@ -1672,6 +1657,21 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Systems\CameraSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Systems\CollidableGizmoSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Systems\CollisionSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Systems\RenderSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Systems\ScriptSystem.cpp">
+      <Filter>src\Ivy\ECS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

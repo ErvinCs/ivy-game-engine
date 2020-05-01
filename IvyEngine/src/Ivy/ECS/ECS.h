@@ -9,7 +9,7 @@
 #include "Component.h"
 #include "ComponentContainer.h"
 #include "Entity.h"
-#include "System.h"
+#include "Systems/System.h"
 #include "Components/Transform.h"
 #include "Components/Renderable.h"
 #include "Components/ScriptComponent.h"
@@ -20,11 +20,11 @@
 #include "../Core/ResourcePaths.h"
 #include "../Core/Logger.h"
 #include "JSONManager.h"
-#include "RenderSystem.h"
-#include "ScriptSystem.h"
-#include "CollisionSystem.h"
-#include "CollidableGizmoSystem.h"
-#include "CameraSystem.h"
+#include "Systems/RenderSystem.h"
+#include "Systems/ScriptSystem.h"
+#include "Systems/CollisionSystem.h"
+#include "Systems/CollidableGizmoSystem.h"
+#include "Systems/CameraSystem.h"
 
 namespace Ivy {
 

@@ -12,7 +12,7 @@ namespace Ivy
 	int FI2Pop::populationSize = 26;
 	int FI2Pop::tournamentSize = 6;
 	int FI2Pop::genotypeSize = 12;
-	int FI2Pop::maxGeneration = 3;
+	int FI2Pop::maxGeneration = 4;
 
 	FI2Pop::FI2Pop()
 	{

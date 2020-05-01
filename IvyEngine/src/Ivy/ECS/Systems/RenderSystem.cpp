@@ -1,15 +1,14 @@
 #include "ivypch.h"
 #include "RenderSystem.h"
 
-#include "ECS.h"
-#include "Component.h"
-#include "Components/Renderable.h"
-#include "Components/Transform.h"
+#include "../ECS.h"
+#include "../Component.h"
+#include "../Components/Renderable.h"
+#include "../Components/Transform.h"
 #include "CollidableGizmoSystem.h"
-#include "../Renderer/RenderCommand.h"
-#include "../Renderer/Renderer.h"
-
-#include "../Core/Application.h"
+#include "../../Renderer/RenderCommand.h"
+#include "../../Renderer/Renderer.h"
+#include "../../Core/Application.h"
 
 
 namespace Ivy {

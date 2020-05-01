@@ -1,9 +1,9 @@
 #pragma once
 
 #include "System.h"
-#include "../Renderer/Renderer.h"
-#include "../Renderer/Texture.h"
-#include "../Core/ResourcePaths.h"
+#include "../../Renderer/Renderer.h"
+#include "../../Renderer/Texture.h"
+#include "../../Core/ResourcePaths.h"
 
 namespace Ivy {
 	class CollidableGizmoSystem : public System

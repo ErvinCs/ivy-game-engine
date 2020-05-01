@@ -1,9 +1,9 @@
 #include "ivypch.h"
 #include "CameraSystem.h"
 
-#include "ECS.h"
-#include "../Core/Logger.h"
-#include "../Core/Application.h"
+#include "../ECS.h"
+#include "../../Core/Logger.h"
+#include "../../Core/Application.h"
 
 namespace Ivy {
 
