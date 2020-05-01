@@ -9,9 +9,10 @@
 class GameLayer : public Ivy::SortingLayer
 {
 private:
-	bool isStarted = false, isPaused = false, isLoaded = false, loadedMenu = false;
+	bool isStarted = false, isLoaded = false, loadedMenu = false;
 	glm::vec2 menuSize = glm::vec2(7.0f, 7.0f);
-	Entity mainMenu, pauseMenu, victoryMenu;
+	Entity mainMenu;
+	//Entity pauseMenu, victoryMenu;
 	const int final_score = 11;
 	static int level_score;
 public:
@@ -21,8 +22,8 @@ public:
 
 		mainMenu = Ivy::ECS::getInstance().createEntity();
 		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
-		pauseMenu = Ivy::ECS::getInstance().createEntity();
-		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-paused.png"));
+		//pauseMenu = Ivy::ECS::getInstance().createEntity();
+		//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-paused.png"));
 		//victoryMenu = Ivy::ECS::getInstance().createEntity();
 		//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-won.png"));
 
@@ -41,6 +42,12 @@ public:
 					Ivy::ECS::getInstance().addComponent<Ivy::Transform>(mainMenu, Ivy::Transform(Ivy::Application::GetCamera().position, 0.0f, menuSize));
 					loadedMenu = true;
 				}
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_X))
+				{
+					Ivy::ECS::getInstance().clearECS();
+					Ivy::ScriptManager::GetInstance().garbageCollect(2);
+					Ivy::Application::getInstance().isRunning = false;
+				}
 				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_SPACE))
 				{
 					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(mainMenu);
@@ -53,14 +60,13 @@ public:
 
 			if (Ivy::InputHandler::IsKeyDown(IVY_KEY_P) && isStarted)
 			{
-				isPaused = true;
 				Ivy::Application::getInstance().isPaused = true;
 			}
-			if (isPaused)
+			if (Ivy::Application::getInstance().isPaused)
 			{
 				if (!loadedMenu)
 				{
-					Ivy::ECS::getInstance().addComponent<Ivy::Transform>(pauseMenu, Ivy::Transform(Ivy::Application::GetCamera().position, 0.0f, menuSize));
+					Ivy::ECS::getInstance().addComponent<Ivy::Transform>(mainMenu, Ivy::Transform(Ivy::Application::GetCamera().position, 0.0f, menuSize));
 					loadedMenu = true;
 				}
 				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_X))
@@ -69,10 +75,9 @@ public:
 					Ivy::ScriptManager::GetInstance().garbageCollect(2);		
 					Ivy::Application::getInstance().isRunning = false;
 				}
-				else if (Ivy::InputHandler::IsKeyDown(IVY_KEY_C))
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_SPACE))
 				{
-					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(pauseMenu);
-					isPaused = false;
+					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(mainMenu);
 					Ivy::Application::getInstance().isPaused = false;
 					loadedMenu = false;
 				}
@@ -87,14 +92,14 @@ public:
 
 		if (level_score == final_score)
 		{
-			isStarted = false; isPaused = false; isLoaded = false; loadedMenu = false;
+			isStarted = false; isLoaded = false; loadedMenu = false;
 			Ivy::ECS::getInstance().clearECS();
 			Ivy::ScriptManager::GetInstance().garbageCollect(2);
 			level_score = 0;
 			mainMenu = Ivy::ECS::getInstance().createEntity();
 			Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
-			pauseMenu = Ivy::ECS::getInstance().createEntity();
-			Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-paused.png"));
+			//pauseMenu = Ivy::ECS::getInstance().createEntity();
+			//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-paused.png"));
 		}
 
 		Ivy::ScriptManager::GetInstance().garbageCollect(1);
