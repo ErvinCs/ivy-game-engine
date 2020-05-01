@@ -3,9 +3,8 @@
 
 #include <new>
 #include "ASRegistrationCalls.h"
-#include "../angelscript/add_on/scriptstdstring/scriptstdstring.h"
-#include "../angelscript/add_on/scriptbuilder/scriptbuilder.h"
-#include "../angelscript/add_on/weakref/weakref.h"
+//#include "../angelscript/add_on/aatc/aatc.hpp"
+
 #include "../Core/Logger.h"
 
 namespace Ivy {
@@ -24,7 +23,9 @@ namespace Ivy {
 			scriptEngine->ShutDownAndRelease();
 
 		scriptEngine = 0;
+
 	}
+
 
 	int ScriptManager::init()
 	{
@@ -44,6 +45,9 @@ namespace Ivy {
 
 		// Register the weak ref template type
 		RegisterScriptWeakRef(scriptEngine);
+
+		// Register Templated Containers
+		//aatc::RegisterAllContainers(scriptEngine);
 
 		// Register deltaTime. Currently a float variable.
 		RegisterTimestep(scriptEngine);

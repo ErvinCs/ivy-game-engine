@@ -37,6 +37,8 @@ namespace Ivy {
 
 			if (!scriptComponent->scriptableObject->isAlive())
 			{
+				delete scriptComponent->scriptableObject;
+				scriptComponent->scriptableObject = NULL;
 				ECS::getInstance().removeComponent<ScriptComponent>(entities->getEntity(*entities->at(i)));
 				i--;
 				size--;

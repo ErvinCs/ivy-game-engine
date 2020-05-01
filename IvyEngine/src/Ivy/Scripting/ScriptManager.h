@@ -3,7 +3,9 @@
 #include <glm/glm.hpp>
 #include <angelscript.h>
 #include "../angelscript/add_on/scripthandle/scripthandle.h"
-
+#include "../angelscript/add_on/scriptstdstring/scriptstdstring.h"
+#include "../angelscript/add_on/scriptbuilder/scriptbuilder.h"
+#include "../angelscript/add_on/weakref/weakref.h"
 #include "ScriptableObject.h"
 
 namespace Ivy {

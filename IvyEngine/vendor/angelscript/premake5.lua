@@ -13,6 +13,7 @@ project "AngelScript"
         "source/**.h",
         "source/**.cpp",
         "add_on/**.h",
+        "add_on/**.hpp",
         "add_on/**.cpp"
     }
 

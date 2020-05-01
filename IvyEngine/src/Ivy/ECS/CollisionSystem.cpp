@@ -12,9 +12,17 @@
 
 namespace Ivy
 {
+	std::map<Entity, std::vector<Entity>> CollisionSystem::isCollidingWith;
+
 	void CollisionSystem::init()
 	{
-
+		for (Entity i = 0; i < MAX_Entities; i++)
+		{
+			Entity entity = i;
+			std::vector<Entity> entityVector{};
+			std::pair<Entity, std::vector<Entity>> pair = std::make_pair(entity, entityVector);
+			isCollidingWith.insert(pair);
+		}
 	}
 
 	void CollisionSystem::update(float deltatime)
@@ -50,6 +58,7 @@ namespace Ivy
 			A.halfScale = ATransform.scale / 2.0f;
 			A.rotation = ATransform.rotation;
 
+			std::vector<Entity>* entityIsColliding = &isCollidingWith[object];
 			for (auto& itOther = entities->begin(); itOther != entities->end(); itOther++)
 			{
 				if (*it == *itOther)
@@ -65,16 +74,19 @@ namespace Ivy
 				glm::vec2 T = A.centerPosition - B.centerPosition;
 
 				// Check if the objects are close to eachother and ignore other computations otherwise
-				maxDistA = A.halfScale.x > A.halfScale.y ? A.halfScale.x + 0.5f : A.halfScale.y + 0.5f;
-				maxDistB = B.halfScale.x > B.halfScale.y ? B.halfScale.x + 0.5f : B.halfScale.y + 0.5f;
+				maxDistA = A.halfScale.x > A.halfScale.y ? A.halfScale.x + 0.05f : A.halfScale.y + 0.05f;
+				maxDistB = B.halfScale.x > B.halfScale.y ? B.halfScale.x + 0.05f : B.halfScale.y + 0.05f;
 
 				if (glm::length(T) > maxDistA + maxDistB)
 				{
-					const bool areColliding = A.isCollidingWith.find(otherObject) != A.isCollidingWith.end();
-					if (areColliding)
+					if (entityIsColliding->size() != 0)
 					{
-						A.isCollidingWith.erase(otherObject);
-						B.isCollidingWith.erase(object);
+						std::vector<Entity>::iterator areColliding = std::find(entityIsColliding->begin(), entityIsColliding->end(), otherObject);
+						if (areColliding != entityIsColliding->end())
+						{
+							entityIsColliding->erase(areColliding);
+							//isCollidingWith[otherObject].erase(std::find(isCollidingWith[otherObject].begin(), isCollidingWith[otherObject].end(), object));
+						}
 					}
 					continue;
 				}
@@ -89,17 +101,21 @@ namespace Ivy
 					glm::abs(glm::dot(T, B.unitY)) > B.halfScale.y + glm::abs(glm::dot(A.halfScale.x * A.unitX, B.unitY)) +
 					glm::abs(glm::dot(A.halfScale.y * A.unitY, B.unitY)))
 				{
-					const bool areColliding = A.isCollidingWith.find(otherObject) != A.isCollidingWith.end();
-					if (areColliding)
+					if (entityIsColliding->size() != 0)
 					{
-						A.isCollidingWith.erase(otherObject);
-						B.isCollidingWith.erase(object);
+						std::vector<Entity>::iterator areColliding = std::find(entityIsColliding->begin(), entityIsColliding->end(), otherObject);
+						if (areColliding != entityIsColliding->end())
+						{
+							entityIsColliding->erase(areColliding);
+							//isCollidingWith[otherObject].erase(std::find(isCollidingWith[otherObject].begin(), isCollidingWith[otherObject].end(), object));
+						}		
 					}
-					continue;
+					continue;	
 				}
 
-				A.isCollidingWith.insert(otherObject);
-				B.isCollidingWith.insert(object);
+				entityIsColliding->push_back(otherObject);
+				//isCollidingWith[otherObject].push_back(object);
+
 
 				if (A.isTrigger || B.isTrigger)
 				{

@@ -19,7 +19,8 @@ namespace Ivy
 			scale = glm::vec2(0.0f);
 		}
 		Transform(glm::vec2 position, float rotation, glm::vec2 scale);
-		
+		Transform(const Transform& other);
+
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
 

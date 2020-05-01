@@ -14,6 +14,7 @@ namespace Ivy
 
 		Tag() : Component() {}
 		Tag(std::string newTag);
+		Tag(const Tag& other);
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }

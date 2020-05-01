@@ -12,6 +12,16 @@ namespace Ivy
 		this->setComponentId(ECS::getInstance().getComponentTypes().find(typeid(Transform).name())->second);
 	}
 
+	Transform::Transform(const Transform& other)
+	{
+		this->position = glm::vec2(other.position);
+		this->rotation = other.rotation;
+		this->scale = glm::vec2(other.scale);
+		this->entityId = other.entityId;
+		this->componentId = other.componentId;
+
+	}
+
 	bool Transform::operator==(const Transform& other)
 	{
 		return this->position == other.position;
@@ -23,9 +33,9 @@ namespace Ivy
 
 	Transform& Transform::operator=(const Transform& other)
 	{
-		this->position = other.position;
+		this->position = glm::vec2(other.position);
 		this->rotation = other.rotation;
-		this->scale = other.scale;
+		this->scale = glm::vec2(other.scale);
 		this->entityId = other.entityId;
 		this->componentId = other.componentId;
 

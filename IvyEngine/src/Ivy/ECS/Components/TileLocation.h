@@ -23,6 +23,7 @@ namespace Ivy
 			previousPosition = glm::vec2(0.0f);
 		}
 		TileLocation(float tileIndexX, float tileIndexY, glm::vec2 previousPosition, Entity owner);
+		TileLocation(const TileLocation& other);
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }

@@ -129,6 +129,9 @@
     <ClInclude Include="src\Ivy\ECS\Components\Tag.h">
       <Filter>src\Ivy\ECS\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ivy\ECS\Components\TileLocation.h">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ivy\ECS\Components\Transform.h">
       <Filter>src\Ivy\ECS\Components</Filter>
     </ClInclude>
@@ -1515,7 +1518,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\ECS\Components\TileLocation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ivy\Core\Application.cpp">
@@ -1549,6 +1551,9 @@
       <Filter>src\Ivy\ECS\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\ECS\Components\Tag.cpp">
+      <Filter>src\Ivy\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ivy\ECS\Components\TileLocation.cpp">
       <Filter>src\Ivy\ECS\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Ivy\ECS\Components\Transform.cpp">
@@ -1668,9 +1673,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\Components\TileLocation.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\Ivy\ECS\SpatialPartitioning.txt" />
   </ItemGroup>
 </Project>

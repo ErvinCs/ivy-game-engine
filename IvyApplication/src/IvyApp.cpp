@@ -46,7 +46,7 @@ public:
 				}
 				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_SPACE))
 				{
-					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(pauseMenu);
+					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(mainMenu);
 					isStarted = true;
 					loadedMenu = false;
 					Ivy::Application::getInstance().isPaused = false;

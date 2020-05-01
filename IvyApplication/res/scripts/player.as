@@ -6,7 +6,6 @@ enum Actions
 	DOWN = 83,	//S
 	LEFT = 65,	//A
 	RIGHT = 68,	//D
-	THROW = 81	//Q
 }
 
 class CPlayer : IController
@@ -55,7 +54,7 @@ class CPlayer : IController
 			if(msg.txt == 'ATK')
 			{
 				LoadSprite(self.getOwner(), "player-dead.png");
-				self.kill();
+				//self.kill();
 			}
 			if(msg.txt == 'COLLECT')
 			{

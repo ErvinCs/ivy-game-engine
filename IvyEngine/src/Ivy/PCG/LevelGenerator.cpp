@@ -100,6 +100,14 @@ namespace Ivy
 			(Paths::scriptsPath / LevelGenerator::playerScript).string(), ECS::getInstance().getComponent<ScriptComponent>(player).scriptableObject, player
 		);
 		Application::GetCamera().setOwner(player);
+		IVY_CORE_TRACE("Spawned Player. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+			ECS::getInstance().getComponent<Transform>(player).getEntityId(),
+			ECS::getInstance().getComponent<Tag>(player).tag,
+			ECS::getInstance().getComponent<Transform>(player).position.x,
+			ECS::getInstance().getComponent<Transform>(player).position.y,
+			ECS::getInstance().getComponent<Transform>(player).rotation,
+			ECS::getInstance().getComponent<Transform>(player).scale.x,
+			ECS::getInstance().getComponent<Transform>(player).scale.y);
 
 		// Spawn Enemies
 		auto& it = fittest.getDesignElements().begin();
@@ -131,9 +139,14 @@ namespace Ivy
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
 							);
-							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
 								ECS::getInstance().getComponent<Tag>(collectable).tag,
-								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
 						}
 						else if (type == ElementType::Hole)
 						{
@@ -151,9 +164,14 @@ namespace Ivy
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
 							);
-							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
 								ECS::getInstance().getComponent<Tag>(collectable).tag,
-								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
 						}
 						else if (type == ElementType::Pillar)
 						{
@@ -171,11 +189,17 @@ namespace Ivy
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
 							);
-							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
 								ECS::getInstance().getComponent<Tag>(collectable).tag,
-								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
 						}
-						else {
+						else 
+						{
 							collectable = ECS::getInstance().createEntity();
 							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
 							Transform collectTransform = Transform(
@@ -190,9 +214,14 @@ namespace Ivy
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
 							);
-							IVY_CORE_TRACE("Spawned Colletable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", collectable,
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
 								ECS::getInstance().getComponent<Tag>(collectable).tag,
-								collectTransform.position.x, collectTransform.position.y - halfTilePos * 2, collectTransform.rotation, collectTransform.scale.x, collectTransform.scale.y);
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
 						}
 						
 					}
@@ -218,7 +247,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x, enemyTransform.position.y + halfTilePos, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::HorizontalWall:
@@ -241,7 +270,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x, enemyTransform.position.y + halfTilePos, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::Pillar:
@@ -264,7 +293,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x, enemyTransform.position.y + halfTilePos, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						
 						break;
@@ -288,7 +317,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x, enemyTransform.position.y + halfTilePos, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::RangedEnemy:
@@ -311,7 +340,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x + halfTilePos, enemyTransform.position.y + halfTilePos, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x + halfTilePos, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::TShaped:
@@ -334,7 +363,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x, enemyTransform.position.y - halfTilePos * 2, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::ClosedRoom:
@@ -357,7 +386,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x, enemyTransform.position.y - halfTilePos * 2, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::MeleeEnemy:
@@ -380,7 +409,7 @@ namespace Ivy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
-								enemyTransform.position.x, enemyTransform.position.y - halfTilePos * 2, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					default:

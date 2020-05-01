@@ -18,6 +18,7 @@ namespace Ivy
 			spritePath = "blank.png";
 		}
 		Renderable(std::string spritePath);
+		Renderable(const Renderable& other);
 
 		inline void addReference() { /* do nothing */ }
 		inline void release() { /* do nothing */ }
