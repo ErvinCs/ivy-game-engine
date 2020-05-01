@@ -2,7 +2,7 @@
 
 #include <array>
 #include <cstdlib>
-#include <queue>
+#include <unordered_set>
 
 #include "Entity.h"
 #include "../Core/Logger.h"
@@ -10,8 +10,8 @@
 class EntityContainer
 {
 private:
-	std::vector<Entity> freeEntities{};
-	std::array<Entity, 100> entities{};
+	std::unordered_set<Entity> freeEntities{};
+	std::array<Entity, MAX_Entities> entities{};
 	size_t entitiesSize;
 public:
 	EntityContainer()
@@ -23,7 +23,7 @@ public:
 	inline size_t size() { return entitiesSize; }
 	inline void incrSize() { entitiesSize++; }
 	inline void decrSize() { entitiesSize--; }
-	inline std::array<Entity, 100>& array() { return entities; }
+	inline std::array<Entity, MAX_Entities>& array() { return entities; }
 
 	Entity& operator[](std::size_t idx) { return entities[idx]; }
 	const Entity& operator[](std::size_t idx) const { return entities[idx]; }
@@ -71,8 +71,8 @@ public:
 		}
 		else
 		{
-			entity = freeEntities.back();
-			freeEntities.pop_back();
+			entity = *freeEntities.begin();
+			freeEntities.erase(freeEntities.begin());
 		}
 		entities[entitiesSize] = entity;
 		entitiesSize++;
@@ -98,7 +98,7 @@ public:
 
 	inline void addToFreeEntities(Entity entity)
 	{
-		freeEntities.emplace_back(entity);
+		freeEntities.emplace(entity);
 	}
 
 	inline void addToEntities(uint16_t entity)
@@ -114,7 +114,7 @@ public:
 				return entities[i];
 	}
 
-	inline const std::vector<Entity>& getFreeEntities()
+	inline const std::unordered_set<Entity>& getFreeEntities()
 	{
 		return this->freeEntities;
 	}

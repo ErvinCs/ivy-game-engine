@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "ECS.h"
+#include "EntityContainer.h"
 #include "../Core/Logger.h"
 #include "../Core//Application.h"
 #include "../Renderer/OrthoCamera.h"
@@ -167,7 +168,7 @@ namespace Ivy {
 		std::ofstream writer(path);
 
 		EntityContainer container = ECS::getInstance().getEntities();
-		std::vector<Entity> freeContainer = ECS::getInstance().getEntities().getFreeEntities();
+		std::unordered_set<Entity> freeContainer = ECS::getInstance().getEntities().getFreeEntities();
 		uint16_t entryCounter = 0;
 		for (Entity& entity : container)
 		{

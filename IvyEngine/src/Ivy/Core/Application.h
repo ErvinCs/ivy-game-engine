@@ -27,16 +27,15 @@ namespace Ivy {
 	private:
 		static Application* instance;
 		static OrthoCamera camera;
+		static LevelGenerator levelGenerator;
 		SortingLayerStack layerStack;
 		std::unique_ptr<Window> window;
+		ScriptManager* scriptManager;
 #ifdef _DEBUG
 		ImGuiLayer* imGuiLayer;
 		InspectorLayer* inspectorLayer;
 		GenerationLayer* generationLayer;
-#endif
-		ScriptManager* scriptManager;
-		static LevelGenerator levelGenerator;
-
+#endif	
 	public:
 		bool isRunning = true;
 		bool isPaused = false;
@@ -65,7 +64,8 @@ namespace Ivy {
 		inline static OrthoCamera& GetCamera() { return camera; }
 		inline static LevelGenerator& GetLevelGenerator() { return levelGenerator; }
 	private:
-		bool onWindowClose(WindowCloseEvent& event);
+		bool onWindowClose(WindowCloseEvent& ev);
+		bool onWindowResize(WindowResizeEvent& ev);
 
 	};
 

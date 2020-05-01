@@ -94,6 +94,7 @@ public:
 		{
 			isStarted = false; isLoaded = false; loadedMenu = false;
 			Ivy::ECS::getInstance().clearECS();
+			Ivy::CollisionSystem::refresh();
 			Ivy::ScriptManager::GetInstance().garbageCollect(2);
 			level_score = 0;
 			mainMenu = Ivy::ECS::getInstance().createEntity();

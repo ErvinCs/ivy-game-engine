@@ -24,6 +24,7 @@ namespace Ivy {
 			this->setEntities(entities);
 		}
 
+		static void refresh();
 		virtual void init() override;
 		virtual void update(float deltatime) override;
 	};

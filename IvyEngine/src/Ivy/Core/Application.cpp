@@ -75,7 +75,7 @@ namespace Ivy {
 
 	void Application::init()
 	{
-		ECS::getInstance().loadEntities();
+		//ECS::getInstance().loadEntities();
 		ECS::getInstance().initSystems();
 	}
 
@@ -113,7 +113,7 @@ namespace Ivy {
 
 	void Application::shutdown()
 	{
-		ECS::getInstance().saveEntities();
+		//ECS::getInstance().saveEntities();
 		Renderer::Shutdown();
 	}
 
@@ -127,9 +127,17 @@ namespace Ivy {
 	{
 	}
 
-	bool Application::onWindowClose(WindowCloseEvent& event)
+	bool Application::onWindowClose(WindowCloseEvent& ev)
 	{
 		isRunning = false;
+		return true;
+	}
+
+	bool Application::onWindowResize(WindowResizeEvent& ev)
+	{
+		currTime = (float)glfwGetTime();
+		globalTime = 0;
+		lastFrameTime = currTime;
 		return true;
 	}
 }

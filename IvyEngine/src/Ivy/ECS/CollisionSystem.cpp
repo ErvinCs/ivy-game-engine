@@ -25,6 +25,14 @@ namespace Ivy
 		}
 	}
 
+	void CollisionSystem::refresh()
+	{
+		for (std::pair<const Entity, std::vector<Entity>>& pair : CollisionSystem::isCollidingWith)
+		{
+			isCollidingWith[pair.first].clear();
+		}
+	}
+
 	void CollisionSystem::update(float deltatime)
 	{
 		/*
