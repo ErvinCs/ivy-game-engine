@@ -1,10 +1,11 @@
 #pragma once
 
+#include <map>
+#include <unordered_map>
 #include <stdint.h>
 #include <glm/glm.hpp>
 
-#pragma once
-
+#include "Entity.h"
 #include "System.h"
 
 namespace Ivy {
@@ -15,6 +16,8 @@ namespace Ivy {
 		float maxDistA;
 		float maxDistB;
 	public:
+		static std::map<Entity, std::vector<Entity>> isCollidingWith;
+
 		CollisionSystem() = default;
 		CollisionSystem(EntityContainer& entities)
 		{

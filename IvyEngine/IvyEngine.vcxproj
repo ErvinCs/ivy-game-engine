@@ -92,7 +92,7 @@
     </Lib>
     <PostBuildEvent>
       <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
-IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul)</Command>
+IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\shaders &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\shaders &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -119,8 +119,8 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
-IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul)</Command>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\shaders &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\shaders &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -147,8 +147,8 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
-IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul)</Command>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\shaders &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\shaders\**.glsl $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\shaders &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -172,6 +172,7 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClInclude Include="src\Ivy\ECS\Components\Renderable.h" />
     <ClInclude Include="src\Ivy\ECS\Components\ScriptComponent.h" />
     <ClInclude Include="src\Ivy\ECS\Components\Tag.h" />
+    <ClInclude Include="src\Ivy\ECS\Components\TileLocation.h" />
     <ClInclude Include="src\Ivy\ECS\Components\Transform.h" />
     <ClInclude Include="src\Ivy\ECS\ECS.h" />
     <ClInclude Include="src\Ivy\ECS\Entity.h" />
@@ -224,7 +225,6 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClInclude Include="src\Ivy\Windows\WindowsInputHandler.h" />
     <ClInclude Include="src\Ivy\Windows\WindowsWindow.h" />
     <ClInclude Include="src\ivypch.h" />
-    <ClInclude Include="src\Ivy\ECS\Components\TileLocation.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -648,6 +648,7 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClCompile Include="src\Ivy\ECS\Components\Renderable.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\ScriptComponent.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\Tag.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Components\TileLocation.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\Transform.cpp" />
     <ClCompile Include="src\Ivy\ECS\JSONManager.cpp" />
     <ClCompile Include="src\Ivy\ECS\RenderSystem.cpp" />
@@ -688,7 +689,6 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClCompile Include="src\ivypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Ivy\ECS\Components\TileLocation.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -704,9 +704,6 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ProjectReference Include="vendor\angelscript\AngelScript.vcxproj">
       <Project>{0136F6DA-6DEB-6ED0-F6DF-68A7629465D4}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\Ivy\ECS\SpatialPartitioning.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

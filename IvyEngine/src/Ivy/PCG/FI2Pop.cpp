@@ -12,7 +12,7 @@ namespace Ivy
 	int FI2Pop::populationSize = 26;
 	int FI2Pop::tournamentSize = 6;
 	int FI2Pop::genotypeSize = 12;
-	int FI2Pop::maxGeneration = 5;
+	int FI2Pop::maxGeneration = 3;
 
 	FI2Pop::FI2Pop()
 	{
@@ -243,10 +243,10 @@ namespace Ivy
 		Individual individual{};
 		
 		int elemTypeCount = DesignElement::ElementTypeCount;
-		int hostileTypeCount = DesignElement::HostileTypeCount;
+		int hostileTypeCount = DesignElement::HostileTypeCount ;
 		for (int i = 0; i < genotypeSize; i++)
 		{
-			int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
+			int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 3));
 			float rotation;
 			switch (randomRotationQuadrant)
 			{
@@ -267,9 +267,9 @@ namespace Ivy
 			const glm::vec2 roomSize = glm::vec2(8.0f, 8.0f);
 			// Do not allow traps at level beginning and end
 			if (i == 0 || i == genotypeSize - 1)
-				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / elemTypeCount - hostileTypeCount));
+				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (elemTypeCount - hostileTypeCount - 1)));
 			else
-				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / elemTypeCount));
+				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (elemTypeCount - 1)));
 			Transform roomTransform = Transform(glm::vec2(1.0f), rotation, roomSize);
 
 			DesignElement piece = DesignElement(Tag(std::string("LevelElement" + std::to_string(DesignElement::TagCounter++))), roomTransform);
@@ -387,7 +387,7 @@ namespace Ivy
 
 	void FI2Pop::mutateRotation(DesignElement& designElement)
 	{
-		int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
+		int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 3));
 		float rotation;
 		switch (randomRotationQuadrant)
 		{
@@ -406,7 +406,7 @@ namespace Ivy
 		}
 		while (rotation == designElement.transform.rotation)
 		{
-			randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 4));
+			randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 3));
 			switch (randomRotationQuadrant)
 			{
 			case 1:
@@ -429,15 +429,15 @@ namespace Ivy
 	void FI2Pop::mutateLevelElement(DesignElement& designElement, int geneIndex)
 	{
 		// Select random room type
-		int roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount)));
+		int roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount - 1)));
 		// Keep changing piece until it's different
 		while ((ElementType)roomType == designElement.getElementType())
 		{
-			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount)));
+			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount - 1)));
 		}
 		// Do not allow traps at level beginning and end
 		if (geneIndex == 0 || geneIndex == genotypeSize - 1)
-			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount - DesignElement::HostileTypeCount)));
+			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount - DesignElement::HostileTypeCount - 1)));
 
 		designElement.setElementType((ElementType)roomType);
 	}

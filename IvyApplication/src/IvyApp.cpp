@@ -6,81 +6,107 @@
 
 #include "UserComponent.h"
 
-class TestLayer : public Ivy::SortingLayer
+class GameLayer : public Ivy::SortingLayer
 {
 private:
-	//Systems
-	std::shared_ptr<Ivy::System> userSystem      = std::make_shared<UserComponentSystem>(Ivy::ECS::getInstance().getEntities());
-
-	Ivy::OrthoCamera camera;
+	bool isStarted = false, isLoaded = false, loadedMenu = false;
+	glm::vec2 menuSize = glm::vec2(7.0f, 7.0f);
+	Entity mainMenu;
+	//Entity pauseMenu, victoryMenu;
+	const int final_score = 11;
+	static int level_score;
 public:
-	TestLayer() : SortingLayer("Test")
+	GameLayer() : SortingLayer("Game")
 	{
-		IVY_TRACE("Creating TestLayer");
+		IVY_TRACE("Creating GameLayer");
 
-		camera = Ivy::Application::GetCamera();
+		mainMenu = Ivy::ECS::getInstance().createEntity();
+		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
+		//pauseMenu = Ivy::ECS::getInstance().createEntity();
+		//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-paused.png"));
+		//victoryMenu = Ivy::ECS::getInstance().createEntity();
+		//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-won.png"));
 
-		Ivy::ECS::getInstance().addSystem(userSystem);
-
-		userSystem->init();
-
-		Ivy::JSONManager::addLoadFunction(loadUC);
-		Ivy::JSONManager::addSaveFunction(saveUC);
+		int r = Ivy::ScriptManager::GetInstance().getScriptEngine()->RegisterGlobalProperty("int level_score", &level_score); assert(r >= 0);
 	}
 
 	void update(Ivy::Timestep ts) override
 	{
-		// User System
-		userSystem->update(ts);
+		if (isLoaded)
+		{
+			if (!isStarted) 
+			{
+				Ivy::Application::getInstance().isPaused = true;
+				if (!loadedMenu)
+				{
+					Ivy::ECS::getInstance().addComponent<Ivy::Transform>(mainMenu, Ivy::Transform(Ivy::Application::GetCamera().position, 0.0f, menuSize));
+					loadedMenu = true;
+				}
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_X))
+				{
+					Ivy::ECS::getInstance().clearECS();
+					Ivy::ScriptManager::GetInstance().garbageCollect(2);
+					Ivy::Application::getInstance().isRunning = false;
+				}
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_SPACE))
+				{
+					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(mainMenu);
+					isStarted = true;
+					Ivy::Application::getInstance().isPaused = false;
+					loadedMenu = false;
+				}
+			}
+
+
+			if (Ivy::InputHandler::IsKeyDown(IVY_KEY_P) && isStarted)
+			{
+				Ivy::Application::getInstance().isPaused = true;
+			}
+			if (Ivy::Application::getInstance().isPaused)
+			{
+				if (!loadedMenu)
+				{
+					Ivy::ECS::getInstance().addComponent<Ivy::Transform>(mainMenu, Ivy::Transform(Ivy::Application::GetCamera().position, 0.0f, menuSize));
+					loadedMenu = true;
+				}
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_X))
+				{
+					Ivy::ECS::getInstance().clearECS();
+					Ivy::ScriptManager::GetInstance().garbageCollect(2);		
+					Ivy::Application::getInstance().isRunning = false;
+				}
+				if (Ivy::InputHandler::IsKeyDown(IVY_KEY_SPACE))
+				{
+					Ivy::ECS::getInstance().removeComponent<Ivy::Transform>(mainMenu);
+					Ivy::Application::getInstance().isPaused = false;
+					loadedMenu = false;
+				}
+			}
+		}
+		else
+		{
+			Ivy::Application::getInstance().isPaused = true;
+			Ivy::Application::GetLevelGenerator().run();
+			isLoaded = true;
+		}
+
+		if (level_score == final_score)
+		{
+			isStarted = false; isLoaded = false; loadedMenu = false;
+			Ivy::ECS::getInstance().clearECS();
+			Ivy::ScriptManager::GetInstance().garbageCollect(2);
+			level_score = 0;
+			mainMenu = Ivy::ECS::getInstance().createEntity();
+			Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
+			//pauseMenu = Ivy::ECS::getInstance().createEntity();
+			//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-paused.png"));
+		}
+
+		Ivy::ScriptManager::GetInstance().garbageCollect(1);
 	}
 
 	void imGuiRender() override
 	{
-		static std::string tagTemp;
-		ImGui::Begin("User Components");
-		for (Entity& entity : Ivy::ECS::getInstance().getEntities())
-		{
-			ImGui::PushID(&entity);
-			if (Ivy::ECS::getInstance().getComponent<Ivy::Tag>(entity).getComponentId() == 
-				Ivy::ECS::getInstance().getComponentTypes().find(typeid(Ivy::Tag).name())->second
-				&& tagTemp.size() > 0)
-			{
-				tagTemp = Ivy::ECS::getInstance().getComponent<Ivy::Tag>(entity).tag;
-			}
-			else
-			{
-				tagTemp = "Entity##";
-			}
-
-			if (ImGui::CollapsingHeader(tagTemp.c_str()))
-			{
-				if (ImGui::TreeNode("UserComp"))
-				{
-					if (Ivy::ECS::getInstance().getComponent<UserComponent>(entity).getComponentId() == UserCompID)
-					{
-						ImGui::InputFloat("aField", (float*)&Ivy::ECS::getInstance().getComponent<UserComponent>(entity).aField, 2);
-						if (ImGui::Button("Remove UserComp"))
-						{
-							Ivy::ECS::getInstance().removeComponent<UserComponent>(entity);
-							IVY_INFO("Destroyed UserComponent on Entity: {0}", entity);
-						}
-					}
-					else
-					{
-						if (ImGui::Button("Add UserComp"))
-						{
-							UserComponent newUserComp = UserComponent(0.001f, "Hello World");
-							newUserComp.setComponentId(UserCompID);
-							Ivy::ECS::getInstance().addComponent<UserComponent>(entity, newUserComp);
-							IVY_INFO("Added: User Component");
-						}
-					}
-					ImGui::TreePop();
-				}
-			}
-			ImGui::PopID();
-		}
-		ImGui::End();
 
 	}
 
@@ -89,17 +115,19 @@ public:
 		IVY_INFO("Test Layer: {0}", event.toString());
 	}
 
-	~TestLayer()
+	~GameLayer()
 	{
 	}
 };
+
+int GameLayer::level_score = 0;
 
 class IvyApp : public Ivy::Application
 {
 public:
 	IvyApp()
 	{
-		pushLayer(new TestLayer());
+		pushLayer(new GameLayer());
 	}
 
 	~IvyApp()

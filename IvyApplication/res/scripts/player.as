@@ -6,7 +6,6 @@ enum Actions
 	DOWN = 83,	//S
 	LEFT = 65,	//A
 	RIGHT = 68,	//D
-	THROW = 81	//Q
 }
 
 class CPlayer : IController
@@ -16,7 +15,6 @@ class CPlayer : IController
 
 	int isFacing = 1;
 	float playerMoveSpeed = 5;
-	int score = 0;
 
 	CPlayer(ScriptableObject@ object)
 	{
@@ -54,12 +52,12 @@ class CPlayer : IController
 		{
 			if(msg.txt == 'ATK')
 			{
-				LoadSprite(self.getOwner(), "rage.png");
+				LoadSprite(self.getOwner(), "player-dead.png");
 				self.kill();
 			}
 			if(msg.txt == 'COLLECT')
 			{
-				score = score + 1;
+				level_score = level_score + 1;
 			}
 		} 
 	}

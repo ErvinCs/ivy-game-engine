@@ -38,11 +38,13 @@ namespace Ivy {
 
 	ScriptableObject::ScriptableObject(const ScriptableObject& other)
 	{
+
 		this->name = other.name;
 		this->referenceCount = other.referenceCount;
 		this->scriptObject = other.scriptObject;
 		this->weakReferenceFlag = other.weakReferenceFlag;
 		this->alive = other.alive;
+		
 	}
 
 	ScriptableObject& ScriptableObject::operator=(const ScriptableObject& other)
@@ -62,12 +64,15 @@ namespace Ivy {
 		{
 			weakReferenceFlag->Set(true);
 			weakReferenceFlag->Release();
+			weakReferenceFlag = NULL;
 		}
 		// Release the script controller
 		if (scriptObject != NULL)
 		{
 			scriptObject->Release();
+			scriptObject = NULL;
 		}
+
 	}
 
 	asILockableSharedBool* ScriptableObject::getWeakRefereneFlag()
@@ -120,7 +125,7 @@ namespace Ivy {
 
 	void ScriptableObject::onUpdate()
 	{
-		if (scriptObject) {
+		if (alive && scriptObject != NULL) {
 			ScriptManager::GetInstance().callOnUpdate(scriptObject);
 		}
 	}

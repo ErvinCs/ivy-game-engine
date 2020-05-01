@@ -9,6 +9,7 @@
 #include "../ECS/Components/ScriptComponent.h"
 #include "../ECS/Components/Renderable.h"
 #include "../ECS/Components/Collidable.h"
+#include "../ECS/CollisionSystem.h"
 
 #include "../Core/InputHandler.h"
 #include "../Core/Logger.h"
@@ -139,35 +140,16 @@ namespace Ivy {
 		collidable.rotation += 3.0f * M_PI_2;
 	}
 
-	bool IsEntityCollidingCollidable(Entity e1, CollidableBox& c1)
-	{
-		return c1.isCollidingWith.find(e1) != c1.isCollidingWith.end();
-	}
-
 	bool AreEntitiesColliding(Entity e1, Entity e2)
 	{
-		CollidableBox c1 = ECS::getInstance().getComponent<CollidableBox>(e1);
-		bool col = c1.isCollidingWith.find(e2) != c1.isCollidingWith.end();
-		if (col)
-			IVY_CORE_ERROR("MethodWrappers: Colliding: {0} with {1}", e1, e2);
-		return col;
-	}
-
-	bool AreCollidablesColliding(CollidableBox& c1, CollidableBox& c2)
-	{
-		return c1.isCollidingWith.find(c2.getEntityId()) != c1.isCollidingWith.end();
+		return std::find(CollisionSystem::isCollidingWith[e1].begin(), CollisionSystem::isCollidingWith[e1].end(), e2) != CollisionSystem::isCollidingWith[e1].end();
 	}
 
 	bool IsEntityColliding(Entity e)
 	{
-		CollidableBox& c = ECS::getInstance().getComponent<CollidableBox>(e);
-		return !c.isCollidingWith.empty();
+		return CollisionSystem::isCollidingWith[e].size() != 0;
 	}
 
-	bool IsCollidableColliding(CollidableBox& c)
-	{
-		return !c.isCollidingWith.empty();
-	}
 
 	void FlipX(Renderable& renderable)
 	{
@@ -190,6 +172,33 @@ namespace Ivy {
 	{
 		r.spritePath = newPath;
 		r.texture = Texture::Create(newPath);
+	}
+
+	void SelfDestroyRenderable(Entity entity)
+	{
+		Renderable* r = &ECS::getInstance().getComponent<Renderable>(entity);
+		if (r->getComponentId() == 0)
+			return;
+		else
+			ECS::getInstance().removeComponent<Renderable>(entity);
+	}
+
+	void SelfDestroyCollidable(Entity entity)
+	{
+		CollidableBox* c = &ECS::getInstance().getComponent<CollidableBox>(entity);
+		if (c->getComponentId() == 0)
+			return;
+		else
+			ECS::getInstance().removeComponent<CollidableBox>(entity);
+	}
+
+	void SelfDestroyTransform(Entity entity)
+	{
+		Transform* t = &ECS::getInstance().getComponent<Transform>(entity);
+		if (t->getComponentId() == 0)
+			return;
+		else
+			ECS::getInstance().removeComponent<Transform>(entity);
 	}
 
 	// ---------- Timestep ----------

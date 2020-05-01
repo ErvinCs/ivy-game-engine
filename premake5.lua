@@ -98,7 +98,7 @@ project "IvyEngine"
         symbols "on"
         postbuildcommands { 
             "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
-            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures"
+            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/shaders"
         }
 
     filter "configurations:Release"
@@ -106,8 +106,8 @@ project "IvyEngine"
         runtime "Release"
         optimize "on"
         postbuildcommands { 
-            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
-            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures"
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/shaders"
         }
 
     filter "configurations:Dist"
@@ -115,8 +115,8 @@ project "IvyEngine"
         runtime "Release"
         optimize "on"
         postbuildcommands { 
-            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
-            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures"
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/shaders"
         }
 
 -- Application
@@ -175,9 +175,9 @@ project "IvyApplication"
         runtime "Release"
         optimize "on"
         postbuildcommands { 
-            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
-            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/scripts",
-            "{COPY} %{prj.location}/res/**.json %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res"
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res"
         }
 
     filter "configurations:Dist"
@@ -185,7 +185,7 @@ project "IvyApplication"
         runtime "Release"
         optimize "on"
         postbuildcommands { 
-            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/textures",
-            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res/scripts",
-            "{COPY} %{prj.location}/res/**.json %{prj.location}/bin/" .. outputdir .. "/%{prj.name}/res"
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res"
         }

@@ -20,7 +20,33 @@ namespace Ivy {
 		//unitY.x = 0.0f * glm::cos(rotation) - 1.0f * glm::sin(rotation);
 		//unitY.y = 0.0f * glm::sin(rotation) + 1.0f * glm::cos(rotation);
 		this->unitY = glm::vec2(-glm::sin(rotation), glm::cos(rotation));
-		
+
 		this->setComponentId(ECS::getInstance().getComponentTypes().find(typeid(CollidableBox).name())->second);
+	}
+
+	CollidableBox::CollidableBox(const CollidableBox& other)
+	{
+		this->centerPosition = glm::vec2(other.centerPosition);
+		this->halfScale = glm::vec2(other.halfScale);
+		this->rotation = other.rotation;
+		this->isTrigger = other.isTrigger;
+		this->unitX = glm::vec2(other.unitX);
+		this->unitY = glm::vec2(other.unitY);
+		this->componentId = other.componentId;
+		this->entityId = other.entityId;
+	}
+
+	CollidableBox& CollidableBox::operator=(const CollidableBox& other)
+	{
+		this->centerPosition = glm::vec2(other.centerPosition);
+		this->halfScale = glm::vec2(other.halfScale);
+		this->rotation = other.rotation;
+		this->isTrigger = other.isTrigger;
+		this->unitX = glm::vec2(other.unitX);
+		this->unitY = glm::vec2(other.unitY);
+		this->componentId = other.componentId;
+		this->entityId = other.entityId;
+
+		return *this;
 	}
 }

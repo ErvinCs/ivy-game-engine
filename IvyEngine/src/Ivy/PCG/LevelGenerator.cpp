@@ -15,8 +15,6 @@ namespace Ivy
 	std::string LevelGenerator::horizontalBorderPath = "horizontalBorder.png";
 	std::string LevelGenerator::verticalBorderPath = "verticalBorder.png";
 	std::string LevelGenerator::closedRoomPath = "closedRoom.png";
-	std::string LevelGenerator::enemyFlyPath = "enemy-fly.png";
-	std::string LevelGenerator::enemyGroundPath = "enemy-ground.png";
 	std::string LevelGenerator::hallwayPath = "hallway.png";
 	std::string LevelGenerator::holePath = "hole.png";
 	std::string LevelGenerator::horizontalWallPath = "horizontalWall.png";
@@ -27,11 +25,16 @@ namespace Ivy
 	std::string LevelGenerator::stdRoom1Path = "standardRoom1.png";
 	std::string LevelGenerator::stdRoom2Path = "standardRoom2.png";
 	std::string LevelGenerator::tShapePath = "tshape.png";
+
+	std::string LevelGenerator::enemyFlyPath = "enemy-1.png";
+	std::string LevelGenerator::enemyGroundPath = "enemy-2.png";
+	std::string LevelGenerator::playerPath = "player.png";
+	std::string LevelGenerator::collectablePath = "item.png";
+
 	std::string LevelGenerator::scriptPatrolV = "patrol-diag.as";
 	std::string LevelGenerator::scriptPatrolH = "patrol-plus.as";
 	std::string LevelGenerator::playerScript = "player.as";
-	std::string LevelGenerator::playerPath = "ninja.png";
-
+	std::string LevelGenerator::collectableScript = "item.as";
 	
 
 	LevelGenerator::LevelGenerator()
@@ -47,11 +50,13 @@ namespace Ivy
 		if (!generator.getInitialisedFeasible())
 		{
 			fittest = generator.getFittestInfeasibleIndividual();
+			finalPopulation = generator.getInfeasiblePopulation();
 			IVY_CORE_INFO("LevelGenerator: Loading Fittest Infeasible");
 			
 		}
 		else
 		{
+			finalPopulation = generator.getFeasiblePopulation();
 			if (alwaysLoad)
 			{
 				if (alwaysLoadFittest == 1)
@@ -75,8 +80,9 @@ namespace Ivy
 		float xMax = (int)std::sqrtf(fittest.getDesignElements().size());
 		float yMax = (int)(fittest.getDesignElements().size() / xMax);
 		IVY_CORE_INFO("LevelGenerator: xMax={0}, yMax={1}", xMax, yMax);
-		Entity wall1 = -1, wall2 = -1, wall3 = -1, wall4 = -1, hole = -1, enemy1 = -1, enemy2 = -1, enemy3 = -1;
-		uint16_t enemyTagCounter = 0;
+		Entity wall1 = -1, wall2 = -1, wall3 = -1, wall4 = -1, hole = -1, enemy = -1, collectable = -1;
+		uint16_t enemyTagCounter = 1;
+		uint16_t collectibleTagCounter = 1;
 
 		// Spawn the player
 		Entity player = ECS::getInstance().createEntity();
@@ -94,6 +100,14 @@ namespace Ivy
 			(Paths::scriptsPath / LevelGenerator::playerScript).string(), ECS::getInstance().getComponent<ScriptComponent>(player).scriptableObject, player
 		);
 		Application::GetCamera().setOwner(player);
+		IVY_CORE_TRACE("Spawned Player. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+			ECS::getInstance().getComponent<Transform>(player).getEntityId(),
+			ECS::getInstance().getComponent<Tag>(player).tag,
+			ECS::getInstance().getComponent<Transform>(player).position.x,
+			ECS::getInstance().getComponent<Transform>(player).position.y,
+			ECS::getInstance().getComponent<Transform>(player).rotation,
+			ECS::getInstance().getComponent<Transform>(player).scale.x,
+			ECS::getInstance().getComponent<Transform>(player).scale.y);
 
 		// Spawn Enemies
 		auto& it = fittest.getDesignElements().begin();
@@ -101,156 +115,302 @@ namespace Ivy
 		{
 			for (int y = 0; y < (int)yMax; y++)
 			{
-				if (it != fittest.getDesignElements().end())
+				if (it != fittest.getDesignElements().begin() || it != fittest.getDesignElements().end())
 				{
 					DesignElement& levelElement = *it;
 					ElementType type = levelElement.getElementType();
 					levelElement.transform.position.x = (x * positionOffset) - (xMax * positionOffset) / 2;
 					levelElement.transform.position.y = (y * positionOffset) - (yMax * positionOffset) / 2;
+					if (it != fittest.getDesignElements().begin())
+					{
+						if (type == ElementType::TShaped)
+						{
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 2), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
+						}
+						else if (type == ElementType::Hole)
+						{
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
+						}
+						else if (type == ElementType::Pillar)
+						{
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
+						}
+						else 
+						{
+							collectable = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(collectable, Tag(std::string("Collectable-" + std::to_string(collectibleTagCounter++))));
+							Transform collectTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox collectBox = CollidableBox(collectTransform.position, collectTransform.rotation, collectTransform.scale);
+							collectBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(collectable, collectTransform);
+							ECS::getInstance().addComponent<Renderable>(collectable, Renderable(LevelGenerator::collectablePath));
+							ECS::getInstance().addComponent<CollidableBox>(collectable, collectBox);
+							ECS::getInstance().addComponent<ScriptComponent>(collectable, ScriptComponent(LevelGenerator::collectableScript));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::collectableScript).string(), ECS::getInstance().getComponent<ScriptComponent>(collectable).scriptableObject, collectable
+							);
+							IVY_CORE_TRACE("Spawned Collectable. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))",
+								ECS::getInstance().getComponent<Transform>(collectable).getEntityId(),
+								ECS::getInstance().getComponent<Tag>(collectable).tag,
+								ECS::getInstance().getComponent<Transform>(collectable).position.x,
+								ECS::getInstance().getComponent<Transform>(collectable).position.y,
+								ECS::getInstance().getComponent<Transform>(collectable).rotation,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.x,
+								ECS::getInstance().getComponent<Transform>(collectable).scale.y);
+						}
+						
+					}
 					switch (type)
 					{
 					case ElementType::VerticalWall:
-						IVY_CORE_TRACE("Adding VerticalWall Enemies");
+						IVY_CORE_TRACE("Adding VerticalWall Entities");
 						// Enemies
 						{
-							enemy1 = ECS::getInstance().createEntity();
-							ECS::getInstance().addComponent<Tag>(enemy1, Tag(std::string("Enemy-Fly-" + std::to_string(enemyTagCounter++))));
-							Transform fly1Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTilePos * 5), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
-							CollidableBox fly1box = CollidableBox(fly1Transform.position, fly1Transform.rotation, fly1Transform.scale);
-							fly1box.isTrigger = true;
-							ECS::getInstance().addComponent<Transform>(enemy1, fly1Transform);
-							ECS::getInstance().addComponent<Renderable>(enemy1, Renderable(LevelGenerator::enemyFlyPath));
-							ECS::getInstance().addComponent<CollidableBox>(enemy1, fly1box);
-							ECS::getInstance().addComponent<ScriptComponent>(enemy1, ScriptComponent(LevelGenerator::scriptPatrolH));
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyFlyPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
 							);
-							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy1,
-								ECS::getInstance().getComponent<Tag>(enemy1).tag,
-								fly1Transform.position.x, fly1Transform.position.y + halfTilePos, fly1Transform.rotation, fly1Transform.scale.x, fly1Transform.scale.y);
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::HorizontalWall:
-						//IVY_CORE_TRACE("Adding HorizontalWall Enemies");
-						// Enemies
-						break;
-					case ElementType::Pillar:
-						//IVY_CORE_TRACE("Adding Pillar Enemies");
-						// Enemies
-						break;
-					case ElementType::Hole:
-						//IVY_CORE_TRACE("Adding Hole Enemies");
-						// Enemies
-						break;
-					case ElementType::RangedEnemy:
-						IVY_CORE_TRACE("Adding RangedEnemy Enemies");
+						IVY_CORE_TRACE("Adding HorizontalWall Entities");
 						// Enemies
 						{
-							enemy1 = ECS::getInstance().createEntity();
-							ECS::getInstance().addComponent<Tag>(enemy1, Tag(std::string("Enemy-Fly-" + std::to_string(enemyTagCounter++))));
-							Transform fly2Transform = Transform(
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
+								glm::vec2(levelElement.transform.position.x - halfTilePos, levelElement.transform.position.y - halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyFlyPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolV));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
+							);
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+						}
+						break;
+					case ElementType::Pillar:
+						IVY_CORE_TRACE("Adding Pillar Entities");
+						// Enemies
+						{
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
+								glm::vec2(levelElement.transform.position.x + 3 * halfTilePos, levelElement.transform.position.y + 5 * halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyGroundPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolH));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
+							);
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+						}
+						
+						break;
+					case ElementType::Hole:
+						IVY_CORE_TRACE("Adding Hole Entities");
+						// Enemies
+						{
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
+								glm::vec2(levelElement.transform.position.x - 6 * halfTilePos, levelElement.transform.position.y - 6 * halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyGroundPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolH));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
+							);
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+						}
+						break;
+					case ElementType::RangedEnemy:
+						IVY_CORE_TRACE("Adding RangedEnemy Entities");
+						// Enemies
+						{
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
 								glm::vec2(levelElement.transform.position.x + halfTilePos * 2, levelElement.transform.position.y + halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
-							CollidableBox fly2Box = CollidableBox(fly2Transform.position, fly2Transform.rotation, fly2Transform.scale);
-							fly2Box.isTrigger = true;
-							ECS::getInstance().addComponent<Transform>(enemy1, fly2Transform);
-							ECS::getInstance().addComponent<Renderable>(enemy1, Renderable(LevelGenerator::enemyFlyPath));
-							ECS::getInstance().addComponent<CollidableBox>(enemy1, fly2Box);
-							ECS::getInstance().addComponent<ScriptComponent>(enemy1, ScriptComponent(LevelGenerator::scriptPatrolV));
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyFlyPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolV));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
 							);
-							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy1,
-								ECS::getInstance().getComponent<Tag>(enemy1).tag,
-								fly2Transform.position.x + halfTilePos, fly2Transform.position.y + halfTilePos, fly2Transform.rotation, fly2Transform.scale.x, fly2Transform.scale.y);
-
-							/*enemy2 = ECS::getInstance().createEntity();
-							ECS::getInstance().addComponent<Tag>(enemy2, Tag(std::string("Enemy-Fly-" + std::to_string(enemyTagCounter++))));
-							Transform fly3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - halfTilePos * 2, levelElement.transform.position.y - halfTilePos * 6), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
-							);
-							CollidableBox fly3Box = CollidableBox(fly3Transform.position, fly3Transform.rotation, fly3Transform.scale);
-							fly3Box.isTrigger = true;
-							ECS::getInstance().addComponent<Transform>(enemy2, fly3Transform);
-							ECS::getInstance().addComponent<Renderable>(enemy2, Renderable(LevelGenerator::enemyFlyPath));
-							ECS::getInstance().addComponent<CollidableBox>(enemy2, CollidableBox(fly3Transform.position, fly3Transform.rotation, fly3Transform.scale));
-							ECS::getInstance().addComponent<ScriptComponent>(enemy2, ScriptComponent(LevelGenerator::scriptPatrolH));
-							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy2).scriptableObject, enemy2
-							);
-							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy2,
-								ECS::getInstance().getComponent<Tag>(enemy2).tag,
-								fly2Transform.position.x - halfTilePos * 2, fly2Transform.position.y - halfTilePos * 2, fly2Transform.rotation, fly2Transform.scale.x, fly2Transform.scale.y);*/
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x + halfTilePos, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::TShaped:
-						IVY_CORE_TRACE("Adding TShaped Enemies");
+						IVY_CORE_TRACE("Adding TShaped Entities");
 						// Enemies
 						{
-							enemy1 = ECS::getInstance().createEntity();
-							ECS::getInstance().addComponent<Tag>(enemy1, Tag(std::string("Enemy-Ground-" + std::to_string(enemyTagCounter++))));
-							Transform ground1Transform = Transform(
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
 								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y - halfTilePos * 2), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
 							);
-							CollidableBox ground1box = CollidableBox(ground1Transform.position, ground1Transform.rotation, ground1Transform.scale);
-							ground1box.isTrigger = true;
-							ECS::getInstance().addComponent<Transform>(enemy1, ground1Transform);
-							ECS::getInstance().addComponent<Renderable>(enemy1, Renderable(LevelGenerator::enemyGroundPath));
-							ECS::getInstance().addComponent<CollidableBox>(enemy1, ground1box);
-							ECS::getInstance().addComponent<ScriptComponent>(enemy1, ScriptComponent(LevelGenerator::scriptPatrolV));
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyFlyPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy1).scriptableObject, enemy1
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
 							);
-							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy1,
-								ECS::getInstance().getComponent<Tag>(enemy1).tag,
-								ground1Transform.position.x, ground1Transform.position.y - halfTilePos * 2, ground1Transform.rotation, ground1Transform.scale.x, ground1Transform.scale.y);
-
-							/*enemy2 = ECS::getInstance().createEntity();
-							ECS::getInstance().addComponent<Tag>(enemy2, Tag(std::string("Enemy-Fly-" + std::to_string(enemyTagCounter++))));
-							Transform fly4Transform = Transform(
-								glm::vec2(levelElement.transform.position.x - halfTilePos * 2, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
-							);
-							CollidableBox fly4box = CollidableBox(fly4Transform.position, fly4Transform.rotation, fly4Transform.scale);
-							fly4box.isTrigger = true;
-							ECS::getInstance().addComponent<Transform>(enemy2, fly4Transform);
-							ECS::getInstance().addComponent<Renderable>(enemy2, Renderable(LevelGenerator::enemyFlyPath));
-							ECS::getInstance().addComponent<CollidableBox>(enemy2, fly4box);
-							ECS::getInstance().addComponent<ScriptComponent>(enemy2, ScriptComponent(LevelGenerator::scriptPatrolH));
-							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy2).scriptableObject, enemy2
-							);
-							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy2,
-								ECS::getInstance().getComponent<Tag>(enemy2).tag,
-								fly4Transform.position.x - halfTilePos * 2, fly4Transform.position.y + halfTilePos, fly4Transform.rotation, fly4Transform.scale.x, fly4Transform.scale.y);
-
-							enemy3 = ECS::getInstance().createEntity();
-							ECS::getInstance().addComponent<Tag>(enemy3, Tag(std::string("Enemy-Fly-" + std::to_string(enemyTagCounter++))));
-							Transform fly5Transform = Transform(
-								glm::vec2(levelElement.transform.position.x + halfTilePos * 2, levelElement.transform.position.y + halfTilePos), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
-							);
-							CollidableBox fly5box = CollidableBox(fly5Transform.position, fly5Transform.rotation, fly5Transform.scale);
-							fly5box.isTrigger = true;
-							ECS::getInstance().addComponent<Transform>(enemy3, fly5Transform);
-							ECS::getInstance().addComponent<Renderable>(enemy3, Renderable(LevelGenerator::enemyFlyPath));
-							ECS::getInstance().addComponent<CollidableBox>(enemy3, fly5box);
-							ECS::getInstance().addComponent<ScriptComponent>(enemy3, ScriptComponent(LevelGenerator::scriptPatrolH));
-							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy3).scriptableObject, enemy3
-							);
-							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy3,
-								ECS::getInstance().getComponent<Tag>(enemy3).tag,
-								fly5Transform.position.x + halfTilePos * 2, fly5Transform.position.y + halfTilePos, fly5Transform.rotation, fly5Transform.scale.x, fly5Transform.scale.y);*/
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
 						}
 						break;
 					case ElementType::ClosedRoom:
-						//IVY_CORE_TRACE("Adding ClosedRoom Enemies");
+						IVY_CORE_TRACE("Adding ClosedRoom Entities");
 						// Enemies
+						{
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyGroundPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolH));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
+							);
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+						}
 						break;
 					case ElementType::MeleeEnemy:
-						//IVY_CORE_TRACE("Adding MeleeEnemy Enemies");
+						//IVY_CORE_TRACE("Adding MeleeEnemy Entities");
 						//Enemies
+						{
+							enemy = ECS::getInstance().createEntity();
+							ECS::getInstance().addComponent<Tag>(enemy, Tag(std::string("Enemy-" + std::to_string(enemyTagCounter++))));
+							Transform enemyTransform = Transform(
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y), 0, glm::vec2(halfTileSize * 2, halfTileSize * 2)
+							);
+							CollidableBox enemyBox = CollidableBox(enemyTransform.position, enemyTransform.rotation, enemyTransform.scale);
+							enemyBox.isTrigger = true;
+							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
+							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyGroundPath));
+							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolV));
+							ScriptManager::GetInstance().createScriptController(
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
+							);
+							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
+								ECS::getInstance().getComponent<Tag>(enemy).tag,
+								enemyTransform.position.x, enemyTransform.position.y, enemyTransform.rotation, enemyTransform.scale.x, enemyTransform.scale.y);
+						}
 						break;
 					default:
 						break;

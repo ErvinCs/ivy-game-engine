@@ -10,6 +10,7 @@ namespace Ivy
 	private:
 		FI2Pop generator;
 		Individual fittest;
+		Population finalPopulation;
 		const float positionOffset = 8.0f;
 		const float wallOfsset = 4.5f;
 		const float halfTileSize = 0.49f;
@@ -36,10 +37,13 @@ namespace Ivy
 		static std::string scriptPatrolH;	
 		static std::string LevelGenerator::playerScript;
 		static std::string LevelGenerator::playerPath;
+		static std::string collectablePath;
+		static std::string collectableScript;
 		static bool isGenerating;
 		LevelGenerator();
 		
 		void run();
+		inline Individual getFittest() { return this->fittest; }
 	};
 
 }

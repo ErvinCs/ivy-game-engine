@@ -3,7 +3,9 @@
 #include <glm/glm.hpp>
 #include <angelscript.h>
 #include "../angelscript/add_on/scripthandle/scripthandle.h"
-
+#include "../angelscript/add_on/scriptstdstring/scriptstdstring.h"
+#include "../angelscript/add_on/scriptbuilder/scriptbuilder.h"
+#include "../angelscript/add_on/weakref/weakref.h"
 #include "ScriptableObject.h"
 
 namespace Ivy {
@@ -35,11 +37,14 @@ namespace Ivy {
 
 		int init();
 		asIScriptObject* createScriptController(const std::string& script, ScriptableObject* gameObject, Entity entity);
+		void garbageCollect(int option);
 
 		void callOnUpdate(asIScriptObject* scriptObject);
 		void callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, ScriptableObject* caller);
 
 		inline bool getHasCompileErrors() { return hasCompileErrors; }
+
+		inline asIScriptEngine* getScriptEngine() { return this->scriptEngine; }
 	protected:
 		void setMessageCallback(const asSMessageInfo& message);
 		asIScriptContext* getScriptContextFromPool(asIScriptFunction* function);

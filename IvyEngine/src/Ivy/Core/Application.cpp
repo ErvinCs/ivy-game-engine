@@ -83,9 +83,19 @@ namespace Ivy {
 	{
 		while (isRunning)
 		{
-			currTime = (float)glfwGetTime();
-			globalTime = currTime - lastFrameTime;
-			lastFrameTime = currTime;
+			if (!isPaused)
+			{
+				currTime = (float)glfwGetTime();
+				globalTime = currTime - lastFrameTime;
+				lastFrameTime = currTime;
+			}
+			else
+			{
+				currTime = (float)glfwGetTime();
+				globalTime = 0;
+				lastFrameTime = currTime;
+			}
+			
 
 			ECS::getInstance().updateSystems(globalTime);
 
