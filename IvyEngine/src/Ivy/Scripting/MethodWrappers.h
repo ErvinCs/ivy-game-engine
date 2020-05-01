@@ -9,7 +9,7 @@
 #include "../ECS/Components/ScriptComponent.h"
 #include "../ECS/Components/Renderable.h"
 #include "../ECS/Components/Collidable.h"
-#include "../ECS/CollisionSystem.h"
+#include "../ECS/Systems/CollisionSystem.h"
 
 #include "../Core/InputHandler.h"
 #include "../Core/Logger.h"

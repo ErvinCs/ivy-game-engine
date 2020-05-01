@@ -1,11 +1,10 @@
 #include "ivypch.h"
 #include "CollisionSystem.h"
 
-#include "../Core/Logger.h"
-
-#include "ECS.h"
-#include "Component.h"
-#include "Components/Collidable.h"
+#include "../../Core/Logger.h"
+#include "../ECS.h"
+#include "../Component.h"
+#include "../Components/Collidable.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtx/projection.hpp>
@@ -22,6 +21,14 @@ namespace Ivy
 			std::vector<Entity> entityVector{};
 			std::pair<Entity, std::vector<Entity>> pair = std::make_pair(entity, entityVector);
 			isCollidingWith.insert(pair);
+		}
+	}
+
+	void CollisionSystem::refresh()
+	{
+		for (std::pair<const Entity, std::vector<Entity>>& pair : CollisionSystem::isCollidingWith)
+		{
+			isCollidingWith[pair.first].clear();
 		}
 	}
 

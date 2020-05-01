@@ -1,11 +1,10 @@
 #pragma once
 
 #include <map>
-#include <unordered_map>
 #include <stdint.h>
 #include <glm/glm.hpp>
 
-#include "Entity.h"
+#include "../Entity.h"
 #include "System.h"
 
 namespace Ivy {
@@ -24,6 +23,7 @@ namespace Ivy {
 			this->setEntities(entities);
 		}
 
+		static void refresh();
 		virtual void init() override;
 		virtual void update(float deltatime) override;
 	};

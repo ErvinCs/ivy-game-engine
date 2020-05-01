@@ -334,9 +334,9 @@ namespace Ivy
 							ECS::getInstance().addComponent<Transform>(enemy, enemyTransform);
 							ECS::getInstance().addComponent<Renderable>(enemy, Renderable(LevelGenerator::enemyFlyPath));
 							ECS::getInstance().addComponent<CollidableBox>(enemy, enemyBox);
-							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolV));
+							ECS::getInstance().addComponent<ScriptComponent>(enemy, ScriptComponent(LevelGenerator::scriptPatrolH));
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / LevelGenerator::scriptPatrolV).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
+								(Paths::scriptsPath / LevelGenerator::scriptPatrolH).string(), ECS::getInstance().getComponent<ScriptComponent>(enemy).scriptableObject, enemy
 							);
 							IVY_CORE_TRACE("Spawned Enemy. Entity={0}, Tag={1}, Transform=(({2},{3}), {4}, ({5}, {6}))", enemy,
 								ECS::getInstance().getComponent<Tag>(enemy).tag,
