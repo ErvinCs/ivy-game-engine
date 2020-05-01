@@ -37,11 +37,14 @@ namespace Ivy {
 
 		int init();
 		asIScriptObject* createScriptController(const std::string& script, ScriptableObject* gameObject, Entity entity);
+		void garbageCollect(int option);
 
 		void callOnUpdate(asIScriptObject* scriptObject);
 		void callOnMessage(asIScriptObject* scriptObject, CScriptHandle& message, ScriptableObject* caller);
 
 		inline bool getHasCompileErrors() { return hasCompileErrors; }
+
+		inline asIScriptEngine* getScriptEngine() { return this->scriptEngine; }
 	protected:
 		void setMessageCallback(const asSMessageInfo& message);
 		asIScriptContext* getScriptContextFromPool(asIScriptFunction* function);

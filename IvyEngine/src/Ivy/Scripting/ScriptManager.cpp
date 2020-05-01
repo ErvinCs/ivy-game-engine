@@ -26,6 +26,21 @@ namespace Ivy {
 
 	}
 
+	/*
+	 * Performs garbage collection according to the option parameter.
+	 *  option = 1 - One Step incremental collection
+	 *  option = 2 - Full Cycle collection
+	 */
+	void ScriptManager::garbageCollect(int option)
+	{
+		if (option == 1)
+		{
+			scriptEngine->GarbageCollect(asGC_ONE_STEP);
+		}
+		else if (option == 2) {
+			scriptEngine->GarbageCollect(asGC_FULL_CYCLE);
+		}
+	}
 
 	int ScriptManager::init()
 	{

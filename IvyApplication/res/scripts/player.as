@@ -15,7 +15,6 @@ class CPlayer : IController
 
 	int isFacing = 1;
 	float playerMoveSpeed = 5;
-	int score = 0;
 
 	CPlayer(ScriptableObject@ object)
 	{
@@ -54,11 +53,11 @@ class CPlayer : IController
 			if(msg.txt == 'ATK')
 			{
 				LoadSprite(self.getOwner(), "player-dead.png");
-				//self.kill();
+				self.kill();
 			}
 			if(msg.txt == 'COLLECT')
 			{
-				score = score + 1;
+				level_score = level_score + 1;
 			}
 		} 
 	}
