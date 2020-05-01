@@ -48,6 +48,7 @@ namespace Ivy {
 		inline const void setFullPath(const std::string& fullPath) { this->name = fullPath; }
 		inline asIScriptObject* getScriptObject() { return this->scriptObject; }
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }
+		inline void setWeakRefereneFlag(asILockableSharedBool* weakRefFlag) { this->weakReferenceFlag = weakRefFlag; }
 
 		ScriptableObject& operator=(const ScriptableObject& other);
 	};

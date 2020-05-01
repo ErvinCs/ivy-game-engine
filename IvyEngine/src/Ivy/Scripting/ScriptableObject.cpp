@@ -105,8 +105,8 @@ namespace Ivy {
 		if (scriptObject)
 		{
 			scriptObject->Release();
-			scriptObject = 0;
-			weakReferenceFlag = 0;
+			scriptObject = NULL;
+			weakReferenceFlag = NULL;
 			name = "";
 			ownerEntity = 0;
 			alive = false;

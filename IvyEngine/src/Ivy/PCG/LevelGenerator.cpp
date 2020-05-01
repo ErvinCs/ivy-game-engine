@@ -835,7 +835,7 @@ namespace Ivy
 							Transform wall2Transform = Transform(
 								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 7 * halfTileSize), 0, glm::vec2(halfTileSize * 6, halfTileSize));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTileSize * 7), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
@@ -892,7 +892,7 @@ namespace Ivy
 							Transform wall2Transform = Transform(
 								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 7 * halfTileSize), 0, glm::vec2(halfTileSize * 6, halfTileSize));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTileSize * 7), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));

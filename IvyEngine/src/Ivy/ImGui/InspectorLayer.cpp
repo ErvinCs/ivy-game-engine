@@ -200,11 +200,15 @@ namespace Ivy {
 						if (ImGui::Button("Import Script"))
 						{
 							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);	
-							//script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->setScriptObject(NULL);
+							script->scriptableObject->setWeakRefereneFlag(NULL);
+							script->scriptableObject = NULL;
 							getECS().removeComponent<ScriptComponent>(entity);	
 
 							ScriptComponent newScript = ScriptComponent(*buffer);
 							newScript.setComponentId(ScriptComponentID);
+							newScript.setEntityId(entity);
 							getECS().addComponent<ScriptComponent>(entity, newScript);
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / *buffer).string(),
@@ -214,7 +218,10 @@ namespace Ivy {
 						if (ImGui::Button("Remove Script"))
 						{
 							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
-							//script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->setScriptObject(NULL);
+							script->scriptableObject->setWeakRefereneFlag(NULL);
+							script->scriptableObject = NULL;
 							getECS().removeComponent<ScriptComponent>(entity);
 
 							
@@ -229,6 +236,7 @@ namespace Ivy {
 							if (scriptPathTemp.size() > 0) {
 								ScriptComponent newScript = ScriptComponent(scriptPathTemp);
 								newScript.setComponentId(ScriptComponentID);
+								newScript.setEntityId(entity);
 								getECS().addComponent<ScriptComponent>(entity, newScript);
 								ScriptManager::GetInstance().createScriptController(
 									(Paths::scriptsPath / scriptPathTemp).string(),

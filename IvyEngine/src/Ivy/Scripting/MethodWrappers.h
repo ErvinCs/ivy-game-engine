@@ -87,7 +87,7 @@ namespace Ivy {
 
 	ScriptableObject* FindObjectByTag(const std::string& tag)
 	{
-		bool found;
+		bool found = false;
 		for (Entity entity : ECS::getInstance().getEntities())
 		{
 			if (ECS::getInstance().getComponent<Tag>(entity).tag == tag)

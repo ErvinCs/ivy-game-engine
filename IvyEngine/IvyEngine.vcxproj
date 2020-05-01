@@ -163,9 +163,6 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClInclude Include="src\Ivy\Core\SortingLayerStack.h" />
     <ClInclude Include="src\Ivy\Core\Timestep.h" />
     <ClInclude Include="src\Ivy\Core\Window.h" />
-    <ClInclude Include="src\Ivy\ECS\Systems\CameraSystem.h" />
-    <ClInclude Include="src\Ivy\ECS\Systems\CollidableGizmoSystem.h" />
-    <ClInclude Include="src\Ivy\ECS\Systems\CollisionSystem.h" />
     <ClInclude Include="src\Ivy\ECS\Component.h" />
     <ClInclude Include="src\Ivy\ECS\ComponentContainer.h" />
     <ClInclude Include="src\Ivy\ECS\Components\Collidable.h" />
@@ -178,6 +175,9 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClInclude Include="src\Ivy\ECS\Entity.h" />
     <ClInclude Include="src\Ivy\ECS\EntityContainer.h" />
     <ClInclude Include="src\Ivy\ECS\JSONManager.h" />
+    <ClInclude Include="src\Ivy\ECS\Systems\CameraSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\Systems\CollidableGizmoSystem.h" />
+    <ClInclude Include="src\Ivy\ECS\Systems\CollisionSystem.h" />
     <ClInclude Include="src\Ivy\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="src\Ivy\ECS\Systems\ScriptSystem.h" />
     <ClInclude Include="src\Ivy\ECS\Systems\System.h" />
@@ -641,9 +641,6 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClCompile Include="src\Ivy\Core\Logger.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayer.cpp" />
     <ClCompile Include="src\Ivy\Core\SortingLayerStack.cpp" />
-    <ClCompile Include="src\Ivy\ECS\Systems\CameraSystem.cpp" />
-    <ClCompile Include="src\Ivy\ECS\Systems\CollidableGizmoSystem.cpp" />
-    <ClCompile Include="src\Ivy\ECS\Systems\CollisionSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\Collidable.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\Renderable.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\ScriptComponent.cpp" />
@@ -651,6 +648,9 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClCompile Include="src\Ivy\ECS\Components\TileLocation.cpp" />
     <ClCompile Include="src\Ivy\ECS\Components\Transform.cpp" />
     <ClCompile Include="src\Ivy\ECS\JSONManager.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Systems\CameraSystem.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Systems\CollidableGizmoSystem.cpp" />
+    <ClCompile Include="src\Ivy\ECS\Systems\CollisionSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Ivy\ECS\Systems\ScriptSystem.cpp" />
     <ClCompile Include="src\Ivy\Events\Event.cpp" />
