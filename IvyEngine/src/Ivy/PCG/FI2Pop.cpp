@@ -9,8 +9,8 @@ namespace Ivy
 	float FI2Pop::uniformRate = 0.5f;
 	int FI2Pop::singlePointCrossoverFrequency = 3;
 	int FI2Pop::eliteCount = 2;
-	int FI2Pop::populationSize = 26;
-	int FI2Pop::tournamentSize = 6;
+	int FI2Pop::populationSize = 25;
+	int FI2Pop::tournamentSize = 4;
 	int FI2Pop::genotypeSize = 12;
 	int FI2Pop::maxGeneration = 4;
 
@@ -40,7 +40,7 @@ namespace Ivy
 	void FI2Pop::run()
 	{
 		IVY_CORE_TRACE("FI2POP: Starting run");
-		while (currGeneration <= maxGeneration)	
+		while (currGeneration <= maxGeneration)
 		{
 			IVY_CORE_TRACE("FI2POP: Generation {0}", currGeneration);
 
@@ -100,6 +100,7 @@ namespace Ivy
 			{
 				IVY_CORE_TRACE("FI2POP: Computing Feasible Fitnesses");
 				int popSize = feasiblePop.getPopulationSize();
+				currentFeasibleSize = popSize;
 				float diversity = 0.0f;
 				
 				for (int i = 0; i < popSize; i++)
@@ -144,6 +145,7 @@ namespace Ivy
 				}
 			}
 			currGeneration += 1;
+			
 		}
 		currGeneration = 1;
 	}

@@ -77,6 +77,12 @@ namespace Ivy
 			}
 			
 		}
+#ifdef _DEBUG
+		float avgDiversity = generator.getFeasiblePopulation().feasibleAvgDiversity();
+		float avgFitness = generator.getInfeasiblePopulation().infeasibleAvgFitness();
+		IVY_CORE_TRACE("Feasible Average Diversity: {0}", avgDiversity);
+		IVY_CORE_TRACE("Inveasible Average Fitness: {0}", avgFitness);
+#endif
 		float xMax = (int)std::sqrtf(fittest.getDesignElements().size());
 		float yMax = (int)(fittest.getDesignElements().size() / xMax);
 		IVY_CORE_INFO("LevelGenerator: xMax={0}, yMax={1}", xMax, yMax);

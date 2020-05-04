@@ -29,6 +29,8 @@ namespace Ivy {
 		void removeIndividualAtIndex(int index);
 
 		Population& Population::operator=(const Population& other);
+		const float feasibleAvgDiversity() const;
+		const float infeasibleAvgFitness() const;
 		// Has Issues
 		//void removeDuplicates();
 	};

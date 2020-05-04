@@ -106,26 +106,39 @@ namespace Ivy
 			asMETHODPR(glm::vec2, operator/=, (const float&), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
 	}
 
+	/* 
+	 * Register the Transform component.
+	 * Properties: position : vec2, scale : vec2, rotation: float
+	 * Factory Methods: Transform(), Transform(vec2, float, vec2)
+	 * Operators: assignment(=) - Invokes the copy constructor of Transform
+	 * Static Methods:
+	 *   void DestroyTransform(uint16) - Destroy the transform owned by the passed entity
+	 *   Transform@ FindTransform(uint16) - Returns a reference to the transformed owned by the passed entity
+	 */
 	static void RegisterTransform(asIScriptEngine* scriptEngine)
 	{
 		int r;
 
-		// Register the Transform component. The scripts cannot create these directly, so there is no factory function.
 		r = scriptEngine->RegisterObjectType("Transform", 0, asOBJ_REF); assert(r >= 0);
+		// Enable reference counting for references to a Transform component
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_ADDREF, "void f()", asMETHOD(Transform, addReference), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_RELEASE, "void f()", asMETHOD(Transform, release), asCALL_THISCALL); assert(r >= 0);
 
+		// Constructors
 		r = scriptEngine->RegisterGlobalFunction("Transform@ InitTransform()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
 
+		// Fields
 		r = scriptEngine->RegisterObjectProperty("Transform", "Vec2 position", asOFFSET(Transform, position)); assert(r >= 0);
 		r = scriptEngine->RegisterObjectProperty("Transform", "float rotation", asOFFSET(Transform, rotation)); assert(r >= 0);
 		r = scriptEngine->RegisterObjectProperty("Transform", "Vec2 scale", asOFFSET(Transform, scale)); assert(r >= 0);
 
+		// The assignment operator for transform
 		r = scriptEngine->RegisterObjectMethod("Transform", "Transform &opAssign(const Transform &in)",
 			asMETHODPR(Transform, operator=, (const Transform &), Transform &), asCALL_THISCALL); assert(r >= 0);
+		// Factory method for Transform such that it can be instantiated in script
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
 
-		// Destroy owned Transform
+		// Destroy the Transform owned by the passed entity
 		r = scriptEngine->RegisterGlobalFunction("void DestroyTransform(uint16)", asFUNCTION(SelfDestroyTransform), asCALL_CDECL);
 		// Register FindTransform(uint16). Provides access to the transform component of an Entity if it exists.
 		r = scriptEngine->RegisterGlobalFunction("Transform@ FindTransform(uint16)", asFUNCTION(FindTransform), asCALL_CDECL); assert(r >= 0);
@@ -134,6 +147,7 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("void Rotate180(Transform &)", asFUNCTION(Rotate180Transform), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("void Rotate270(Transform &)", asFUNCTION(Rotate270Transform), asCALL_CDECL); assert(r >= 0);
 	}
+
 
 	static void RegisterRenderable(asIScriptEngine* scriptEngine)
 	{
@@ -173,20 +187,19 @@ namespace Ivy
 		r = scriptEngine->RegisterObjectBehaviour("ScriptableObject", asBEHAVE_GET_WEAKREF_FLAG, "int &f()", asMETHOD(ScriptableObject, getWeakRefereneFlag), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void setOwner(uint16 ownerEntity)", asMETHOD(ScriptableObject, setOwner), asCALL_THISCALL); assert(r >= 0);
 
-		// Access the owning object through the script. Note that getOwner() returns the entity id
+		// Access the owning entity through the script. Note that getOwner() returns the entity id
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "uint16 getOwner()", asMETHOD(ScriptableObject, getOwner), asCALL_THISCALL); assert(r >= 0);
 
-		// Kill the ScriptableObject. The alive flag is set to false and onEntityDestroyed will be called by the ECS
+		// Kill the ScriptableObject. The alive flag is set to false and onEntityDestroyed() will be called by the ECS to destroy the object.
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void kill()", asMETHOD(ScriptableObject, kill), asCALL_THISCALL); assert(r >= 0);
 
 		// The script can send a message to the other object through this method
-		// Observe the autohandle @+ to tell AngelScript to automatically release the handle after the call
+		// The autohandle @+ to tell AngelScript to automatically release the handle after the call
 		// The generic handle type is used to allow the script to pass any object to another script without the application having to know anything about it
 		r = scriptEngine->RegisterObjectMethod("ScriptableObject", "void sendMessage(ref message, const ScriptableObject @+ to)", asMETHOD(ScriptableObject, sendMessage), asCALL_THISCALL); assert(r >= 0);
 		
 		// Register a method that will allow the script to find an object by its Tag.
-		// This returns the object as const handle, as the script should only be allowed to directly modify its owner object.
-		// The @+ that tells AngelScript to automatically increase the refcount
+		// The @+ that tells AngelScript to automatically increase the refcount of the returned object
 		r = scriptEngine->RegisterGlobalFunction("ScriptableObject @+ FindObjectByTag(const string &in)", asFUNCTION(FindObjectByTag), asCALL_CDECL); assert(r >= 0);
 	}
 

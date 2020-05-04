@@ -105,6 +105,26 @@ namespace Ivy {
 		return *this;
 	}
 
+	const float Population::feasibleAvgDiversity() const
+	{
+		float avgDiversity = 0;
+		for (int i = 0; i < individuals.size(); i++)
+		{
+			avgDiversity += individuals[i].getDiversity();
+		}
+		return (avgDiversity / individuals.size());
+	}
+
+	const float Population::infeasibleAvgFitness() const
+	{
+		float avgFitness = 0;
+		for (int i = 0; i < individuals.size(); i++)
+		{
+			avgFitness += individuals[i].getFitness();
+		}
+		return (avgFitness / individuals.size());
+	}
+
 	// Has Issues
 	/*void Population::removeDuplicates()
 	{

@@ -12,7 +12,6 @@ private:
 	bool isStarted = false, isLoaded = false, loadedMenu = false;
 	glm::vec2 menuSize = glm::vec2(7.0f, 7.0f);
 	Entity mainMenu;
-	//Entity pauseMenu, victoryMenu;
 	const int final_score = 11;
 	static int level_score;
 public:
@@ -22,10 +21,6 @@ public:
 
 		mainMenu = Ivy::ECS::getInstance().createEntity();
 		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
-		//pauseMenu = Ivy::ECS::getInstance().createEntity();
-		//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-paused.png"));
-		//victoryMenu = Ivy::ECS::getInstance().createEntity();
-		//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(pauseMenu, Ivy::Renderable("level-won.png"));
 
 		int r = Ivy::ScriptManager::GetInstance().getScriptEngine()->RegisterGlobalProperty("int level_score", &level_score); assert(r >= 0);
 	}

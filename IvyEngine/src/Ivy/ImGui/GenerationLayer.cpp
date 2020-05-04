@@ -39,7 +39,7 @@ namespace Ivy
 				ImGui::InputText("Hallway", &LevelGenerator::hallwayPath);
 				ImGui::InputText("T-Shaped Hallway", &LevelGenerator::tShapePath);
 				ImGui::InputText("Middle Obstacle", &LevelGenerator::holePath);
-				ImGui::InputText("Half-Enclosed Middle Obstacle", &LevelGenerator::pillarPath);
+				ImGui::InputText("Pillar Room", &LevelGenerator::pillarPath);
 				ImGui::InputText("Walls x4", &LevelGenerator::horizontalWallPath);
 				ImGui::InputText("Walls x3", &LevelGenerator::verticalWallPath);
 				ImGui::InputText("Walls x2", &LevelGenerator::rangedEnemyPath);	

@@ -125,6 +125,7 @@ namespace Ivy {
 
 	void Application::onEvent(Event& event)
 	{
+		//IVY_CORE_TRACE(event.toString());
 	}
 
 	bool Application::onWindowClose(WindowCloseEvent& ev)
