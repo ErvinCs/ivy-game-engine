@@ -119,6 +119,7 @@ namespace Ivy
 	{
 		int r;
 
+		// Register Transform type
 		r = scriptEngine->RegisterObjectType("Transform", 0, asOBJ_REF); assert(r >= 0);
 		// Enable reference counting for references to a Transform component
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_ADDREF, "void f()", asMETHOD(Transform, addReference), asCALL_THISCALL); assert(r >= 0);
@@ -135,19 +136,19 @@ namespace Ivy
 		// The assignment operator for transform
 		r = scriptEngine->RegisterObjectMethod("Transform", "Transform &opAssign(const Transform &in)",
 			asMETHODPR(Transform, operator=, (const Transform &), Transform &), asCALL_THISCALL); assert(r >= 0);
-		// Factory method for Transform such that it can be instantiated in script
+		// Factory methods for Transform such that it can be instantiated in script
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
+		//r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f(Vec2, float, Vec2)", asFUNCTION(Transform_Factory2), asCALL_CDECL); assert(r >= 0);
 
 		// Destroy the Transform owned by the passed entity
 		r = scriptEngine->RegisterGlobalFunction("void DestroyTransform(uint16)", asFUNCTION(SelfDestroyTransform), asCALL_CDECL);
-		// Register FindTransform(uint16). Provides access to the transform component of an Entity if it exists.
+		// Provide access to the transform component of an Entity if it exists.
 		r = scriptEngine->RegisterGlobalFunction("Transform@ FindTransform(uint16)", asFUNCTION(FindTransform), asCALL_CDECL); assert(r >= 0);
 		// Flip the Transform of a scriptable object by 90/180/270 degrees
 		r = scriptEngine->RegisterGlobalFunction("void Rotate90(Transform &)", asFUNCTION(Rotate90Transform), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("void Rotate180(Transform &)", asFUNCTION(Rotate180Transform), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("void Rotate270(Transform &)", asFUNCTION(Rotate270Transform), asCALL_CDECL); assert(r >= 0);
 	}
-
 
 	static void RegisterRenderable(asIScriptEngine* scriptEngine)
 	{

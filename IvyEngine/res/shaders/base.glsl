@@ -1,4 +1,4 @@
-#shader vertex
+TH#shader vertex
 #version 330 core
 
 layout(location = 0) in vec3 position;
@@ -30,5 +30,8 @@ uniform sampler2D u_texture;
 
 void main()
 {
-	color = texture(u_texture, o_texCoord) * u_color;
+	float dist = 1.0f - distance(o_position * 0.8f, vec2(0.0f));
+	dist = clamp(dist, 0.0f, 1.0f);
+	dist = sqrt(dist);
+	color = texture(u_texture, o_texCoord) * u_color * dist;
 };

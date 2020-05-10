@@ -42,6 +42,12 @@ namespace Ivy
 		this->generator = FI2Pop();
 	}
 
+	void LevelGenerator::clearPopulations()
+	{
+		this->generator.clearFeasiblePop();
+		this->generator.clearInfeasiblePop();
+	}
+
 	void LevelGenerator::run()
 	{
 		generator.init();

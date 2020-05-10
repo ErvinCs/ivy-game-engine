@@ -83,7 +83,7 @@ namespace Ivy {
 	{
 		while (isRunning)
 		{
-			if (!isPaused)
+			if (!isPaused && !windowResized)
 			{
 				currTime = (float)glfwGetTime();
 				globalTime = currTime - lastFrameTime;
@@ -94,6 +94,8 @@ namespace Ivy {
 				currTime = (float)glfwGetTime();
 				globalTime = 0;
 				lastFrameTime = currTime;
+				if (windowResized)
+					windowResized = false;
 			}
 			
 
@@ -125,7 +127,22 @@ namespace Ivy {
 
 	void Application::onEvent(Event& event)
 	{
-		//IVY_CORE_TRACE(event.toString());
+		switch (event.type)
+		{
+		case 1:	// Close
+			this->isRunning = false;
+			IVY_CORE_TRACE("Window Close Event");
+			break;
+		case 2:	// Resize
+			currTime = (float)glfwGetTime();
+			globalTime = 0;
+			lastFrameTime = currTime;
+			windowResized = true;
+			IVY_CORE_TRACE("Window Resize Event");
+			break;
+		default:
+			break;
+		}
 	}
 
 	bool Application::onWindowClose(WindowCloseEvent& ev)

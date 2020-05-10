@@ -79,6 +79,10 @@ namespace Ivy
 			//CollisionSystem::ConstructArray();
 			Application::getInstance().lastFrameTime = (float)glfwGetTime();
 		}
+		if (ImGui::Button("Clear"))
+		{
+			Application::GetLevelGenerator().clearPopulations();
+		}
 		ImGui::PopID();
 		ImGui::End();
 	}

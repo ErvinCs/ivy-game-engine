@@ -66,6 +66,7 @@ namespace Ivy {
 			data.wProps.width = width;
 			data.wProps.height = height;
 			WindowResizeEvent resizeEvent(width, height);
+			resizeEvent.type = 2;
 			data.callback(resizeEvent);
 		});
 
@@ -74,6 +75,7 @@ namespace Ivy {
 		{
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
 			WindowCloseEvent closeEvent;
+			closeEvent.type = 1;
 			data.callback(closeEvent);
 		});
 
@@ -86,18 +88,21 @@ namespace Ivy {
 				case GLFW_PRESS:
 				{
 					KeyDownEvent keyEvent(key, 0);
+					keyEvent.type = 3;
 					data.callback(keyEvent);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
 					KeyUpEvent keyEvent(key);
+					keyEvent.type = 4;
 					data.callback(keyEvent);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
 					KeyDownEvent keyEvent(key, 1);
+					keyEvent.type = 5;
 					data.callback(keyEvent);
 					break;
 				}
@@ -113,12 +118,14 @@ namespace Ivy {
 				case GLFW_PRESS:
 				{
 					MouseButtonDownEvent mouseEvent(button);
+					mouseEvent.type = 6;
 					data.callback(mouseEvent);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
 					MouseButtonUpEvent mouseEvent(button);
+					mouseEvent.type = 7;
 					data.callback(mouseEvent);
 					break;
 				}
@@ -130,6 +137,7 @@ namespace Ivy {
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
 			
 			MouseScrollEvent scrollEvent((float)xOffset, (float)yOffset);
+			scrollEvent.type = 8;
 			data.callback(scrollEvent);
 		});
 
@@ -138,6 +146,7 @@ namespace Ivy {
 			WindowPropertiesUserData& data = *(WindowPropertiesUserData*)glfwGetWindowUserPointer(window);
 			
 			MouseMoveEvent moveEvent((float)xPos, (float)yPos);
+			moveEvent.type = 9;
 			data.callback(moveEvent);
 		});
 	}

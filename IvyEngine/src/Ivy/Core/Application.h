@@ -36,6 +36,7 @@ namespace Ivy {
 		InspectorLayer* inspectorLayer;
 		GenerationLayer* generationLayer;
 #endif	
+		bool windowResized = false;
 	public:
 		bool isRunning = true;
 		bool isPaused = false;

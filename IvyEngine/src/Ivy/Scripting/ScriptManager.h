@@ -20,7 +20,7 @@ namespace Ivy {
 			asITypeInfo* controllerType;
 			asIScriptFunction* createFunction;
 			asIScriptFunction* onUpdateMethod;
-			asIScriptFunction *onMessageMethod;
+			asIScriptFunction* onMessageMethod;
 		};
 
 		bool hasCompileErrors;

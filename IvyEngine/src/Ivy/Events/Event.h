@@ -47,6 +47,8 @@ namespace Ivy {
 
 		void notifyHandlers();
 	public:
+		//TODO
+		int type;
 		void addHandler(const EventHandler &handler);
 		void removeHandler(const EventHandler &handler);
 		void operator()();

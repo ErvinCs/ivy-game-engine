@@ -63,6 +63,9 @@ namespace Ivy
 		void mutate(Individual& ind);
 
 		Individual& getRandomFeasibleIndividual();
+
+		void clearFeasiblePop();
+		void clearInfeasiblePop();
 	private:
 		void mutateRotation(DesignElement& designElement);
 		void mutateLevelElement(DesignElement& designElement, int geneIndex);

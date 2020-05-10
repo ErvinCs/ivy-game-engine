@@ -41,6 +41,7 @@ namespace Ivy
 	{
 		IVY_CORE_TRACE("FI2POP: Starting run");
 		while (currGeneration <= maxGeneration)
+		//while(feasiblePop.getIndividuals().size() < populationSize)	// Used for testing
 		{
 			IVY_CORE_TRACE("FI2POP: Generation {0}", currGeneration);
 
@@ -324,7 +325,6 @@ namespace Ivy
 		{
 			if (copyDesignElemProb <= uniformRate)
 			{
-				// Copies half of individual 1 and half of individual 2
 				if (i <= midPoint)
 				{
 					offspring.addDesignElement(ind1.getDesignElementAt(i));
@@ -336,7 +336,6 @@ namespace Ivy
 			}
 			else
 			{
-				// Copies half of individual 1 and half of individual 2
 				if (i <= midPoint)
 				{
 					offspring.addDesignElement(ind2.getDesignElementAt(i));
@@ -475,6 +474,16 @@ namespace Ivy
 		{
 			return this->feasiblePop.getFittestIndividual();
 		}
+	}
+
+	void FI2Pop::clearFeasiblePop()
+	{
+		this->feasiblePop = Population();
+	}
+
+	void FI2Pop::clearInfeasiblePop()
+	{
+		this->infeasiblePop = Population();
 	}
 
 }

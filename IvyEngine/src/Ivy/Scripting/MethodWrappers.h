@@ -57,6 +57,11 @@ namespace Ivy {
 		return new Transform(glm::vec2(0), 0, glm::vec2(0));
 	}
 
+	Transform* Transform_Factory2(glm::vec2 position, float rotation, glm::vec2 scale)
+	{
+		return new Transform(position, rotation, scale);
+	}
+
 	Renderable* FindRenderable(Entity entity)
 	{
 		Renderable* r = &ECS::getInstance().getComponent<Renderable>(entity);

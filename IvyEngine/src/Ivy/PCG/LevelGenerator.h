@@ -43,6 +43,7 @@ namespace Ivy
 		LevelGenerator();
 		
 		void run();
+		void clearPopulations();
 		inline Individual getFittest() { return this->fittest; }
 	};
 
