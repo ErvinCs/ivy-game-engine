@@ -22,6 +22,9 @@
 #include "../PCG/LevelGenerator.h"
 
 namespace Ivy {
+	/*
+	 *
+	 */
 	class Application 
 	{
 	private:

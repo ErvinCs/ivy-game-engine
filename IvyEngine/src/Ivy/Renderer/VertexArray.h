@@ -4,8 +4,11 @@
 #include "IndexBuffer.h"
 #include "VertexBufferLayout.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class VertexArray
 	{
 	public:

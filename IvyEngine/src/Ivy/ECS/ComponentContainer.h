@@ -6,7 +6,9 @@
 #include "../Core/Logger.h"
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class BaseComponentContainer
 	{
 	public:
@@ -15,6 +17,9 @@ namespace Ivy {
 		virtual void clearComponents() = 0;
 	};
 
+	/*
+	 *
+	 */
 	template<typename T>
 	class ComponentContainer : public BaseComponentContainer
 	{

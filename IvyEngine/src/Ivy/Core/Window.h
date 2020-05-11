@@ -4,7 +4,9 @@
 #include "../Events/Event.h"
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	struct WindowProperties
 	{
 		std::string name;
@@ -17,7 +19,9 @@ namespace Ivy {
 			: name(name), width(width), height(height)
 		{}
 	};
-
+	/*
+	 *
+	 */
 	class Window
 	{
 	public:

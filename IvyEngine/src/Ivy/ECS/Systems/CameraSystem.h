@@ -6,6 +6,9 @@
 
 namespace Ivy{
 
+	/*
+	 *
+	 */
 	class CameraSystem : public System
 	{
 	private:

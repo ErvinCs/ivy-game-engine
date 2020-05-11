@@ -3,7 +3,9 @@
 #include "System.h"
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class ScriptSystem : public System
 	{
 	private:

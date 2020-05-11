@@ -10,6 +10,9 @@
 
 namespace Ivy {
 
+	/*
+	 *
+	 */
 	class ScriptManager
 	{
 	protected:

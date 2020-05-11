@@ -4,7 +4,9 @@
 
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class KeyEvent : public Event
 	{
 	public:
@@ -19,7 +21,9 @@ namespace Ivy {
 
 		int keyCode;
 	};
-
+	/*
+	 *
+	 */
 	class KeyDownEvent : public KeyEvent
 	{
 	public:
@@ -42,7 +46,9 @@ namespace Ivy {
 	private:
 		int repeatCount;
 	};
-
+	/*
+	 *
+	 */
 	class KeyUpEvent : public KeyEvent
 	{
 	public:

@@ -3,6 +3,10 @@
 #include <exception>
 #include <string>
 
+
+/*
+ *
+ */
 class ComponentNotFoundException
 {
 protected:

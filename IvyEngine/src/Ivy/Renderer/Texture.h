@@ -2,8 +2,11 @@
 
 #include <string>
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class Texture
 	{
 	public:

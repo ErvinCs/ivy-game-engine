@@ -30,7 +30,7 @@ uniform sampler2D u_texture;
 
 void main()
 {
-	float dist = 1.0f - distance(o_position * 0.8f, vec2(0.0f));
+	float dist = 1.0f - distance(o_position * 0.4f, vec2(0.0f));
 	dist = clamp(dist, 0.0f, 1.0f);
 	dist = sqrt(dist);
 	color = texture(u_texture, o_texCoord) * u_color * dist;

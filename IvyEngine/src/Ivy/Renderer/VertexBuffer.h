@@ -2,8 +2,11 @@
 
 #include "VertexBufferLayout.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class VertexBuffer
 	{
 	public:

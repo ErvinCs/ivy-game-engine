@@ -5,7 +5,11 @@
 #include "DesignElement.h"
 #include "Graph.h"
 
-namespace Ivy {
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class Individual
 	{
 	private:

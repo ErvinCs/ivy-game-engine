@@ -1,7 +1,10 @@
 #pragma once
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class IndexBuffer
 	{
 	public:

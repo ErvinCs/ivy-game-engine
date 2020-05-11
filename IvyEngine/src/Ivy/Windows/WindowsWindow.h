@@ -10,8 +10,11 @@
 #include "../Events/KeyEvent.h"
 
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class WindowsWindow : public Window
 	{
 	public:

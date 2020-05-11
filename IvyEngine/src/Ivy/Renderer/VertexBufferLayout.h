@@ -2,13 +2,19 @@
 
 // Needed by the VertexArray & its children
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	enum class ShaderDataType
 	{
 		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
 	};
 
+	/*
+	 *
+	 */
 	static uint32_t ShaderDataTypeSize(ShaderDataType type)
 	{
 		switch (type)
@@ -29,6 +35,9 @@ namespace Ivy {
 		return 0;	//Unknown ShaderDataType
 	}
 
+	/*
+	 *
+	 */
 	struct BufferElement
 	{
 		std::string Name;
@@ -65,6 +74,9 @@ namespace Ivy {
 		}
 	};
 
+	/*
+	 *
+	 */
 	class VertexBufferLayout
 	{
 	public:

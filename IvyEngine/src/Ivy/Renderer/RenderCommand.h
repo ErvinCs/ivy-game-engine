@@ -2,8 +2,11 @@
 
 #include "RenderAPI.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class RenderCommand
 	{
 	public:

@@ -10,6 +10,9 @@
 
 namespace Ivy
 {
+	/*
+	 *
+	 */
 	static void RegisterTimestep(asIScriptEngine* scriptEngine)
 	{
 		int r;
@@ -62,6 +65,9 @@ namespace Ivy
 		*/
 	}
 
+	/*
+	 *
+	 */
 	static void RegisterVec2(asIScriptEngine* scriptEngine)
 	{
 		int r;
@@ -150,6 +156,9 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("void Rotate270(Transform &)", asFUNCTION(Rotate270Transform), asCALL_CDECL); assert(r >= 0);
 	}
 
+	/*
+	 *
+	 */
 	static void RegisterRenderable(asIScriptEngine* scriptEngine)
 	{
 		int r;
@@ -177,6 +186,9 @@ namespace Ivy
 
 	}
 
+	/*
+	 *
+	 */
 	static void RegisterScriptableObject(asIScriptEngine* scriptEngine)
 	{
 		int r;
@@ -204,6 +216,9 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("ScriptableObject @+ FindObjectByTag(const string &in)", asFUNCTION(FindObjectByTag), asCALL_CDECL); assert(r >= 0);
 	}
 
+	/*
+	 *
+	 */
 	static void RegisterInputHandler(asIScriptEngine* scriptEngine)
 	{
 		int r;
@@ -215,6 +230,9 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("float GetMouseY()", asFUNCTION(GetMouseY), asCALL_CDECL); assert(r >= 0);
 	}
 
+	/*
+	 *
+	 */
 	static void RegisterCollision(asIScriptEngine* scriptEngine)
 	{
 		int r;

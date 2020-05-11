@@ -7,7 +7,9 @@
 
 namespace Ivy
 {
-
+	/*
+	 *
+	 */
 	struct ScriptComponent : public Component
 	{
 	public:

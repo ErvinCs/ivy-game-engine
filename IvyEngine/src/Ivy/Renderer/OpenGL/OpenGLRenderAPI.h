@@ -17,10 +17,11 @@
 void GLClearError();
 bool GLLogCall(const char* function, const char* file, int line);
 
-
-
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class OpenGLRenderAPI : public RenderAPI
 	{
 	public:

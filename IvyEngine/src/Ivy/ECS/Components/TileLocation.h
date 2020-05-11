@@ -8,6 +8,9 @@
 
 namespace Ivy
 {
+	/*
+	 *
+	 */
 	struct TileLocation : public Component
 	{
 	public:

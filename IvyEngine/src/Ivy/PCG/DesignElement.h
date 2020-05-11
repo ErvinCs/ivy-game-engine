@@ -10,6 +10,10 @@
 #include "../ECS/Components/ScriptComponent.h"
 
 namespace Ivy {
+
+	/*
+	 *
+	 */
 	enum ElementType
 	{
 		StandardRoom1 = 0,	//NO ENEMIES
@@ -21,10 +25,13 @@ namespace Ivy {
 		HorizontalWall,	
 		Pillar,	
 		Hole, 
-		RangedEnemy,	//BOSS
-		MeleeEnemy		//BOSS
+		RangedEnemy,	
+		MeleeEnemy		
 	};
 
+	/*
+	 *
+	 */
     class DesignElement
 	{
 	protected:

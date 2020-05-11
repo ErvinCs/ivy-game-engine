@@ -5,6 +5,9 @@
 
 namespace Ivy
 {
+	/*
+	 *
+	 */
 	struct Transform : public Component
 	{
 	public:

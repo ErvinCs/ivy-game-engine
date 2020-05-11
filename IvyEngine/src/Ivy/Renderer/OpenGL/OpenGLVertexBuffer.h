@@ -2,8 +2,11 @@
 
 #include "../VertexBuffer.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	private:

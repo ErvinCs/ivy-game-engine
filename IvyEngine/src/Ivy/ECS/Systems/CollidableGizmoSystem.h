@@ -6,6 +6,10 @@
 #include "../../Core/ResourcePaths.h"
 
 namespace Ivy {
+
+	/*
+	 *
+	 */
 	class CollidableGizmoSystem : public System
 	{
 	private:

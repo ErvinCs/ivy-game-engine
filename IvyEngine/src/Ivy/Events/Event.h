@@ -12,6 +12,9 @@ namespace Ivy {
 	
 	class Event;
 
+	/*
+	 *
+	 */
 	class EventHandler {
 	public:
 		using Func = std::function<void(Event& e)>;
@@ -42,6 +45,9 @@ namespace Ivy {
 		bool operator!=(nullptr_t);
 	};
 
+	/*
+	 *
+	 */
 	class Event {
 		std::vector<std::unique_ptr<EventHandler>> handlers;
 

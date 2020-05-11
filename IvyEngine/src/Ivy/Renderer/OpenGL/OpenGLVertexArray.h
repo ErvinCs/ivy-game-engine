@@ -7,9 +7,12 @@
 //#include "OpenGLRenderer.h" - Cyclic dependency
 #include "../RenderAPI.h"
 
-namespace Ivy {
+namespace Ivy 
+{
 
-
+	/*
+	 *
+	 */
 	class OpenGLVertexArray : public VertexArray
 	{
 	private:

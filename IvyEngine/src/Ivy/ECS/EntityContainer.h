@@ -7,6 +7,9 @@
 #include "Entity.h"
 #include "../Core/Logger.h"
 
+/*
+ *
+ */
 class EntityContainer
 {
 private:

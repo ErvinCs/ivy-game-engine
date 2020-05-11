@@ -4,7 +4,9 @@
 
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class MouseMoveEvent : public Event
 	{
 	private:
@@ -26,7 +28,9 @@ namespace Ivy {
 			return ss.str();
 		}
 	};
-
+	/*
+	 *
+	 */
 	class MouseScrollEvent : public Event
 	{
 	private:
@@ -49,7 +53,9 @@ namespace Ivy {
 		}
 
 	};
-
+	/*
+	 *
+	 */
 	class MouseButtonEvent : public Event
 	{
 	public:
@@ -64,7 +70,9 @@ namespace Ivy {
 
 		int button;
 	};
-
+	/*
+	 *
+	 */
 	class MouseButtonDownEvent : public MouseButtonEvent
 	{
 	public:
@@ -81,7 +89,9 @@ namespace Ivy {
 			return ss.str();
 		}
 	};
-
+	/*
+	 *
+	 */
 	class MouseButtonUpEvent : public MouseButtonEvent
 	{
 	public:

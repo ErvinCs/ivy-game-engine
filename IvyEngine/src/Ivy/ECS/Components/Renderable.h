@@ -6,7 +6,9 @@
 
 namespace Ivy
 {
-
+	/*
+	 *
+	 */
 	struct Renderable : public Component
 	{
 	public:

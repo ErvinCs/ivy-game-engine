@@ -3,7 +3,9 @@
 #include "System.h"
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class RenderSystem : public System
 	{
 	public:

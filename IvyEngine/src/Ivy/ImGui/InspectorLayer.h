@@ -12,6 +12,10 @@
 #include "../ECS/Components/Collidable.h"
 
 namespace Ivy {
+
+	/*
+	 *
+	 */
 	class InspectorLayer : public SortingLayer
 	{
 	private:

@@ -10,7 +10,9 @@
 
 namespace Ivy 
 {
-
+	/*
+	 *
+	 */
 	class Renderer
 	{
 	private:

@@ -8,6 +8,9 @@
 
 namespace Ivy {
 
+	/*
+	 *
+	 */
 	class OpenGLTexture : public Texture
 	{
 	private:

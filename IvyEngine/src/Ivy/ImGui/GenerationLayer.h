@@ -4,7 +4,9 @@
 
 namespace Ivy
 {
-
+	/*
+	 *
+	 */
 	class GenerationLayer : public SortingLayer
 	{
 	public:

@@ -96,6 +96,7 @@ project "IvyEngine"
         defines "IVY_DEBUG"
         runtime "Debug"
         symbols "on"
+        optimize "on"
         postbuildcommands { 
             "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
             "{COPY} %{prj.location}/res/shaders/**.glsl %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/shaders"

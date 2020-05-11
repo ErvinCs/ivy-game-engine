@@ -1,9 +1,12 @@
 #pragma once
 
-#include<glm/glm.hpp>
+#include <glm/glm.hpp>
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class Shader
 	{
 	public:

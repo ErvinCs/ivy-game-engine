@@ -6,7 +6,9 @@
 #include <vector>
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class SortingLayerStack
 	{
 	public:

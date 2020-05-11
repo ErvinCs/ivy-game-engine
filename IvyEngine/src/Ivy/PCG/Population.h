@@ -4,7 +4,11 @@
 
 #include "Individual.h"
 
-namespace Ivy {
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class Population
 	{
 	private:

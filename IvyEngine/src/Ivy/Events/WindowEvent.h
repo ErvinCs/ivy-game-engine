@@ -4,7 +4,9 @@
 
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class WindowResizeEvent : public Event
 	{
 	private:
@@ -27,7 +29,9 @@ namespace Ivy {
 		}
 
 	};
-
+	/*
+	 *
+	 */
 	class WindowCloseEvent : public Event
 	{
 	public:

@@ -4,12 +4,12 @@
 #include "Entity.h"
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class JSONManager
 	{
 	public:
-		//using ConvFunc = std::function<void(Entity&, nlohmann::json&)>;
-		//using Json = nlohmann::json;
 		static std::vector<std::function<void(Entity&, nlohmann::json&)>> SaveFunctions;
 		static std::vector<std::function<void(Entity&, nlohmann::json&)>> LoadFunctions;
 

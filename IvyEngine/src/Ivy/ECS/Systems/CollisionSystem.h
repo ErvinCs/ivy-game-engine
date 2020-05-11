@@ -9,6 +9,9 @@
 
 namespace Ivy {
 
+	/*
+	 *
+	 */
 	class CollisionSystem : public System
 	{
 	private:

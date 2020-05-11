@@ -4,7 +4,9 @@
 
 namespace Ivy
 {
-
+	/*
+	 *
+	 */
 	class LevelGenerator
 	{
 	private:

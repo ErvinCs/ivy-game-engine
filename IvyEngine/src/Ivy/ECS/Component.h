@@ -6,8 +6,14 @@
 
 namespace Ivy
 {
+/*
+ *
+ */
 #define ComponentType uint8_t
 
+	/*
+	 *
+	 */
 	struct Component
 	{
 	protected:

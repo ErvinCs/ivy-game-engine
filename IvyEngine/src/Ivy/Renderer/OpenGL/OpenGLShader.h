@@ -7,14 +7,20 @@
 
 #include "../Shader.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	struct ShaderProgramSource
 	{
 		std::string VertexSource;
 		std::string FragmentSource;
 	};
 
+	/*
+	 *
+	 */
 	class OpenGLShader : public Shader
 	{
 	private:

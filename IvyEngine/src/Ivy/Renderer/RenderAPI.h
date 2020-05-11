@@ -4,8 +4,11 @@
 
 #include "VertexArray.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class RenderAPI
 	{
 	public:

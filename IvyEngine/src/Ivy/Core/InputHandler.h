@@ -3,7 +3,9 @@
 #include "Logger.h"
 
 namespace Ivy{
-
+	/*
+	 *
+	 */
 	class InputHandler
 	{
 	public:

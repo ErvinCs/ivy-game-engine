@@ -10,8 +10,12 @@
 
 #include "../Core/Logger.h"
 
-namespace Ivy {
+namespace Ivy 
+{
 
+	/*
+	 *
+	 */
 	class ScriptableObject
 	{
 	protected:

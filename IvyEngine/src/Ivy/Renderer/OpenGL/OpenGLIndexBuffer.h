@@ -2,8 +2,11 @@
 
 #include "../IndexBuffer.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	private:

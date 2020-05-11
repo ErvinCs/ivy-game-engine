@@ -27,7 +27,9 @@
 #include "Systems/CameraSystem.h"
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class ECS
 	{
 	private:

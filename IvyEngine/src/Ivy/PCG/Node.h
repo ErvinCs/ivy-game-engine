@@ -5,6 +5,9 @@
 
 namespace Ivy
 {
+	/*
+	 *
+	 */
 	class Node
 	{
 	private:
@@ -37,15 +40,6 @@ namespace Ivy
 			if (it != children.end())
 				this->children.erase(it);
 		}
-		/*inline void removeChild(int nodeId) 
-		{
-			for (auto& it = children.begin(); it != children.end(); it++)
-			{
-				Node& node = *it;
-				if (node.getNodeId() == this->nodeId)
-					children.erase(it);
-			}
-		}*/
 
 		inline bool operator==(const Node& other)
 		{

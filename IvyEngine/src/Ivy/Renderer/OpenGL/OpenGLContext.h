@@ -4,8 +4,11 @@
 
 struct GLFWwindow;
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class OpenGLContext : public Context
 	{
 	public:

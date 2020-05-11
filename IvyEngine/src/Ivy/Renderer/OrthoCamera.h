@@ -3,8 +3,11 @@
 #include <glm/glm.hpp>
 #include "../ECS/Entity.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	class OrthoCamera
 	{
 	public:

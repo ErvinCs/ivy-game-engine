@@ -4,8 +4,11 @@
 #include "../Component.h"
 #include "../Entity.h"
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/*
+	 *
+	 */
 	struct CollidableBox : public Component
 	{
 	public:

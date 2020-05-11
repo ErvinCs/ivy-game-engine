@@ -4,7 +4,9 @@
 #include "../EntityContainer.h"
 
 namespace Ivy {
-
+	/*
+	 *
+	 */
 	class System
 	{
 	protected:
