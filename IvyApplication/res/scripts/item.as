@@ -14,24 +14,21 @@ class Item : IController
 	void onUpdate()
 	{
 		ScriptableObject @player = playerRef;
-		if(player is null)
-		{
-			@player = FindObjectByTag('Player');
-			@playerRef = player;
-		}
+		@player = FindObjectByTag('Player');
+		@playerRef = player;
 		
 
-		if (not(collected))
+		if (not(collected) and not(player is null))
 		{
-			 if (AreColliding(self.getOwner(), player.getOwner()))
-			 {
+			if (AreColliding(self.getOwner(), player.getOwner()))
+			{
 				collected = true;
 				DestroySprite(self.getOwner());
 				DestroyCollidable(self.getOwner());
 				DestroyTransform(self.getOwner());
 				self.sendMessage(CMessage('COLLECT'), player);
 				self.kill();
-			 }		
+			}		
 		}
 
 	}

@@ -92,7 +92,7 @@ namespace Ivy {
 	{
 		if (--referenceCount <= 0)
 		{
-			delete this;
+			//delete this;
 			return 0;
 		}
 		return referenceCount;
@@ -105,8 +105,8 @@ namespace Ivy {
 		if (scriptObject)
 		{
 			scriptObject->Release();
-			scriptObject = NULL;
-			weakReferenceFlag = NULL;
+			scriptObject = 0;
+			weakReferenceFlag = 0;
 			name = "";
 			ownerEntity = 0;
 			alive = false;
