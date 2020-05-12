@@ -4,23 +4,28 @@
 
 
 namespace Ivy {
-	/*
+	/**
 	 *
 	 */
 	class WindowResizeEvent : public Event
 	{
 	private:
+		//
 		unsigned int width, height;
 	public:
+		/**
+		 *
+		 */
 		WindowResizeEvent(unsigned int width, unsigned int height)
-			: width(width), height(height) 
-		{
-			//IVY_CORE_TRACE("WindowResizeEvent: Created: WindowEvent/WindowResizeEvent: width={0}, height={1}", width, height);
-		}
+			: width(width), height(height) {}
 
+		//
 		inline unsigned int getWidth() const { return width; }
+
+		//
 		inline unsigned int getHeight() const { return height; }
 
+		//
 		std::string toString() const override
 		{
 			std::stringstream ss;
@@ -29,17 +34,17 @@ namespace Ivy {
 		}
 
 	};
-	/*
+
+	/**
 	 *
 	 */
 	class WindowCloseEvent : public Event
 	{
 	public:
-		WindowCloseEvent() 
-		{
-			//IVY_CORE_TRACE("WindowCloseEvent: Created: WindowEvent/WindowClosedEvent");
-		}
+		//
+		WindowCloseEvent() {}
 
+		//
 		std::string toString() const override
 		{
 			return "WindowClosedEvent";

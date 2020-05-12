@@ -4,27 +4,30 @@
 #include <string>
 
 
-/*
- *
- */
-class LayerException : public std::exception
+namespace Ivy
 {
-protected:
-	std::string message;
-
-public:
-	LayerException() noexcept
+	/**
+	 *
+	 */
+	class LayerException : public std::exception
 	{
-		this->message = "";
-	}
+	protected:
+		std::string message;
 
-	explicit LayerException(const std::string& msg)
-	{
-		this->message = msg;
-	}
+	public:
+		LayerException() noexcept
+		{
+			this->message = "";
+		}
 
-	virtual const char* what()
-	{
-		return message.c_str();
-	}
-};
+		explicit LayerException(const std::string& msg)
+		{
+			this->message = msg;
+		}
+
+		virtual const char* what()
+		{
+			return message.c_str();
+		}
+	};
+}

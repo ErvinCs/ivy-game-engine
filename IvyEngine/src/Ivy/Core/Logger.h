@@ -15,7 +15,9 @@ namespace Ivy {
 	class Logger
 	{
 	private:
+		// Engine logger
 		static std::shared_ptr<spdlog::logger> coreLogger;
+		// Application logger
 		static std::shared_ptr<spdlog::logger> clientLogger;
 
 	public:
@@ -24,11 +26,13 @@ namespace Ivy {
 		 */
 		static void Init();
 
+		// Get the engine logger
 		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger()
 		{
 			return coreLogger;
 		}
 
+		// Get the application logger
 		inline static std::shared_ptr<spdlog::logger>& GetClientLogger()
 		{
 			return clientLogger;
@@ -37,21 +41,21 @@ namespace Ivy {
 
 }
 
-// Core Logger
+// Core Logger Settings
 #define IVY_CORE_FATAL(...) ::Ivy::Logger::GetCoreLogger()->fatal(__VA_ARGS__)	//Severe errors that lead to application abort
 #define IVY_CORE_ERROR(...) ::Ivy::Logger::GetCoreLogger()->error(__VA_ARGS__)	//Error events that might still allow the application to run
 #define IVY_CORE_WARN(...)  ::Ivy::Logger::GetCoreLogger()->warn(__VA_ARGS__)	//Highlight potentionally harmful situations 
 #define IVY_CORE_INFO(...)  ::Ivy::Logger::GetCoreLogger()->info(__VA_ARGS__)	//General informational messages - Used to track application progress  
 #define IVY_CORE_TRACE(...) ::Ivy::Logger::GetCoreLogger()->trace(__VA_ARGS__)	//Fine-Grained informational events - Used for debugging
 
-// Client Logger
+// Client Logger Settings
 #define IVY_FATAL(...) ::Ivy::Logger::GetClientLogger()->fatal(__VA_ARGS__)		//Severe errors that lead to application abort
 #define IVY_ERROR(...) ::Ivy::Logger::GetClientLogger()->error(__VA_ARGS__)		//Error events that might still allow the application to run
 #define IVY_WARN(...)  ::Ivy::Logger::GetClientLogger()->warn(__VA_ARGS__)		//Highlight potentionally harmful situations 
 #define IVY_INFO(...)  ::Ivy::Logger::GetClientLogger()->info(__VA_ARGS__)		//General informational messages - Used to track application progress 
 #define IVY_TRACE(...) ::Ivy::Logger::GetClientLogger()->trace(__VA_ARGS__)		//Fine-Grained informational events - Used for debugging
 
-// Strip Logs from distribution build
+// Strip engine-side Logs from distribution build
 #ifdef _DEBUG
 #else
 #define IVY_CORE_INFO

@@ -6,8 +6,10 @@
 
 namespace Ivy{
 
-	/*
-	 *
+	/**
+	 * System used for camera manipulation.
+	 * Currently only supports binding camera to an entity
+	 * @see OrthoCamera
 	 */
 	class CameraSystem : public System
 	{

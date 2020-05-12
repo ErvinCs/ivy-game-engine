@@ -4,27 +4,32 @@
 #include <string>
 
 
-/*
- *
- */
-class EventException
+namespace Ivy
 {
-protected:
-	std::string message;
 
-public:
-	EventException() noexcept
+	/**
+	 *
+	 */
+	class EventException
 	{
-		this->message = "";
-	}
+	protected:
+		std::string message;
 
-	explicit EventException(const std::string& msg)
-	{
-		this->message = msg;
-	}
+	public:
+		EventException() noexcept
+		{
+			this->message = "";
+		}
 
-	virtual const char* what()
-	{
-		return message.c_str();
-	}
-};
+		explicit EventException(const std::string& msg)
+		{
+			this->message = msg;
+		}
+
+		virtual const char* what()
+		{
+			return message.c_str();
+		}
+	};
+
+}

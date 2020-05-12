@@ -13,14 +13,35 @@ namespace Ivy {
 	class ImGuiLayer : public SortingLayer
 	{
 	public:
+		/**
+		 *
+		 */
 		ImGuiLayer();
 		~ImGuiLayer();
 
+		/**
+		 *
+		 */
 		virtual void attach() override;
+		
+		/**
+		 *
+		 */
 		virtual void detach() override;
+
+		/**
+		 *
+		 */
 		virtual void imGuiRender() override;
 
+		/**
+		 *
+		 */
 		void begin();
+
+		/**
+		 *
+		 */
 		void end();
 	private:
 	private:

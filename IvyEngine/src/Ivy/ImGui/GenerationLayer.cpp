@@ -74,10 +74,9 @@ namespace Ivy
 		}
 		if (ImGui::Button("Run"))
 		{
-			Application::getInstance().globalTime = 0.0f;
-			Application::getInstance().GetLevelGenerator().run();
-			//CollisionSystem::ConstructArray();
-			Application::getInstance().lastFrameTime = (float)glfwGetTime();
+			Application::GetInstance().globalTime = 0.0f;
+			Application::GetInstance().GetLevelGenerator().run();
+			Application::GetInstance().lastFrameTime = (float)glfwGetTime();
 		}
 		if (ImGui::Button("Clear"))
 		{

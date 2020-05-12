@@ -1,8 +1,9 @@
 #pragma once
 
 namespace Ivy {
-	/*
-	 *
+	/**
+	 * Utility class. Encapsulates a float used in the measurement of time.
+	 * Provides math operators and can be converted into a float value.
 	 */
 	class Timestep
 	{
@@ -115,8 +116,6 @@ namespace Ivy {
 			return other.time != this->time;
 		}
 
-
-
 		/*
 		 * Allow time to be cast to a float value
 		 */
@@ -132,7 +131,9 @@ namespace Ivy {
 			return time * 1000.0f;
 		}
 
+		[[DEPRECATED]]
 		inline void addReference() { /* do nothing */ }
+		[[DEPRECATED]]
 		inline void release() { /* do nothing */ }
 
 	};

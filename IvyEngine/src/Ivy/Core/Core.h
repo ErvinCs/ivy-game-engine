@@ -12,10 +12,10 @@
 	#endif
 #endif
 
-// Logging
+// Assertion mechanism. Cause a breakpoint if the expression in question is false.
 #ifdef IVY_ENABLE_ASSERTS
-	#define IVY_ASSERT(x, ...) { if(!(x)) { HZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define IVY_CORE_ASSERT(x, ...) { if(!(x)) { HZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define IVY_ASSERT(x, ...) { if(!(x)) { IVY_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define IVY_CORE_ASSERT(x, ...) { if(!(x)) { IVY_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
 	#define IVY_ASSERT(x, ...)
 	#define IVY_CORE_ASSERT(x, ...)

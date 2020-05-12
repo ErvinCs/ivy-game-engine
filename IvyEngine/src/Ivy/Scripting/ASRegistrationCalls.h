@@ -10,63 +10,22 @@
 
 namespace Ivy
 {
-	/*
-	 *
+	/**
+	 * Register a global property and its type in order to measure time and maintain a steady framerate.
 	 */
 	static void RegisterTimestep(asIScriptEngine* scriptEngine)
 	{
 		int r;
 		// Register global time variable
-		r = scriptEngine->RegisterGlobalProperty("float deltatime", &Application::getInstance().globalTime); assert(r >= 0);
-
-		// Register Timestep
-		/*
-		r = scriptEngine->RegisterObjectType("Timestep", 0, asOBJ_REF); assert(r >= 0);
-		r = scriptEngine->RegisterObjectBehaviour("Timestep", asBEHAVE_ADDREF, "void f()", asMETHOD(Timestep, addReference), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectBehaviour("Timestep", asBEHAVE_RELEASE, "void f()", asMETHOD(Timestep, release), asCALL_THISCALL); assert(r >= 0);
-
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opAddAssign(const Timestep& in)",
-			asMETHODPR(Timestep, operator+=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opSubAssign(const Timestep& in)",
-			asMETHODPR(Timestep, operator-=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opMulAssign(const Timestep& in)",
-			asMETHODPR(Timestep, operator*=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timestep &opDivAssign(const Timestep& in)",
-			asMETHODPR(Timestep, operator/=, (const Timestep&), Timestep&), asCALL_THISCALL); assert(r >= 0);
-
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opAddAssign(const float& in)",
-			asMETHODPR(Timestep, operator+=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opSubAssign(const float& in)",
-			asMETHODPR(Timestep, operator-=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opMulAssign(const float& in)",
-			asMETHODPR(Timestep, operator*=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float &opDivAssign(const float& in)",
-			asMETHODPR(Timestep, operator/=, (const float&), float&), asCALL_THISCALL); assert(r >= 0);
-		*/
-
-		/*
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opAdd(const Timestep &in)",
-			asFUNCTIONPR(operator+, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opSub(const Timestep &in)",
-			asFUNCTIONPR(operator-, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opMul(const Timestep &in)",
-			asFUNCTIONPR(operator*, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "Timesteop opDiv(const Timestep &in)",
-			asFUNCTIONPR(operator/, (const Timestep&, const Timestep&), Timestep), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float opAdd(const float &in)",
-			asFUNCTIONPR(operator+, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float opSub(const float &in)",
-			asFUNCTIONPR(operator-, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float opMul(const float &in)",
-			asFUNCTIONPR(operator*, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-		r = scriptEngine->RegisterObjectMethod("Timestep", "float opDiv(const float &in)",
-			asFUNCTIONPR(operator/, (const Timestep&, const float&), float), asCALL_CDECL_OBJFIRST); assert(r >= 0);
-		*/
+		r = scriptEngine->RegisterGlobalProperty("float deltatime", &Application::GetInstance().globalTime); assert(r >= 0);
 	}
 
-	/*
-	 *
+	/**
+	 * Register glm::vec2 type as Vec2.
+	 * Properties: x : float, y : float,
+	 * Factory Methods: Vec2(), Vec2(float), Vec2(float, float), Vec2(Vec2)
+	 * Operators: assignment(=, +=, -=, *=, /=), math(+, -, *, /)
+	 * Methods: None
 	 */
 	static void RegisterVec2(asIScriptEngine* scriptEngine)
 	{
@@ -112,14 +71,16 @@ namespace Ivy
 			asMETHODPR(glm::vec2, operator/=, (const float&), glm::vec2&), asCALL_THISCALL); assert(r >= 0);
 	}
 
-	/* 
-	 * Register the Transform component.
+	/** 
+	 * Register the Transform component as Transform.
 	 * Properties: position : vec2, scale : vec2, rotation: float
 	 * Factory Methods: Transform(), Transform(vec2, float, vec2)
 	 * Operators: assignment(=) - Invokes the copy constructor of Transform
+	 * Methods: None
 	 * Static Methods:
-	 *   void DestroyTransform(uint16) - Destroy the transform owned by the passed entity
-	 *   Transform@ FindTransform(uint16) - Returns a reference to the transformed owned by the passed entity
+	 *   void DestroyTransform(uint16) - Remove the Transform owned by the passed entity
+	 *   Transform@ FindTransform(uint16) - Returns a reference to the Transform owned by the passed entity
+	 * @see Transform
 	 */
 	static void RegisterTransform(asIScriptEngine* scriptEngine)
 	{
@@ -131,9 +92,6 @@ namespace Ivy
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_ADDREF, "void f()", asMETHOD(Transform, addReference), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_RELEASE, "void f()", asMETHOD(Transform, release), asCALL_THISCALL); assert(r >= 0);
 
-		// Constructors
-		r = scriptEngine->RegisterGlobalFunction("Transform@ InitTransform()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
-
 		// Fields
 		r = scriptEngine->RegisterObjectProperty("Transform", "Vec2 position", asOFFSET(Transform, position)); assert(r >= 0);
 		r = scriptEngine->RegisterObjectProperty("Transform", "float rotation", asOFFSET(Transform, rotation)); assert(r >= 0);
@@ -142,9 +100,9 @@ namespace Ivy
 		// The assignment operator for transform
 		r = scriptEngine->RegisterObjectMethod("Transform", "Transform &opAssign(const Transform &in)",
 			asMETHODPR(Transform, operator=, (const Transform &), Transform &), asCALL_THISCALL); assert(r >= 0);
-		// Factory methods for Transform such that it can be instantiated in script
+		// Factory methods for Transform
 		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f()", asFUNCTION(Transform_Factory1), asCALL_CDECL); assert(r >= 0);
-		//r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f(Vec2, float, Vec2)", asFUNCTION(Transform_Factory2), asCALL_CDECL); assert(r >= 0);
+		r = scriptEngine->RegisterObjectBehaviour("Transform", asBEHAVE_FACTORY, "Transform@ f(Vec2, float, Vec2)", asFUNCTION(Transform_Factory2), asCALL_CDECL); assert(r >= 0);
 
 		// Destroy the Transform owned by the passed entity
 		r = scriptEngine->RegisterGlobalFunction("void DestroyTransform(uint16)", asFUNCTION(SelfDestroyTransform), asCALL_CDECL);
@@ -156,22 +114,31 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("void Rotate270(Transform &)", asFUNCTION(Rotate270Transform), asCALL_CDECL); assert(r >= 0);
 	}
 
-	/*
-	 *
+	/**
+	 * Register the Renderable component as Sprite.
+	 * Properties: None
+	 * Factory Methods: Sprite()
+	 * Operators: assignment(=) - Invokes the copy constructor of Renderable
+	 * Methods: None
+	 * Static Methods:
+	 *   void DestroySprite(uint16) - Remove the Renderable owned by the passed entity
+	 *   Sprite@ FindSprite(uint16) - Returns a reference to the Renderable owned by the passed entity
+	 *	 void LoadSprite(uint16, string) - Load a Renderable for the passed entity at the path given by the string
+	 *   void LoadSprite(Sprite &, string) - Load a Renderable in place of the passed Renderable at the path given by the string
+	 * @see Renderable
 	 */
 	static void RegisterRenderable(asIScriptEngine* scriptEngine)
 	{
 		int r;
 
-		// Register the Renderable component. The scripts cannot create these directly, so there is no factory function.
+		// Register the Renderable component.
 		r = scriptEngine->RegisterObjectType("Sprite", 0, asOBJ_REF); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_ADDREF, "void f()", asMETHOD(Renderable, addReference), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_RELEASE, "void f()", asMETHOD(Renderable, release), asCALL_THISCALL); assert(r >= 0);
 
-		r = scriptEngine->RegisterGlobalFunction("Sprite@ InitSprite()", asFUNCTION(Renderable_Factory1), asCALL_CDECL); assert(r >= 0);
-
 		r = scriptEngine->RegisterObjectMethod("Sprite", "Sprite &opAssign(const Sprite &in)",
 			asMETHODPR(Renderable, operator=, (const Renderable &), Renderable &), asCALL_THISCALL); assert(r >= 0);
+		
 		r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite@ f()", asFUNCTION(Renderable_Factory1), asCALL_CDECL); assert(r >= 0);
 
 		// Destroy owned Renderable
@@ -181,13 +148,25 @@ namespace Ivy
 		// Register LoadNewTexture(Entity, std::string). Changes the texture a renderable of an entity displays with the texture at the given string location
 		r = scriptEngine->RegisterGlobalFunction("void LoadSprite(uint16, string)", asFUNCTION(LoadNewTextureToEntity), asCALL_CDECL); assert(r >= 0);
 		r = scriptEngine->RegisterGlobalFunction("void LoadSprite(Sprite &, string)", asFUNCTION(LoadNewTextureToRenderable), asCALL_CDECL); assert(r >= 0);
-		r = scriptEngine->RegisterGlobalFunction("void FlipX(Sprite &)", asFUNCTION(FlipX), asCALL_CDECL); assert(r >= 0);
-		r = scriptEngine->RegisterGlobalFunction("void FlipY(Sprite &)", asFUNCTION(FlipY), asCALL_CDECL); assert(r >= 0);
-
+		//r = scriptEngine->RegisterGlobalFunction("void FlipX(Sprite &)", asFUNCTION(FlipX), asCALL_CDECL); assert(r >= 0);
+		//r = scriptEngine->RegisterGlobalFunction("void FlipY(Sprite &)", asFUNCTION(FlipY), asCALL_CDECL); assert(r >= 0);
 	}
 
-	/*
-	 *
+	/**
+	 * Register the ScriptableObject. It represents in script a game object owned by an entity.
+	 * Properties: None
+	 * Factory Methods: None
+	 * Operators: None
+	 * Methods: 
+	 *	uint16 getOwner() - Returns the entity that owns the ScriptableObject
+	 *  void kill() - Mark the ScriptableObject as dead. It will be destroyed by the ScriptManager.
+	 *  void sendMessage(ref message, const ScriptableObject@+ to) - Send a message to another ScriptableObject
+	 * Static Methods:
+	 *    ScriptableObject@+ FindObjectByTag(const string &in) - Returns a handle to the ScriptableObject that has a Tag component with the name of the passed string
+	 * @see ScriptableObject
+	 * @see ScriptManager
+	 * @see ScriptComponent
+	 * @see ScriptSystem
 	 */
 	static void RegisterScriptableObject(asIScriptEngine* scriptEngine)
 	{
@@ -216,8 +195,9 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("ScriptableObject @+ FindObjectByTag(const string &in)", asFUNCTION(FindObjectByTag), asCALL_CDECL); assert(r >= 0);
 	}
 
-	/*
-	 *
+	/**
+	 * Register the methods of the InputHandler to query input devices.
+	 * @see InputHandler
 	 */
 	static void RegisterInputHandler(asIScriptEngine* scriptEngine)
 	{
@@ -230,13 +210,24 @@ namespace Ivy
 		r = scriptEngine->RegisterGlobalFunction("float GetMouseY()", asFUNCTION(GetMouseY), asCALL_CDECL); assert(r >= 0);
 	}
 
-	/*
-	 *
+	/**
+	 * Register the CollidableBox as Collidable
+	 * Properties: centerPosition : Vec2, rotation : float, halfScale : Vec2, isTrigger : bool, unitX : Vec2, unitY : Vec2
+	 * Factory Methods: Collidable()
+	 * Operators: assignment(=)
+	 * Methods: None
+	 * Static Methods:
+	 *    void DestroyCollidable(uint16) - Remove the CollidableBox owned by the passed entity
+	 *    Collidable@ FindCollidable(uint16) - Returns a reference to the CollidableBox owned by the passed entity
+	 *    AreColliding(uint16, uint16) - Returns true if the passed entities are colliding; false otherwise
+	 *    IsColliding(uint16) - Returns true if the passed entity is colliding with anything
+	 * @see CollidableBox
+	 * @see CollisionSystem
 	 */
 	static void RegisterCollision(asIScriptEngine* scriptEngine)
 	{
 		int r;
-		// Register the Renderable component. The scripts cannot create these directly, so there is no factory function.
+		// Register the Renderable component.
 		r = scriptEngine->RegisterObjectType("Collidable", 0, asOBJ_REF); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_ADDREF, "void f()", asMETHOD(CollidableBox, addReference), asCALL_THISCALL); assert(r >= 0);
 		r = scriptEngine->RegisterObjectBehaviour("Collidable", asBEHAVE_RELEASE, "void f()", asMETHOD(CollidableBox, release), asCALL_THISCALL); assert(r >= 0);
@@ -247,8 +238,6 @@ namespace Ivy
 		r = scriptEngine->RegisterObjectProperty("Collidable", "bool isTrigger", asOFFSET(CollidableBox, isTrigger)); assert(r >= 0);
 		r = scriptEngine->RegisterObjectProperty("Collidable", "Vec2 unitX", asOFFSET(CollidableBox, unitX)); assert(r >= 0);
 		r = scriptEngine->RegisterObjectProperty("Collidable", "Vec2 unitY", asOFFSET(CollidableBox, unitY)); assert(r >= 0);
-
-		r = scriptEngine->RegisterGlobalFunction("Collidable@ InitCollidable()", asFUNCTION(Collidable_Factory1), asCALL_CDECL); assert(r >= 0);
 
 		r = scriptEngine->RegisterObjectMethod("Collidable", "Collidable &opAssign(const Collidable &in)",
 			asMETHODPR(CollidableBox, operator=, (const CollidableBox &), CollidableBox &), asCALL_THISCALL); assert(r >= 0);

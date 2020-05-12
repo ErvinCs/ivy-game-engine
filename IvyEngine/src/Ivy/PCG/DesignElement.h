@@ -37,18 +37,25 @@ namespace Ivy {
 	protected:
 		ElementType elementType;
 	public:
+		//
 		Entity entity;
+		//
 		Tag tag{};
+		//
 		Transform transform{};
 
+		//
 		static int TagCounter;
+		//
 		const static int ElementTypeCount = 11;
+		//
 		const static int HostileTypeCount = 8;
 	public:
 		DesignElement() = default;
 		DesignElement(const DesignElement& other);
 		DesignElement(const DesignElement&& other);
 		DesignElement(Tag tag, Transform transform);
+
 
 		DesignElement& operator=(const DesignElement& other)
 		{
@@ -57,14 +64,26 @@ namespace Ivy {
 			this->elementType = other.elementType;
 			return *this;
 		}
+
+		/**
+		 *
+		 */
 		bool operator==(const DesignElement& other)
 		{ 
 			return this->transform == other.transform;
 		}
+
+		/**
+		 *
+		 */
 		bool operator!=(const DesignElement& other)
 		{
 			return !(*this == other);
 		}
+
+		/**
+		 *
+		 */
 		bool operator<(const DesignElement& other)
 		{
 			if (this->transform.position.y < other.transform.position.y) 
@@ -79,6 +98,10 @@ namespace Ivy {
 
 			return false;
 		}
+
+		/**
+		 *
+		 */
 		bool operator>(const DesignElement& other)
 		{
 			if (this->transform.position.y > other.transform.position.y)
@@ -93,6 +116,10 @@ namespace Ivy {
 
 			return false;
 		}
+
+		/**
+		 *
+		 */
 		bool operator<=(const DesignElement& other)
 		{
 			if (this->transform.position.y <= other.transform.position.y)
@@ -107,6 +134,10 @@ namespace Ivy {
 
 			return false;
 		}
+
+		/**
+		 *
+		 */
 		bool operator>=(const DesignElement& other)
 		{
 			if (this->transform.position.y >= other.transform.position.y)
@@ -122,10 +153,17 @@ namespace Ivy {
 			return false;
 		}
 
+		/**
+		 *
+		 */
 		inline const ElementType& getElementType()
 		{ 
 			return this->elementType; 
 		}
+
+		/**
+		 *
+		 */
 		inline void setElementType(const ElementType& elementType) 
 		{ 
 			this->elementType = elementType; 

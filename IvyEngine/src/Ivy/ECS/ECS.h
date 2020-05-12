@@ -27,7 +27,7 @@
 #include "Systems/CameraSystem.h"
 
 namespace Ivy {
-	/*
+	/**
 	 *
 	 */
 	class ECS
@@ -39,20 +39,27 @@ namespace Ivy {
 		EntityContainer entities;
 		std::vector<std::shared_ptr<System>> systems{};
 	public:
-
+		/**
+		 *
+		 */
 		~ECS()
 		{	
 			componentTypes.clear();
 			componentContainers.clear();
 			systems.clear();
 		}
-
+		/**
+		 *
+		 */
 		static ECS& getInstance()
 		{
 			static ECS instance{};
 			return instance;
 		}
 
+		/**
+		 *
+		 */
 		void loadEntities() {
 			IVY_CORE_INFO("ECS: Loading Entities from {0}", Paths::entitiesRepoPath.string());
 			if (std::filesystem::exists(Paths::entitiesRepoPath)) {
@@ -74,6 +81,9 @@ namespace Ivy {
 			}
 		}
 
+		/**
+		 *
+		 */
 		void saveEntities() {
 			IVY_CORE_INFO("ECS: Saving Entities to {0}", Paths::entitiesRepoPath.string());
 			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());
@@ -81,6 +91,9 @@ namespace Ivy {
 			JSONManager::SaveCamera(Paths::cameraRepoPath.string());
 		}
 
+		/**
+		 *
+		 */
 		void clearECS()
 		{
 			for (auto& componentContainer : componentContainers)
@@ -90,16 +103,21 @@ namespace Ivy {
 			this->entities.clearEntities();
 		}
 
+		/**
+		 *
+		 */
 		int getSizeEntities() {
 			return this->entities.size();
 		}
 
-		// Components
+		// ---------- Components ----------
+
+		/**
+		 *
+		 */
 		template<typename T>
 		uint8_t addComponentType()
 		{
-			// Log produces error
-			//IVY_CORE_INFO("ECS: Registering new Component: type={0}, id={1}", typeid(T).name(), componentTypeCounter);
 			const char* typeName = typeid(T).name();
 
 			// Add a new component type
@@ -111,28 +129,42 @@ namespace Ivy {
 			return componentTypeCounter - 1;
 		}
 
-		//TEMPORARY - Until bitset is implemented
+		/**
+		 *
+		 */
 		uint8_t generateComponentId()
 		{
 			return componentTypeCounter;
 		}
 
+		/**
+		 *
+		 */
 		const std::map<const char*, uint8_t>& getComponentTypes() {
 			return this->componentTypes;
 		}
 
+		/**
+		 *
+		 */
 		template<typename T>
 		void addComponent(Entity& entity, T component)
 		{
 			getComponentContainer<T>()->addComponent(entity, component);
 		}
 
+		/**
+		 *
+		 */
 		template<typename T>
 		void removeComponent(Entity& entity)
 		{
 			getComponentContainer<T>()->removeComponent(entity);
 		}
 
+		/**
+		 *
+		 */
 		template<typename T>
 		T& getComponent(Entity& entity)
 		{
@@ -141,7 +173,11 @@ namespace Ivy {
 
 
 
-		// Entities
+		// ---------- Entities -----------
+
+		/**
+		 *
+		 */
 		void destroyEntity(Entity& entity)
 		{
 			for (auto const& containerPair : componentContainers)
@@ -154,33 +190,52 @@ namespace Ivy {
 			entities.destroyEntity(entity);
 		}
 
+		/**
+		 *
+		 */
 		Entity& createEntity()
 		{
 			return entities.createEntity();
 		}
 
+		/**
+		 *
+		 */
 		void addToFreeEntities(Entity entity)
 		{
 			entities.addToFreeEntities(entity);
 		}
 
+		/**
+		 *
+		 */
 		void addToEntities(uint16_t entity)
 		{
 			entities.addToEntities(entity);
 		}
 
+		/**
+		 *
+		 */
 		EntityContainer& getEntities()
 		{
 			return this->entities;
 		}
 
-		// Systems
+		// ---------- Systems ----------
+
+		/**
+		 *
+		 */
 		void addSystem(const std::shared_ptr<System>& system)
 		{
 			IVY_CORE_INFO("ECS: Registering System");
 			systems.push_back(std::move(system));
 		}
 
+		/**
+		 *
+		 */
 		void updateSystems(float ts) {
 			for (std::shared_ptr<System> system : systems)
 			{
@@ -188,6 +243,9 @@ namespace Ivy {
 			}
 		}
 
+		/**
+		 *
+		 */
 		void initSystems() {
 			std::shared_ptr<System> renderSystem    = std::make_shared<RenderSystem>(entities);
 			std::shared_ptr<System> scriptSystem    = std::make_shared<ScriptSystem>(entities);
@@ -214,6 +272,9 @@ namespace Ivy {
 
 
 	private:
+		/**
+		 *
+		 */
 		template<typename T>
 		std::shared_ptr<ComponentContainer<T>> getComponentContainer()
 		{
@@ -222,6 +283,9 @@ namespace Ivy {
 			return std::static_pointer_cast<ComponentContainer<T>>(componentContainers[typeName]);
 		}	
 
+		/**
+		 *
+		 */
 		ECS()
 		{
 			// Ids
@@ -231,13 +295,15 @@ namespace Ivy {
 			this->registerComponentTypes();
 		}
 
+		/**
+		 *
+		 */
 		void registerComponentTypes() {
 			this->addComponentType<Transform>();		
 			this->addComponentType<Renderable>();		
 			this->addComponentType<ScriptComponent>();	
 			this->addComponentType<Tag>();	
 			this->addComponentType<CollidableBox>();
-			//this->addComponentType<TileLocation>();
 		}
 
 		ECS(const ECS&) = delete;

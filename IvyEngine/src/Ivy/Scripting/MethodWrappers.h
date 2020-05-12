@@ -42,6 +42,32 @@ namespace Ivy {
 		return InputHandler::GetInstance()->GetMouseY();
 	}
 
+	// ---------- ScriptableObject ----------
+
+	ScriptableObject* FindObjectByTag(const std::string& tag)
+	{
+		bool found = false;
+		for (Entity entity : ECS::getInstance().getEntities())
+		{
+			if (ECS::getInstance().getComponent<Tag>(entity).tag == tag)
+			{
+				found = true;
+				if (ECS::getInstance().getComponent<ScriptComponent>(entity).getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
+				{
+					return NULL;
+				}
+				else
+				{
+					return ECS::getInstance().getComponent<ScriptComponent>(entity).scriptableObject;
+				}
+
+			}
+		}
+		if (!found)
+		{
+			return NULL;
+		}
+	}
 
 	// ---------- Components ----------
 	Transform* FindTransform(Entity entity) {
@@ -90,31 +116,6 @@ namespace Ivy {
 		return new CollidableBox(glm::vec2(0), 0, glm::vec2(0));
 	}
 
-	ScriptableObject* FindObjectByTag(const std::string& tag)
-	{
-		bool found = false;
-		for (Entity entity : ECS::getInstance().getEntities())
-		{
-			if (ECS::getInstance().getComponent<Tag>(entity).tag == tag)
-			{ 
-				found = true;
-				if (ECS::getInstance().getComponent<ScriptComponent>(entity).getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
-				{
-					return NULL;
-				}
-				else
-				{
-					return ECS::getInstance().getComponent<ScriptComponent>(entity).scriptableObject;
-				}
-				
-			}
-		}
-		if (!found)
-		{
-			return NULL;
-		}
-	}
-
 	void Rotate90Transform(Transform& transform)
 	{
 		transform.rotation += M_PI_2;
@@ -154,7 +155,6 @@ namespace Ivy {
 	{
 		return CollisionSystem::isCollidingWith[e].size() != 0;
 	}
-
 
 	void FlipX(Renderable& renderable)
 	{
@@ -265,6 +265,4 @@ namespace Ivy {
 	glm::vec2* Vec2Init2(float x, float y) {
 		return new glm::vec2(x, y);
 	}
-
-	
 }

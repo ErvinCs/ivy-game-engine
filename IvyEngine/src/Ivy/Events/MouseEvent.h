@@ -10,17 +10,19 @@ namespace Ivy {
 	class MouseMoveEvent : public Event
 	{
 	private:
+		//
 		float x, y;
 	public:
 		MouseMoveEvent(float x, float y)
-			: x(x), y(y) 
-		{
-			//IVY_CORE_TRACE("MouseMoveEvent: Created: MouseEvent/MouseMoveEvent: x={0},y={1}", x, y);
-		}
+			: x(x), y(y) {}
 
+		//
 		inline float getX() const { return x; }
+
+		//
 		inline float getY() const { return y; }
 
+		//
 		std::string toString() const override
 		{
 			std::stringstream ss;
@@ -34,17 +36,18 @@ namespace Ivy {
 	class MouseScrollEvent : public Event
 	{
 	private:
+		//
 		float x, y;
 	public:
 		MouseScrollEvent(float x, float y)
-			: x(x), y(y) 
-		{
-			//IVY_CORE_TRACE("MouseScrollEvent: Created: MouseEvent/MouseScrollEvent: x={0},y={1}", x, y);
-		}
+			: x(x), y(y) {}
 
+		//
 		inline float getXOffset() const { return x; }
+		//
 		inline float getYOffset() const { return y; }
 
+		//
 		std::string toString() const override
 		{
 			std::stringstream ss;
@@ -53,21 +56,23 @@ namespace Ivy {
 		}
 
 	};
-	/*
+
+	/**
 	 *
 	 */
 	class MouseButtonEvent : public Event
 	{
 	public:
+		/**
+		 *
+		 */
 		inline int getMouseButton() const { return button; }
 
 	protected:
 		MouseButtonEvent(int button)
-			: button(button) 
-		{
-			//IVY_CORE_TRACE("MouseButtonEvent: Created: MouseEvent/MouseButtonEvent: button={0}", button);
-		}
+			: button(button) {}
 
+		//
 		int button;
 	};
 	/*
@@ -89,18 +94,17 @@ namespace Ivy {
 			return ss.str();
 		}
 	};
-	/*
+
+	/**
 	 *
 	 */
 	class MouseButtonUpEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonUpEvent(int button)
-			: MouseButtonEvent(button) 
-		{
-			//IVY_CORE_TRACE("MouseButtonUpEvent: Created: MouseEvent/MouseButtonUpEvent: button={0}", button);
-		}
+			: MouseButtonEvent(button) {}
 
+		//
 		std::string toString() const override
 		{
 			std::stringstream ss;

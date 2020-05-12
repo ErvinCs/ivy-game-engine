@@ -3,28 +3,40 @@
 #include <exception>
 #include <string>
 
-
-/*
- *
- */
-class ComponentNotFoundException
+namespace Ivy
 {
-protected:
-	std::string message;
-
-public:
-	ComponentNotFoundException() noexcept
+	/**
+	 *
+	 */
+	class ComponentNotFoundException
 	{
-		this->message = "";
-	}
+	protected:
+		//
+		std::string message;
 
-	explicit ComponentNotFoundException(const std::string& msg)
-	{
-		this->message = msg;
-	}
+	public:
+		/**
+		 *
+		 */
+		ComponentNotFoundException() noexcept
+		{
+			this->message = "";
+		}
 
-	virtual const char* what()
-	{
-		return message.c_str();
-	}
-};
+		/**
+		 *
+		 */
+		explicit ComponentNotFoundException(const std::string& msg)
+		{
+			this->message = msg;
+		}
+
+		/**
+		 *
+		 */
+		virtual const char* what()
+		{
+			return message.c_str();
+		}
+	};
+}

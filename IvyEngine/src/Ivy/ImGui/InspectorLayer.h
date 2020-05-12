@@ -19,16 +19,26 @@ namespace Ivy {
 	class InspectorLayer : public SortingLayer
 	{
 	private:
+		//
 		ComponentType TagID;
+		//
 		ComponentType RenderableID;
+		//
 		ComponentType TransformID;
+		//
 		ComponentType ScriptComponentID;
+		//
 		ComponentType CollidableBoxID;
 	public:
+		/**
+		 *
+		 */
 		InspectorLayer();
-
 		~InspectorLayer() = default;
 
+		/**
+		 *
+		 */
 		virtual void imGuiRender() override;
 	};
 }

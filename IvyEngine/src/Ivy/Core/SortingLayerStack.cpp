@@ -3,11 +3,6 @@
 
 namespace Ivy {
 
-	SortingLayerStack::SortingLayerStack()
-	{
-	}
-
-
 	SortingLayerStack::~SortingLayerStack()
 	{
 		for (SortingLayer* layer : this->layers)

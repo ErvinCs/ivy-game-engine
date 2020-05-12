@@ -45,7 +45,7 @@ namespace Ivy {
 				}
 				if (ImGui::MenuItem("Exit"))
 				{
-					Application::getInstance().isRunning = false;
+					Application::GetInstance().isRunning = false;
 				}
 				ImGui::EndMenu();
 			}

@@ -124,26 +124,4 @@ namespace Ivy {
 		}
 		return (avgFitness / individuals.size());
 	}
-
-	// Has Issues
-	/*void Population::removeDuplicates()
-	{
-		int indSize = individuals.size();
-		for (int i = 0; i < indSize -1; i++)
-		{
-			auto& it = individuals.begin();
-			std::next(it, i + 1);
-			while( it != individuals.end() )
-			{				
-				if (individuals[i] == *it)
-				{
-					individuals.erase(it);
-					indSize--;
-					it++;
-				}
-				
-			}
-		}
-	}*/
-
 }

@@ -36,7 +36,7 @@ namespace Ivy {
 	{
 		// End ImGui Window Rendering
 		ImGuiIO& io = ImGui::GetIO();
-		Application& app = Application::GetApplication();
+		Application& app = Application::GetInstance();
 		io.DisplaySize = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
 
 		// Rendering
@@ -55,7 +55,7 @@ namespace Ivy {
 	void ImGuiLayer::imGuiRender() 
 	{
 		static bool showDemo = false;
-		ImGui::ShowDemoWindow(&showDemo);
+		//ImGui::ShowDemoWindow(&showDemo);
 	}
 
 	void ImGuiLayer::attach()  
@@ -69,7 +69,6 @@ namespace Ivy {
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-		//io.ConfigFlags |= ImGuiWindowFlags_Popup;
 
 		ImGui::StyleColorsDark();
 
@@ -80,7 +79,7 @@ namespace Ivy {
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
-		Application& app = Application::GetApplication();
+		Application& app = Application::GetInstance();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.getWindow().getNativeWindow());
 
 		// Setup Renderer bindings

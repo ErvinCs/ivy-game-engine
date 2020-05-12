@@ -13,38 +13,78 @@
 namespace Ivy 
 {
 
-	/*
-	 *
+	/**
+	 * 
 	 */
 	class ScriptableObject
 	{
 	protected:
+		// Name of the script
 		std::string name;
 		asIScriptObject* scriptObject;
+		// Entity controlled by the script
 		Entity ownerEntity;
+		// True if the entity is alive, false otherwise
 		bool alive;
 
+		//
 		int referenceCount;
+
+		//
 		asILockableSharedBool* weakReferenceFlag;
 	public:
+		/**
+		 *
+		 */
 		ScriptableObject();
+
+		/**
+		 *
+		 */
 		ScriptableObject(const std::string& name);
+
+		/**
+		 *
+		 */
 		ScriptableObject(const ScriptableObject& other);
 		~ScriptableObject();
 
+		/**
+		 *
+		 */
 		int addReference();
+		/**
+		 *
+		 */
 		int release();
 
+		/**
+		 *
+		 */
 		asILockableSharedBool* getWeakRefereneFlag();
+		
+		/**
+		 *
+		 */
 		void destoryAndRelease();
+		
+		/**
+		 *
+		 */
 		void kill();
 
+		/**
+		 *
+		 */
 		void sendMessage(CScriptHandle message, ScriptableObject* target);
+		
+		/**
+		 *
+		 */
 		void onUpdate();
 
 		void setOwner(Entity ownerEntity);
 		Entity getOwner();	
-
 		inline void setAlive(bool live) { this->alive = live; }
 		inline bool isAlive() { return alive; }
 		inline const std::string& getName() { return this->name; }
@@ -54,6 +94,9 @@ namespace Ivy
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }
 		inline void setWeakRefereneFlag(asILockableSharedBool* weakRefFlag) { this->weakReferenceFlag = weakRefFlag; }
 
+		/**
+		 *
+		 */
 		ScriptableObject& operator=(const ScriptableObject& other);
 	};
 

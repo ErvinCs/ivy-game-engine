@@ -60,8 +60,7 @@ namespace Ivy
 			A.centerPosition = ATransform.position;
 
 			// For now I've decided to also update the rotation and scale of a Collidable when changing the transform
-			// If support for gizmos will be added in the feature, then I'll consider removing it
-			// For now there isn't really a use-case for a collidable with different properties than the transform
+			// Currently there isn't really a use-case for a collidable with different properties than the transform
 			A.halfScale = ATransform.scale / 2.0f;
 			A.rotation = ATransform.rotation;
 

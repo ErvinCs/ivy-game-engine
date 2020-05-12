@@ -10,9 +10,19 @@ namespace Ivy
 	class Shader
 	{
 	public:
+		/**
+		 *
+		 */
 		virtual ~Shader() = default;
 
+		/**
+		 *
+		 */
 		virtual void bind() const = 0;
+
+		/**
+		 *
+		 */
 		virtual void unbind() const = 0;
 
 		virtual void setUniform1f(const std::string& name, float v) = 0;
@@ -25,6 +35,9 @@ namespace Ivy
 		virtual void setUniform4i(const std::string& name, const glm::ivec4& vec4) = 0;
 		virtual void setUniformMat4f(const std::string& name, const glm::mat4& matrix) = 0;
 
+		/**
+		 *
+		 */
 		static std::shared_ptr<Shader> Create(const std::string& filepath);
 	};
 

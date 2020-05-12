@@ -3,8 +3,12 @@
 #include "System.h"
 
 namespace Ivy {
-	/*
-	 *
+	/**
+	 * System used to render the entities by calling the Renderer.
+	 * Requires a Renderable and a Transform.
+	 * @see System
+	 * @see Renderable
+	 * @see Renderer
 	 */
 	class RenderSystem : public System
 	{
@@ -15,6 +19,9 @@ namespace Ivy {
 			this->setEntities(entities);
 		}
 		
+		/**
+		 * Sets the clear color used by the Renderer
+		 */
 		virtual void init() override;
 		virtual void update(float deltatime) override;
 	};

@@ -10,12 +10,19 @@ namespace Ivy
 	class LevelGenerator
 	{
 	private:
+		//
 		FI2Pop generator;
+		//
 		Individual fittest;
+		//
 		Population finalPopulation;
+		//
 		const float positionOffset = 8.0f;
+		//
 		const float wallOfsset = 4.5f;
+		//
 		const float halfTileSize = 0.49f;
+		//
 		const float halfTilePos = 0.5f;
 	public:
 		static bool alwaysLoad;
@@ -42,10 +49,25 @@ namespace Ivy
 		static std::string collectablePath;
 		static std::string collectableScript;
 		static bool isGenerating;
+
+		/**
+		 *
+		 */
 		LevelGenerator();
 		
+		/**
+		 *
+		 */
 		void run();
+
+		/**
+		 *
+		 */
 		void clearPopulations();
+
+		/**
+		 *
+		 */
 		inline Individual getFittest() { return this->fittest; }
 	};
 
