@@ -75,6 +75,7 @@ namespace Ivy {
 		//
 		int button;
 	};
+
 	/*
 	 *
 	 */
@@ -83,9 +84,7 @@ namespace Ivy {
 	public:
 		MouseButtonDownEvent(int button)
 			: MouseButtonEvent(button) 
-		{
-			//IVY_CORE_TRACE("MouseButtonDownEvent: Created: MouseEvent/MouseButtonDownEvent: button={0}", button);
-		}
+		{}
 
 		std::string toString() const override
 		{
@@ -104,7 +103,6 @@ namespace Ivy {
 		MouseButtonUpEvent(int button)
 			: MouseButtonEvent(button) {}
 
-		//
 		std::string toString() const override
 		{
 			std::stringstream ss;

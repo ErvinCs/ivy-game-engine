@@ -7,7 +7,8 @@
 namespace Ivy
 {
 	/**
-	 *
+	 * Thrown by the LayerStack on attempting to pop an unexistent layer.
+	 * @see LayerStack
 	 */
 	class LayerException : public std::exception
 	{

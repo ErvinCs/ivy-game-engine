@@ -53,7 +53,9 @@ namespace Ivy
 		 */
 		CollidableBox(const CollidableBox& other);
 
+		// Used by AS reference counting mechanism
 		inline void addReference() { /* do nothing */ }
+		// Used by AS reference counting mechanism
 		inline void release() { /* do nothing */ }
 
 		CollidableBox& operator=(const CollidableBox& other);

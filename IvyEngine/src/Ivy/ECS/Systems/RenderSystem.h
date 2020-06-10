@@ -23,6 +23,10 @@ namespace Ivy {
 		 * Sets the clear color used by the Renderer
 		 */
 		virtual void init() override;
+		/**
+		 * Calls the renderer to draw the texture held in the Renderable component at the position and scale
+		 *  determined by the Transform.
+		 */
 		virtual void update(float deltatime) override;
 	};
 

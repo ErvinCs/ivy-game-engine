@@ -46,7 +46,9 @@ namespace Ivy
 		 */
 		~ScriptComponent();
 
+		// Used by AS reference counting mechanism
 		inline void addReference() { /* do nothing */ }
+		// Used by AS reference counting mechanism
 		inline void release() { /* do nothing */ }
 
 		ScriptComponent& operator=(const ScriptComponent& other);

@@ -32,6 +32,9 @@ namespace Ivy {
 		 * Sets the clear color used by the Renderer
 		 */
 		virtual void init() override;
+		/**
+		 * Calls the renderer to draw the boxes coresponding to the collidables owned by entities.
+		 */
 		virtual void update(float deltatime) override;
 	};
 }

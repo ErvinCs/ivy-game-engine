@@ -298,7 +298,7 @@ namespace Ivy {
 			return 0;
 		}
 
-		// Find the optional event handlers
+		// Find the optional function handles
 		controller->onUpdateMethod = type->GetMethodByDecl("void onUpdate()");
 		controller->onMessageMethod = type->GetMethodByDecl("void onMessage(ref @message, const ScriptableObject @sender)");
 

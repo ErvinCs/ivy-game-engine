@@ -50,7 +50,6 @@ namespace Ivy {
 			return repeatCount;
 		}
 
-		//
 		std::string toString() const override {
 			std::stringstream ss;
 			ss << "KeyDownEvent: " << keyCode << "; Repeat count: " << repeatCount;
@@ -72,7 +71,6 @@ namespace Ivy {
 		 */
 		KeyUpEvent(int keyCode) : KeyEvent(keyCode) {}
 
-		//
 		std::string toString() const override {
 			std::stringstream ss;
 			ss << "KeyUpEvent: " << keyCode;

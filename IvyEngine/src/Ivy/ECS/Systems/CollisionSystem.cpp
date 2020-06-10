@@ -79,7 +79,7 @@ namespace Ivy
 				// Distance between the object centers
 				glm::vec2 T = A.centerPosition - B.centerPosition;
 
-				// Check if the objects are close to eachother and ignore other computations otherwise
+				// Check if the objects are close to each other and ignore other computations otherwise
 				maxDistA = A.halfScale.x > A.halfScale.y ? A.halfScale.x + 0.05f : A.halfScale.y + 0.05f;
 				maxDistB = B.halfScale.x > B.halfScale.y ? B.halfScale.x + 0.05f : B.halfScale.y + 0.05f;
 
@@ -91,7 +91,6 @@ namespace Ivy
 						if (areColliding != entityIsColliding->end())
 						{
 							entityIsColliding->erase(areColliding);
-							//isCollidingWith[otherObject].erase(std::find(isCollidingWith[otherObject].begin(), isCollidingWith[otherObject].end(), object));
 						}
 					}
 					continue;
@@ -113,15 +112,12 @@ namespace Ivy
 						if (areColliding != entityIsColliding->end())
 						{
 							entityIsColliding->erase(areColliding);
-							//isCollidingWith[otherObject].erase(std::find(isCollidingWith[otherObject].begin(), isCollidingWith[otherObject].end(), object));
 						}		
 					}
 					continue;	
 				}
 
 				entityIsColliding->push_back(otherObject);
-				//isCollidingWith[otherObject].push_back(object);
-
 
 				if (A.isTrigger || B.isTrigger)
 				{

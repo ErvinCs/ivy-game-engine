@@ -38,7 +38,9 @@ namespace Ivy
 		 */
 		Renderable(const Renderable& other);
 
+		// Used by AS reference counting mechanism
 		inline void addReference() { /* do nothing */ }
+		// Used by AS reference counting mechanism
 		inline void release() { /* do nothing */ }
 
 		Renderable& operator=(const Renderable& other);

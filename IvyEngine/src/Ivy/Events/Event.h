@@ -17,23 +17,21 @@ namespace Ivy {
 	 */
 	class EventHandler {
 	public:
-		//
-		//
 		using Func = std::function<void(Event& e)>;
 
 	public:
-		//
+		// Defines the callback function
 		Func callback;
 		//
 		Event* event;
 
 	public:
-		//
+		// Id of the handler
 		int id;
-		//
+		// Used to generate handler ids
 		static int counter;
 
-		//
+		// Default constructor. Creates an EventHandler with id 0.
 		EventHandler() : id{ 0 } {
 		}
 
@@ -45,7 +43,7 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @returns Event* pointer to the event associated to the handler
 		 */
 		Event* getEvent() {
 			return event;
@@ -65,7 +63,7 @@ namespace Ivy {
 	 *
 	 */
 	class Event {
-		//
+		// The EventHandlers that will be called in response to this Event being raised
 		std::vector<std::unique_ptr<EventHandler>> handlers;
 
 		/**

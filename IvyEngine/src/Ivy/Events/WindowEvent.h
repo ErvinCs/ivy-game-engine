@@ -25,7 +25,6 @@ namespace Ivy {
 		//
 		inline unsigned int getHeight() const { return height; }
 
-		//
 		std::string toString() const override
 		{
 			std::stringstream ss;
@@ -41,10 +40,8 @@ namespace Ivy {
 	class WindowCloseEvent : public Event
 	{
 	public:
-		//
 		WindowCloseEvent() {}
 
-		//
 		std::string toString() const override
 		{
 			return "WindowClosedEvent";

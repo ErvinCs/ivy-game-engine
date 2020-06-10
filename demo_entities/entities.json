@@ -2,6 +2,29 @@
   {
     "components": {
       "collidable_box": {
+        "centerPositionX": 1.0,
+        "centerPositionY": 1.0,
+        "halfScaleX": 0.5,
+        "halfScaleY": 4.0,
+        "is_trigger": false,
+        "rotation": 0.0
+      },
+      "renderable": "verticalBorder.png",
+      "script": null,
+      "tag": "Wall1",
+      "transform": {
+        "positionX": 1.0,
+        "positionY": 1.0,
+        "rotation": 0.0,
+        "scaleX": 1.0,
+        "scaleY": 8.0
+      }
+    },
+    "entity_id": 0
+  },
+  {
+    "components": {
+      "collidable_box": {
         "centerPositionX": 5.5,
         "centerPositionY": -2.5,
         "halfScaleX": 4.0,
@@ -20,7 +43,7 @@
         "scaleY": 1.0
       }
     },
-    "entity_id": 64
+    "entity_id": 1
   },
   {
     "components": {
@@ -43,7 +66,7 @@
         "scaleY": 1.0
       }
     },
-    "entity_id": 70
+    "entity_id": 2
   },
   {
     "components": {
@@ -66,32 +89,32 @@
         "scaleY": 1.0
       }
     },
-    "entity_id": 69
+    "entity_id": 3
   },
   {
     "components": {
       "collidable_box": null,
       "renderable": "player.png",
       "script": null,
-      "tag": "Player",
+      "tag": "Avatar",
       "transform": {
-        "positionX": 1.0,
-        "positionY": 1.0,
+        "positionX": 3.0,
+        "positionY": -1.4500000476837158,
         "rotation": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0
       }
     },
-    "entity_id": 68
+    "entity_id": 4
   },
   {
     "free": [
+      59,
       3,
       67,
-      59,
+      58,
       2,
       66,
-      58,
       65,
       63,
       62,
@@ -152,7 +175,11 @@
       5,
       4,
       1,
-      0
+      0,
+      68,
+      69,
+      70,
+      64
     ]
   }
 ]

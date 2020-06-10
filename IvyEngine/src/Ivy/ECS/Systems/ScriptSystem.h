@@ -19,9 +19,13 @@ namespace Ivy {
 		}
 
 		/**
-		 * Creates script controllers for all scripts available at initialization time
+		 * Creates script controllers for all scripts available at initialization time.
 		 */
 		virtual void init() override;
+		/**
+		 * Calls the update function for all scripts that are alive.
+		 * If a script that has been killed is encountered then it is deleted.
+		 */
 		virtual void update(float deltatime) override;
 	};
 

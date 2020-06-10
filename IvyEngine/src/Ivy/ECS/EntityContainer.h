@@ -10,7 +10,9 @@
 namespace Ivy
 {
 	/**
-	 * 
+	 * Contains all the Entity instances.
+	 * The `entities` packed-array contains all active entities.
+	 * The `freeEntities` set keeps track of used and deleted entities such that they can be added back into the application.
 	 */
 	class EntityContainer
 	{
@@ -24,7 +26,7 @@ namespace Ivy
 	public:
 
 		/**
-		 *
+		 * Creates an empty entity container with size 0.
 		 */
 		EntityContainer()
 		{
@@ -42,15 +44,17 @@ namespace Ivy
 		[[DEPRECATED]]
 		const Entity& operator[](std::size_t idx) const { return entities[idx]; }
 
+		/**
+		 * @returns Entity at `index` index in the container array
+		 */
 		Entity* at(int index) { return &entities[index]; }
 
 		/**
-		 *
+		 * Moves the entity from the `entities` array to the `freeEntities` set
 		 */
 		inline void destroyEntity(Entity& entity)
 		{
 			IVY_CORE_INFO("EntityContainer: Removing Entity {0}", entity);
-			// User-Friendly Way
 			for (int i = 0; i < this->entitiesSize; i++)
 			{
 				if (entities[i] == entity)
@@ -68,7 +72,10 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * Adds an entity to the `entities` array.
+		 * If the `freeEntities` set is not empty then it pops an entity from it.
+		 * Otherwise it creates a new Entity identified by the index in the array.
+		 * @returns Entity that was created
 		 */
 		inline Entity& createEntity()
 		{
@@ -105,7 +112,7 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * Adds `entity` to the `freeEntities` set
 		 */
 		inline void addToFreeEntities(Entity entity)
 		{
@@ -113,7 +120,7 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * Adds `entity` to the `entities` array
 		 */
 		inline void addToEntities(uint16_t entity)
 		{
@@ -122,7 +129,7 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * @returns Entity& a reference in the `entities` array to the entity equal to `entityId`
 		 */
 		inline Entity& getEntity(uint16_t entityId)
 		{
@@ -132,7 +139,7 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * @returns unordered_set<Entity>& containing the entities that were destroyed and removed from the set of entities
 		 */
 		inline const std::unordered_set<Entity>& getFreeEntities()
 		{
@@ -140,7 +147,7 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * Destroys all the entities and adds them to `freeEntities`
 		 */
 		inline void clearEntities()
 		{

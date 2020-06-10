@@ -33,7 +33,9 @@ namespace Ivy
 		 */
 		Tag(const Tag& other);
 
+		// Used by AS reference counting mechanism
 		inline void addReference() { /* do nothing */ }
+		// Used by AS reference counting mechanism
 		inline void release() { /* do nothing */ }
 
 		Tag& operator=(const Tag& other);

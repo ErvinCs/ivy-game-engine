@@ -46,6 +46,14 @@ namespace Ivy {
 		 * Initializes the `isCollidingWith` map.
 		 */
 		virtual void init() override;
+
+		/**
+		 * Checks collision for all entities holding a collidable against all other entities.
+		 * First performs the Bounding Circles test. 
+		 * If the test determines that the objects are not colliding, it moves to the next entity.
+		 * Otherwise it performs Oriented Bounding Boxes test using the Separating Axis theorem.
+		 * Finally the `isCollidingWith` map is updated.
+		 */
 		virtual void update(float deltatime) override;
 	};
 

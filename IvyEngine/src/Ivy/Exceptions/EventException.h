@@ -8,7 +8,8 @@ namespace Ivy
 {
 
 	/**
-	 *
+	 * Thrown if an EventHandler assignment(=) operations fails
+	 * @see EventHandler
 	 */
 	class EventException
 	{
