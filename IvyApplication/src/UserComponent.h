@@ -52,7 +52,7 @@ class UserComponentSystem : public Ivy::System
 {
 public:
 	UserComponentSystem() = default;
-	UserComponentSystem(EntityContainer& entities)
+	UserComponentSystem(Ivy::EntityContainer& entities)
 	{
 		this->setEntities(entities);
 	}

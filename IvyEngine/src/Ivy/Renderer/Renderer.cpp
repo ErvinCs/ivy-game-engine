@@ -40,7 +40,6 @@ namespace Ivy
 		std::shared_ptr<IndexBuffer> ib = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		data.vertexArray->setIndexBuffer(ib);
 
-		//
 		textureBlank = Texture::Create(Paths::baseTexturePath.string(), true);
 
 		IVY_CORE_INFO("Loading shader from location: {0}", Paths::shaderPath);

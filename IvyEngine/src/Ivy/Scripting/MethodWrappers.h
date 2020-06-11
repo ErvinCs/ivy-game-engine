@@ -19,6 +19,9 @@
 #include "ScriptableObject.h"
 
 namespace Ivy {
+	/**
+	 * Method wrappers for functions made available with AS's Scripting Enveironment.
+	 */
 
 	// ---------- Input ----------
 	bool IsKeyDown(unsigned int keycode)
@@ -42,6 +45,32 @@ namespace Ivy {
 		return InputHandler::GetInstance()->GetMouseY();
 	}
 
+	// ---------- ScriptableObject ----------
+
+	ScriptableObject* FindObjectByTag(const std::string& tag)
+	{
+		bool found = false;
+		for (Entity entity : ECS::getInstance().getEntities())
+		{
+			if (ECS::getInstance().getComponent<Tag>(entity).tag == tag)
+			{
+				found = true;
+				if (ECS::getInstance().getComponent<ScriptComponent>(entity).getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
+				{
+					return NULL;
+				}
+				else
+				{
+					return ECS::getInstance().getComponent<ScriptComponent>(entity).scriptableObject;
+				}
+
+			}
+		}
+		if (!found)
+		{
+			return NULL;
+		}
+	}
 
 	// ---------- Components ----------
 	Transform* FindTransform(Entity entity) {
@@ -55,6 +84,11 @@ namespace Ivy {
 	Transform* Transform_Factory1()
 	{
 		return new Transform(glm::vec2(0), 0, glm::vec2(0));
+	}
+
+	Transform* Transform_Factory2(glm::vec2 position, float rotation, glm::vec2 scale)
+	{
+		return new Transform(position, rotation, scale);
 	}
 
 	Renderable* FindRenderable(Entity entity)
@@ -83,31 +117,6 @@ namespace Ivy {
 	CollidableBox* Collidable_Factory1()
 	{
 		return new CollidableBox(glm::vec2(0), 0, glm::vec2(0));
-	}
-
-	ScriptableObject* FindObjectByTag(const std::string& tag)
-	{
-		bool found;
-		for (Entity entity : ECS::getInstance().getEntities())
-		{
-			if (ECS::getInstance().getComponent<Tag>(entity).tag == tag)
-			{ 
-				found = true;
-				if (ECS::getInstance().getComponent<ScriptComponent>(entity).getComponentId() != ECS::getInstance().getComponentTypes().find(typeid(ScriptComponent).name())->second)
-				{
-					return NULL;
-				}
-				else
-				{
-					return ECS::getInstance().getComponent<ScriptComponent>(entity).scriptableObject;
-				}
-				
-			}
-		}
-		if (!found)
-		{
-			return NULL;
-		}
 	}
 
 	void Rotate90Transform(Transform& transform)
@@ -149,7 +158,6 @@ namespace Ivy {
 	{
 		return CollisionSystem::isCollidingWith[e].size() != 0;
 	}
-
 
 	void FlipX(Renderable& renderable)
 	{
@@ -260,6 +268,4 @@ namespace Ivy {
 	glm::vec2* Vec2Init2(float x, float y) {
 		return new glm::vec2(x, y);
 	}
-
-	
 }

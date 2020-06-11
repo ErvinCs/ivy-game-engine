@@ -105,25 +105,23 @@ namespace Ivy {
 		return *this;
 	}
 
-	// Has Issues
-	/*void Population::removeDuplicates()
+	const float Population::feasibleAvgDiversity() const
 	{
-		int indSize = individuals.size();
-		for (int i = 0; i < indSize -1; i++)
+		float avgDiversity = 0;
+		for (int i = 0; i < individuals.size(); i++)
 		{
-			auto& it = individuals.begin();
-			std::next(it, i + 1);
-			while( it != individuals.end() )
-			{				
-				if (individuals[i] == *it)
-				{
-					individuals.erase(it);
-					indSize--;
-					it++;
-				}
-				
-			}
+			avgDiversity += individuals[i].getDiversity();
 		}
-	}*/
+		return (avgDiversity / individuals.size());
+	}
 
+	const float Population::infeasibleAvgFitness() const
+	{
+		float avgFitness = 0;
+		for (int i = 0; i < individuals.size(); i++)
+		{
+			avgFitness += individuals[i].getFitness();
+		}
+		return (avgFitness / individuals.size());
+	}
 }

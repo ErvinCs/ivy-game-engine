@@ -35,8 +35,8 @@ namespace Ivy {
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 		GLCall(glEnable(GL_DEPTH_TEST));
-		//GLCall(glEnable(GL_TEXTURE_2D));
 	}
+
 	void OpenGLRenderAPI::draw(const std::shared_ptr<VertexArray>& va, uint32_t indexCount)
 	{
 		uint32_t count = indexCount ? indexCount : va->getIndexBuffer()->getCount();

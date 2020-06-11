@@ -2,13 +2,19 @@
 
 // Needed by the VertexArray & its children
 
-namespace Ivy {
-
+namespace Ivy 
+{
+	/**
+	 * Enumeration used to determine data types used in a shader and their sizes in number of bytes.
+	 */
 	enum class ShaderDataType
 	{
 		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
 	};
 
+	/**
+	 * @returns unit32_t the number of bytes used by a data type in a shader
+	 */
 	static uint32_t ShaderDataTypeSize(ShaderDataType type)
 	{
 		switch (type)
@@ -29,6 +35,12 @@ namespace Ivy {
 		return 0;	//Unknown ShaderDataType
 	}
 
+	/**
+	 * An element in the VertexBuffer.
+	 * Encapsulates its name, type, size and offset
+	 * @see VertexBuffer
+	 * @see ShaderDataType
+	 */
 	struct BufferElement
 	{
 		std::string Name;
@@ -37,13 +49,22 @@ namespace Ivy {
 		size_t Offset;
 		bool Normalized;
 
+		// Default Constructor
 		BufferElement() = default;
 
+		/**
+		 * Construct a buffer element.
+		 * @param type ShaderDataType
+		 * @param string name
+		 * @param bool normalized
+		 */
 		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
 			: Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
-		{
-		}
+		{}
 
+		/**
+		 * @returns uint32_t equal to the number of elements in a shader data type
+		 */
 		uint32_t GetComponentCount() const
 		{
 			switch (Type)
@@ -65,18 +86,33 @@ namespace Ivy {
 		}
 	};
 
+	/**
+	 * Used to determine the layout of an associated VertexBuffer.
+	 * @see VertexBuffer
+	 */
 	class VertexBufferLayout
 	{
 	public:
+		// Default Constructor
 		VertexBufferLayout() {}
 
+		/**
+		 * Stores the elements and calculates their offsets
+		 */
 		VertexBufferLayout(const std::initializer_list<BufferElement>& elements)
 			: elements(elements)
 		{
 			CalculateOffsetsAndStride();
 		}
 
+		/**
+		 * @returns uint32_t stride
+		 */
 		inline uint32_t GetStride() const { return stride; }
+
+		/**
+		 * @retturns vector<BufferElement> elements of the buffer
+		 */
 		inline const std::vector<BufferElement>& GetElements() const { return elements; }
 
 		std::vector<BufferElement>::iterator begin() { return elements.begin(); }
@@ -84,6 +120,10 @@ namespace Ivy {
 		std::vector<BufferElement>::const_iterator begin() const { return elements.begin(); }
 		std::vector<BufferElement>::const_iterator end() const { return elements.end(); }
 	private:
+
+		/**
+		 * Calculate the offset and stride of each element in the VertexBuffer
+		 */
 		void CalculateOffsetsAndStride()
 		{
 			size_t offset = 0;

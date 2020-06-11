@@ -3,24 +3,34 @@
 #include <exception>
 #include <string>
 
-class EventException
+
+namespace Ivy
 {
-protected:
-	std::string message;
 
-public:
-	EventException() noexcept
+	/**
+	 * Thrown if an EventHandler assignment(=) operations fails
+	 * @see EventHandler
+	 */
+	class EventException
 	{
-		this->message = "";
-	}
+	protected:
+		std::string message;
 
-	explicit EventException(const std::string& msg)
-	{
-		this->message = msg;
-	}
+	public:
+		EventException() noexcept
+		{
+			this->message = "";
+		}
 
-	virtual const char* what()
-	{
-		return message.c_str();
-	}
-};
+		explicit EventException(const std::string& msg)
+		{
+			this->message = msg;
+		}
+
+		virtual const char* what()
+		{
+			return message.c_str();
+		}
+	};
+
+}

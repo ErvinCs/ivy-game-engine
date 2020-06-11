@@ -92,7 +92,7 @@ namespace Ivy {
 	{
 		if (--referenceCount <= 0)
 		{
-			delete this;
+			//delete this;
 			return 0;
 		}
 		return referenceCount;

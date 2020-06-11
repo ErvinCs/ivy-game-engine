@@ -12,7 +12,6 @@ namespace Ivy {
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 
 		coreLogger = spdlog::stdout_color_mt("Ivy");
-		// Expose this such that the level can be set on demand
 		coreLogger->set_level(spdlog::level::trace);
 
 		clientLogger = spdlog::stdout_color_mt("Application");

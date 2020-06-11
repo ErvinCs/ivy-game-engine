@@ -27,7 +27,15 @@
 #include "Systems/CameraSystem.h"
 
 namespace Ivy {
-
+	/**
+	 * The singleton ECS class is in charge of managing Entities, Components and Systems.
+	 * It provides functionality to add or remove Entities or attach or detach components to them.
+	 * It also runs the systems, calling their `init` and `update` functions. The Systems operate on 
+	 *  the components that share the same aspect as them.
+	 * @see Entity
+	 * @see Component
+	 * @see System
+	 */
 	class ECS
 	{
 	private:
@@ -37,20 +45,30 @@ namespace Ivy {
 		EntityContainer entities;
 		std::vector<std::shared_ptr<System>> systems{};
 	public:
-
+		/**
+		 * Clears all component types and component containers
+		 * Clears all systems.
+		 */
 		~ECS()
 		{	
 			componentTypes.clear();
 			componentContainers.clear();
 			systems.clear();
 		}
-
+		/**
+		 * @return ECS& Singleton instance of this class
+		 */
 		static ECS& getInstance()
 		{
 			static ECS instance{};
 			return instance;
 		}
 
+		/**
+		 * Loads the camera.
+		 * Loads all the entities and their components.
+		 * They are loaded from the JSON files in the `res` folder.
+		 */
 		void loadEntities() {
 			IVY_CORE_INFO("ECS: Loading Entities from {0}", Paths::entitiesRepoPath.string());
 			if (std::filesystem::exists(Paths::entitiesRepoPath)) {
@@ -72,6 +90,11 @@ namespace Ivy {
 			}
 		}
 
+		/**
+		 * Saves the camera properties.
+		 * Saves the entities and their components.
+		 * They are saved into the JSON files in the `res` folder.
+		 */
 		void saveEntities() {
 			IVY_CORE_INFO("ECS: Saving Entities to {0}", Paths::entitiesRepoPath.string());
 			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());
@@ -79,6 +102,9 @@ namespace Ivy {
 			JSONManager::SaveCamera(Paths::cameraRepoPath.string());
 		}
 
+		/**
+		 * Clear all components and entities.
+		 */
 		void clearECS()
 		{
 			for (auto& componentContainer : componentContainers)
@@ -88,16 +114,23 @@ namespace Ivy {
 			this->entities.clearEntities();
 		}
 
+		/**
+		 * @return int the number of live entities
+		 */
 		int getSizeEntities() {
 			return this->entities.size();
 		}
 
-		// Components
+		// ---------- Components ----------
+
+		/**
+		 * Register a new component type with the engine.
+		 * Creates a new component container for the registered type.
+		 * @return uint8_t the index in the container of the component type that was added
+		 */
 		template<typename T>
 		uint8_t addComponentType()
 		{
-			// Log produces error
-			//IVY_CORE_INFO("ECS: Registering new Component: type={0}, id={1}", typeid(T).name(), componentTypeCounter);
 			const char* typeName = typeid(T).name();
 
 			// Add a new component type
@@ -109,28 +142,47 @@ namespace Ivy {
 			return componentTypeCounter - 1;
 		}
 
-		//TEMPORARY - Until bitset is implemented
+		/**
+		 * @return uint8_t a component ID
+		 */
 		uint8_t generateComponentId()
 		{
 			return componentTypeCounter;
 		}
 
+		/**
+		 * @return map<const char*, uint8_t>& a reference to the map holding the registered component types <name, identifier>
+		 */
 		const std::map<const char*, uint8_t>& getComponentTypes() {
 			return this->componentTypes;
 		}
 
+		/**
+		 * Associate a component of type T to an Entity
+		 * @param entity Entity to add the component to
+		 * @param component T
+		 */
 		template<typename T>
 		void addComponent(Entity& entity, T component)
 		{
 			getComponentContainer<T>()->addComponent(entity, component);
 		}
 
+		/**
+		 * Remove a component of type T from an Entity.
+		 * @param entity Entity to remove the component from
+		 */
 		template<typename T>
 		void removeComponent(Entity& entity)
 		{
 			getComponentContainer<T>()->removeComponent(entity);
 		}
 
+		/**
+		 * Get the component of type T from an Entity
+		 * @param entity Entity to query
+		 * @returns T& the component
+		 */
 		template<typename T>
 		T& getComponent(Entity& entity)
 		{
@@ -139,7 +191,13 @@ namespace Ivy {
 
 
 
-		// Entities
+		// ---------- Entities -----------
+
+		/**
+		 * Removes `entity` from the `EntityContainer` and destorys all of its associated components
+		 *  in their respective `ComponentContainer`s.
+		 * @param entity Entity to destroy
+		 */
 		void destroyEntity(Entity& entity)
 		{
 			for (auto const& containerPair : componentContainers)
@@ -152,33 +210,60 @@ namespace Ivy {
 			entities.destroyEntity(entity);
 		}
 
+		/**
+		 * @return Entity& a reference to a newly created Entity
+		 */
 		Entity& createEntity()
 		{
 			return entities.createEntity();
 		}
 
+		/**
+		 * Add an Entity to the array of `freeEntities`
+		 * @param entity Entity
+		 * @see EntityContainer
+		 */
 		void addToFreeEntities(Entity entity)
 		{
 			entities.addToFreeEntities(entity);
 		}
 
+		/**
+		 * Add an Entity to the array of `entities`.
+		 * @param entity uint16_t the ID of the entity
+		 * @see EntityContainer
+		 */
 		void addToEntities(uint16_t entity)
 		{
 			entities.addToEntities(entity);
 		}
 
+		/**
+		 * @returns EntityContainer&
+		 */
 		EntityContainer& getEntities()
 		{
 			return this->entities;
 		}
 
-		// Systems
+		// ---------- Systems ----------
+
+		/**
+		 * Registers a system with the ECS
+		 * @param system pointer to the System to be added
+		 * @see System
+		 */
 		void addSystem(const std::shared_ptr<System>& system)
 		{
 			IVY_CORE_INFO("ECS: Registering System");
 			systems.push_back(std::move(system));
 		}
 
+		/**
+		 * Calls the update method of all Systems
+		 * @param ts Timestep to regulate framerate
+		 * @see System
+		 */
 		void updateSystems(float ts) {
 			for (std::shared_ptr<System> system : systems)
 			{
@@ -186,6 +271,10 @@ namespace Ivy {
 			}
 		}
 
+		/**
+		 * Initialize and add to the System container all engine systems.
+		 * Note that if NOT running in DEBUG mode then the GizmoSystem is not initialized.
+		 */
 		void initSystems() {
 			std::shared_ptr<System> renderSystem    = std::make_shared<RenderSystem>(entities);
 			std::shared_ptr<System> scriptSystem    = std::make_shared<ScriptSystem>(entities);
@@ -212,6 +301,9 @@ namespace Ivy {
 
 
 	private:
+		/**
+		 * @returns ComponentContainer<T>, where T is the type of Component contained.
+		 */
 		template<typename T>
 		std::shared_ptr<ComponentContainer<T>> getComponentContainer()
 		{
@@ -220,6 +312,9 @@ namespace Ivy {
 			return std::static_pointer_cast<ComponentContainer<T>>(componentContainers[typeName]);
 		}	
 
+		/**
+		 * Initalizes the `componentTypeCounter` and registers all default component types.
+		 */
 		ECS()
 		{
 			// Ids
@@ -229,13 +324,15 @@ namespace Ivy {
 			this->registerComponentTypes();
 		}
 
+		/**
+		 * Registers all default component types.
+		 */
 		void registerComponentTypes() {
 			this->addComponentType<Transform>();		
 			this->addComponentType<Renderable>();		
 			this->addComponentType<ScriptComponent>();	
 			this->addComponentType<Tag>();	
 			this->addComponentType<CollidableBox>();
-			//this->addComponentType<TileLocation>();
 		}
 
 		ECS(const ECS&) = delete;

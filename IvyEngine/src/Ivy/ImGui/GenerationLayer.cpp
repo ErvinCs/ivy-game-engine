@@ -13,8 +13,10 @@ namespace Ivy
 {
 	void GenerationLayer::imGuiRender()
 	{
+		// Create the Generator menu with the ID "Generation Layer"
 		ImGui::Begin("Generator");
 		ImGui::PushID("GenerationLayer");
+		// Algorithm parameters
 		if (ImGui::CollapsingHeader("Parameters"))
 		{
 			ImGui::InputFloat("Mutation Rate", &FI2Pop::mutationRate, 0.05f);
@@ -28,6 +30,7 @@ namespace Ivy
 			ImGui::RadioButton("Fittest", &LevelGenerator::alwaysLoadFittest, 1);
 			ImGui::RadioButton("Least Fit", &LevelGenerator::alwaysLoadFittest, 0);
 		}
+		// Generation resources
 		if (ImGui::CollapsingHeader("Resources"))
 		{
 			if (ImGui::TreeNode("Rooms"))
@@ -39,7 +42,7 @@ namespace Ivy
 				ImGui::InputText("Hallway", &LevelGenerator::hallwayPath);
 				ImGui::InputText("T-Shaped Hallway", &LevelGenerator::tShapePath);
 				ImGui::InputText("Middle Obstacle", &LevelGenerator::holePath);
-				ImGui::InputText("Half-Enclosed Middle Obstacle", &LevelGenerator::pillarPath);
+				ImGui::InputText("Pillar Room", &LevelGenerator::pillarPath);
 				ImGui::InputText("Walls x4", &LevelGenerator::horizontalWallPath);
 				ImGui::InputText("Walls x3", &LevelGenerator::verticalWallPath);
 				ImGui::InputText("Walls x2", &LevelGenerator::rangedEnemyPath);	
@@ -74,10 +77,13 @@ namespace Ivy
 		}
 		if (ImGui::Button("Run"))
 		{
-			Application::getInstance().globalTime = 0.0f;
-			Application::getInstance().GetLevelGenerator().run();
-			//CollisionSystem::ConstructArray();
-			Application::getInstance().lastFrameTime = (float)glfwGetTime();
+			Application::GetInstance().globalTime = 0.0f;
+			Application::GetInstance().GetLevelGenerator().run();
+			Application::GetInstance().lastFrameTime = (float)glfwGetTime();
+		}
+		if (ImGui::Button("Clear"))
+		{
+			Application::GetLevelGenerator().clearPopulations();
 		}
 		ImGui::PopID();
 		ImGui::End();

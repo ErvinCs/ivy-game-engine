@@ -30,7 +30,7 @@ namespace Ivy {
 		static std::string tagTemp, newTagTemp;
 		static std::string scriptPathTemp;
 
-		//Menu Bar
+		// Menu Bar
 		if (ImGui::BeginMainMenuBar())
 		{
 			if (ImGui::BeginMenu("Project"))
@@ -45,7 +45,7 @@ namespace Ivy {
 				}
 				if (ImGui::MenuItem("Exit"))
 				{
-					Application::getInstance().isRunning = false;
+					Application::GetInstance().isRunning = false;
 				}
 				ImGui::EndMenu();
 			}
@@ -200,11 +200,15 @@ namespace Ivy {
 						if (ImGui::Button("Import Script"))
 						{
 							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);	
-							//script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->setScriptObject(NULL);
+							script->scriptableObject->setWeakRefereneFlag(NULL);
+							script->scriptableObject = NULL;
 							getECS().removeComponent<ScriptComponent>(entity);	
 
 							ScriptComponent newScript = ScriptComponent(*buffer);
 							newScript.setComponentId(ScriptComponentID);
+							newScript.setEntityId(entity);
 							getECS().addComponent<ScriptComponent>(entity, newScript);
 							ScriptManager::GetInstance().createScriptController(
 								(Paths::scriptsPath / *buffer).string(),
@@ -214,7 +218,10 @@ namespace Ivy {
 						if (ImGui::Button("Remove Script"))
 						{
 							ScriptComponent* script = &getECS().getComponent<ScriptComponent>(entity);
-							//script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->destoryAndRelease();
+							script->scriptableObject->setScriptObject(NULL);
+							script->scriptableObject->setWeakRefereneFlag(NULL);
+							script->scriptableObject = NULL;
 							getECS().removeComponent<ScriptComponent>(entity);
 
 							
@@ -229,6 +236,7 @@ namespace Ivy {
 							if (scriptPathTemp.size() > 0) {
 								ScriptComponent newScript = ScriptComponent(scriptPathTemp);
 								newScript.setComponentId(ScriptComponentID);
+								newScript.setEntityId(entity);
 								getECS().addComponent<ScriptComponent>(entity, newScript);
 								ScriptManager::GetInstance().createScriptController(
 									(Paths::scriptsPath / scriptPathTemp).string(),
@@ -244,6 +252,7 @@ namespace Ivy {
 					ImGui::TreePop();
 				}
 
+				// -------------------- Collidable --------------------
 				if (ImGui::TreeNode("CollidableBox"))
 				{
 					if (getECS().getComponent<CollidableBox>(entity).getComponentId() == CollidableBoxID)
@@ -304,12 +313,17 @@ namespace Ivy {
 			ImGui::PopID();
 			auxEntityTracker++;
 		}
+		// Create a new Entity
 		if (ImGui::Button("New Entity"))
 		{
 			Entity entity = getECS().createEntity();
 			IVY_INFO("Created Entity={0}", entity);
 		}
+
+		// Show the Gizmos (Collision World)
 		ImGui::Checkbox("Show Gizmos", &CollidableGizmoSystem::showGizmos);
+
+		// Save/Load/Clear Entities buttons
 		if (ImGui::Button("Save Entities"))
 		{
 			getECS().saveEntities();

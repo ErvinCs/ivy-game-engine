@@ -42,6 +42,12 @@ namespace Ivy
 		this->generator = FI2Pop();
 	}
 
+	void LevelGenerator::clearPopulations()
+	{
+		this->generator.clearFeasiblePop();
+		this->generator.clearInfeasiblePop();
+	}
+
 	void LevelGenerator::run()
 	{
 		generator.init();
@@ -77,6 +83,12 @@ namespace Ivy
 			}
 			
 		}
+#ifdef _DEBUG
+		float avgDiversity = generator.getFeasiblePopulation().feasibleAvgDiversity();
+		float avgFitness = generator.getInfeasiblePopulation().infeasibleAvgFitness();
+		IVY_CORE_TRACE("Feasible Average Diversity: {0}", avgDiversity);
+		IVY_CORE_TRACE("Inveasible Average Fitness: {0}", avgFitness);
+#endif
 		float xMax = (int)std::sqrtf(fittest.getDesignElements().size());
 		float yMax = (int)(fittest.getDesignElements().size() / xMax);
 		IVY_CORE_INFO("LevelGenerator: xMax={0}, yMax={1}", xMax, yMax);
@@ -835,7 +847,7 @@ namespace Ivy
 							Transform wall2Transform = Transform(
 								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 7 * halfTileSize), 0, glm::vec2(halfTileSize * 6, halfTileSize));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTileSize * 7), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));
@@ -892,7 +904,7 @@ namespace Ivy
 							Transform wall2Transform = Transform(
 								glm::vec2(levelElement.transform.position.x + halfTilePos * 7, levelElement.transform.position.y), 0, glm::vec2(halfTileSize, halfTileSize * 8));
 							Transform wall3Transform = Transform(
-								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + 7 * halfTileSize), 0, glm::vec2(halfTileSize * 6, halfTileSize));
+								glm::vec2(levelElement.transform.position.x, levelElement.transform.position.y + halfTileSize * 7), 0, glm::vec2(halfTileSize * 6, halfTileSize));
 							ECS::getInstance().addComponent<CollidableBox>(wall1, CollidableBox(wall1Transform.position, wall1Transform.rotation, wall1Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall2, CollidableBox(wall2Transform.position, wall2Transform.rotation, wall2Transform.scale));
 							ECS::getInstance().addComponent<CollidableBox>(wall3, CollidableBox(wall3Transform.position, wall3Transform.rotation, wall3Transform.scale));

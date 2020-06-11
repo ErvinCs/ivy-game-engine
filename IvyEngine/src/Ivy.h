@@ -29,6 +29,7 @@
 #include "Ivy/ECS/Systems/System.h"
 #include "Ivy/ECS/Component.h"
 #include "Ivy/ECS/ECS.h"
+#include "Ivy/ECS/EntityContainer.h"
 #include "Ivy/ECS/Systems/RenderSystem.h"
 #include "Ivy/ECS/Systems/ScriptSystem.h"
 #include "Ivy/ECS/Systems/CollisionSystem.h"

@@ -10,6 +10,11 @@
 #include "../ECS/Components/ScriptComponent.h"
 
 namespace Ivy {
+
+	/**
+	 * The type of one DesignElement (Room) in a level
+	 * @see DesignElement
+	 */
 	enum ElementType
 	{
 		StandardRoom1 = 0,	//NO ENEMIES
@@ -21,10 +26,17 @@ namespace Ivy {
 		HorizontalWall,	
 		Pillar,	
 		Hole, 
-		RangedEnemy,	//BOSS
-		MeleeEnemy		//BOSS
+		RangedEnemy,	
+		MeleeEnemy		
 	};
 
+	/**
+	 * Represents one element of a level.
+	 * The element is treated as a tagged entity and neccesarily has a Transform.
+	 * @see Entity
+	 * @see Tag
+	 * @see Transform
+	 */
     class DesignElement
 	{
 	protected:
@@ -43,6 +55,11 @@ namespace Ivy {
 		DesignElement(const DesignElement&& other);
 		DesignElement(Tag tag, Transform transform);
 
+
+		/**
+		 * Copies the transform, tag, and element type of another DesignElement
+		 * @returns DesignElement&
+		 */
 		DesignElement& operator=(const DesignElement& other)
 		{
 			this->transform = other.transform;
@@ -50,14 +67,31 @@ namespace Ivy {
 			this->elementType = other.elementType;
 			return *this;
 		}
+
+		/**
+		 * @returns true if the transform of this is equal to the transform of other and false otherwise
+		 * @see Transform
+		 */
 		bool operator==(const DesignElement& other)
 		{ 
 			return this->transform == other.transform;
 		}
+
+		/**
+		 * @returns false if the transform of this is equal to the transform of other and true otherwise
+		 * @see Transform
+		 */
 		bool operator!=(const DesignElement& other)
 		{
 			return !(*this == other);
 		}
+
+		/**
+		 * @param other DesignElement
+		 * @returns true if this has its transform position smaller than other.
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
+		 */
 		bool operator<(const DesignElement& other)
 		{
 			if (this->transform.position.y < other.transform.position.y) 
@@ -72,6 +106,13 @@ namespace Ivy {
 
 			return false;
 		}
+
+		/**
+		 * @param other DesignElement
+		 * @returns true if this has its transform position greater than other.
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
+		 */
 		bool operator>(const DesignElement& other)
 		{
 			if (this->transform.position.y > other.transform.position.y)
@@ -86,6 +127,13 @@ namespace Ivy {
 
 			return false;
 		}
+
+		/**
+		 * @param other DesignElement
+		 * @returns true if this has its transform position smaller or equal than other.
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
+		 */
 		bool operator<=(const DesignElement& other)
 		{
 			if (this->transform.position.y <= other.transform.position.y)
@@ -100,6 +148,13 @@ namespace Ivy {
 
 			return false;
 		}
+
+		/**
+		 * @param other DesignElement
+		 * @returns true if this has its transform position greater or equal than other. 
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
+		 */
 		bool operator>=(const DesignElement& other)
 		{
 			if (this->transform.position.y >= other.transform.position.y)
@@ -115,10 +170,18 @@ namespace Ivy {
 			return false;
 		}
 
+		/**
+		 * @returns ElementType& of this DesignElement
+		 */
 		inline const ElementType& getElementType()
 		{ 
 			return this->elementType; 
 		}
+
+		/**
+		 * Sets the element type of this DesignElement
+		 * @param elementType the type of room
+		 */
 		inline void setElementType(const ElementType& elementType) 
 		{ 
 			this->elementType = elementType; 

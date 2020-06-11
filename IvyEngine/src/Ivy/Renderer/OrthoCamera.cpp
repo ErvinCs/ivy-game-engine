@@ -19,11 +19,4 @@ namespace Ivy {
 		viewMatrix = glm::inverse(transform);
 		viewProjMatrix = projMatrix * viewMatrix;
 	}
-
-	// Needs testing
-	//void OrthoCamera::zoomCamera(float factor)
-	//{
-	//	projMatrix *= factor;
-	//	calculateViewMatrix();
-	//}
 }

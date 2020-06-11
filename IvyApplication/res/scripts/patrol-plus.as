@@ -20,11 +20,9 @@ class Patrol : IController
 	{
 		@transform = FindTransform(self.getOwner());
 		ScriptableObject @player = playerRef;
-		if(player is null)
-		{
-			@player = FindObjectByTag('Player');
-			@playerRef = player;
-		}
+		@player = FindObjectByTag('Player');
+		@playerRef = player;
+
 
 		if(direction == 0) {
 			transform.position.x += moveSpeed * deltatime;

@@ -12,6 +12,12 @@
 #include "../ECS/Components/Collidable.h"
 
 namespace Ivy {
+
+	/**
+	 * Creates a new layer containing the ImGUI for manipulation the game objects properties.
+	 * I.e. the properties of the Components mapped to Entities.
+	 * @see SortingLayer
+	 */
 	class InspectorLayer : public SortingLayer
 	{
 	private:
@@ -21,10 +27,16 @@ namespace Ivy {
 		ComponentType ScriptComponentID;
 		ComponentType CollidableBoxID;
 	public:
+		/**
+		 * Initalize the `ComponentType`s identifiers.
+		 */
 		InspectorLayer();
-
 		~InspectorLayer() = default;
 
+		/**
+		 * Renders the ImGUI for the `InspectorLayer`.
+		 * Called every frame.
+		 */
 		virtual void imGuiRender() override;
 	};
 }
