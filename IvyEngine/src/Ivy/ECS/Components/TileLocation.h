@@ -8,7 +8,7 @@
 
 namespace Ivy
 {
-	//Deprecated
+	// [[DEPRECATED]]
 	struct TileLocation : public Component
 	{
 	public:

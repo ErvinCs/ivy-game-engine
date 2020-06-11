@@ -8,13 +8,14 @@ namespace Ivy
 {
 /**
  * The component types are generated on being registerd.
- * Also see: ECS
+ * @see: ECS
  */
 #define ComponentType uint8_t
 
 	/**
 	 * Base class for all components used by the ECS.
 	 * Defines the `ComponentType` and the `Entity` owning the component.
+	 * @see ComponentContainer
 	 */
 	struct Component
 	{

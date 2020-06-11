@@ -5,7 +5,9 @@
 namespace Ivy
 {
 	/**
-	 *
+	 * The LevelGenerator runs the generation algorithm and spawns all the entities
+	 *  according to the values stored in the resulting genotype.
+	 * @see FI2Pop
 	 */
 	class LevelGenerator
 	{

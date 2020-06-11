@@ -26,8 +26,10 @@ namespace Ivy {
 		GLCall(glGenTextures(1, &rendererId));
 		GLCall(glBindTexture(GL_TEXTURE_2D, rendererId));
 
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+		// GL_LINEAR - Returns the weighted average of the four texture elements that are closest to the specified texture coordinates
+		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));	// Texture Minifying function
+		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));	// Texture Magnifyin function
+		// GL_CLAMP_TO_EDGE - Clamp texture coordinates to edges
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 

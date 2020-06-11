@@ -7,8 +7,11 @@
 
 namespace Ivy {
 
-	/*
-	 *
+	/**
+	 * The ImGuiLayer is in charge of starting and ending frames related to GUI rendering,
+	 *  as well as setting the default options for any other ImGui layer.
+	 * Note that each ImGui layer can define addition options.
+	 * It also provides access to the demo window which provides examples for all common widgets.
 	 */
 	class ImGuiLayer : public SortingLayer
 	{

@@ -28,7 +28,13 @@
 
 namespace Ivy {
 	/**
-	 *
+	 * The singleton ECS class is in charge of managing Entities, Components and Systems.
+	 * It provides functionality to add or remove Entities or attach or detach components to them.
+	 * It also runs the systems, calling their `init` and `update` functions. The Systems operate on 
+	 *  the components that share the same aspect as them.
+	 * @see Entity
+	 * @see Component
+	 * @see System
 	 */
 	class ECS
 	{
