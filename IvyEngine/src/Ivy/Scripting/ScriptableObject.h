@@ -14,7 +14,8 @@ namespace Ivy
 {
 
 	/**
-	 * 
+	 * An abstraction that represents a physical script.
+	 * Maintains the name of the script, a pointer to its script object, its live status and the number of outside references.
 	 */
 	class ScriptableObject
 	{
@@ -26,60 +27,58 @@ namespace Ivy
 		Entity ownerEntity;
 		// True if the entity is alive, false otherwise
 		bool alive;
-
-		//
+		// Keeps track of other objects referencing this one
 		int referenceCount;
-
-		//
+		// Obtains a weak reference flag to another ScriptableObject that signals wether or not it is still alive
 		asILockableSharedBool* weakReferenceFlag;
 	public:
 		/**
-		 *
+		 * Base Constructor. Constructs a live ScriptableObject with no name.
 		 */
 		ScriptableObject();
 
 		/**
-		 *
+		 * Constructs a SciriptableObject with the given name
+		 * @param name string 
 		 */
 		ScriptableObject(const std::string& name);
 
 		/**
-		 *
+		 * Copy Constructor.
+		 * @param other ScriptableObject to be copied
 		 */
 		ScriptableObject(const ScriptableObject& other);
 		~ScriptableObject();
 
 		/**
-		 *
+		 * Increase the reference count of this ScriptableObject
+		 * @returns int number of references held by this
 		 */
 		int addReference();
 		/**
-		 *
+		 * Decrease the reference count of this ScriptableObject
+		 * @returns int number of references held by this
 		 */
 		int release();
-
-		/**
-		 *
-		 */
-		asILockableSharedBool* getWeakRefereneFlag();
 		
 		/**
-		 *
+		 * Release this object.
 		 */
 		void destoryAndRelease();
 		
 		/**
-		 *
+		 * Set the alive flag to false.
+		 * The object will be released at a later stage
 		 */
 		void kill();
 
 		/**
-		 *
+		 * Class the `onMessage` function of `target` ScriptableObject, passing it the `message` handle
 		 */
 		void sendMessage(CScriptHandle message, ScriptableObject* target);
 		
 		/**
-		 *
+		 * Calls the `onUpdate` function of this ScriptableObject
 		 */
 		void onUpdate();
 
@@ -93,10 +92,8 @@ namespace Ivy
 		inline asIScriptObject* getScriptObject() { return this->scriptObject; }
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }
 		inline void setWeakRefereneFlag(asILockableSharedBool* weakRefFlag) { this->weakReferenceFlag = weakRefFlag; }
+		asILockableSharedBool* getWeakRefereneFlag();
 
-		/**
-		 *
-		 */
 		ScriptableObject& operator=(const ScriptableObject& other);
 	};
 

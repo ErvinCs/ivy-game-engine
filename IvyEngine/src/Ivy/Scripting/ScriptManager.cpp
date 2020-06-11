@@ -26,11 +26,7 @@ namespace Ivy {
 
 	}
 
-	/*
-	 * Performs garbage collection according to the option parameter.
-	 *  option = 1 - One Step incremental collection
-	 *  option = 2 - Full Cycle collection
-	 */
+
 	void ScriptManager::garbageCollect(int option)
 	{
 		if (option == 1)
@@ -133,7 +129,7 @@ namespace Ivy {
 
 	void ScriptManager::callOnUpdate(asIScriptObject* scriptObject)
 	{
-		// Find the cached onThink method id
+		// Find the cached onUpdate method id
 		SController *controller = reinterpret_cast<SController*>(scriptObject->GetObjectType()->GetUserData());
 
 		// Call the method using the shared context

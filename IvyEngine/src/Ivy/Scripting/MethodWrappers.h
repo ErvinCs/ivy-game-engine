@@ -19,6 +19,9 @@
 #include "ScriptableObject.h"
 
 namespace Ivy {
+	/**
+	 * Method wrappers for functions made available with AS's Scripting Enveironment.
+	 */
 
 	// ---------- Input ----------
 	bool IsKeyDown(unsigned int keycode)

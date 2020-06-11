@@ -5,19 +5,19 @@
 
 namespace Ivy
 {
-	/*
-	 *
+	/**
+	 * A node in a directed graph.
+	 * Encapsulates a unique identifier and a list of its children
 	 */
 	class Node
 	{
-	private:
-		//
+	private:		
 		int nodeId;
-		//
 		std::vector<Node> children{};
 	public:
 		/**
-		 *
+		 * Default Constructor.
+		 * Sets nodeId to -1.
 		 */
 		Node()
 		{
@@ -25,7 +25,8 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * Constructs a node with a given Id.
+		 * @param nodeId the Id of this node
 		 */
 		Node(int nodeId)
 		{
@@ -33,7 +34,8 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * Copy Constructor
+		 * @param other Node to copy
 		 */
 		Node(const Node& other)
 		{
@@ -46,12 +48,14 @@ namespace Ivy
 		inline std::vector<Node>& getChildren() { return this->children; }
 
 		/**
-		 *
+		 * Adds a child node to this node.
+		 * @param node to be added as a child of this node
 		 */
 		inline void addChild(Node node) { this->children.push_back(node); }
 
 		/**
-		 *
+		 * Removes a child node fo this node.
+		 * @param node to be removed from the children kept by this node
 		 */
 		inline void removeChild(Node& node) 
 		{
@@ -61,7 +65,8 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * @param other Node
+		 * @returns true if the id of this node is equal to the other's and false otherwise
 		 */
 		inline bool operator==(const Node& other)
 		{
@@ -69,7 +74,8 @@ namespace Ivy
 		}
 
 		/**
-		 *
+		 * @param other Node
+		 * @returns false if the id of this node is equal to the other's and true otherwise
 		 */
 		inline bool operator!=(const Node& other)
 		{

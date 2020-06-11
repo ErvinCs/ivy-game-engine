@@ -4,25 +4,25 @@
 
 namespace Ivy
 {
-	/*
+	/**
 	 *
 	 */
 	class LevelGenerator
 	{
 	private:
-		//
+		// The algorithm used to generate levels
 		FI2Pop generator;
-		//
+
 		Individual fittest;
-		//
 		Population finalPopulation;
-		//
+
+		// The distance between the centers of every room
 		const float positionOffset = 8.0f;
-		//
+		// The distance of the walls from the center of the rooms situated at the map edges
 		const float wallOfsset = 4.5f;
-		//
+		// Half the size of a tile. Used to determine Transform and Collidable sizes for an Entity.
 		const float halfTileSize = 0.49f;
-		//
+		// Half the measure used for position. Used to determine Transform position for an Entity
 		const float halfTilePos = 0.5f;
 	public:
 		static bool alwaysLoad;
@@ -51,22 +51,26 @@ namespace Ivy
 		static bool isGenerating;
 
 		/**
-		 *
+		 * Default constructor. Intializes the level generator algorithm
 		 */
 		LevelGenerator();
 		
 		/**
-		 *
+		 * Runs the generation algorithm.
+		 * Once the algorithm finishes it spawns all the game Entities and attaches corresponding components
+		 * @see FI2Pop
 		 */
 		void run();
 
 		/**
-		 *
+		 * Clears the populations maintained by the algorithm
 		 */
 		void clearPopulations();
 
 		/**
-		 *
+		 * @returns Individual having the highest fitness in the feaisble population. 
+		 *  If feasible individuals do not exist then 
+		 *  it returns the most fit infeaisble Individual
 		 */
 		inline Individual getFittest() { return this->fittest; }
 	};

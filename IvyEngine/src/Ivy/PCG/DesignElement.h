@@ -11,8 +11,9 @@
 
 namespace Ivy {
 
-	/*
-	 *
+	/**
+	 * The type of one DesignElement (Room) in a level
+	 * @see DesignElement
 	 */
 	enum ElementType
 	{
@@ -29,26 +30,24 @@ namespace Ivy {
 		MeleeEnemy		
 	};
 
-	/*
-	 *
+	/**
+	 * Represents one element of a level.
+	 * The element is treated as a tagged entity and neccesarily has a Transform.
+	 * @see Entity
+	 * @see Tag
+	 * @see Transform
 	 */
     class DesignElement
 	{
 	protected:
 		ElementType elementType;
 	public:
-		//
 		Entity entity;
-		//
 		Tag tag{};
-		//
 		Transform transform{};
 
-		//
 		static int TagCounter;
-		//
 		const static int ElementTypeCount = 11;
-		//
 		const static int HostileTypeCount = 8;
 	public:
 		DesignElement() = default;
@@ -57,6 +56,10 @@ namespace Ivy {
 		DesignElement(Tag tag, Transform transform);
 
 
+		/**
+		 * Copies the transform, tag, and element type of another DesignElement
+		 * @returns DesignElement&
+		 */
 		DesignElement& operator=(const DesignElement& other)
 		{
 			this->transform = other.transform;
@@ -66,7 +69,8 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @returns true if the transform of this is equal to the transform of other and false otherwise
+		 * @see Transform
 		 */
 		bool operator==(const DesignElement& other)
 		{ 
@@ -74,7 +78,8 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @returns false if the transform of this is equal to the transform of other and true otherwise
+		 * @see Transform
 		 */
 		bool operator!=(const DesignElement& other)
 		{
@@ -82,7 +87,10 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @param other DesignElement
+		 * @returns true if this has its transform position smaller than other.
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
 		 */
 		bool operator<(const DesignElement& other)
 		{
@@ -100,7 +108,10 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @param other DesignElement
+		 * @returns true if this has its transform position greater than other.
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
 		 */
 		bool operator>(const DesignElement& other)
 		{
@@ -118,7 +129,10 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @param other DesignElement
+		 * @returns true if this has its transform position smaller or equal than other.
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
 		 */
 		bool operator<=(const DesignElement& other)
 		{
@@ -136,7 +150,10 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @param other DesignElement
+		 * @returns true if this has its transform position greater or equal than other. 
+		 *  First the Y-Axis position is compared; if equal then the X-Axis position is compared.
+		 *  If equal in all respects returns false.
 		 */
 		bool operator>=(const DesignElement& other)
 		{
@@ -154,7 +171,7 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * @returns ElementType& of this DesignElement
 		 */
 		inline const ElementType& getElementType()
 		{ 
@@ -162,7 +179,8 @@ namespace Ivy {
 		}
 
 		/**
-		 *
+		 * Sets the element type of this DesignElement
+		 * @param elementType the type of room
 		 */
 		inline void setElementType(const ElementType& elementType) 
 		{ 

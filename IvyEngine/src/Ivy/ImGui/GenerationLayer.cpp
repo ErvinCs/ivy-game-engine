@@ -13,8 +13,10 @@ namespace Ivy
 {
 	void GenerationLayer::imGuiRender()
 	{
+		// Create the Generator menu with the ID "Generation Layer"
 		ImGui::Begin("Generator");
 		ImGui::PushID("GenerationLayer");
+		// Algorithm parameters
 		if (ImGui::CollapsingHeader("Parameters"))
 		{
 			ImGui::InputFloat("Mutation Rate", &FI2Pop::mutationRate, 0.05f);
@@ -28,6 +30,7 @@ namespace Ivy
 			ImGui::RadioButton("Fittest", &LevelGenerator::alwaysLoadFittest, 1);
 			ImGui::RadioButton("Least Fit", &LevelGenerator::alwaysLoadFittest, 0);
 		}
+		// Generation resources
 		if (ImGui::CollapsingHeader("Resources"))
 		{
 			if (ImGui::TreeNode("Rooms"))

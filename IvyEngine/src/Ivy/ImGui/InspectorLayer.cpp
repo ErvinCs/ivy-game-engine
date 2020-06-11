@@ -30,7 +30,7 @@ namespace Ivy {
 		static std::string tagTemp, newTagTemp;
 		static std::string scriptPathTemp;
 
-		//Menu Bar
+		// Menu Bar
 		if (ImGui::BeginMainMenuBar())
 		{
 			if (ImGui::BeginMenu("Project"))
@@ -252,6 +252,7 @@ namespace Ivy {
 					ImGui::TreePop();
 				}
 
+				// -------------------- Collidable --------------------
 				if (ImGui::TreeNode("CollidableBox"))
 				{
 					if (getECS().getComponent<CollidableBox>(entity).getComponentId() == CollidableBoxID)
@@ -312,12 +313,17 @@ namespace Ivy {
 			ImGui::PopID();
 			auxEntityTracker++;
 		}
+		// Create a new Entity
 		if (ImGui::Button("New Entity"))
 		{
 			Entity entity = getECS().createEntity();
 			IVY_INFO("Created Entity={0}", entity);
 		}
+
+		// Show the Gizmos (Collision World)
 		ImGui::Checkbox("Show Gizmos", &CollidableGizmoSystem::showGizmos);
+
+		// Save/Load/Clear Entities buttons
 		if (ImGui::Button("Save Entities"))
 		{
 			getECS().saveEntities();
