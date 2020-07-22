@@ -19,15 +19,15 @@ public:
 	{
 		IVY_TRACE("Creating GameLayer");
 
-		//mainMenu = Ivy::ECS::getInstance().createEntity();
-		//Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
+		mainMenu = Ivy::ECS::getInstance().createEntity();
+		Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
 
 		int r = Ivy::ScriptManager::GetInstance().getScriptEngine()->RegisterGlobalProperty("int level_score", &level_score); assert(r >= 0);
 	}
 
 	void update(Ivy::Timestep ts) override
 	{
-		/*if (isLoaded)
+		if (isLoaded)
 		{
 			if (!isStarted) 
 			{
@@ -106,7 +106,7 @@ public:
 			Ivy::ECS::getInstance().addComponent<Ivy::Renderable>(mainMenu, Ivy::Renderable("level-menu.png"));
 		}
 
-		Ivy::ScriptManager::GetInstance().garbageCollect(1);*/
+		Ivy::ScriptManager::GetInstance().garbageCollect(1);
 	}
 
 	void imGuiRender() override {}
