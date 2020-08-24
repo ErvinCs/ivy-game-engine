@@ -43,11 +43,18 @@ Components:
 * Transform
 
 Components are aggregated in packed-arrays to maximize cache performance. </br>
-Additional Components and Systems can be added by the user as long as they derive from the Component and System class respectively. We provide the UserComponent as an example for user-defined components. </br>Note that in order to be able to import/export newly defined components the appropriate functions have to be implemented and registered with the <code> JSONManager </code> (We recommend taking a look at the <a href="https://github.com/nlohmann/json"> json-nlojmann library </a> for more information).
+Additional Components and Systems can be added by the user as long as they derive from the Component and System class respectively. We provide the UserComponent as an example for user-defined components. </br>Note that in order to be able to import/export newly defined components the appropriate functions have to be implemented and registered with the <code>JSONManager</code>. </br>(We recommend taking a look at the <a href="https://github.com/nlohmann/json"> json-nlojmann library </a> for more information).
 
 The GUI is implemented using <a href="https://github.com/ocornut/imgui">Dear ImGui</a>. It provides easy access to creating, deleting and modifying entities and components.
 
-Game-specific code can be written in C++ or in <a href="https://www.angelcode.com/angelscript">AngelScript</a> scripts. A number of sample scripts are present in <code>IvyApplication/scripts</code>. Currently the types the script engine is registered with are the following: Vec2, Transform, Renderable, Collidable, ScriptableObject. The ScriptComponent mentioned above merely encapsluates a ScriptableObject such that it can be managed by the ECS. </br>
+Game-specific code can be written in C++ or in <a href="https://www.angelcode.com/angelscript">AngelScript</a> scripts. A number of sample scripts are present in <code>IvyApplication/scripts</code>. Currently the types the script engine is registered with are the following: 
+* Vec2 
+* Transform
+* Renderable
+* Collidable
+* ScriptableObject
+
+The ScriptComponent mentioned above merely encapsluates a ScriptableObject such that it can be managed by the ECS. </br>
 To create a new script it suffices to create a new <code>.as</code> file and place it in the scripts folder. Script classes should <code>#include 'common.as'</code> and provide a constructor. The <code>onUpdate</code> and <code>onMessage</code> methods can be implement to specify behavior.
 
 The PCG module is responsible for level generation and uses the Feasible-Infeasible Two-Populations Genetic Algorithm. An Individual is a collection of DesignElements (DEs) where each DE should specify a Tag, a Transform and an associated Entity. The FI2Pop class encapsulates the algorithm which can be tweaked through the Generator GUI. The LevelGenerator class is responsible for actually instantiating the game objects and should be implemented per project.
