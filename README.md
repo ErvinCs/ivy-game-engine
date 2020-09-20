@@ -57,6 +57,18 @@ Game-specific code can be written in C++ or in <a href="https://www.angelcode.co
 The ScriptComponent mentioned above merely encapsluates a ScriptableObject such that it can be managed by the ECS. </br>
 To create a new script it suffices to create a new <code>.as</code> file and place it in the scripts folder. Script classes should <code>#include 'common.as'</code> and provide a constructor. The <code>onUpdate</code> and <code>onMessage</code> methods can be implement to specify behavior.
 
-The PCG module is responsible for level generation and uses the Feasible-Infeasible Two-Populations Genetic Algorithm. An Individual is a collection of DesignElements (DEs) where each DE should specify a Tag, a Transform and an associated Entity. The FI2Pop class encapsulates the algorithm which can be tweaked through the Generator GUI. The LevelGenerator class is responsible for actually instantiating the game objects and should be implemented per project.
+The PCG module is responsible for level generation and uses the Feasible-Infeasible Two-Populations Genetic Algorithm. An Individual is a collection of DesignElements (DEs) where each DE should specify a Tag, a Transform and an associated Entity. The FI2Pop class encapsulates the algorithm which can be tweaked through the Generator GUI. 
+
+Note: The LevelGenerator class is responsible for actually instantiating the game objects and should be implemented per project.
+
+# Features to come (at some point hopefully)
+* Sound System
+* Animation System
+* Multi-threading
+* More Gizmos
+* Collidable Types
+* Support for multiple components of the same type per Entity
+* Layered Rendering
+* Multiple Graphics API Support
 
 

@@ -2,6 +2,7 @@
 
 #include <Ivy.h>
 
+// Generate an ID for the new component type
 static ComponentType UserCompID = Ivy::ECS::getInstance().generateComponentId();
 
 class UserComponent : public Ivy::Component
@@ -19,6 +20,7 @@ public:
 	}
 };
 
+// Convert a UserComponent of an Entity from JSON
 void loadUC(Entity& entity, nlohmann::json& json)
 {
 	if (!json["components"]["user_component"].is_null())
@@ -33,6 +35,7 @@ void loadUC(Entity& entity, nlohmann::json& json)
 	}
 }
 
+// Convert a UserComponent of an Entity to JSON
 void saveUC(Entity& entity, nlohmann::json& json)
 {
 	nlohmann::json jsonNull;
@@ -47,7 +50,7 @@ void saveUC(Entity& entity, nlohmann::json& json)
 	}
 }
 
-
+// A System that Acts on UserComponents
 class UserComponentSystem : public Ivy::System
 {
 public:
@@ -80,11 +83,20 @@ public:
 	}
 };
 
-/* Construct Code
+// ImGUI code for visualizing the UserComponent
+
+/*  // Construct Code
+	// Placed in the Constructor of a SortingLayer (in this case the GameLayer in IvyApp.cpp) 
+	// Registers the conversion functions to and from JSON for the UserComponent
+
 		Ivy::JSONManager::addLoadFunction(loadUC);
 		Ivy::JSONManager::addSaveFunction(saveUC);
 */
-/* imGuiRender Code
+
+/*  // ImGUI Render Code
+	// Placed in the `void imGuiRender()` method a SortingLayer (in this case the GameLayer in IvyApp.cpp) 
+	// Defines the GUI elemets used to manipulate the UserComponent
+
 		static std::string tagTemp;
 		ImGui::Begin("User Components");
 		for (Entity& entity : Ivy::ECS::getInstance().getEntities())

@@ -146,9 +146,6 @@ IF EXIST $(ProjectDir)\res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)\res\**.json
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\UserComponent.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\IvyApp.cpp" />
   </ItemGroup>
   <ItemGroup>
