@@ -61,7 +61,7 @@ The PCG module is responsible for level generation and uses the Feasible-Infeasi
 
 Note: The LevelGenerator class is responsible for actually instantiating the game objects and should be implemented per project.
 
-# Features to come (at some point hopefully)
+# Hopefully Eventually Upcoming Features
 * Sound System
 * Animation System
 * Multi-threading
