@@ -45,8 +45,6 @@ Additional functionality is added to the renderer by the <a href="https://github
 
 ### GameObject System
 <div style="text-align: justify;">
-<img src=".img/ecs-menu-only.png" align="right" alt="ECS Menu" width="300" height="570">
-
 The game object system follows the ECS paradigm and provides a number of readily available Systems and Components. </br>
 Systems:
 * CameraSystem
@@ -66,12 +64,14 @@ Components are aggregated in packed-arrays to maximize cache performance. </br>
 Additional Components and Systems can be added by the user as long as they derive from the Component and System class respectively. We provide the <code>UserComponent</code> as an example for user-defined components. </br>Note that in order to be able to import/export newly defined components the appropriate functions have to be implemented and registered with the <code>JSONManager</code>. </br>(We recommend taking a look at the <a href="https://github.com/nlohmann/json"> json-nlojmann library </a> for more information).
 
 The GUI is implemented using <a href="https://github.com/ocornut/imgui">Dear ImGui</a>. It provides easy access to creating, deleting and modifying entities and components.
+<p align="center">
+  <img src=".img/ecs-menu-only.png" align="center" alt="ECS Menu" width="300" height="550">
+  <img src=".img/generator_ui.png" align="center" alt="Collidable Gizmos" width="300" height="550">
+</p>
 </div>
 
 ### Scripting
 <div style="text-align: justify;">
-<img src=".img/generator_ui.png" align="right" alt="Collidable Gizmos" width="300" height="570">
-  
 Game-specific code can be written in C++ or in <a href="https://www.angelcode.com/angelscript">AngelScript</a> scripts. A number of sample scripts are present in <code>IvyApplication/scripts</code>. Currently the types the script engine is registered with are the following: 
 * Vec2 
 * Transform
