@@ -11,7 +11,7 @@ Features:
 
 # Setup
 Clone the repository using <code>git clone --recursive</code> to fetch all the required submodules.
-Run the <code>ProjectGenerator.bat</code> batch file to generate a Visual Studio 2017 project.
+Run the <code>ProjectGenerator.bat</code> batch file to generate a Visual Studio 2017 project. Make sure to set <code>IvyApplication</code> as the startup project.
 
 Project files for Visual Studio 2017 are generated using <a href="https://github.com/premake/premake-core">Premake5</a>. If you wish to use a different IDE make sure to check these files and update them accordingly. <br/>(Note: The AngelScript module has a number of readily available project files at <code>IvyEngine\vendor\angelscript\projects</code>).
 
