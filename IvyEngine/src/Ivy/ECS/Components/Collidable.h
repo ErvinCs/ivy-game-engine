@@ -60,5 +60,4 @@ namespace Ivy
 
 		CollidableBox& operator=(const CollidableBox& other);
 	};
-
 }

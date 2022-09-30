@@ -1,8 +1,8 @@
 {
   "camera": {
-    "owner": 68,
-    "position_x": 1.0,
-    "position_y": 1.0,
+    "owner": -1,
+    "position_x": 0.0,
+    "position_y": 0.0,
     "position_z": 0.0,
     "rotation": 0.0
   }

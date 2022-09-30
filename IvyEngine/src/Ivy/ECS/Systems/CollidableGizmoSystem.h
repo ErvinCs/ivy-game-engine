@@ -18,11 +18,12 @@ namespace Ivy {
 	class CollidableGizmoSystem : public System
 	{
 	private:
-		std::shared_ptr<Texture> gizmo = Texture::Create(Paths::collidablePath.string());
+		std::shared_ptr<Texture> gizmo = Texture::Create(Paths::COLLIDABLE_PATH.string());
 	public:
-		static bool showGizmos;
+		static bool ShowGizmos;
 
 		CollidableGizmoSystem() = default;
+
 		CollidableGizmoSystem(EntityContainer& entities)
 		{
 			this->setEntities(entities);

@@ -3,8 +3,7 @@
 
 #include "../Core/Logger.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	Graph::Graph(const std::vector<Node>& other)
 	{
 		this->nodes = other;
@@ -141,5 +140,4 @@ namespace Ivy
 		}
 		stack->push(vertex);
 	}
-
 }

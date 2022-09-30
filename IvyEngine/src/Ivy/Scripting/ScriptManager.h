@@ -9,7 +9,6 @@
 #include "ScriptableObject.h"
 
 namespace Ivy {
-
 	/**
 	 * The ScriptManager is in charge of maintaing references to as well as creating script execution contexts and script controllers.
 	 * It keeps pointers to the script functions and allows control of the garbage collector.
@@ -153,5 +152,4 @@ namespace Ivy {
 		ScriptManager(const ScriptManager&) = delete;
 		ScriptManager& operator=(const ScriptManager&) = delete;
 	};
-
 }

@@ -25,7 +25,7 @@ namespace Ivy {
 		currTime = 0;
 		lastFrameTime = 0;
 
-		int success;
+		auto success = -1;
 		Instance = this;
 		window = Window::Create();
 		// The window receives the callback functions encapsulated in received events. See: Event, Window

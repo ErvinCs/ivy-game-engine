@@ -29,5 +29,4 @@ namespace Ivy {
 		 */
 		virtual void update(float deltatime) override;
 	};
-
 }

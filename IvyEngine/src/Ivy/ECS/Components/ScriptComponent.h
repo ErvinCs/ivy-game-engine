@@ -5,8 +5,7 @@
 #include "../Component.h"
 #include "../../Scripting/ScriptableObject.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	/**
 	 * Encapsulates the AS script used to control an entity.
 	 * @see ScriptableObject

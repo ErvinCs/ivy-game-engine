@@ -19,59 +19,59 @@ namespace Ivy
 		// Algorithm parameters
 		if (ImGui::CollapsingHeader("Parameters"))
 		{
-			ImGui::InputFloat("Mutation Rate", &FI2Pop::mutationRate, 0.05f);
-			ImGui::InputFloat("Uniform Rate", &FI2Pop::uniformRate, 0.5f);
-			ImGui::InputInt("Elite Count", &FI2Pop::eliteCount, 1);
-			ImGui::InputInt("Population Size", &FI2Pop::populationSize, 1);
-			ImGui::InputInt("Tournament Size", &FI2Pop::tournamentSize, 1);
-			ImGui::InputInt("Genotype Size", &FI2Pop::genotypeSize, 1);
-			ImGui::InputInt("Max Generation", &FI2Pop::maxGeneration, 1);
-			ImGui::Checkbox("Always Load", &LevelGenerator::alwaysLoad);
-			ImGui::RadioButton("Fittest", &LevelGenerator::alwaysLoadFittest, 1);
-			ImGui::RadioButton("Least Fit", &LevelGenerator::alwaysLoadFittest, 0);
+			ImGui::InputFloat("Mutation Rate", &FI2Pop::MutationRate, 0.05f);
+			ImGui::InputFloat("Uniform Rate", &FI2Pop::UniformRate, 0.5f);
+			ImGui::InputInt("Elite Count", &FI2Pop::EliteCount, 1);
+			ImGui::InputInt("Population Size", &FI2Pop::PopulationSize, 1);
+			ImGui::InputInt("Tournament Size", &FI2Pop::TournamentSize, 1);
+			ImGui::InputInt("Genotype Size", &FI2Pop::GenotypeSize, 1);
+			ImGui::InputInt("Max Generation", &FI2Pop::MaxGeneration, 1);
+			ImGui::Checkbox("Always Load", &LevelGenerator::AlwaysLoad);
+			ImGui::RadioButton("Fittest", &LevelGenerator::AlwaysLoadFittest, 1);
+			ImGui::RadioButton("Least Fit", &LevelGenerator::AlwaysLoadFittest, 0);
 		}
 		// Generation resources
 		if (ImGui::CollapsingHeader("Resources"))
 		{
 			if (ImGui::TreeNode("Rooms"))
 			{
-				ImGui::InputText("Safe Room 1", &LevelGenerator::stdRoom1Path);	
-				ImGui::InputText("Safe Room 2", &LevelGenerator::stdRoom2Path);
-				ImGui::InputText("Dead End 1", &LevelGenerator::closedRoomPath);
-				ImGui::InputText("Dead End 2", &LevelGenerator::meleeEnemyPath);
-				ImGui::InputText("Hallway", &LevelGenerator::hallwayPath);
-				ImGui::InputText("T-Shaped Hallway", &LevelGenerator::tShapePath);
-				ImGui::InputText("Middle Obstacle", &LevelGenerator::holePath);
-				ImGui::InputText("Pillar Room", &LevelGenerator::pillarPath);
-				ImGui::InputText("Walls x4", &LevelGenerator::horizontalWallPath);
-				ImGui::InputText("Walls x3", &LevelGenerator::verticalWallPath);
-				ImGui::InputText("Walls x2", &LevelGenerator::rangedEnemyPath);	
+				ImGui::InputText("Safe Room 1", &LevelGenerator::StdRoom1Path);	
+				ImGui::InputText("Safe Room 2", &LevelGenerator::StdRoom2Path);
+				ImGui::InputText("Dead End 1", &LevelGenerator::ClosedRoomPath);
+				ImGui::InputText("Dead End 2", &LevelGenerator::MeleeEnemyPath);
+				ImGui::InputText("Hallway", &LevelGenerator::HallwayPath);
+				ImGui::InputText("T-Shaped Hallway", &LevelGenerator::TShapePath);
+				ImGui::InputText("Middle Obstacle", &LevelGenerator::HolePath);
+				ImGui::InputText("Pillar Room", &LevelGenerator::PillarPath);
+				ImGui::InputText("Walls x4", &LevelGenerator::HorizontalWallPath);
+				ImGui::InputText("Walls x3", &LevelGenerator::VerticalWallPath);
+				ImGui::InputText("Walls x2", &LevelGenerator::RangedEnemyPath);	
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Player"))
 			{
-				ImGui::InputText("Player Sprite", &LevelGenerator::playerPath);
-				ImGui::InputText("Player Script", &LevelGenerator::playerScript);
+				ImGui::InputText("Player Sprite", &LevelGenerator::PlayerPath);
+				ImGui::InputText("Player Script", &LevelGenerator::PlayerScript);
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Enemies"))
 			{
-				ImGui::InputText("Enemy 1", &LevelGenerator::enemyFlyPath);
-				ImGui::InputText("Enemy 2", &LevelGenerator::enemyGroundPath);
-				ImGui::InputText("Enemy 1 Script", &LevelGenerator::scriptPatrolH);
-				ImGui::InputText("Enemy 2 Script", &LevelGenerator::scriptPatrolV);
+				ImGui::InputText("Enemy 1", &LevelGenerator::EnemyFlyPath);
+				ImGui::InputText("Enemy 2", &LevelGenerator::EnemyGroundPath);
+				ImGui::InputText("Enemy 1 Script", &LevelGenerator::ScriptPatrolH);
+				ImGui::InputText("Enemy 2 Script", &LevelGenerator::ScriptPatrolV);
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Items"))
 			{
-				ImGui::InputText("Item 1", &LevelGenerator::collectablePath);
-				ImGui::InputText("Item 1 Script", &LevelGenerator::collectableScript);
+				ImGui::InputText("Item 1", &LevelGenerator::CollectablePath);
+				ImGui::InputText("Item 1 Script", &LevelGenerator::CollectableScript);
 				ImGui::TreePop();
 			}
 			if (ImGui::TreeNode("Borders"))
 			{
-				ImGui::InputText("Horizontal Border", &LevelGenerator::horizontalBorderPath);
-				ImGui::InputText("Vertical Border", &LevelGenerator::verticalBorderPath);
+				ImGui::InputText("Horizontal Border", &LevelGenerator::HorizontalBorderPath);
+				ImGui::InputText("Vertical Border", &LevelGenerator::VerticalBorderPath);
 				ImGui::TreePop();
 			}		
 		}

@@ -55,7 +55,6 @@ namespace Ivy {
 		DesignElement(const DesignElement&& other);
 		DesignElement(Tag tag, Transform transform);
 
-
 		/**
 		 * Copies the transform, tag, and element type of another DesignElement
 		 * @returns DesignElement&

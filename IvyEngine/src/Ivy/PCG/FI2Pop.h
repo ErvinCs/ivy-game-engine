@@ -52,19 +52,19 @@ namespace Ivy
 		
 	public:
 		// Value in [0,1]
-		static float mutationRate;
+		static float MutationRate;
 		// Value in [0,1]
-		static float uniformRate;
+		static float UniformRate;
 		// Value in [0,1]
-		static int singlePointCrossoverFrequency;
+		static int SinglePointCrossoverFrequency;
 		// Number of individuals to not be affected by mutations
-		static int eliteCount;
+		static int EliteCount;
 		// The generation at which the algorithm should stop running
-		static int maxGeneration;
+		static int MaxGeneration;
 
-		static int populationSize;
-		static int tournamentSize;
-		static int genotypeSize;
+		static int PopulationSize;
+		static int TournamentSize;
+		static int GenotypeSize;
 
 		/**
 		 * Initializes the population. Calls `init`.
@@ -175,5 +175,4 @@ namespace Ivy
 		 */
 		void mutateLevelElement(DesignElement& designElement, int geneIndex);
 	};
-
 }

@@ -13,6 +13,7 @@ namespace Ivy {
 	{
 	public:
 		ScriptSystem() = default;
+
 		ScriptSystem(EntityContainer& entities)
 		{
 			this->setEntities(entities);		
@@ -28,5 +29,4 @@ namespace Ivy {
 		 */
 		virtual void update(float deltatime) override;
 	};
-
 }

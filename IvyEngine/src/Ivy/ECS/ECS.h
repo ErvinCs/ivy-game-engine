@@ -70,21 +70,21 @@ namespace Ivy {
 		 * They are loaded from the JSON files in the `res` folder.
 		 */
 		void loadEntities() {
-			IVY_CORE_INFO("ECS: Loading Entities from {0}", Paths::entitiesRepoPath.string());
-			if (std::filesystem::exists(Paths::entitiesRepoPath)) {
-				JSONManager::LoadEntities(Paths::entitiesRepoPath.string());
+			IVY_CORE_INFO("ECS: Loading Entities from {0}", Paths::ENTITIES_REPO_PATH.string());
+			if (std::filesystem::exists(Paths::ENTITIES_REPO_PATH)) {
+				JSONManager::LoadEntities(Paths::ENTITIES_REPO_PATH.string());
 			}
 			else {
-				std::ofstream writer(Paths::entitiesRepoPath.string());
+				std::ofstream writer(Paths::ENTITIES_REPO_PATH.string());
 				writer.close();
 				IVY_CORE_INFO("ECS: Entitiy JSON file was not found. Creating empty entities.json.");
 			}
-			IVY_CORE_INFO("ECS: Loading camera from {0}", Paths::cameraRepoPath.string());
-			if (std::filesystem::exists(Paths::cameraRepoPath)) {
-				JSONManager::LoadCamera(Paths::cameraRepoPath.string());
+			IVY_CORE_INFO("ECS: Loading camera from {0}", Paths::CAMERA_REPOSITORY_PATH.string());
+			if (std::filesystem::exists(Paths::CAMERA_REPOSITORY_PATH)) {
+				JSONManager::LoadCamera(Paths::CAMERA_REPOSITORY_PATH.string());
 			}
 			else {
-				std::ofstream writer(Paths::cameraRepoPath.string());
+				std::ofstream writer(Paths::CAMERA_REPOSITORY_PATH.string());
 				writer.close();
 				IVY_CORE_INFO("ECS: Camera JSON file was not found. Creating empty camera.json.");
 			}
@@ -96,10 +96,10 @@ namespace Ivy {
 		 * They are saved into the JSON files in the `res` folder.
 		 */
 		void saveEntities() {
-			IVY_CORE_INFO("ECS: Saving Entities to {0}", Paths::entitiesRepoPath.string());
-			JSONManager::SaveEntities(Paths::entitiesRepoPath.string());
-			IVY_CORE_INFO("ECS: Saving Camera to {0}", Paths::cameraRepoPath.string());
-			JSONManager::SaveCamera(Paths::cameraRepoPath.string());
+			IVY_CORE_INFO("ECS: Saving Entities to {0}", Paths::ENTITIES_REPO_PATH.string());
+			JSONManager::SaveEntities(Paths::ENTITIES_REPO_PATH.string());
+			IVY_CORE_INFO("ECS: Saving Camera to {0}", Paths::CAMERA_REPOSITORY_PATH.string());
+			JSONManager::SaveCamera(Paths::CAMERA_REPOSITORY_PATH.string());
 		}
 
 		/**
@@ -279,7 +279,7 @@ namespace Ivy {
 			std::shared_ptr<System> renderSystem    = std::make_shared<RenderSystem>(entities);
 			std::shared_ptr<System> scriptSystem    = std::make_shared<ScriptSystem>(entities);
 			std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>(entities);
-			std::shared_ptr<System> cameraSystem = std::make_shared<CameraSystem>(entities);
+			std::shared_ptr<System> cameraSystem    = std::make_shared<CameraSystem>(entities);
 
 #ifdef _DEBUG
 			std::shared_ptr<System> collisionGizmos = std::make_shared<CollidableGizmoSystem>(entities);

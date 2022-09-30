@@ -28,6 +28,7 @@ namespace Ivy {
 		 * @param rank representing 
 		 */
 		SortingLayer(const std::string& name, const unsigned int& rank);
+
 		~SortingLayer();
 
 		/**
@@ -63,5 +64,4 @@ namespace Ivy {
 		// The importance of the layer. Equivalent to its rank in the layer stack.
 		unsigned int layerRank;
 	};
-
 }

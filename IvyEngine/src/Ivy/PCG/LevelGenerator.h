@@ -27,30 +27,30 @@ namespace Ivy
 		// Half the measure used for position. Used to determine Transform position for an Entity
 		const float halfTilePos = 0.5f;
 	public:
-		static bool alwaysLoad;
-		static int alwaysLoadFittest;
-		static std::string horizontalBorderPath;
-		static std::string verticalBorderPath;
-		static std::string closedRoomPath;
-		static std::string enemyFlyPath;
-		static std::string enemyGroundPath;
-		static std::string hallwayPath;
-		static std::string holePath;
-		static std::string horizontalWallPath;
-		static std::string verticalWallPath;
-		static std::string pillarPath;
-		static std::string meleeEnemyPath;
-		static std::string rangedEnemyPath;
-		static std::string stdRoom1Path;
-		static std::string stdRoom2Path;
-		static std::string tShapePath;
-		static std::string scriptPatrolV;
-		static std::string scriptPatrolH;	
-		static std::string LevelGenerator::playerScript;
-		static std::string LevelGenerator::playerPath;
-		static std::string collectablePath;
-		static std::string collectableScript;
-		static bool isGenerating;
+		static bool AlwaysLoad;
+		static int AlwaysLoadFittest;
+		static std::string HorizontalBorderPath;
+		static std::string VerticalBorderPath;
+		static std::string ClosedRoomPath;
+		static std::string EnemyFlyPath;
+		static std::string EnemyGroundPath;
+		static std::string HallwayPath;
+		static std::string HolePath;
+		static std::string HorizontalWallPath;
+		static std::string VerticalWallPath;
+		static std::string PillarPath;
+		static std::string MeleeEnemyPath;
+		static std::string RangedEnemyPath;
+		static std::string StdRoom1Path;
+		static std::string StdRoom2Path;
+		static std::string TShapePath;
+		static std::string ScriptPatrolV;
+		static std::string ScriptPatrolH;	
+		static std::string LevelGenerator::PlayerScript;
+		static std::string LevelGenerator::PlayerPath;
+		static std::string CollectablePath;
+		static std::string CollectableScript;
+		static bool IsGenerating;
 
 		/**
 		 * Default constructor. Intializes the level generator algorithm
@@ -76,5 +76,4 @@ namespace Ivy
 		 */
 		inline Individual getFittest() { return this->fittest; }
 	};
-
 }

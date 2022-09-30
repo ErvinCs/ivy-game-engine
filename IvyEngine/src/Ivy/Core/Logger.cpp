@@ -17,6 +17,4 @@ namespace Ivy {
 		clientLogger = spdlog::stdout_color_mt("Application");
 		clientLogger->set_level(spdlog::level::trace);
 	}
-
-
 }

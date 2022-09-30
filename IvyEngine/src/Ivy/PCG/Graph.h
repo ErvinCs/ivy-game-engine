@@ -5,8 +5,7 @@
 
 #include "Node.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	/**
 	 * A directed graph represented as a list of Nodes
 	 * @see Node
@@ -80,7 +79,6 @@ namespace Ivy
 			return *this;
 		}
 	private:
-
 		void depthFirstSearch(int vertex, bool* visited);
 
 		/**
@@ -88,8 +86,5 @@ namespace Ivy
 		 * @param numberOfNodes int representing the number of nodes to be created
 		 */
 		Graph(int numberOfNodes);
-		
-
 	};
-
 }

@@ -2,8 +2,7 @@
 
 #include "../Core/SortingLayer.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	/**
 	 * Creates a new layer containing the ImGUI for manipulation the PCG algorithm parameters.
 	 * @see SortingLayer
@@ -12,6 +11,7 @@ namespace Ivy
 	{
 	public:
 		GenerationLayer() = default;
+
 		~GenerationLayer() = default;
 
 		/**
@@ -20,5 +20,4 @@ namespace Ivy
 		 */
 		virtual void imGuiRender() override;
 	};
-
 }

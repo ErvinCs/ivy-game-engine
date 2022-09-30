@@ -4,9 +4,7 @@
 #include <string>
 
 
-namespace Ivy
-{
-
+namespace Ivy {
 	/**
 	 * Thrown if an EventHandler assignment(=) operations fails
 	 * @see EventHandler
@@ -32,5 +30,4 @@ namespace Ivy
 			return message.c_str();
 		}
 	};
-
 }

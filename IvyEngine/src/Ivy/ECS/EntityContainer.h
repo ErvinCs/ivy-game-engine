@@ -55,12 +55,12 @@ namespace Ivy
 		inline void destroyEntity(Entity& entity)
 		{
 			IVY_CORE_INFO("EntityContainer: Removing Entity {0}", entity);
-			for (int i = 0; i < this->entitiesSize; i++)
+			for (auto i = 0; i < this->entitiesSize; i++)
 			{
 				if (entities[i] == entity)
 				{
 					addToFreeEntities(entities[i]);
-					for (int j = i; j < this->entitiesSize - 1; j++)
+					for (auto j = i; j < this->entitiesSize - 1; j++)
 					{
 						entities[j] = entities[j + 1];
 					}
@@ -68,7 +68,6 @@ namespace Ivy
 					break;
 				}
 			}
-
 		}
 
 		/**
@@ -158,5 +157,4 @@ namespace Ivy
 			}
 		}
 	};
-
 }

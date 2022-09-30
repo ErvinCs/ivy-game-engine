@@ -4,8 +4,7 @@
 #include "../../Scripting/ScriptManager.h"
 #include "../ECS.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	ScriptComponent::ScriptComponent(std::string scriptName)
 	{
 		this->scriptName = scriptName;

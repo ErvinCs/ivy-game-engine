@@ -82,7 +82,6 @@ namespace Ivy{
 	private:
 		// Singular InputHandler instance. Points to the InputHandler instantiated per platform.
 		static std::unique_ptr<InputHandler> instance;
-		
 	};
 
 }

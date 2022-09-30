@@ -4,8 +4,7 @@
 #include <string>
 
 
-namespace Ivy
-{
+namespace Ivy {
 	/**
 	 * Thrown by the LayerStack on attempting to pop an unexistent layer.
 	 * @see LayerStack

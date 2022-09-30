@@ -15,7 +15,8 @@ namespace Ivy {
 		/**
 		 * @returns int the key code associated to the key that triggers this Event
 		 */
-		inline int getKeyCode() const {
+		inline int getKeyCode() const 
+		{
 			return keyCode;
 		}
 	protected:
@@ -52,11 +53,13 @@ namespace Ivy {
 		/**
 		 * @returns int the repeat count
 		 */
-		inline int getRepeatCount() const {
+		inline int getRepeatCount() const 
+		{
 			return repeatCount;
 		}
 
-		std::string toString() const override {
+		std::string toString() const override 
+		{
 			std::stringstream ss;
 			ss << "KeyDownEvent: " << keyCode << "; Repeat count: " << repeatCount;
 			return ss.str();
@@ -78,7 +81,8 @@ namespace Ivy {
 		 */
 		KeyUpEvent(int keyCode) : KeyEvent(keyCode) {}
 
-		std::string toString() const override {
+		std::string toString() const override 
+		{
 			std::stringstream ss;
 			ss << "KeyUpEvent: " << keyCode;
 			return ss.str();

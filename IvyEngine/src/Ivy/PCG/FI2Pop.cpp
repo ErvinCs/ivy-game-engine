@@ -5,14 +5,14 @@
 
 namespace Ivy 
 {
-	float FI2Pop::mutationRate = 0.1f;
-	float FI2Pop::uniformRate = 0.5f;
-	int FI2Pop::singlePointCrossoverFrequency = 3;
-	int FI2Pop::eliteCount = 2;
-	int FI2Pop::populationSize = 25;
-	int FI2Pop::tournamentSize = 4;
-	int FI2Pop::genotypeSize = 12;
-	int FI2Pop::maxGeneration = 4;
+	float FI2Pop::MutationRate = 0.1f;
+	float FI2Pop::UniformRate = 0.5f;
+	int FI2Pop::SinglePointCrossoverFrequency = 3;
+	int FI2Pop::EliteCount = 2;
+	int FI2Pop::PopulationSize = 25;
+	int FI2Pop::TournamentSize = 4;
+	int FI2Pop::GenotypeSize = 12;
+	int FI2Pop::MaxGeneration = 4;
 
 	FI2Pop::FI2Pop()
 	{
@@ -40,14 +40,14 @@ namespace Ivy
 	void FI2Pop::run()
 	{
 		IVY_CORE_TRACE("FI2POP: Starting run");
-		while (currGeneration <= maxGeneration)
+		while (currGeneration <= MaxGeneration)
 		//while(feasiblePop.getIndividuals().size() < populationSize)	// Used for testing
 		{
 			IVY_CORE_TRACE("FI2POP: Generation {0}", currGeneration);
 
-			if (infeasiblePop.getPopulationSize() > populationSize)
+			if (infeasiblePop.getPopulationSize() > PopulationSize)
 			{
-				while (infeasiblePop.getPopulationSize() > populationSize)
+				while (infeasiblePop.getPopulationSize() > PopulationSize)
 				{
 					IVY_CORE_TRACE("FI2POP: Removing extra individual at index {0}. Size of Infeasible: {1}", infeasiblePop.getLeastFitIndividualIndex(), infeasiblePop.getPopulationSize());
 					infeasiblePop.removeIndividualAtIndex(infeasiblePop.getLeastFitIndividualIndex());
@@ -90,7 +90,7 @@ namespace Ivy
 				}
 			}
 
-			for (int i = infeasiblePop.getPopulationSize(); i < populationSize; i++)
+			for (int i = infeasiblePop.getPopulationSize(); i < PopulationSize; i++)
 			{
 				IVY_CORE_TRACE("FI2POP: Repopulating with random infeasible {0}", i);
 				infeasiblePop.addIndividual(this->generateRandomIndividual());
@@ -158,7 +158,7 @@ namespace Ivy
 		if (oldPop.getPopulationSize() != 0)
 		{
 			int i = 0;
-			while (i < eliteCount)
+			while (i < EliteCount)
 			{
 				population.addIndividual(oldPop.getFittestIndividual());
 				i++;
@@ -167,14 +167,14 @@ namespace Ivy
 
 		// Crossover
 		int oldPopSize = oldPop.getPopulationSize();
-		if (oldPopSize >= eliteCount && oldPopSize >= tournamentSize)
+		if (oldPopSize >= EliteCount && oldPopSize >= TournamentSize)
 		{
-			for (int i = eliteCount; i < oldPopSize; i++)
+			for (int i = EliteCount; i < oldPopSize; i++)
 			{
 				Individual ind1 = this->tournamentSelection(oldPop);
 				Individual ind2 = this->tournamentSelection(oldPop);
 				Individual offspring = Individual();
-				if (i % singlePointCrossoverFrequency == 0)
+				if (i % SinglePointCrossoverFrequency == 0)
 					offspring = uniformCrossover(ind1, ind2);
 				else
 					offspring = singlePointCrossover(ind1, ind2);
@@ -183,12 +183,12 @@ namespace Ivy
 
 			// Mutation
 			// Mutate one elite
-			this->mutate(population.getIndividualAt(eliteCount - 1));
+			this->mutate(population.getIndividualAt(EliteCount - 1));
 			int currPopSize = population.getPopulationSize();
-			for (int i = eliteCount; i < currPopSize; i++)
+			for (int i = EliteCount; i < currPopSize; i++)
 			{
 				float randomUnit = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-				if (randomUnit <= mutationRate)
+				if (randomUnit <= MutationRate)
 				{
 					this->mutate(population.getIndividualAt(i));
 				}
@@ -197,14 +197,14 @@ namespace Ivy
 		else if (oldPopSize != 0)
 		{
 			int randIndex;
-			for (int i = eliteCount; i < oldPopSize; i++)
+			for (int i = EliteCount; i < oldPopSize; i++)
 			{
 				randIndex = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / oldPopSize));
 				Individual ind1 = oldPop.getIndividualAt(randIndex);
 				randIndex = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / oldPopSize));
 				Individual ind2 = oldPop.getIndividualAt(randIndex);
 				Individual offspring = Individual();
-				if (i % singlePointCrossoverFrequency == 0)
+				if (i % SinglePointCrossoverFrequency == 0)
 					offspring = uniformCrossover(ind1, ind2);
 				else
 					offspring = singlePointCrossover(ind1, ind2);
@@ -215,11 +215,11 @@ namespace Ivy
 			// Mutation
 			// Mutate one elite
 			int currPopSize = population.getPopulationSize();
-			this->mutate(population.getIndividualAt(eliteCount - 1));
-			for (int i = eliteCount; i < currPopSize; i++)
+			this->mutate(population.getIndividualAt(EliteCount - 1));
+			for (int i = EliteCount; i < currPopSize; i++)
 			{
 				float randomUnit = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-				if (randomUnit <= mutationRate)
+				if (randomUnit <= MutationRate)
 				{
 					this->mutate(population.getIndividualAt(i));
 				}
@@ -234,7 +234,7 @@ namespace Ivy
 	{
 		// Generating Initial Population
 		Population randomPop = Population();
-		for (int i = 0; i < populationSize; i++)
+		for (int i = 0; i < PopulationSize; i++)
 		{
 			randomPop.addIndividual(this->generateRandomIndividual());
 		}
@@ -247,7 +247,7 @@ namespace Ivy
 		
 		int elemTypeCount = DesignElement::ElementTypeCount;
 		int hostileTypeCount = DesignElement::HostileTypeCount ;
-		for (int i = 0; i < genotypeSize; i++)
+		for (int i = 0; i < GenotypeSize; i++)
 		{
 			int randomRotationQuadrant = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 3));
 			float rotation;
@@ -269,7 +269,7 @@ namespace Ivy
 			int roomType;
 			const glm::vec2 roomSize = glm::vec2(8.0f, 8.0f);
 			// Do not allow traps at level beginning and end
-			if (i == 0 || i == genotypeSize - 1)
+			if (i == 0 || i == GenotypeSize - 1)
 				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (elemTypeCount - hostileTypeCount - 1)));
 			else
 				roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (elemTypeCount - 1)));
@@ -286,12 +286,12 @@ namespace Ivy
 	Individual FI2Pop::uniformCrossover(Individual& ind1, Individual& ind2)
 	{
 		Individual offspring{};
-		for (int i = 0; i < genotypeSize; i++)
+		for (int i = 0; i < GenotypeSize; i++)
 		{
 			float copyDesignElemProb = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			if (ind1.getFitness() > ind2.getFitness())
 			{
-				if (copyDesignElemProb <= uniformRate)
+				if (copyDesignElemProb <= UniformRate)
 				{
 					offspring.addDesignElement(ind1.getDesignElementAt(i));
 				}
@@ -302,7 +302,7 @@ namespace Ivy
 			}
 			else
 			{
-				if (copyDesignElemProb <= uniformRate)
+				if (copyDesignElemProb <= UniformRate)
 				{
 					offspring.addDesignElement(ind2.getDesignElementAt(i));
 				}
@@ -319,11 +319,11 @@ namespace Ivy
 	Individual FI2Pop::singlePointCrossover(Individual& ind1, Individual& ind2)
 	{
 		Individual offspring{};
-		int midPoint = genotypeSize / 2;
+		int midPoint = GenotypeSize / 2;
 		float copyDesignElemProb = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		for (int i = 0; i < genotypeSize; i++)
+		for (int i = 0; i < GenotypeSize; i++)
 		{
-			if (copyDesignElemProb <= uniformRate)
+			if (copyDesignElemProb <= UniformRate)
 			{
 				if (i <= midPoint)
 				{
@@ -357,7 +357,7 @@ namespace Ivy
 		Individual winner = pop.getIndividualAt(randIndex);
 
 		Individual current;
-		for (int i = 1; i < tournamentSize; i++)
+		for (int i = 1; i < TournamentSize; i++)
 		{
 			randIndex = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / populationSize));
 			current = pop.getIndividualAt(randIndex);
@@ -371,7 +371,7 @@ namespace Ivy
 
 	void FI2Pop::mutate(Individual & ind)
 	{
-		for (int i = 0; i < genotypeSize; i++)
+		for (int i = 0; i < GenotypeSize; i++)
 		{
 			int mutationType = static_cast<int> (rand()) / (static_cast <float> (RAND_MAX / 2));
 			if (mutationType == 0)
@@ -437,7 +437,7 @@ namespace Ivy
 			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount - 1)));
 		}
 		// Do not allow traps at level beginning and end
-		if (geneIndex == 0 || geneIndex == genotypeSize - 1)
+		if (geneIndex == 0 || geneIndex == GenotypeSize - 1)
 			roomType = static_cast<int> (rand()) / (static_cast<float> (RAND_MAX / (DesignElement::ElementTypeCount - DesignElement::HostileTypeCount - 1)));
 
 		designElement.setElementType((ElementType)roomType);

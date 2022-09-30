@@ -11,9 +11,7 @@
 #include <glad/glad.h>
 
 namespace Ivy {
-
-	ImGuiLayer::ImGuiLayer()
-		: SortingLayer("ImGuiLayer")
+	ImGuiLayer::ImGuiLayer() : SortingLayer("ImGuiLayer")
 	{
 		gladLoadGL();
 	}

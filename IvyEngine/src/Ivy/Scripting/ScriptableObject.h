@@ -10,8 +10,7 @@
 
 #include "../Core/Logger.h"
 
-namespace Ivy 
-{
+namespace Ivy {
 
 	/**
 	 * An abstraction that represents a physical script.
@@ -87,7 +86,7 @@ namespace Ivy
 		inline void setAlive(bool live) { this->alive = live; }
 		inline bool isAlive() { return alive; }
 		inline const std::string& getName() { return this->name; }
-		inline const void setName(const std::string& name) { this->name = (Paths::scriptsPath / name).string(); }
+		inline const void setName(const std::string& name) { this->name = (Paths::SCRIPTS_PATH / name).string(); }
 		inline const void setFullPath(const std::string& fullPath) { this->name = fullPath; }
 		inline asIScriptObject* getScriptObject() { return this->scriptObject; }
 		inline void setScriptObject(asIScriptObject* scriptObject) { this->scriptObject = scriptObject; }
@@ -96,5 +95,4 @@ namespace Ivy
 
 		ScriptableObject& operator=(const ScriptableObject& other);
 	};
-
 }

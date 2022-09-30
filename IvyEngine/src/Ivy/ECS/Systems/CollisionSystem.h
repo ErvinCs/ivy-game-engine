@@ -29,11 +29,13 @@ namespace Ivy {
 		 * Map used to represent the collision world
 		 * For each entity it stores the vector of the entities it is colliding with in a given frame
 		 */
-		static std::map<Entity, std::vector<Entity>> isCollidingWith;
+		static std::map<Entity, std::vector<Entity>> IsCollidingWith;
 
 		CollisionSystem() = default;
 		CollisionSystem(EntityContainer& entities)
 		{
+			maxDistA = 0;
+			maxDistB = 0;
 			this->setEntities(entities);
 		}
 
@@ -56,5 +58,4 @@ namespace Ivy {
 		 */
 		virtual void update(float deltatime) override;
 	};
-
 }

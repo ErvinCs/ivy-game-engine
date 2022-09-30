@@ -40,10 +40,10 @@ namespace Ivy
 		std::shared_ptr<IndexBuffer> ib = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		data.vertexArray->setIndexBuffer(ib);
 
-		textureBlank = Texture::Create(Paths::baseTexturePath.string(), true);
+		textureBlank = Texture::Create(Paths::BASE_TEXTURE_PATH.string(), true);
 
-		IVY_CORE_INFO("Loading shader from location: {0}", Paths::shaderPath);
-		data.shaderTex = Shader::Create(Paths::shaderPath.string());
+		IVY_CORE_INFO("Loading shader from location: {0}", Paths::SHADER_PATH);
+		data.shaderTex = Shader::Create(Paths::SHADER_PATH.string());
 		data.shaderTex->bind();
 		data.shaderTex->setUniform1i("u_texture", 0);
 	}

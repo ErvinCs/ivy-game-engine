@@ -10,9 +10,7 @@
 #include "../../Renderer/Renderer.h"
 #include "../../Core/Application.h"
 
-
 namespace Ivy {
-	
 	void RenderSystem::init()
 	{
 		IVY_CORE_INFO("RenderSystem: Initializing System");
@@ -23,7 +21,7 @@ namespace Ivy {
 	void RenderSystem::update(float deltatime)
 	{
 #ifdef _DEBUG
-		if (!CollidableGizmoSystem::showGizmos)
+		if (!CollidableGizmoSystem::ShowGizmos)
 		{
 			RenderCommand::clear();
 			Renderer::Begin(Application::GetCamera());
@@ -47,7 +45,5 @@ namespace Ivy {
 			Renderer::DrawRect(transform.position, transform.scale, transform.rotation, renderable.texture);
 		}
 		Renderer::End();
-
 	}
-
 }

@@ -171,9 +171,6 @@
     <ClInclude Include="src\Ivy\Events\WindowEvent.h">
       <Filter>src\Ivy\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h">
-      <Filter>src\Ivy\Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ivy\Exceptions\EventException.h">
       <Filter>src\Ivy\Exceptions</Filter>
     </ClInclude>
