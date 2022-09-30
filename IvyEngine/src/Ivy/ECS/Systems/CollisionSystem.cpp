@@ -9,9 +9,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/projection.hpp>
 
-namespace Ivy
-{
-	std::map<Entity, std::vector<Entity>> CollisionSystem::isCollidingWith;
+namespace Ivy {
+	std::map<Entity, std::vector<Entity>> CollisionSystem::IsCollidingWith;
 
 	void CollisionSystem::init()
 	{
@@ -20,15 +19,15 @@ namespace Ivy
 			Entity entity = i;
 			std::vector<Entity> entityVector{};
 			std::pair<Entity, std::vector<Entity>> pair = std::make_pair(entity, entityVector);
-			isCollidingWith.insert(pair);
+			IsCollidingWith.insert(pair);
 		}
 	}
 
 	void CollisionSystem::refresh()
 	{
-		for (std::pair<const Entity, std::vector<Entity>>& pair : CollisionSystem::isCollidingWith)
+		for (std::pair<const Entity, std::vector<Entity>>& pair : CollisionSystem::IsCollidingWith)
 		{
-			isCollidingWith[pair.first].clear();
+			IsCollidingWith[pair.first].clear();
 		}
 	}
 
@@ -64,7 +63,7 @@ namespace Ivy
 			A.halfScale = ATransform.scale / 2.0f;
 			A.rotation = ATransform.rotation;
 
-			std::vector<Entity>* entityIsColliding = &isCollidingWith[object];
+			std::vector<Entity>* entityIsColliding = &IsCollidingWith[object];
 			for (auto& itOther = entities->begin(); itOther != entities->end(); itOther++)
 			{
 				if (*it == *itOther)

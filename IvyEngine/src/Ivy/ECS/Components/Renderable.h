@@ -4,8 +4,7 @@
 #include "../Component.h"
 #include "../../Renderer/Texture.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	/**
 	 * Encapsulates the Texture used to render an entity
 	 * @see Texture

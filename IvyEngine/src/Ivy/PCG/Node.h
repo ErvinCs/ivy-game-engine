@@ -3,8 +3,7 @@
 #include <vector>
 #include <string>
 
-namespace Ivy
-{
+namespace Ivy {
 	/**
 	 * A node in a directed graph.
 	 * Encapsulates a unique identifier and a list of its children
@@ -82,5 +81,4 @@ namespace Ivy
 			return (!(*this == other));
 		}
 	};
-
 }

@@ -3,8 +3,7 @@
 
 #include "../ECS.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	Tag::Tag(std::string newTag)
 	{
 		this->tag = newTag;

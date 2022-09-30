@@ -10,8 +10,7 @@
 #include "../Events/KeyEvent.h"
 
 
-namespace Ivy 
-{
+namespace Ivy  {
 	/**
 	 * Implementation of Window for Windows.
 	 * @see: Window
@@ -71,5 +70,4 @@ namespace Ivy
 		// Destroys the window by calling `glfwDestroyWindow`
 		virtual void shutdown();
 	};
-
 }

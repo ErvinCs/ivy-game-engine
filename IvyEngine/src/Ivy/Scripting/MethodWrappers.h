@@ -102,7 +102,7 @@ namespace Ivy {
 
 	Renderable* Renderable_Factory1()
 	{
-		return new Renderable(Paths::baseTexturePath.string());
+		return new Renderable(Paths::BASE_TEXTURE_PATH.string());
 	}
 
 	CollidableBox* FindCollidable(Entity entity)
@@ -151,12 +151,12 @@ namespace Ivy {
 
 	bool AreEntitiesColliding(Entity e1, Entity e2)
 	{
-		return std::find(CollisionSystem::isCollidingWith[e1].begin(), CollisionSystem::isCollidingWith[e1].end(), e2) != CollisionSystem::isCollidingWith[e1].end();
+		return std::find(CollisionSystem::IsCollidingWith[e1].begin(), CollisionSystem::IsCollidingWith[e1].end(), e2) != CollisionSystem::IsCollidingWith[e1].end();
 	}
 
 	bool IsEntityColliding(Entity e)
 	{
-		return CollisionSystem::isCollidingWith[e].size() != 0;
+		return CollisionSystem::IsCollidingWith[e].size() != 0;
 	}
 
 	void FlipX(Renderable& renderable)

@@ -4,8 +4,7 @@
 
 #include "../Component.h"
 
-namespace Ivy 
-{
+namespace Ivy  {
 	/**
 	 * Acts as the name of the entity.
 	 * Used to display it in the GUI.
@@ -40,5 +39,4 @@ namespace Ivy
 
 		Tag& operator=(const Tag& other);
 	};
-
 }

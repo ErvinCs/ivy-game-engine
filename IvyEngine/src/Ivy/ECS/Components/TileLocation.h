@@ -34,5 +34,4 @@ namespace Ivy
 
 		TileLocation& operator= (const TileLocation& other);
 	};
-
 }

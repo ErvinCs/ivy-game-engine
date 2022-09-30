@@ -6,13 +6,15 @@
 #include "../../Core/Application.h"
 
 namespace Ivy {
-
 	void CameraSystem::init()
 	{
 		IVY_CORE_INFO("CameraSystem: Initializing System");
 		camera = &Application::GetCamera();
+		if (camera == nullptr)
+		{
+			IVY_CORE_ERROR("CameraSystem::Camera is null!");
+		}
 	}
-
 
 	void CameraSystem::update(float deltatime)
 	{
@@ -21,5 +23,4 @@ namespace Ivy {
 			camera->setPosition(glm::vec3(ECS::getInstance().getComponent<Transform>(owner).position, 0.0f));
 		}
 	}
-
 }

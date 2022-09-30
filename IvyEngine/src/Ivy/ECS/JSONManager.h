@@ -54,12 +54,12 @@ namespace Ivy {
 		 * Add a function pointer to `LoadFunctions`
 		 * @see LoadFunctions
 		 */
-		static void addLoadFunction(std::function<void(Entity&, nlohmann::json&)> func);
+		static void AddLoadFunction(std::function<void(Entity&, nlohmann::json&)> func);
 
 		/**
 		 * Add a function pointer to `SaveFunctions`
 		 * @see SaveFunctions
 		 */
-		static void addSaveFunction(std::function<void(Entity&, nlohmann::json&)> func);
+		static void AddSaveFunction(std::function<void(Entity&, nlohmann::json&)> func);
 	}; 
 }

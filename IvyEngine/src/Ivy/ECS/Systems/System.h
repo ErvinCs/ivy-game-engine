@@ -12,7 +12,7 @@ namespace Ivy {
 	{
 	protected:
 		// Points to the EntityContainer maintained by the ECS
-		EntityContainer* entities;
+		EntityContainer* entities = nullptr;
 	public:
 		/**
 		 * @return EntityContainer The container maintained by the ECS
@@ -30,6 +30,4 @@ namespace Ivy {
 		// Defines system actions on each frame
 		virtual void update(float deltatime) = 0;
 	};
-
-
 }

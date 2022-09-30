@@ -12,7 +12,6 @@
 #include "../ECS/Components/Collidable.h"
 
 namespace Ivy {
-
 	/**
 	 * Creates a new layer containing the ImGUI for manipulation the game objects properties.
 	 * I.e. the properties of the Components mapped to Entities.

@@ -2,8 +2,8 @@
 
 #include "Transform.h"
 #include "../ECS.h"
-namespace Ivy
-{
+
+namespace Ivy {
 	Transform::Transform(glm::vec2 position, float rotation, glm::vec2 scale)
 	{
 		this->position = position;

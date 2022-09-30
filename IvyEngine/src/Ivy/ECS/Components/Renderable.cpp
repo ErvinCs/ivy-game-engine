@@ -3,8 +3,7 @@
 #include "Renderable.h"
 #include "../ECS.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	Renderable::Renderable(std::string spritePath)
 	{
 		this->spritePath = spritePath;

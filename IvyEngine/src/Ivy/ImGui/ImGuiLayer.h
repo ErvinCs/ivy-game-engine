@@ -6,7 +6,6 @@
 #include "../Events/WindowEvent.h"
 
 namespace Ivy {
-
 	/**
 	 * The ImGuiLayer is in charge of starting and ending frames related to GUI rendering,
 	 *  as well as setting the default options for any other ImGui layer.
@@ -49,7 +48,5 @@ namespace Ivy {
 	private:
 		// Used to maintain the framerate.
 		float time = 0.0;
-	
 	};
-
 }

@@ -4,8 +4,7 @@
 #include "../Entity.h"
 #include "../../Renderer/OrthoCamera.h"
 
-namespace Ivy{
-
+namespace Ivy {
 	/**
 	 * System used for camera manipulation.
 	 * Currently only supports binding camera to an entity
@@ -15,10 +14,11 @@ namespace Ivy{
 	{
 	private:
 		// Points to the global OrthoCamera
-		OrthoCamera* camera;
+		OrthoCamera* camera = nullptr;
 	public:
 
 		CameraSystem() = default;
+
 		CameraSystem(EntityContainer& entities)
 		{
 			this->setEntities(entities);
@@ -33,5 +33,4 @@ namespace Ivy{
 		 */
 		virtual void update(float deltatime) override;
 	};
-
 }

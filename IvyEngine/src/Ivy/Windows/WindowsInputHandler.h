@@ -4,8 +4,7 @@
 #include <memory>
 
 
-namespace Ivy 
-{
+namespace Ivy  {
 	/**
 	 * Implementation of the InputHandler for Windows.
 	 * @see: InputHandler
@@ -43,5 +42,4 @@ namespace Ivy
 		 */
 		virtual float getMouseYImpl() override;
 	};
-
 }

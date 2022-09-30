@@ -9,7 +9,6 @@
 #include "../Exceptions/EventException.h"
 
 namespace Ivy {
-	
 	class Event;
 
 	/**
@@ -25,7 +24,7 @@ namespace Ivy {
 		// Defines the callback function
 		Func callback;
 		// The Event to be listening to
-		Event* event;
+		Event* event = nullptr;
 
 	public:
 		// Id of the handler
@@ -34,8 +33,7 @@ namespace Ivy {
 		static int counter;
 
 		// Default constructor. Creates an EventHandler with id 0.
-		EventHandler() : id{ 0 } {
-		}
+		EventHandler() : id{ 0 } { }
 
 		/**
 		 * Sets the `callback` function to `func` and increases the counter
@@ -132,6 +130,4 @@ namespace Ivy {
 		// @returns string describing this raised Event
 		virtual std::string toString() const;
 	};
-
-
 }

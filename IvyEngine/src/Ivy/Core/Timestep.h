@@ -54,7 +54,6 @@ namespace Ivy {
 			return time;
 		}
 
-
 		Timestep operator-(const Timestep& ts) {
 			time -= ts.time;
 			return *this;
@@ -135,7 +134,5 @@ namespace Ivy {
 		inline void addReference() { /* do nothing */ }
 		[[DEPRECATED]]
 		inline void release() { /* do nothing */ }
-
 	};
-
 }

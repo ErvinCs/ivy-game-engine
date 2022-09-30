@@ -8,7 +8,6 @@
 #include "../Core/Logger.h"
 
 namespace Ivy {
-
 	ScriptManager::~ScriptManager()
 	{
 		for (unsigned int n = 0; n < controllerList.size(); n++)

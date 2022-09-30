@@ -93,8 +93,7 @@ namespace Ivy {
 		 * @param button the code of the pressed mouse button
 		 */
 		MouseButtonDownEvent(int button)
-			: MouseButtonEvent(button) 
-		{}
+			: MouseButtonEvent(button)  {}
 
 		std::string toString() const override
 		{

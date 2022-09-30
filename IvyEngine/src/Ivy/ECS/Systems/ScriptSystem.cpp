@@ -21,7 +21,7 @@ namespace Ivy {
 				continue;
 			scriptComponent->setEntityId(object);
 
-			ScriptManager::GetInstance().createScriptController((Paths::scriptsPath / scriptComponent->scriptName).string(), scriptComponent->scriptableObject, object);
+			ScriptManager::GetInstance().createScriptController((Paths::SCRIPTS_PATH / scriptComponent->scriptName).string(), scriptComponent->scriptableObject, object);
 			IVY_CORE_INFO("ScriptSystem: Creating ScriptController: scriptName={0}, path={1}", scriptComponent->scriptName, scriptComponent->scriptableObject->getName());
 		}
 	}

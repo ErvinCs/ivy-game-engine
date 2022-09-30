@@ -7,9 +7,8 @@
 #include "../../Core/ResourcePaths.h"
 #include "../../Core/Application.h"
 
-namespace Ivy
-{
-	bool CollidableGizmoSystem::showGizmos = false;
+namespace Ivy {
+	bool CollidableGizmoSystem::ShowGizmos = false;
 
 	void CollidableGizmoSystem::init() 
 	{
@@ -21,7 +20,7 @@ namespace Ivy
 	void CollidableGizmoSystem::update(float deltatime)
 	{
 		
-		if (showGizmos)
+		if (ShowGizmos)
 		{
 			RenderCommand::clear();
 			Renderer::Begin(Application::GetCamera());

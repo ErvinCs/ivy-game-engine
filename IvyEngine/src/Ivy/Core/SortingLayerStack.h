@@ -16,6 +16,7 @@ namespace Ivy {
 	public:
 		// Base constructor
 		SortingLayerStack() {}
+
 		// Base destructor. Free the layers in the layer stack.
 		~SortingLayerStack();
 

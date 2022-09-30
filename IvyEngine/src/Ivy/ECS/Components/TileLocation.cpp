@@ -3,8 +3,7 @@
 
 #include "../ECS.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	TileLocation::TileLocation(float tileIndexX, float tileIndexY, glm::vec2 previousPosition, Entity owner)
 	{
 		this->owner = owner;

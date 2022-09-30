@@ -10,9 +10,9 @@ namespace Ivy {
 	OpenGLTexture::OpenGLTexture(const std::string& path, bool isBaseTexture)
 	{
 		if (isBaseTexture)
-			filepath = Paths::baseTexturePath.string();
+			filepath = Paths::BASE_TEXTURE_PATH.string();
 		else
-			filepath = (Paths::texturesPath / path).string();
+			filepath = (Paths::TEXTURES_PATH / path).string();
 
 		localBuffer = nullptr;
 		width = 0;

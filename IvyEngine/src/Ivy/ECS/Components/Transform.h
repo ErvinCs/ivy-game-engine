@@ -3,8 +3,7 @@
 #include "glm/vec2.hpp"
 #include "../Component.h"
 
-namespace Ivy
-{
+namespace Ivy {
 	/**
 	 * Represents the transformation of an entity, namely its position, rotation and scale.
 	 */
@@ -55,7 +54,6 @@ namespace Ivy
 		 */
 		bool operator!=(const Transform& other);
 
-		Transform& operator=(const Transform& other);
-
+		Transform& operator=(const Transform& other)
 	};
 }

@@ -5,8 +5,7 @@
 #include "DesignElement.h"
 #include "Graph.h"
 
-namespace Ivy 
-{
+namespace Ivy {
 	/**
 	 * An individual used in the PCG mechanism to form populations.
 	 * Represents a level as an aggregation of DesignElements
@@ -43,7 +42,6 @@ namespace Ivy
 		 * @param designElements vector of DesignElement to be copied into this Individual
 		 */
 		Individual(const std::vector<DesignElement>& designElements);
-
 
 		inline std::vector<DesignElement>& getDesignElements() { return designElements; }
 		inline const float& getFitness() const { return fitness; }
@@ -119,7 +117,5 @@ namespace Ivy
 		void removeRight(Node* node, int nodeId, int x, int y, int xMax, int yMax);
 		void removeTop(Node* node, int nodeId, int x, int y, int xMax, int yMax);
 		void removeBottom(Node* node, int nodeId, int x, int y, int xMax, int yMax);
-		
-		
 	};
 }

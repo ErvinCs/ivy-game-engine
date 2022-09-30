@@ -65,5 +65,4 @@ namespace Ivy {
 		 */
 		static std::unique_ptr<Window> Create(const WindowProperties& properties = WindowProperties());
 	};
-
 }

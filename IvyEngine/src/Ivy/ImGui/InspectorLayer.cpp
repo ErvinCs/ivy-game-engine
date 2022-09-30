@@ -211,7 +211,7 @@ namespace Ivy {
 							newScript.setEntityId(entity);
 							getECS().addComponent<ScriptComponent>(entity, newScript);
 							ScriptManager::GetInstance().createScriptController(
-								(Paths::scriptsPath / *buffer).string(),
+								(Paths::SCRIPTS_PATH / *buffer).string(),
 								getECS().getComponent<ScriptComponent>(entity).scriptableObject,
 								entity);
 						}
@@ -239,7 +239,7 @@ namespace Ivy {
 								newScript.setEntityId(entity);
 								getECS().addComponent<ScriptComponent>(entity, newScript);
 								ScriptManager::GetInstance().createScriptController(
-									(Paths::scriptsPath / scriptPathTemp).string(),
+									(Paths::SCRIPTS_PATH / scriptPathTemp).string(),
 									getECS().getComponent<ScriptComponent>(entity).scriptableObject,
 									entity);
 								scriptPathTemp = "";
@@ -321,7 +321,7 @@ namespace Ivy {
 		}
 
 		// Show the Gizmos (Collision World)
-		ImGui::Checkbox("Show Gizmos", &CollidableGizmoSystem::showGizmos);
+		ImGui::Checkbox("Show Gizmos", &CollidableGizmoSystem::ShowGizmos);
 
 		// Save/Load/Clear Entities buttons
 		if (ImGui::Button("Save Entities"))

@@ -29,20 +29,22 @@ namespace Ivy {
 	class Application 
 	{
 	private:
-		// True while resizing the window
-		bool windowResized = false;
 		// Singular application instance
 		static Application* Instance;
 		// Singular camera instance
 		static OrthoCamera Camera;
 		// Singulare level generator instance
 		static LevelGenerator LevelGen;
+
+		// True while resizing the window
+		bool windowResized = false;
+
 		// Stack of layers
 		SortingLayerStack layerStack;
-		// Points to a window depending on the target platform
-		std::unique_ptr<Window> window;
 		// Points to the singular script manager instance
 		ScriptManager* scriptManager;
+		// Points to a window depending on the target platform
+		std::unique_ptr<Window> window;
 #ifdef _DEBUG
 		ImGuiLayer* imGuiLayer;
 		InspectorLayer* inspectorLayer;

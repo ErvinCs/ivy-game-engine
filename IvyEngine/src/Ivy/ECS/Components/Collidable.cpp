@@ -4,7 +4,6 @@
 #include "../ECS.h"
 
 namespace Ivy {
-
 	CollidableBox::CollidableBox(glm::vec2 position, float rotation, glm::vec2 scale)
 	{
 		

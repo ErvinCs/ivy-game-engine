@@ -35,7 +35,6 @@ namespace Ivy {
 			ss << "WindowResizeEvent: width=" << width << ",height=" << height;
 			return ss.str();
 		}
-
 	};
 
 	/**
@@ -53,5 +52,4 @@ namespace Ivy {
 			return "WindowClosedEvent";
 		}
 	};
-
 }

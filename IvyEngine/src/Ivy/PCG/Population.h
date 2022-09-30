@@ -4,8 +4,7 @@
 
 #include "Individual.h"
 
-namespace Ivy 
-{
+namespace Ivy {
 	/**
 	 * A population of levels used by the PCG mechanism's GA.
 	 * Maintains a collection of Individuals.

@@ -3,7 +3,6 @@
 #include "Population.h"
 
 namespace Ivy {
-
 	Population::Population(const Population& other)
 	{
 		this->individuals.clear();

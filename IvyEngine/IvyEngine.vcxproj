@@ -19,7 +19,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>IvyEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -192,7 +192,6 @@ IF EXIST $(ProjectDir)\res\shaders\**.glsl\ (xcopy /Q /E /Y /I $(ProjectDir)\res
     <ClInclude Include="src\Ivy\Events\KeyEvent.h" />
     <ClInclude Include="src\Ivy\Events\MouseEvent.h" />
     <ClInclude Include="src\Ivy\Events\WindowEvent.h" />
-    <ClInclude Include="src\Ivy\Exceptions\ComponentNotFoundException.h" />
     <ClInclude Include="src\Ivy\Exceptions\EventException.h" />
     <ClInclude Include="src\Ivy\Exceptions\LayerException.h" />
     <ClInclude Include="src\Ivy\ImGui\GenerationLayer.h" />

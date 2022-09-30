@@ -29,7 +29,7 @@ namespace Ivy {
 		// Array of components
 		std::array<T, MAX_Entities> componentArray{};
 		// The number of owned components in the array
-		int size;
+		uint8_t size;
 	public:
 		/**
 		 * Base constructor. Sets size to 0.

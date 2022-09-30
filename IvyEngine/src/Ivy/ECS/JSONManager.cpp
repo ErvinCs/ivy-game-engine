@@ -239,12 +239,12 @@ namespace Ivy {
 		writer.close();
 	}
 
-	void JSONManager::addLoadFunction(std::function<void(Entity&, nlohmann::json&)> func)
+	void JSONManager::AddLoadFunction(std::function<void(Entity&, nlohmann::json&)> func)
 	{
 		JSONManager::LoadFunctions.push_back(func);
 	}
 
-	void JSONManager::addSaveFunction(std::function<void(Entity&, nlohmann::json&)> func)
+	void JSONManager::AddSaveFunction(std::function<void(Entity&, nlohmann::json&)> func)
 	{
 		JSONManager::SaveFunctions.push_back(func);
 	}
