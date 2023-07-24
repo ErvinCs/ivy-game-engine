@@ -46,6 +46,7 @@ Additional functionality is added to the renderer by the <a href="https://github
 ### GameObject System
 <div style="text-align: justify;">
 The game object system follows the ECS paradigm and provides a number of readily available Systems and Components. </br>
+
 Systems:
 * CameraSystem
 * ScriptSystem
