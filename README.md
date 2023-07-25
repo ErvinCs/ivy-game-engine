@@ -46,6 +46,7 @@ Additional functionality is added to the renderer by the <a href="https://github
 ### GameObject System
 <div style="text-align: justify;">
 The game object system follows the ECS paradigm and provides a number of readily available Systems and Components. </br>
+
 Systems:
 * CameraSystem
 * ScriptSystem
@@ -72,7 +73,9 @@ The GUI is implemented using <a href="https://github.com/ocornut/imgui">Dear ImG
 
 ### Scripting
 <div style="text-align: justify;">
-Game-specific code can be written in C++ or in <a href="https://www.angelcode.com/angelscript">AngelScript</a> scripts. A number of sample scripts are present in <code>IvyApplication/scripts</code>. Currently the types the script engine is registered with are the following: 
+Game-specific code can be written in C++ or in <a href="https://www.angelcode.com/angelscript">AngelScript</a> scripts. A number of sample scripts are present in <code>IvyApplication/scripts</code>. 
+
+Currently the types the script engine is registered with are the following: 
 * Vec2 
 * Transform
 * Renderable
@@ -90,12 +93,12 @@ The PCG module is responsible for level generation and uses the Feasible-Infeasi
 Note: The LevelGenerator class is responsible for actually instantiating the game objects and should be implemented per project.
 </div>
 
-# Hopefully Eventually Upcoming Features
+# TODOs
 * Sound System
 * Animation System
-* Multi-threading
+* Multi-threading support
 * More Gizmos
-* Collidable Types
+* More Collidable Types
 * Support for multiple components of the same type per Entity
 * Layered Rendering
 * Multiple Graphics API Support
