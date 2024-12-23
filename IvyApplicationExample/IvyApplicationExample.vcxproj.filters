@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{a880bfb9-433e-4cbc-af07-03f0c26066c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{b6a819e8-3347-4b11-8add-26db6d821f4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\scripts">
+      <UniqueIdentifier>{bea11455-d711-42d3-851b-c82bec912fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\textures">
+      <UniqueIdentifier>{db716aaf-52ef-42ad-9455-826a2adee8ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\IvyApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\UserComponent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\scripts\item.as">
+      <Filter>res\scripts</Filter>
+    </None>
+    <None Include="res\scripts\patrol-diag.as">
+      <Filter>res\scripts</Filter>
+    </None>
+    <None Include="res\scripts\patrol-plus.as">
+      <Filter>res\scripts</Filter>
+    </None>
+    <None Include="res\scripts\player.as">
+      <Filter>res\scripts</Filter>
+    </None>
+    <None Include="res\scripts\common.as">
+      <Filter>res\scripts</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\closedRoom.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\enemy-1.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\enemy-2.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\enemy-fly.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\enemy-ground.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\hallway.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\hole.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\horizontalBorder.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\horizontalWall.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\item.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\level-menu.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\meleeEnemy.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\pillar.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\player.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\player-dead.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\rangedEnemy.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\standardRoom1.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\standardRoom2.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\tshape.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\verticalBorder.png">
+      <Filter>res\textures</Filter>
+    </Image>
+    <Image Include="res\textures\verticalWall.png">
+      <Filter>res\textures</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
