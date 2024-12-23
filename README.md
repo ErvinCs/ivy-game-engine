@@ -22,7 +22,10 @@ Follow these steps:
 Project files for Visual Studio 2017 are generated using <a href="https://github.com/premake/premake-core">Premake5</a>. If you wish to use a different IDE make sure to check these files and update them accordingly. <br/>(Note: The AngelScript module has a number of readily available project files at <code>IvyEngine\vendor\angelscript\projects</code>).
 
 An Application on top of the engine is required to define a class that derives from <code>Ivy::Application</code> and a class that derives from <code>Ivy::SortingLayer</code>. An additional function that returns the newly created <code>Ivy::Application</code> instance is also required. <br/>
-An example application is provided in the <code>IvyApplication</code> project.
+
+An example application is provided in the <code>IvyApplicationExample</code> project. <br/>
+
+Note that having spaces in the project name of the IvyApplication might trigger error <a href="https://learn.microsoft.com/en-us/visualstudio/msbuild/errors/msb3073?view=vs-2022&f1url=%3FappId%3DDev17IDEF1%26l%3DEN-US%26k%3Dk(MSBuild.Exec.CommandFailed)%26rd%3Dtrue">MSB3073</a>.
 </div>
 
 # Implementation Details
