@@ -405,4 +405,13 @@
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="source\as_callfunc_x64_msvc_asm.asm" />
+    <CustomBuild Include="source\as_callfunc_arm_msvc.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\as_callfunc_arm_gcc.S" />
+    <None Include="source\as_callfunc_arm_vita.S" />
+    <None Include="source\as_callfunc_arm_xcode.S" />
+  </ItemGroup>
 </Project>

@@ -15,10 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F1039B6E-DDD1-8E74-C665-FF9AB2D26AD9}</ProjectGuid>
+    <ProjectGuid>{3D6F29A0-A9DB-E49A-72CF-7CF8DEFA0603}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>IvyApplication</RootNamespace>
+    <RootNamespace>IvyApplicationExample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -55,23 +55,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\Debug-windows-x86_64\IvyApplication\</OutDir>
-    <IntDir>..\bin-int\Debug-windows-x86_64\IvyApplication\</IntDir>
-    <TargetName>IvyApplication</TargetName>
+    <OutDir>..\bin\Debug-windows-x86_64\IvyApplicationExample\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\IvyApplicationExample\</IntDir>
+    <TargetName>IvyApplicationExample</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Release-windows-x86_64\IvyApplication\</OutDir>
-    <IntDir>..\bin-int\Release-windows-x86_64\IvyApplication\</IntDir>
-    <TargetName>IvyApplication</TargetName>
+    <OutDir>..\bin\Release-windows-x86_64\IvyApplicationExample\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\IvyApplicationExample\</IntDir>
+    <TargetName>IvyApplicationExample</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Dist-windows-x86_64\IvyApplication\</OutDir>
-    <IntDir>..\bin-int\Dist-windows-x86_64\IvyApplication\</IntDir>
-    <TargetName>IvyApplication</TargetName>
+    <OutDir>..\bin\Dist-windows-x86_64\IvyApplicationExample\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\IvyApplicationExample\</IntDir>
+    <TargetName>IvyApplicationExample</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,7 +146,42 @@ IF EXIST $(ProjectDir)\res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)\res\**.json
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\UserComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\IvyApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\camera.json" />
+    <None Include="res\entities.json" />
+    <None Include="res\scripts\common.as" />
+    <None Include="res\scripts\item.as" />
+    <None Include="res\scripts\patrol-diag.as" />
+    <None Include="res\scripts\patrol-plus.as" />
+    <None Include="res\scripts\player.as" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\closedRoom.png" />
+    <Image Include="res\textures\enemy-1.png" />
+    <Image Include="res\textures\enemy-2.png" />
+    <Image Include="res\textures\enemy-fly.png" />
+    <Image Include="res\textures\enemy-ground.png" />
+    <Image Include="res\textures\hallway.png" />
+    <Image Include="res\textures\hole.png" />
+    <Image Include="res\textures\horizontalBorder.png" />
+    <Image Include="res\textures\horizontalWall.png" />
+    <Image Include="res\textures\item.png" />
+    <Image Include="res\textures\level-menu.png" />
+    <Image Include="res\textures\meleeEnemy.png" />
+    <Image Include="res\textures\pillar.png" />
+    <Image Include="res\textures\player-dead.png" />
+    <Image Include="res\textures\player.png" />
+    <Image Include="res\textures\rangedEnemy.png" />
+    <Image Include="res\textures\standardRoom1.png" />
+    <Image Include="res\textures\standardRoom2.png" />
+    <Image Include="res\textures\tshape.png" />
+    <Image Include="res\textures\verticalBorder.png" />
+    <Image Include="res\textures\verticalWall.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IvyEngine\IvyEngine.vcxproj">

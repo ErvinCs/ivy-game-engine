@@ -2,7 +2,6 @@
 
 #include <array>
 #include "Entity.h"
-#include "../Exceptions/ComponentNotFoundException.h"
 #include "../Core/Logger.h"
 
 namespace Ivy {
