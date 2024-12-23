@@ -11,10 +11,13 @@ Features:
 
 # Setup
 <div style="text-align: justify;">
-1. Clone the repository using <code>git clone --recursive</code> to fetch all the required submodules.
-2. Run <code>git submodule update --recursive --remote</code> to update the submodules to their required versions
-3. Run the <code>ProjectGenerator.bat</code> batch file to generate a Visual Studio 2017 project. 
-4. Set <code>IvyApplication</code> as the startup project.
+Follow these steps:
+<ol>
+  <li>Clone the repository using <code>git clone --recursive https://github.com/ErvinCs/ivy-game-engine</code> to fetch all the required submodules.</li>
+  <li>Run <code>git submodule update --recursive --remote</code> to update the submodules to their required versions</li>
+  <li>Run the <code>ProjectGenerator.bat</code> batch file to generate a Visual Studio 2017 project.</li>
+  <li>Set <code>IvyApplication</code> as the startup project.</li>
+</ol>
 
 Project files for Visual Studio 2017 are generated using <a href="https://github.com/premake/premake-core">Premake5</a>. If you wish to use a different IDE make sure to check these files and update them accordingly. <br/>(Note: The AngelScript module has a number of readily available project files at <code>IvyEngine\vendor\angelscript\projects</code>).
 
