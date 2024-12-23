@@ -13,4 +13,4 @@
 [submodule "IvyEngine/vendor/imgui"]
 	path = IvyEngine/vendor/imgui
 	url = https://github.com/ErvinCs/imgui
-	branch = ivy
+	branch = docking
