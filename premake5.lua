@@ -26,6 +26,7 @@ group "Dependencies"
     include "IvyEngine/vendor/imgui"
     include "IvyEngine/vendor/angelscript"
 
+-- Engine
 project "IvyEngine"
     location "IvyEngine"
     kind "StaticLib"            
@@ -121,7 +122,6 @@ project "IvyEngine"
         }
 
 -- Application
-
 project "IvyApplication"
     location "IvyApplication"
     kind "ConsoleApp"           
@@ -136,6 +136,79 @@ project "IvyApplication"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp"
+    }
+
+    includedirs
+    {
+        "IvyEngine/vendor/spdlog/include",
+        "IvyEngine/vendor",
+        "IvyEngine/src",
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.angelscript}",
+        "%{IncludeDir.json}"
+    }
+
+    links
+    {
+        "IvyEngine"
+    }
+
+    -- Windows specific properties
+    filter "system:windows"
+        systemversion "latest"
+        defines
+        {
+            "IVY_PLATFORM_WINDOWS"
+        }
+
+    filter "configurations:Debug"
+        defines "IVY_DEBUG"
+        runtime "Debug"
+        symbols "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res"
+        }
+
+    filter "configurations:Release"
+        defines "IVY_RELEASE"
+        runtime "Release"
+        optimize "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res"
+        }
+
+    filter "configurations:Dist"
+        defines "IVY_DIST"
+        runtime "Release"
+        optimize "on"
+        postbuildcommands { 
+            "{COPY} %{prj.location}/res/textures/**.png %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/textures",
+            "{COPY} %{prj.location}/res/scripts/**.as %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res/scripts",
+            "{COPY} %{prj.location}/res/**.json %{prj.location}/../bin/" .. outputdir .. "/%{prj.name}/res"
+        }
+
+-- Application Example
+project "IvyApplicationExample"
+    location "IvyApplicationExample"
+    kind "ConsoleApp"           
+    language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
+
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir   ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+    files
+    {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/res/**.json",
+        "%{prj.name}/res/scripts/**.as",
+        "%{prj.name}/res/textures/**.png",
     }
 
     includedirs
