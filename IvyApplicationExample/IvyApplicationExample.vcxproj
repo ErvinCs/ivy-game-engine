@@ -15,7 +15,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5CDBDB0B-1BB7-4E05-8929-7B3CDFEEB034}</ProjectGuid>
+    <ProjectGuid>{3D6F29A0-A9DB-E49A-72CF-7CF8DEFA0603}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>IvyApplicationExample</RootNamespace>
@@ -90,9 +90,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(ProjectDir)res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)res\textures\**.png $(ProjectDir)..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\textures\**.png $(ProjectDir)..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
-IF EXIST $(ProjectDir)res\scripts\**.as\ (xcopy /Q /E /Y /I $(ProjectDir)res\scripts\**.as $(ProjectDir)..\bin\Debug-windows-x86_64\$(ProjectName)\res\scripts &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\scripts\**.as $(ProjectDir)..\bin\Debug-windows-x86_64\$(ProjectName)\res\scripts &gt; nul)
-IF EXIST $(ProjectDir)res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)res\**.json $(ProjectDir)..\bin\Debug-windows-x86_64\$(ProjectName)\res &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\**.json $(ProjectDir)..\bin\Debug-windows-x86_64\$(ProjectName)\res &gt; nul)</Command>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\scripts\**.as\ (xcopy /Q /E /Y /I $(ProjectDir)\res\scripts\**.as $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\scripts &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\scripts\**.as $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res\scripts &gt; nul)
+IF EXIST $(ProjectDir)\res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)\res\**.json $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\**.json $(ProjectDir)\..\bin\Debug-windows-x86_64\$(ProjectName)\res &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -115,9 +115,9 @@ IF EXIST $(ProjectDir)res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)res\**.json $
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(ProjectDir)res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)res\textures\**.png $(ProjectDir)..\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\textures\**.png $(ProjectDir)..\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
-IF EXIST $(ProjectDir)res\scripts\**.as\ (xcopy /Q /E /Y /I $(ProjectDir)res\scripts\**.as $(ProjectDir)..\bin\Release-windows-x86_64\$(ProjectName)\res\scripts &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\scripts\**.as $(ProjectDir)..\bin\Release-windows-x86_64\$(ProjectName)\res\scripts &gt; nul)
-IF EXIST $(ProjectDir)res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)res\**.json $(ProjectDir)..\bin\Release-windows-x86_64\$(ProjectName)\res &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\**.json $(ProjectDir)..\bin\Release-windows-x86_64\$(ProjectName)\res &gt; nul)</Command>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\scripts\**.as\ (xcopy /Q /E /Y /I $(ProjectDir)\res\scripts\**.as $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\scripts &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\scripts\**.as $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res\scripts &gt; nul)
+IF EXIST $(ProjectDir)\res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)\res\**.json $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\**.json $(ProjectDir)\..\bin\Release-windows-x86_64\$(ProjectName)\res &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -140,23 +140,20 @@ IF EXIST $(ProjectDir)res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)res\**.json $
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(ProjectDir)res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)res\textures\**.png $(ProjectDir)..\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\textures\**.png $(ProjectDir)..\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
-IF EXIST $(ProjectDir)res\scripts\**.as\ (xcopy /Q /E /Y /I $(ProjectDir)res\scripts\**.as $(ProjectDir)..\bin\Dist-windows-x86_64\$(ProjectName)\res\scripts &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\scripts\**.as $(ProjectDir)..\bin\Dist-windows-x86_64\$(ProjectName)\res\scripts &gt; nul)
-IF EXIST $(ProjectDir)res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)res\**.json $(ProjectDir)..\bin\Dist-windows-x86_64\$(ProjectName)\res &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)res\**.json $(ProjectDir)..\bin\Dist-windows-x86_64\$(ProjectName)\res &gt; nul)</Command>
+      <Command>IF EXIST $(ProjectDir)\res\textures\**.png\ (xcopy /Q /E /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\textures\**.png $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\textures &gt; nul)
+IF EXIST $(ProjectDir)\res\scripts\**.as\ (xcopy /Q /E /Y /I $(ProjectDir)\res\scripts\**.as $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\scripts &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\scripts\**.as $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res\scripts &gt; nul)
+IF EXIST $(ProjectDir)\res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)\res\**.json $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)\res\**.json $(ProjectDir)\..\bin\Dist-windows-x86_64\$(ProjectName)\res &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\IvyApp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IvyEngine\IvyEngine.vcxproj">
-      <Project>{F35D2C1B-5FC8-E091-A806-923714B0BEE6}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\UserComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\IvyApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\camera.json" />
+    <None Include="res\entities.json" />
     <None Include="res\scripts\common.as" />
     <None Include="res\scripts\item.as" />
     <None Include="res\scripts\patrol-diag.as" />
@@ -185,6 +182,11 @@ IF EXIST $(ProjectDir)res\**.json\ (xcopy /Q /E /Y /I $(ProjectDir)res\**.json $
     <Image Include="res\textures\tshape.png" />
     <Image Include="res\textures\verticalBorder.png" />
     <Image Include="res\textures\verticalWall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IvyEngine\IvyEngine.vcxproj">
+      <Project>{F35D2C1B-5FC8-E091-A806-923714B0BEE6}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,23 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{a880bfb9-433e-4cbc-af07-03f0c26066c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="res">
-      <UniqueIdentifier>{b6a819e8-3347-4b11-8add-26db6d821f4a}</UniqueIdentifier>
+      <UniqueIdentifier>{4FA5880B-BBAE-887C-442A-9F7CB032947C}</UniqueIdentifier>
     </Filter>
     <Filter Include="res\scripts">
-      <UniqueIdentifier>{bea11455-d711-42d3-851b-c82bec912fa2}</UniqueIdentifier>
+      <UniqueIdentifier>{A6037D1E-12B9-F513-9BAD-EFEA0762EC17}</UniqueIdentifier>
     </Filter>
     <Filter Include="res\textures">
-      <UniqueIdentifier>{db716aaf-52ef-42ad-9455-826a2adee8ed}</UniqueIdentifier>
+      <UniqueIdentifier>{227C1C83-0EDF-AB27-B764-E4DDA3A677AA}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\IvyApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\UserComponent.h">
@@ -25,6 +20,20 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\IvyApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\camera.json">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\entities.json">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\scripts\common.as">
+      <Filter>res\scripts</Filter>
+    </None>
     <None Include="res\scripts\item.as">
       <Filter>res\scripts</Filter>
     </None>
@@ -35,9 +44,6 @@
       <Filter>res\scripts</Filter>
     </None>
     <None Include="res\scripts\player.as">
-      <Filter>res\scripts</Filter>
-    </None>
-    <None Include="res\scripts\common.as">
       <Filter>res\scripts</Filter>
     </None>
   </ItemGroup>
@@ -81,10 +87,10 @@
     <Image Include="res\textures\pillar.png">
       <Filter>res\textures</Filter>
     </Image>
-    <Image Include="res\textures\player.png">
+    <Image Include="res\textures\player-dead.png">
       <Filter>res\textures</Filter>
     </Image>
-    <Image Include="res\textures\player-dead.png">
+    <Image Include="res\textures\player.png">
       <Filter>res\textures</Filter>
     </Image>
     <Image Include="res\textures\rangedEnemy.png">
