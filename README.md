@@ -11,12 +11,15 @@ Features:
 
 # Setup
 <div style="text-align: justify;">
-Clone the repository using <code>git clone --recursive</code> to fetch all the required submodules.
-Run the <code>ProjectGenerator.bat</code> batch file to generate a Visual Studio 2017 project. Make sure to set <code>IvyApplication</code> as the startup project.
+1. Clone the repository using <code>git clone --recursive</code> to fetch all the required submodules.
+2. Run <code>git submodule update --recursive --remote</code> to update the submodules to their required versions
+3. Run the <code>ProjectGenerator.bat</code> batch file to generate a Visual Studio 2017 project. 
+4. Set <code>IvyApplication</code> as the startup project.
 
 Project files for Visual Studio 2017 are generated using <a href="https://github.com/premake/premake-core">Premake5</a>. If you wish to use a different IDE make sure to check these files and update them accordingly. <br/>(Note: The AngelScript module has a number of readily available project files at <code>IvyEngine\vendor\angelscript\projects</code>).
 
-An Application on top of the engine is required to define a class that derives from <code>Ivy::Application</code> and a class that derives from <code>Ivy::SortingLayer</code>. An additional function that returns the newly created <code>Ivy::Application</code> instance is also required. <br/>An example application is provided in the <code>IvyApplication</code> project.
+An Application on top of the engine is required to define a class that derives from <code>Ivy::Application</code> and a class that derives from <code>Ivy::SortingLayer</code>. An additional function that returns the newly created <code>Ivy::Application</code> instance is also required. <br/>
+An example application is provided in the <code>IvyApplication</code> project.
 </div>
 
 # Implementation Details
